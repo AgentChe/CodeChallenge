@@ -29,3 +29,40 @@ struct Login: ThunkAction {
             }
     }
 }
+
+struct GuestAuth: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.services.authService.guestAuth()
+            .asResolvable()
+            .ephemeralSink { user in
+                dispatcher.dispatch(Action.loadUser(user))
+            }
+    }
+}
+
+struct SignUp: ThunkAction {
+    let email: String
+    let username: String
+    let password: String
+
+    func exec(dispatcher: Dispatcher) {
+        guard let id = dispatcher.state.user.value?.id, let session = dispatcher.state.user.value?.session else { return }
+
+        dispatcher.services.authService.signUp(id: id, session: session, username: username, email: email, password: password)
+            .asResolvable()
+            .ephemeralSink { user in
+                dispatcher.dispatch(Action.loadUser(user))
+            }
+    }
+}
+
+struct Signout: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        guard let session = dispatcher.state.user.value?.session else { return }
+
+        dispatcher.services.authService.logout(session: session)
+            .ephemeralSink { _ in
+                dispatcher.dispatch(Action.loadUser(.pending))
+            }
+    }
+}

@@ -24,7 +24,7 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 20) {
             Spacer()
                 .frame(height: 40)
-            Text("Login")
+            Text(mode == .login ? "Login" : "Sign up")
                 .font(.largeTitle)
             Spacer()
                 .frame(height: 30)
@@ -77,7 +77,9 @@ struct LoginView: View {
     private var loginView: some View {
         Group {
             TextField("Username", text: $userNameText)
-            TextField("Password", text: $passwordText)
+                .autocapitalization(.none)
+            SecureField("Password", text: $passwordText)
+                .autocapitalization(.none)
             HStack {
                 Spacer()
                 Button("Forgot password") {
@@ -94,10 +96,13 @@ struct LoginView: View {
     private var signupView: some View {
         Group {
             TextField("Username", text: $signupUsernameText)
+                .autocapitalization(.none)
             TextField("Email", text: $signupEmailText)
-            TextField("Password", text: $signupPasswordText)
+                .autocapitalization(.none)
+            SecureField("Password", text: $signupPasswordText)
+                .autocapitalization(.none)
             Button("Sign up") {
-
+                store.dispatch(SignUp(email: signupEmailText, username: signupUsernameText, password: signupPasswordText))
             }
             .buttonStyle(PrimaryButton())
         }

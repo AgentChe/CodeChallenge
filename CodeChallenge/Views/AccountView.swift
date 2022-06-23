@@ -9,7 +9,14 @@ import Foundation
 import SwiftUI
 
 struct AccountView: View {
+    @EnvironmentObject var store: Store
+
     var body: some View {
-        Text("Hello logged in")
+        VStack {
+            Text("Hello logged in")
+            Button("Sign out") {
+                store.dispatch(Signout())
+            }
+        }
     }
 }

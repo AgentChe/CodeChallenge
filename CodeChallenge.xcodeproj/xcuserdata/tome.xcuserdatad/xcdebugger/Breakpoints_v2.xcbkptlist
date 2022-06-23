@@ -7,32 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B8CEEA1C-ACBD-4244-B69A-D155C6D174FB"
+            uuid = "2781C0E4-0429-4AAC-9410-6E38A66CE3A4"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Coordinators/RootCoordinator.swift"
+            filePath = "CodeChallenge/Store/Actions/Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "start()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "78B89845-C08E-4E82-B618-14367BE611B0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Resources/SceneDelegate.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "scene(_:willConnectTo:options:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "exec(dispatcher:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

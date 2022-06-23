@@ -17,6 +17,7 @@ final class RootCoordinator {
     private let accountCoordinator: AccountCoordinator
 
     private var authCancellable: AnyCancellable?
+    private var logoutCancellable: AnyCancellable?
 
     init(window: UIWindow) {
         self.window = window
@@ -30,16 +31,28 @@ final class RootCoordinator {
 
         authCancellable = self.store
             .statePublisher
-            .map { $0.user.value != nil }
+            .map { $0.user.value?.username != nil }
             .removeDuplicates()
             .sink { [weak self] isLoggedIn in
                 guard let self = self else { return }
                 if isLoggedIn {
                     self.window.rootViewController = self.accountCoordinator.navigationController
                     self.accountCoordinator.start()
-                    self.authCancellable?.cancel()
-                    self.authCancellable = nil
                 }
             }
+
+        logoutCancellable = self.store
+            .statePublisher
+            .map { $0.user.isPending }
+            .removeDuplicates()
+            .sink { [weak self] isLoggedOut in
+                guard let self = self else { return }
+                if isLoggedOut {
+                    self.window.rootViewController = self.loginCoordinator.navigationController
+                    self.loginCoordinator.start()
+                }
+            }
+
+        store.dispatch(GuestAuth())
     }
 }

@@ -22,7 +22,6 @@ extension Reducers {
         switch action {
         case .loadUser(let user):
             return user
-        default: return state
         }
     }
 }

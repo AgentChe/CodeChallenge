@@ -1,0 +1,10 @@
+git_url("git@github.com:tateviktome/code_challenge_ios_certificates.git")
+
+app_identifier(["com.tome.codechallenge"])
+username("vt.futuristics@gmail.com") # Your Apple Developer Portal username
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options
+
+# The docs are available on https://docs.fastlane.tools/actions/match
+# match(git_basic_authorization: 'dGF0ZXZpa3RvbTpnaHBfZUhwM09wdmRCVmg3OUVjRTdOYmwxdTk1VEE0ZTgzMklPWjM0')

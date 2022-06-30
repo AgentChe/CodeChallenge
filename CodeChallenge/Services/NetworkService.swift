@@ -101,25 +101,7 @@ final class NetworkService: NetworkServiceProtocol {
 
 fileprivate extension URLSession {
     func dataTask(for request: URLRequest) -> AnyPublisher<(data: Data, response: URLResponse), URLError> {
-        return dataTaskPublisher(for: request)
-#if DEBUG && false
-            .handleEvents(
-                receiveOutput: { (_: Data, response: URLResponse) in
-                    let httpMethod = request.httpMethod?.uppercased() ?? ""
-                    let httpResponse = response as? HTTPURLResponse
-                    let url = httpResponse?.url?.absoluteString ?? "--"
-                    debugPrint("\(httpMethod) \(url) \(httpResponse?.statusCode ?? 0)")
-                },
-                receiveCompletion: { result in
-                    if case let .failure(error) = result {
-                        let httpMethod = request.httpMethod?.uppercased() ?? ""
-                        let url = request.url?.absoluteString ?? "--"
-                        debugPrint("\(httpMethod) \(url) \(error)")
-                    }
-                }
-            )
-#endif
-            .eraseToAnyPublisher()
+        return dataTaskPublisher(for: request).eraseToAnyPublisher()
     }
 }
 

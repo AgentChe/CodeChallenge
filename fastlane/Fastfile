@@ -1,0 +1,41 @@
+# fastlane/fastfile
+default_platform :ios
+
+platform :ios do
+  before_all do
+    setup_circle_ci
+app_store_connect_api_key()
+  end
+
+  desc "Runs all the tests"
+  lane :test do
+    scan
+  end
+
+lane :run_qa do
+match(type: "appstore", readonly: true, app_identifier: "com.tome.codechallenge")
+match(type: "development", readonly: true, app_identifier: "com.tome.codechallenge")
+
+    profileMapping = {}
+    profileMapping["com.tome.codechallenge"] = "match AppStore com.tome.codechallenge"
+    current_build = latest_testflight_build_number(app_identifier: "com.tome.codechallenge")
+    increment_build_number({build_number: current_build + 1})
+
+    build_app(
+      silent: true,
+      clean: true,
+      export_method: "app-store",
+      export_options: {
+        method: "app-store",
+        provisioningProfiles: profileMapping
+      },
+      output_name: "CodeChallenge.ipa",
+      archive_path: "CodeChallenge.xcarchive"
+    )
+
+    upload_to_testflight(
+      app_identifier: "com.tome.codechallenge", 
+      skip_waiting_for_build_processing: true
+    )
+end
+end

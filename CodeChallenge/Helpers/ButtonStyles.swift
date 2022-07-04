@@ -30,7 +30,7 @@ struct PrimaryButton: ButtonStyle {
         }
         .frame(height: 56)
         .foregroundColor(.white)
-        .background(status == .enabled ? Color.purple : Color.gray)
+        .background(status == .enabled ? .CodeChallenge.blue1 : .CodeChallenge.dark)
         .clipShape(Capsule())
     }
 }

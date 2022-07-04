@@ -22,6 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = mainWindow
         rootCoordinator = RootCoordinator(window: mainWindow)
         rootCoordinator?.start()
+        window?.overrideUserInterfaceStyle = .light
+        window?.backgroundColor = .CodeChallenge.dark
         window?.makeKeyAndVisible()
     }
 }

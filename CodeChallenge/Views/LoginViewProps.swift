@@ -8,5 +8,5 @@
 import Foundation
 
 protocol LoginViewProps {
-    
+    var screenMode: LoginView.Mode { get set }
 }

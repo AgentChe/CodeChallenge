@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct LoginView: View, LoginViewProps {
     enum Mode {
         case login
         case signup
@@ -19,13 +19,25 @@ struct LoginView: View {
     @State var signupEmailText: String = ""
     @State var signupPasswordText: String = ""
     @State var mode = Mode.login
+    var screenMode: Mode
+    let onChangeMode: (() -> Void)
 
     var body: some View {
+        DoodledView {
+            content
+        }
+        .onAppear {
+            self.mode = screenMode
+        }
+    }
+
+    private var content: some View {
         VStack(alignment: .leading, spacing: 20) {
             Spacer()
                 .frame(height: 40)
             Text(mode == .login ? "Login" : "Sign up")
-                .font(.largeTitle)
+                .font(.systemFont(ofSize: 40, weight: .bold))
+                .foregroundColor(.CodeChallenge.white)
             Spacer()
                 .frame(height: 30)
             if mode == .login {
@@ -41,25 +53,30 @@ struct LoginView: View {
             HStack {
                 Spacer()
                 Button(mode == .login ? "Create Account" : "Have account") {
-                    mode = mode == .login ? .signup : .login
+                    onChangeMode()
                 }
                 .padding(.top, 30)
+                .foregroundColor(.CodeChallenge.blue1)
                 Spacer()
             }
+
+            Spacer()
+                .frame(height: 20)
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal, 25)
     }
 
     private var loginOptionsView: some View {
         Group {
-            HStack {
+            HStack(spacing: 10) {
                 Rectangle()
-                    .background(Color.gray)
-                    .frame(height: 2)
-                Text("Login")
+                    .fill(Color.white)
+                    .frame(height: 0.5)
+                Text(mode == .login ? "Sign In with" : "Sign Up with")
+                    .foregroundColor(.CodeChallenge.white)
                 Rectangle()
-                    .background(Color.gray)
-                    .frame(height: 2)
+                    .fill(Color.white)
+                    .frame(height: 0.5)
             }
 
             HStack {
@@ -76,15 +93,17 @@ struct LoginView: View {
 
     private var loginView: some View {
         Group {
-            TextField("Username", text: $userNameText)
+            LabelledField(text: $userNameText, title: "Username")
                 .autocapitalization(.none)
-            SecureField("Password", text: $passwordText)
+            LabelledField(text: $passwordText, title: "Password", isSecure: true)
                 .autocapitalization(.none)
             HStack {
                 Spacer()
                 Button("Forgot password") {
 
                 }
+                .foregroundColor(UIColor.lightGray)
+                .font(.systemFont(ofSize: 14))
             }
             Button("Login") {
                 store.dispatch(Login(username: userNameText, password: passwordText))
@@ -95,22 +114,16 @@ struct LoginView: View {
 
     private var signupView: some View {
         Group {
-            TextField("Username", text: $signupUsernameText)
+            LabelledField(text: $signupUsernameText, title: "Username")
                 .autocapitalization(.none)
-            TextField("Email", text: $signupEmailText)
+            LabelledField(text: $signupEmailText, title: "Email")
                 .autocapitalization(.none)
-            SecureField("Password", text: $signupPasswordText)
+            LabelledField(text: $signupPasswordText, title: "Password", isSecure: true)
                 .autocapitalization(.none)
             Button("Sign up") {
                 store.dispatch(SignUp(email: signupEmailText, username: signupUsernameText, password: signupPasswordText))
             }
             .buttonStyle(PrimaryButton())
         }
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
     }
 }

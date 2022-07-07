@@ -11,6 +11,7 @@ protocol Dispatchable {}
 
 enum Action: Dispatchable {
     case loadUser(Resolvable<User>)
+    case loadAccount(Resolvable<Account>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -63,6 +64,18 @@ struct Signout: ThunkAction {
         dispatcher.services.authService.logout(session: session)
             .ephemeralSink { _ in
                 dispatcher.dispatch(Action.loadUser(.pending))
+            }
+    }
+}
+
+struct LoadAccount: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.loadAccount(.loading))
+
+        dispatcher.services.accountService.loadAccount()
+            .asResolvable()
+            .ephemeralSink { account in
+                dispatcher.dispatch(Action.loadAccount(account))
             }
     }
 }

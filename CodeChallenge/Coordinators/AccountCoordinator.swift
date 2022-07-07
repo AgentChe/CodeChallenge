@@ -8,14 +8,21 @@
 import Foundation
 import SwiftUI
 
-struct AccountCoordinator {
+class AccountCoordinator {
     let navigationController = UINavigationController()
     let store: Store
 
-    func start() {
+    init(store: Store) {
+        self.store = store
         let accountView = AccountView()
             .environmentObject(store)
         let controller = UIHostingController(rootView: accountView)
+        let tabBarItem = UITabBarItem(
+            title: "Account",
+            image: UIImage(named: "homeTabIcon"),
+            selectedImage: UIImage(named: "homeTabIcon")
+        )
+        controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
     }
 }

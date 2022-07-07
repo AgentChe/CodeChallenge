@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE242877888300995D3D /* HomeCoordinator.swift */; };
+		E06AAE272877888C00995D3D /* BrowseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE262877888C00995D3D /* BrowseCoordinator.swift */; };
+		E06AAE292877889700995D3D /* CommunityCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE282877889700995D3D /* CommunityCoordinator.swift */; };
+		E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */; };
+		E06AAE2D287788B700995D3D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE2C287788B700995D3D /* HomeView.swift */; };
+		E06AAE2F287788C000995D3D /* BrowseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE2E287788C000995D3D /* BrowseView.swift */; };
+		E06AAE31287788C700995D3D /* CommunityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE30287788C700995D3D /* CommunityView.swift */; };
+		E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE32287788CD00995D3D /* PremiumView.swift */; };
+		E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3428778DAC00995D3D /* AccountViewProps.swift */; };
+		E06AAE3728778DDC00995D3D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3628778DDC00995D3D /* Account.swift */; };
+		E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3828778EEF00995D3D /* AccountService.swift */; };
 		E096DF1C2871BCAB008A2A98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E096DF1B2871BCAB008A2A98 /* Colors.swift */; };
 		E096DF1E2871BE61008A2A98 /* ViewAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E096DF1D2871BE61008A2A98 /* ViewAdditions.swift */; };
 		E096DF212871BEA8008A2A98 /* DoodledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E096DF202871BEA8008A2A98 /* DoodledView.swift */; };
@@ -51,6 +62,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E06AAE242877888300995D3D /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		E06AAE262877888C00995D3D /* BrowseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseCoordinator.swift; sourceTree = "<group>"; };
+		E06AAE282877889700995D3D /* CommunityCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityCoordinator.swift; sourceTree = "<group>"; };
+		E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumCoordinator.swift; sourceTree = "<group>"; };
+		E06AAE2C287788B700995D3D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		E06AAE2E287788C000995D3D /* BrowseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseView.swift; sourceTree = "<group>"; };
+		E06AAE30287788C700995D3D /* CommunityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityView.swift; sourceTree = "<group>"; };
+		E06AAE32287788CD00995D3D /* PremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumView.swift; sourceTree = "<group>"; };
+		E06AAE3428778DAC00995D3D /* AccountViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewProps.swift; sourceTree = "<group>"; };
+		E06AAE3628778DDC00995D3D /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		E06AAE3828778EEF00995D3D /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		E096DF1B2871BCAB008A2A98 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E096DF1D2871BE61008A2A98 /* ViewAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewAdditions.swift; sourceTree = "<group>"; };
 		E096DF202871BEA8008A2A98 /* DoodledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoodledView.swift; sourceTree = "<group>"; };
@@ -170,6 +192,10 @@
 				E0BD3242285A8ADD000C37A9 /* LoginCoordinator.swift */,
 				E0BD3245285A8B1F000C37A9 /* RootCoordinator.swift */,
 				E0BD329E285D022F000C37A9 /* AccountCoordinator.swift */,
+				E06AAE242877888300995D3D /* HomeCoordinator.swift */,
+				E06AAE262877888C00995D3D /* BrowseCoordinator.swift */,
+				E06AAE282877889700995D3D /* CommunityCoordinator.swift */,
+				E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -180,6 +206,11 @@
 				E0BD323E285A8723000C37A9 /* LoginView.swift */,
 				E0BD327F285CF48A000C37A9 /* LoginViewProps.swift */,
 				E0BD329C285D01BF000C37A9 /* AccountView.swift */,
+				E06AAE3428778DAC00995D3D /* AccountViewProps.swift */,
+				E06AAE2C287788B700995D3D /* HomeView.swift */,
+				E06AAE2E287788C000995D3D /* BrowseView.swift */,
+				E06AAE30287788C700995D3D /* CommunityView.swift */,
+				E06AAE32287788CD00995D3D /* PremiumView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -229,6 +260,7 @@
 				E0BD3294285CF886000C37A9 /* Services.swift */,
 				E0BD3285285CF568000C37A9 /* NetworkService.swift */,
 				E0BD3296285CF979000C37A9 /* AuthService.swift */,
+				E06AAE3828778EEF00995D3D /* AccountService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -237,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				E0BD328B285CF731000C37A9 /* User.swift */,
+				E06AAE3628778DDC00995D3D /* Account.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -367,18 +400,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				E096DF27287210AE008A2A98 /* LabelledField.swift in Sources */,
+				E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */,
 				E0BD3295285CF886000C37A9 /* Services.swift in Sources */,
 				E0BD3286285CF568000C37A9 /* NetworkService.swift in Sources */,
 				E0BD3246285A8B1F000C37A9 /* RootCoordinator.swift in Sources */,
 				E0BD3297285CF979000C37A9 /* AuthService.swift in Sources */,
+				E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */,
 				E0BD3238285A7181000C37A9 /* CodeChallenge.xcdatamodeld in Sources */,
+				E06AAE3728778DDC00995D3D /* Account.swift in Sources */,
+				E06AAE2F287788C000995D3D /* BrowseView.swift in Sources */,
 				E0BD3288285CF6D2000C37A9 /* AppState.swift in Sources */,
 				E0BD3241285A87A6000C37A9 /* ButtonStyles.swift in Sources */,
 				E0BD328A285CF700000C37A9 /* Resolvable.swift in Sources */,
 				E096DF1E2871BE61008A2A98 /* ViewAdditions.swift in Sources */,
+				E06AAE31287788C700995D3D /* CommunityView.swift in Sources */,
 				E0BD3290285CF782000C37A9 /* Reducers.swift in Sources */,
 				E0BD328C285CF731000C37A9 /* User.swift in Sources */,
+				E06AAE2D287788B700995D3D /* HomeView.swift in Sources */,
 				E0BD3243285A8ADD000C37A9 /* LoginCoordinator.swift in Sources */,
+				E06AAE292877889700995D3D /* CommunityCoordinator.swift in Sources */,
 				E096DF232871BF1E008A2A98 /* LayoutUtilities.swift in Sources */,
 				E0BD3293285CF81B000C37A9 /* Actions.swift in Sources */,
 				E0BD329B285D0001000C37A9 /* PublisherAdditions.swift in Sources */,
@@ -386,6 +426,10 @@
 				E0BD324B285A8D6B000C37A9 /* AppDelegate.swift in Sources */,
 				E0BD3283285CF4A5000C37A9 /* Store.swift in Sources */,
 				E0BD3235285A7181000C37A9 /* Persistence.swift in Sources */,
+				E06AAE272877888C00995D3D /* BrowseCoordinator.swift in Sources */,
+				E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */,
+				E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */,
+				E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */,
 				E0BD3299285CFA79000C37A9 /* RequestAdditions.swift in Sources */,
 				E0BD323F285A8723000C37A9 /* LoginView.swift in Sources */,
 				E0BD329F285D022F000C37A9 /* AccountCoordinator.swift in Sources */,

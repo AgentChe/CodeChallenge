@@ -27,6 +27,10 @@ extension UIColor.CodeChallenge {
     static var blue1: UIColor {
         UIColor(red: 37/255, green: 108/255, blue: 252/255, alpha: 1)
     }
+
+    static var gray1: UIColor {
+        UIColor(red: 39/255, green: 40/255, blue: 44/255, alpha: 1)
+    }
 }
 
 extension Color {

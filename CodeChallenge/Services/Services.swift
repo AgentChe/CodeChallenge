@@ -10,14 +10,17 @@ import Foundation
 protocol ServicesProtocol {
     var networkService: NetworkServiceProtocol { get }
     var authService: AuthServiceProtocol { get }
+    var accountService: AccountServiceProtocol { get }
 }
 
 struct Services: ServicesProtocol {
     let networkService: NetworkServiceProtocol
     let authService: AuthServiceProtocol
+    let accountService: AccountServiceProtocol
 
     init() {
         networkService = NetworkService()
         self.authService = AuthService(networkService: networkService)
+        self.accountService = AccountService(networkService: networkService)
     }
 }

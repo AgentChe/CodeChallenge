@@ -10,10 +10,13 @@ import Foundation
 struct AppState {
     let user: Resolvable<User>
     let account: Resolvable<Account>
+    let challengeGroups: Resolvable<[ChallengeGroup]>
 
     init(user: Resolvable<User> = .pending,
-         account: Resolvable<Account> = .pending) {
+         account: Resolvable<Account> = .pending,
+         challengeGroups: Resolvable<[ChallengeGroup]> = .pending) {
         self.user = user
         self.account = account
+        self.challengeGroups = challengeGroups
     }
 }

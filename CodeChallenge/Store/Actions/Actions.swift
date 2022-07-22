@@ -12,6 +12,7 @@ protocol Dispatchable {}
 enum Action: Dispatchable {
     case loadUser(Resolvable<User>)
     case loadAccount(Resolvable<Account>)
+    case loadChallengeGroups(Resolvable<[ChallengeGroup]>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -76,6 +77,19 @@ struct LoadAccount: ThunkAction {
             .asResolvable()
             .ephemeralSink { account in
                 dispatcher.dispatch(Action.loadAccount(account))
+            }
+    }
+}
+
+struct LoadChallengeGroups: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.loadChallengeGroups(.loading))
+
+        dispatcher.services.challengesService
+            .fetchChallengeGroups()
+            .asResolvable()
+            .ephemeralSink { groups in
+                dispatcher.dispatch(Action.loadChallengeGroups(groups))
             }
     }
 }

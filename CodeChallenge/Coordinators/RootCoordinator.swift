@@ -38,8 +38,8 @@ final class RootCoordinator {
     func start() {
         store.dispatch(GuestAuth())
         let tabs = [
-            homeCoordinator.navigationController,
             accountCoordinator.navigationController,
+            homeCoordinator.navigationController,
             browseCoordinator.navigationController,
             communityCoordinator.navigationController,
             premiumCoordinator.navigationController

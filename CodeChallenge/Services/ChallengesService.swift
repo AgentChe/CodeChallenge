@@ -18,7 +18,7 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func fetchChallengeGroups() -> AnyPublisher<[ChallengeGroup], Error> {
         return URLRequest
-            .create(url: "https://run.mocky.io/v3/c1f2de22-b9a4-4511-93f4-f35800a392ff", type: .get)
+            .create(url: "https://run.mocky.io/v3/ac8dc76d-cadf-4104-afa0-c27819afaabf", type: .get)
             .flatMap { networkService.load($0, decoding: [ChallengeGroup].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

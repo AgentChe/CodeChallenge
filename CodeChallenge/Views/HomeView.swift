@@ -61,10 +61,12 @@ struct HomeView: View, HomeViewProps {
                     ForEach(Array(challengeGroup.challenges.enumerated()), id: \.offset) { (index, challenge) in
                         VStack(alignment: .leading) {
                             ZStack {
-                                NetworkImage(
-                                    viewModel: .init(url: challenge.icon, store: store),
-                                    size: .init(width: 100, height: 100)
-                                )
+//                                NetworkImage(
+//                                    viewModel: .init(url: challenge.icon, store: store),
+//                                    size: .init(width: 100, height: 100)
+//                                )
+                                Image(challenge.icon)
+                                    .frame(width: 100, height: 100)
                                 .cornerRadius(10)
                                 VStack {
                                     Spacer()

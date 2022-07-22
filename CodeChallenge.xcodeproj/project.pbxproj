@@ -49,6 +49,13 @@
 		E0BD329B285D0001000C37A9 /* PublisherAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD329A285D0001000C37A9 /* PublisherAdditions.swift */; };
 		E0BD329D285D01BF000C37A9 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD329C285D01BF000C37A9 /* AccountView.swift */; };
 		E0BD329F285D022F000C37A9 /* AccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BD329E285D022F000C37A9 /* AccountCoordinator.swift */; };
+		E0EBB7E2288B06EE00DE7C53 /* HomeViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E1288B06EE00DE7C53 /* HomeViewProps.swift */; };
+		E0EBB7E4288B1AED00DE7C53 /* ChallengeGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E3288B1AED00DE7C53 /* ChallengeGroups.swift */; };
+		E0EBB7E6288B1B6A00DE7C53 /* ChallengesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E5288B1B6A00DE7C53 /* ChallengesService.swift */; };
+		E0EBB7E8288B1BE100DE7C53 /* JSONDecoderAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E7288B1BE100DE7C53 /* JSONDecoderAdditions.swift */; };
+		E0EBB7EB288B204900DE7C53 /* NetworkImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E9288B204900DE7C53 /* NetworkImage.swift */; };
+		E0EBB7EC288B204900DE7C53 /* NetworkImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7EA288B204900DE7C53 /* NetworkImageViewModel.swift */; };
+		E0EBB7EE288B207700DE7C53 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7ED288B207700DE7C53 /* ImageService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +114,13 @@
 		E0BD329A285D0001000C37A9 /* PublisherAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherAdditions.swift; sourceTree = "<group>"; };
 		E0BD329C285D01BF000C37A9 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		E0BD329E285D022F000C37A9 /* AccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCoordinator.swift; sourceTree = "<group>"; };
+		E0EBB7E1288B06EE00DE7C53 /* HomeViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewProps.swift; sourceTree = "<group>"; };
+		E0EBB7E3288B1AED00DE7C53 /* ChallengeGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeGroups.swift; sourceTree = "<group>"; };
+		E0EBB7E5288B1B6A00DE7C53 /* ChallengesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesService.swift; sourceTree = "<group>"; };
+		E0EBB7E7288B1BE100DE7C53 /* JSONDecoderAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderAdditions.swift; sourceTree = "<group>"; };
+		E0EBB7E9288B204900DE7C53 /* NetworkImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkImage.swift; sourceTree = "<group>"; };
+		E0EBB7EA288B204900DE7C53 /* NetworkImageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkImageViewModel.swift; sourceTree = "<group>"; };
+		E0EBB7ED288B207700DE7C53 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +222,7 @@
 				E0BD329C285D01BF000C37A9 /* AccountView.swift */,
 				E06AAE3428778DAC00995D3D /* AccountViewProps.swift */,
 				E06AAE2C287788B700995D3D /* HomeView.swift */,
+				E0EBB7E1288B06EE00DE7C53 /* HomeViewProps.swift */,
 				E06AAE2E287788C000995D3D /* BrowseView.swift */,
 				E06AAE30287788C700995D3D /* CommunityView.swift */,
 				E06AAE32287788CD00995D3D /* PremiumView.swift */,
@@ -232,6 +247,8 @@
 		E0BD3249285A8D3B000C37A9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E0EBB7E9288B204900DE7C53 /* NetworkImage.swift */,
+				E0EBB7EA288B204900DE7C53 /* NetworkImageViewModel.swift */,
 				E0BD3240285A87A6000C37A9 /* ButtonStyles.swift */,
 				E0BD3289285CF700000C37A9 /* Resolvable.swift */,
 				E0BD3298285CFA79000C37A9 /* RequestAdditions.swift */,
@@ -239,6 +256,7 @@
 				E096DF1B2871BCAB008A2A98 /* Colors.swift */,
 				E096DF1D2871BE61008A2A98 /* ViewAdditions.swift */,
 				E096DF222871BF1E008A2A98 /* LayoutUtilities.swift */,
+				E0EBB7E7288B1BE100DE7C53 /* JSONDecoderAdditions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -261,6 +279,8 @@
 				E0BD3285285CF568000C37A9 /* NetworkService.swift */,
 				E0BD3296285CF979000C37A9 /* AuthService.swift */,
 				E06AAE3828778EEF00995D3D /* AccountService.swift */,
+				E0EBB7E5288B1B6A00DE7C53 /* ChallengesService.swift */,
+				E0EBB7ED288B207700DE7C53 /* ImageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -270,6 +290,7 @@
 			children = (
 				E0BD328B285CF731000C37A9 /* User.swift */,
 				E06AAE3628778DDC00995D3D /* Account.swift */,
+				E0EBB7E3288B1AED00DE7C53 /* ChallengeGroups.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -324,6 +345,8 @@
 			dependencies = (
 			);
 			name = CodeChallenge;
+			packageProductDependencies = (
+			);
 			productName = CodeChallenge;
 			productReference = E0BD3228285A717E000C37A9 /* CodeChallenge.app */;
 			productType = "com.apple.product-type.application";
@@ -356,6 +379,8 @@
 				Base,
 			);
 			mainGroup = E0BD321F285A717E000C37A9;
+			packageReferences = (
+			);
 			productRefGroup = E0BD3229285A717E000C37A9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -405,11 +430,14 @@
 				E0BD3286285CF568000C37A9 /* NetworkService.swift in Sources */,
 				E0BD3246285A8B1F000C37A9 /* RootCoordinator.swift in Sources */,
 				E0BD3297285CF979000C37A9 /* AuthService.swift in Sources */,
+				E0EBB7E8288B1BE100DE7C53 /* JSONDecoderAdditions.swift in Sources */,
 				E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */,
 				E0BD3238285A7181000C37A9 /* CodeChallenge.xcdatamodeld in Sources */,
 				E06AAE3728778DDC00995D3D /* Account.swift in Sources */,
 				E06AAE2F287788C000995D3D /* BrowseView.swift in Sources */,
+				E0EBB7E6288B1B6A00DE7C53 /* ChallengesService.swift in Sources */,
 				E0BD3288285CF6D2000C37A9 /* AppState.swift in Sources */,
+				E0EBB7E4288B1AED00DE7C53 /* ChallengeGroups.swift in Sources */,
 				E0BD3241285A87A6000C37A9 /* ButtonStyles.swift in Sources */,
 				E0BD328A285CF700000C37A9 /* Resolvable.swift in Sources */,
 				E096DF1E2871BE61008A2A98 /* ViewAdditions.swift in Sources */,
@@ -423,14 +451,18 @@
 				E0BD3293285CF81B000C37A9 /* Actions.swift in Sources */,
 				E0BD329B285D0001000C37A9 /* PublisherAdditions.swift in Sources */,
 				E096DF1C2871BCAB008A2A98 /* Colors.swift in Sources */,
+				E0EBB7E2288B06EE00DE7C53 /* HomeViewProps.swift in Sources */,
 				E0BD324B285A8D6B000C37A9 /* AppDelegate.swift in Sources */,
 				E0BD3283285CF4A5000C37A9 /* Store.swift in Sources */,
 				E0BD3235285A7181000C37A9 /* Persistence.swift in Sources */,
+				E0EBB7EC288B204900DE7C53 /* NetworkImageViewModel.swift in Sources */,
 				E06AAE272877888C00995D3D /* BrowseCoordinator.swift in Sources */,
 				E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */,
 				E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */,
 				E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */,
 				E0BD3299285CFA79000C37A9 /* RequestAdditions.swift in Sources */,
+				E0EBB7EB288B204900DE7C53 /* NetworkImage.swift in Sources */,
+				E0EBB7EE288B207700DE7C53 /* ImageService.swift in Sources */,
 				E0BD323F285A8723000C37A9 /* LoginView.swift in Sources */,
 				E0BD329F285D022F000C37A9 /* AccountCoordinator.swift in Sources */,
 				E0BD329D285D01BF000C37A9 /* AccountView.swift in Sources */,

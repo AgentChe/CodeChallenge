@@ -15,7 +15,9 @@ class HomeCoordinator {
 
     init(store: Store) {
         self.store = store
-        let homeView = HomeView()
+        let homeView = HomeView(onChallengeTap: { [weak self] challenge in
+            self?.openCodeChallenge(challenge: challenge)
+        })
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)
         let tabBarItem = UITabBarItem(
@@ -25,5 +27,11 @@ class HomeCoordinator {
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
+    }
+
+    func openCodeChallenge(challenge: Challenge) {
+        let challengeView = CodeChallengeView(codeChallenge: challenge)
+        let controller = UIHostingController(rootView: challengeView)
+        navigationController.pushViewController(controller, animated: true)
     }
 }

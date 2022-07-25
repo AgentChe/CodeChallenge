@@ -22,3 +22,11 @@ struct Challenge: Codable {
     let tags: [String]
     let level: String
 }
+
+extension Challenge {
+    var tagsDescription: String {
+        tags.reduce("") { partialResult, result in
+            return partialResult + " #\(result)"
+        }
+    }
+}

@@ -26,12 +26,6 @@ extension HomeViewProps {
         components.insert(.premium, at: 1)
         return components
     }
-
-    func tags(_ challenge: Challenge) -> String {
-        challenge.tags.reduce("") { partialResult, result in
-            return partialResult + " #\(result)"
-        }
-    }
 }
 
 

@@ -14,6 +14,7 @@ struct HomeView: View, HomeViewProps {
         case premium
     }
     @EnvironmentObject var store: Store
+    let onChallengeTap: ((Challenge) -> Void)?
     
     var body: some View {
         DoodledView {
@@ -26,6 +27,13 @@ struct HomeView: View, HomeViewProps {
         .background(.clear)
         .onAppear {
             store.dispatch(LoadChallengeGroups())
+
+            // FIXME: delete
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                if let first = challengeGroups?.first?.challenges.first {
+                    onChallengeTap?(first)
+                }
+            }
         }
     }
 
@@ -87,13 +95,16 @@ struct HomeView: View, HomeViewProps {
                                 .foregroundColor(.CodeChallenge.white)
                                 .font(.systemFont(ofSize: 14, weight: .semibold))
                                 .lineLimit(2)
-                            Text(tags(challenge))
+                            Text(challenge.tagsDescription)
                                 .foregroundColor(.CodeChallenge.blue1)
                                 .font(.systemFont(ofSize: 10))
                                 .lineLimit(1)
                             Spacer()
                         }
                         .frame(width: 100)
+                        .onTapGesture {
+                            onChallengeTap?(challenge)
+                        }
                     }
                 }
             }

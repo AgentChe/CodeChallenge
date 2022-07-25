@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>php</key>
+	<string>&lt;?php\n\t\n?&gt;</string>
+	<key>c#</key>
+	<string>using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Text;\nusing System.Threading.Tasks;\n\nnamespace SoloLearn\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)\n\t\t{\n\t\t\t\n\t\t}\n\t}\n}\n</string>
+	<key>html</key>
+	<string>&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n\t&lt;head&gt;\n\t\t&lt;title&gt;Page Title&lt;/title&gt;\n\t&lt;/head&gt;\n\t&lt;body&gt;\n\t\n\t&lt;/body&gt;\n&lt;/html&gt;</string>
+	<key>css</key>
+	<string>body {\n\t\n}</string>
+	<key>js</key>
+	<string></string>
+	<key>c++</key>
+	<string>#include &lt;iostream&gt;\nusing namespace std;\n\nint main() {\n\treturn 0;\n}</string>
+	<key>java</key>
+	<string>public class Program\n{\n\tpublic static void main(String[] args) {\n\t\t\n\t}\n}</string>
+	<key>python</key>
+	<string></string>
+	<key>c</key>
+	<string>#include &lt;stdio.h&gt;\n\nint main() {\n    return 0;\n}</string>
+	<key>kt</key>
+	<string>fun main(args: Array&lt;String&gt;) {\n\t\n}</string>
+	<key>go</key>
+	<string>package main\n\nimport &quot;fmt&quot;\n\nfunc main() {\n  fmt.Println(&quot;Happy coding!&quot;)\n}</string>
+	<key>r</key>
+	<string>print(&quot;Happy coding!&quot;)</string>
+</dict>
+</plist>

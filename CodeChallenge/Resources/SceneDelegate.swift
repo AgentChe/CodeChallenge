@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Mixpanel
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -25,5 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.overrideUserInterfaceStyle = .light
         window?.backgroundColor = .CodeChallenge.dark
         window?.makeKeyAndVisible()
+
+        Mixpanel.initialize(token: "4e8b61d12afcdad81dca5a29ef81425d")
     }
 }

@@ -19,7 +19,7 @@ extension UIDevice {
     }
 
     static var hasSmallScreen: Bool {
-        return (UIWindow.main?.bounds.height ?? 0) <= 568
+        return (UIWindow.main?.bounds.height ?? 0) <= 667
     }
 }
 

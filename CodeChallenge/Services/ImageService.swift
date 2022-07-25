@@ -8,9 +8,10 @@
 import Foundation
 import UIKit
 import Combine
+import SVGKit
 
 protocol ImageServiceProtocol {
-    func loadImage(with url: String) -> AnyPublisher<Resolvable<UIImage>, Never>
+    func loadImage(with url: String, cacheEnabled: Bool) -> AnyPublisher<Resolvable<UIImage>, Never>
 }
 
 final class ImageService: ImageServiceProtocol {
@@ -21,7 +22,7 @@ final class ImageService: ImageServiceProtocol {
             directory: nil
         )
         let config = URLSessionConfiguration.default
-        config.requestCachePolicy = .returnCacheDataElseLoad
+//        config.requestCachePolicy = .returnCacheDataElseLoad
         config.urlCache = urlCache
         config.allowsCellularAccess = true
         config.httpMaximumConnectionsPerHost = 10
@@ -38,9 +39,9 @@ final class ImageService: ImageServiceProtocol {
 
     private var urlToPublisher = [String: AnyPublisher<Resolvable<UIImage>, Never>]()
 
-    func loadImage(with url: String) -> AnyPublisher<Resolvable<UIImage>, Never> {
+    func loadImage(with url: String, cacheEnabled: Bool) -> AnyPublisher<Resolvable<UIImage>, Never> {
         let cacheKey = url as NSString
-        if let image = imageCache.object(forKey: cacheKey) {
+        if let image = imageCache.object(forKey: cacheKey), cacheEnabled {
             return Just(.success(image)).eraseToAnyPublisher()
         }
         guard let url = URL(string: url) else {
@@ -54,10 +55,13 @@ final class ImageService: ImageServiceProtocol {
             session
                 .dataTaskPublisher(for: request)
                 .tryMap { result -> (UIImage, Int) in
-                    guard let image = UIImage(data: result.data) else {
-                        throw NetworkError.invalidResponse
+                    if let image = UIImage(data: result.data) {
+                        return (image, result.data.count)
                     }
-                    return (image, result.data.count)
+                    if let svgImage = SVGKImage(data: result.data) {
+                        return (svgImage.uiImage, result.data.count)
+                    }
+                    throw NetworkError.invalidResponse
                 }
                 .receive(on: DispatchQueue.main)
                 .handleEvents(receiveOutput: { [weak self] (image, cost) in

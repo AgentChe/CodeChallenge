@@ -11,3 +11,84 @@ protocol CodeChallengeViewProps {
     var store: Store { get }
     var codeChallenge: Challenge { get }
 }
+
+extension CodeChallengeViewProps {
+    var details: ChallengeDetail? {
+        if store.state.challengeDetails.keys.count >= 1 {
+            return store.state.challengeDetails[codeChallenge.challangeId]?.value
+        } else {
+            return nil
+        }
+    }
+
+    var code: String {
+        if let progress = store.state.challengeProgresses[codeChallenge.challangeId]?.value {
+            return progress.solution?.python ?? details?.body.python.template ?? ""
+        } else {
+            return template
+        }
+    }
+
+    var taskInput: String? {
+        details?.body.input
+    }
+
+    var taskOutput: String? {
+        details?.body.output
+    }
+
+    var template: String {
+        return details?.body.python.template ?? ""
+    }
+
+    var isLoading: Bool {
+        return [
+            store.state.challengeProgresses[codeChallenge.challangeId]?.isLoading,
+            store.state.challengeResults[codeChallenge.challangeId]?.isLoading
+        ].contains { $0 == true }
+    }
+
+    var output: String {
+        return store.state.challengeResults[codeChallenge.challangeId]?.value?.code.output.removingPercentEncoding ?? ""
+    }
+
+    var gotCompileError: Bool? {
+        guard let statusCode = store.state.challengeResults[codeChallenge.challangeId]?.value?.code.statusCode else { return nil }
+        return statusCode == 1
+    }
+
+    var compilerTestCases: [ChallengeCompiledResult.UnitTest]? {
+        return store.state.challengeResults[codeChallenge.challangeId]?.value?.unitTests
+    }
+
+    var testCasesInputs: [PythonOutputs] {
+        return details?.unitTests.pythonOutput ?? []
+    }
+    
+    var testCases: [TestCase] {
+        var result: [TestCase] = []
+        for testCase in testCasesInputs {
+            if let compilerResult = (compilerTestCases?.first { Int($0.id) == testCase.testId }) {
+                let testCase = TestCase(id: testCase.testId,
+                                        input: testCase.input,
+                                        output: "\(compilerResult.output ?? "")",
+                                        expectedOutput: testCase.expectedOutput,
+                                        isFailed: compilerResult.outcome == .failed,
+                                        isLocked: false)
+                result.append(testCase)
+            }
+        }
+        return result
+    }
+
+    var celebratedChallenges: [Int] {
+        guard let array = UserDefaults.standard.array(forKey: "celebratedChallenges") as? [Int] else { return []}
+        return array
+    }
+
+    func set(celebratedChallenge: ChallengeDetail) {
+        var challenges = celebratedChallenges
+        challenges.append(celebratedChallenge.id)
+        UserDefaults.standard.set(challenges, forKey: "celebratedChallenges")
+    }
+}

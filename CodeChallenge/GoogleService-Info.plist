@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>593888610823-5q7ji7el63a40f88m7hjh62e4ifn9cdc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.593888610823-5q7ji7el63a40f88m7hjh62e4ifn9cdc</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCrES_gZfslOCvi2z2y0hEHReoVnzHB81g</string>
+	<key>GCM_SENDER_ID</key>
+	<string>593888610823</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tome.codechallenge</string>
+	<key>PROJECT_ID</key>
+	<string>codehub-2b2de</string>
+	<key>STORAGE_BUCKET</key>
+	<string>codehub-2b2de.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:593888610823:ios:c911a6cede0b5ba839f8a2</string>
+</dict>
+</plist>

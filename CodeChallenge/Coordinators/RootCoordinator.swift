@@ -13,74 +13,124 @@ import Combine
 final class RootCoordinator {
     private let window: UIWindow
     private let store = Store()
-    private let loginCoordinator: LoginCoordinator
+    private var authNavigationController: UINavigationController?
     private let accountCoordinator: AccountCoordinator
     private let homeCoordinator: HomeCoordinator
     private let browseCoordinator: BrowseCoordinator
     private let communityCoordinator: CommunityCoordinator
     private let premiumCoordinator: PremiumCoordinator
+    private let buddiesCoordinator: BuddiesCoordinator
 
     private let tabBarController = UITabBarController()
     private var authCancellable: AnyCancellable?
-    private var logoutCancellable: AnyCancellable?
+//    private var logoutCancellable: AnyCancellable?
+    private var cancellables = Set<AnyCancellable>()
 
     init(window: UIWindow) {
         self.window = window
-        loginCoordinator = LoginCoordinator(store: store)
         accountCoordinator = AccountCoordinator(store: store)
         homeCoordinator = HomeCoordinator(store: store)
         browseCoordinator = BrowseCoordinator(store: store)
         communityCoordinator = CommunityCoordinator(store: store)
         premiumCoordinator = PremiumCoordinator(store: store)
+        buddiesCoordinator = BuddiesCoordinator(store: store)
         setupAppAppearance()
     }
 
     func start() {
         store.dispatch(GuestAuth())
-        let tabs = [
+        var tabs = [
             homeCoordinator.navigationController,
-            accountCoordinator.navigationController,
             browseCoordinator.navigationController,
-            communityCoordinator.navigationController,
-            premiumCoordinator.navigationController
+            accountCoordinator.navigationController
         ]
+        if UserDefaults.standard.bool(forKey: "buddies_enabled") {
+            tabs.insert(buddiesCoordinator.navigationController, at: 2)
+        }
         tabBarController.setViewControllers(tabs, animated: false)
         tabBarController.tabBar.items?.forEach {
             $0.image = $0.image?.withRenderingMode(.alwaysOriginal)
-            $0.selectedImage = $0.selectedImage?.withRenderingMode(.alwaysOriginal)
         }
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.CodeChallenge.blue1], for: .selected)
         window.rootViewController = tabBarController
+
+        accountCoordinator.onLogin = { [weak self] in
+            self?.showLogin()
+        }
+
+        if UserDefaults.standard.string(forKey: "cc_user_session") != nil {
+            store.dispatch(LoadAccount())
+        }
+
+        store.dispatch(LoadChallengeGroups())
+        store.dispatch(AddStreakIfNeeded())
+
+        isAppVersionSupported(store.services.networkService)
+            .filter { !$0 }
+            .sink { [weak self] _ in
+                self?.showForceUpdateAlert()
+            }
+            .store(in: &cancellables)
+
+        isAppMaintained(store.services.networkService)
+            .filter { $0 }
+            .sink { [weak self] _ in
+                self?.showMaintenanceScreen()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func showMaintenanceScreen() {
+        let controller = UIHostingController(rootView: MaintenanceView())
+        window.rootViewController = controller
     }
 
     private func showLogin() {
-        window.rootViewController = loginCoordinator.navigationController
-        loginCoordinator.start()
-
         authCancellable = self.store
             .statePublisher
-            .map { $0.user.value?.username != nil }
+            .map { $0.user.value?.isLoggedIn }
             .removeDuplicates()
             .sink { [weak self] isLoggedIn in
                 guard let self = self else { return }
-                if isLoggedIn {
-                    self.window.rootViewController = self.accountCoordinator.navigationController
+                if isLoggedIn == true {
+                    self.store.dispatch(LoadAccount())
+                    self.store.dispatch(LoadChallengeGroups())
+                    self.authNavigationController?.dismiss(animated: true)
 //                    self.accountCoordinator.start()
                 }
             }
 
-        logoutCancellable = self.store
-            .statePublisher
-            .map { $0.user.isPending }
-            .removeDuplicates()
-            .sink { [weak self] isLoggedOut in
-                guard let self = self else { return }
-                if isLoggedOut {
-                    self.window.rootViewController = self.loginCoordinator.navigationController
-                    self.loginCoordinator.start()
-                }
-            }
+//        logoutCancellable = self.store
+//            .statePublisher
+//            .map { $0.account.isPending }
+//            .removeDuplicates()
+//            .sink { [weak self] isLoggedOut in
+//                guard let self = self else { return }
+//                if isLoggedOut {
+//                    self.authNavigationController?.dismiss(animated: true)
+//                }
+//            }
+
+        let loginView = LoginView(screenMode: .login, onChangeMode: { [weak self] in
+            self?.showSignUpView()
+        })
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: loginView)
+        authNavigationController = UINavigationController(rootViewController: controller)
+        if let authNavigationController = authNavigationController {
+            UIApplication.shared.windows.first?.rootViewController?.present(authNavigationController, animated: true)
+        }
+    }
+
+
+    func showSignUpView() {
+        let loginView = LoginView(screenMode: .signup, onChangeMode: { [weak self] in
+            self?.authNavigationController?.popViewController(animated: true)
+        })
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: loginView)
+        authNavigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -90,19 +140,16 @@ extension RootCoordinator {
         window.overrideUserInterfaceStyle = .light
 
         let tabBarAppearance = UITabBar.appearance()
-        tabBarAppearance.backgroundColor = .CodeChallenge.dark
-        tabBarAppearance.barTintColor = .CodeChallenge.dark
-        tabBarAppearance.isOpaque = false
-        tabBarAppearance.itemPositioning = .centered
-        tabBarAppearance.itemSpacing = 1
+        tabBarAppearance.backgroundColor = .CodeChallenge.tabBar
+        tabBarAppearance.barTintColor = .CodeChallenge.tabBar
+        tabBarAppearance.isTranslucent = false
 
-        let backImage = UIImage(named: "navbar_back")
+        tabBarAppearance.contentMode = .scaleToFill
+
         let barAppearance = UINavigationBarAppearance()
-        barAppearance.titlePositionAdjustment = .init(horizontal: 0, vertical: 4)
         barAppearance.configureWithTransparentBackground()
         barAppearance.backgroundImage = .init()
         barAppearance.backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
-        barAppearance.backButtonAppearance.normal.backgroundImage = backImage
         barAppearance.backButtonAppearance.normal.accessibilityLabel = "navigation back"
         barAppearance.backgroundColor = .clear
         barAppearance.shadowColor = UIColor.clear
@@ -110,13 +157,85 @@ extension RootCoordinator {
                                                   .font: UIFont.systemFont(ofSize: 48)]
         barAppearance.titleTextAttributes = [
             .foregroundColor: UIColor.CodeChallenge.white,
-            .font: UIFont.systemFont(ofSize: 32)
+            .font: UIFont.systemFont(ofSize: 20)
         ]
         UINavigationBar.appearance().compactAppearance = barAppearance
         UINavigationBar.appearance().standardAppearance = barAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = barAppearance
-        UINavigationBar.appearance().tintColor = .clear
+        UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().isOpaque = false
     }
+}
+
+extension RootCoordinator {
+    func isAppVersionSupported(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
+        guard
+            let versionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+            let appVersion = Double(versionString)
+        else {
+            return Just(true).eraseToAnyPublisher()
+        }
+        let versionsURL = "https://api.codehub.ninja/version/"
+        return
+            URLRequest.create(url: versionsURL)
+            .map {
+                var copy = $0
+                copy.cachePolicy = .reloadIgnoringCacheData
+                return copy
+            }
+            .map { networkService.load($0, decoding: String.self, with: .init()) }
+            .switchToLatest()
+            .asResolvable()
+            .compactMap(\.value)
+            .map {
+                Double($0) ?? 0 <= appVersion
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func showForceUpdateAlert() {
+        let alert = UIAlertController(
+            title: "Unsupported Version",
+            message: "This version of Codehub is no longer supported. Please update the app from the App Store",
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "Update", style: .default) { [weak self] _ in
+            guard
+                let url = URL(string: "itms-apps://itunes.apple.com/app/1632477791")
+            else { return }
+            UIApplication.shared.open(url)
+            self?.showForceUpdateAlert()
+        }
+        alert.addAction(action)
+        window.rootViewController?.present(alert, animated: true)
+    }
+}
+
+extension RootCoordinator {
+    func isAppMaintained(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
+        let url = "https://maintenance.yervandgaloyan.workers.dev/"
+        return
+            URLRequest.create(url: url)
+            .map {
+                var copy = $0
+                copy.cachePolicy = .reloadIgnoringCacheData
+                return copy
+            }
+            .map { networkService.load($0, decoding: Maintenance.self, with: .init()) }
+            .switchToLatest()
+            .asResolvable()
+            .compactMap(\.value)
+            .map {
+                let buddiesEnabled = $0.buddies == nil || $0.buddies == true
+                UserDefaults.standard.set(buddiesEnabled, forKey: "buddies_enabled")
+                return $0.maintenance
+            }
+            .eraseToAnyPublisher()
+    }
+}
+
+struct Maintenance: Codable {
+    let maintenance: Bool
+    let buddies: Bool?
 }

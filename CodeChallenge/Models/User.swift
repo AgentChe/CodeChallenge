@@ -7,19 +7,20 @@
 
 import Foundation
 
-struct User: Decodable {
-    let id: Int?
+struct User: Decodable, Equatable {
+    let id: Int
     let session: String?
     let username: String?
+    let email: String?
+    let photo: String
+    let xp: Int
+    let isPremium: Bool?
+    let streak: Int
+    let doneChallangeCount: Int?
+}
 
-    enum CodingKeys: String, CodingKey {
-        case id, session, username
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try? decoder.container(keyedBy: CodingKeys.self)
-        id = try? container?.decodeIfPresent(Int.self, forKey: .id)
-        session = try? container?.decodeIfPresent(String.self, forKey: .session)
-        username = try? container?.decodeIfPresent(String.self, forKey: .username)
+extension User {
+    var isLoggedIn: Bool {
+        return UserDefaults.standard.bool(forKey: "isLoggedIn")
     }
 }

@@ -11,36 +11,33 @@ import SwiftUI
 struct HomeView: View, HomeViewProps {
     enum Component {
         case challengesGroup(ChallengeGroup)
+        case collection([ChallengeGroup])
         case premium
     }
     @EnvironmentObject var store: Store
-    let onChallengeTap: ((Challenge) -> Void)?
+    let onChallengeTap: ((Challenge, ChallengeGroup?) -> Void)?
+    let onCollectionTap: (ChallengeGroup) -> Void
+    let onSearch: (String) -> Void
+    @State private var displayHomeViewComponents: [HomeView.Component] = []
     
     var body: some View {
         DoodledView {
-            if let homeViewComponents = homeViewComponents {
+            if let homeViewComponents = displayHomeViewComponents, !homeViewComponents.isEmpty {
                 contentView(homeViewComponents)
             } else {
-                Text("Loading...")
+                SkeletonHomeView()
             }
+        }
+        .onChange(of: challengeGroups) { _ in
+            displayHomeViewComponents = homeViewComponents
         }
         .background(.clear)
-        .onAppear {
-            store.dispatch(LoadChallengeGroups())
-
-            // FIXME: delete
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                if let first = challengeGroups?.first?.challenges.first {
-                    onChallengeTap?(first)
-                }
-            }
-        }
     }
 
     func contentView(_ homeViewComponents: [HomeView.Component]) -> some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 30) {
-                Text("Code Challenge")
+                Text("Code Challenges")
                     .font(.systemFont(ofSize: 30, weight: .semibold))
                     .foregroundColor(.CodeChallenge.white)
                     .padding(.horizontal, 20)
@@ -49,64 +46,14 @@ struct HomeView: View, HomeViewProps {
                     case .premium:
                         premiumView
                     case .challengesGroup(let group):
-                        groupView(group)
+                        HomeGroupView(challengeGroup: group, onChallengeTap: onChallengeTap)
+                    case .collection(let collections):
+                        HomeCollectionView(collections: collections, onChallengeTap: onChallengeTap, onCollectionTap: onCollectionTap)
                     }
                 }
-            }
-        }
-    }
 
-    func groupView(_ challengeGroup: ChallengeGroup) -> some View {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(challengeGroup.name)
-                    .font(.systemFont(ofSize: 18, weight: .semibold))
-                    .foregroundColor(.CodeChallenge.white)
-                    .padding(.horizontal, 20)
-                ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
-                    Spacer()
-                        .frame(width: 0)
-                    ForEach(Array(challengeGroup.challenges.enumerated()), id: \.offset) { (index, challenge) in
-                        VStack(alignment: .leading) {
-                            ZStack {
-//                                NetworkImage(
-//                                    viewModel: .init(url: challenge.icon, store: store),
-//                                    size: .init(width: 100, height: 100)
-//                                )
-                                Image(challenge.icon)
-                                    .frame(width: 100, height: 100)
-                                .cornerRadius(10)
-                                VStack {
-                                    Spacer()
-                                    HStack {
-                                        Spacer()
-                                            .frame(width: 6)
-                                        Button(challenge.level) {}
-                                            .buttonStyle(RoundedButtonStyle())
-                                            .disabled(true)
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                        .frame(height: 6)
-                                }
-                            }
-                            .frame(height: 100)
-                            Text(challenge.name)
-                                .foregroundColor(.CodeChallenge.white)
-                                .font(.systemFont(ofSize: 14, weight: .semibold))
-                                .lineLimit(2)
-                            Text(challenge.tagsDescription)
-                                .foregroundColor(.CodeChallenge.blue1)
-                                .font(.systemFont(ofSize: 10))
-                                .lineLimit(1)
-                            Spacer()
-                        }
-                        .frame(width: 100)
-                        .onTapGesture {
-                            onChallengeTap?(challenge)
-                        }
-                    }
-                }
+                Spacer()
+                    .frame(height: 20)
             }
         }
     }
@@ -114,7 +61,7 @@ struct HomeView: View, HomeViewProps {
     private var premiumView: some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(.CodeChallenge.gray1))
+                .fill(Color(.CodeChallenge.background))
             VStack(alignment: .leading, spacing: 15) {
                 Spacer()
                     .frame(height: 0)
@@ -125,14 +72,12 @@ struct HomeView: View, HomeViewProps {
                     .font(.systemFont(ofSize: 14))
                     .padding(.horizontal, 20)
                 ZStack {
-                    Rectangle()
+                    RoundedCornersShape(corners: [.bottomLeft, .bottomRight], radius: 10)
+                        .fill(Color(.CodeChallenge.blue1))
                         .frame(height: 38)
-                        .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
-                        .background(.CodeChallenge.blue1)
-                        .opacity(0.3)
                     HStack {
                         Text("Get Premium")
-                            .font(.systemFont(ofSize: 12, weight: .semibold))
+                            .font(.systemFont(ofSize: 14, weight: .regular))
                             .padding(.leading, 15)
                         Spacer()
                     }
@@ -144,19 +89,77 @@ struct HomeView: View, HomeViewProps {
     }
 }
 
-fileprivate struct RoundedButtonStyle: ButtonStyle {
+struct RoundedButtonStyle: ButtonStyle {
+    let foregroundColor: UIColor
+    let backgroundColor: UIColor
+    var strokeColor: UIColor? = nil
+
     func makeBody(configuration: Self.Configuration) -> some View {
         ZStack {
             configuration.label
                 .padding(.horizontal, 8)
-                .padding(.vertical, 4)
+                .padding(.vertical, 3)
                 .font(.systemFont(ofSize: 10))
                 .background(
-                    RoundedRectangle(cornerRadius: 8)
-                        .frame(height: 15)
-                        .foregroundColor(Color.white)
-                        .opacity(0.3)
+                    Group {
+                        if let strokeColor = strokeColor {
+                            RoundedRectangle(cornerRadius: 3)
+                                .stroke(Color(
+                                    red: strokeColor.rgba.red,
+                                    green: strokeColor.rgba.green,
+                                    blue: strokeColor.rgba.blue
+                                ), lineWidth: 1)
+                                .frame(height: 18)
+                        } else {
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(Color(
+                                    red: backgroundColor.rgba.red,
+                                    green: backgroundColor.rgba.green,
+                                    blue: backgroundColor.rgba.blue
+                                ))
+                                .frame(height: 18)
+                        }
+                    }
                 )
+                .foregroundColor(foregroundColor)
         }
+    }
+}
+
+struct SkeletonHomeView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            Text("Code Challenges")
+                .font(.systemFont(ofSize: 30, weight: .semibold))
+                .foregroundColor(.CodeChallenge.white)
+                .padding(.horizontal, 20)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("New Challenges")
+                    .font(.systemFont(ofSize: 18, weight: .semibold))
+                    .foregroundColor(.CodeChallenge.white)
+                    .padding(.horizontal, 20)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 20) {
+                        Spacer()
+                            .frame(width: 0)
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(.CodeChallenge.background))
+                            .frame(width: 200, height: 145)
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(.CodeChallenge.background))
+                            .frame(width: 200, height: 145)
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color(.CodeChallenge.background))
+                            .frame(width: 200, height: 145)
+                    }
+                }
+            }
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color(.CodeChallenge.background))
+                .frame(height: 162)
+                .padding(.horizontal, 20)
+            Spacer()
+        }
+        .redacted(reason: .placeholder)
     }
 }

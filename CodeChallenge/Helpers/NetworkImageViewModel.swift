@@ -11,6 +11,7 @@ import SwiftUI
 
 final class NetworkImageViewModel: ObservableObject {
     let store: Store
+    let cacheEnabled: Bool
     @Published private (set) var image: UIImage?
     @Published private (set) var isLoading = false
     @Published private (set) var error: Error?
@@ -19,19 +20,21 @@ final class NetworkImageViewModel: ObservableObject {
         url: String?,
         store: Store,
         placeholder: UIImage? = nil,
-        showsPlaceholderInitially: Bool = false
+        showsPlaceholderInitially: Bool = false,
+        cacheEnabled: Bool = true
     ) {
         if showsPlaceholderInitially {
             image = placeholder
         }
 
         self.store = store
+        self.cacheEnabled = cacheEnabled
         guard let url = url else {
             image = placeholder
             return
         }
 
-        let publisher = store.services.imageService.loadImage(with: url)
+        let publisher = store.services.imageService.loadImage(with: url, cacheEnabled: cacheEnabled)
 
         publisher
             .filter { !$0.isLoading && !$0.isPending }

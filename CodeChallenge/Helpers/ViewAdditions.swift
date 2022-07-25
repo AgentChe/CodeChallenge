@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftUI
+import Combine
 
 extension View {
     @inlinable func foregroundColor(_ color: UIColor) -> some View {
@@ -32,19 +33,38 @@ extension Text {
     }
 }
 
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape( RoundedCorner(radius: radius, corners: corners) )
+struct RoundedCornersShape: Shape {
+    let corners: UIRectCorner
+    let radius: CGFloat
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect,
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
     }
 }
 
-struct RoundedCorner: Shape {
-
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
-    }
+extension View {
+  var keyboardPublisher: AnyPublisher<CGFloat, Never> {
+    Publishers
+      .Merge(
+        NotificationCenter
+          .default
+          .publisher(for: UIResponder.keyboardWillShowNotification)
+          .map {
+              if let keyboardFrame: NSValue = $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                      let keyboardRectangle = keyboardFrame.cgRectValue
+                      let keyboardHeight = keyboardRectangle.height
+                  return keyboardHeight
+                  }
+              return 0
+          },
+        NotificationCenter
+          .default
+          .publisher(for: UIResponder.keyboardWillHideNotification)
+          .map { _ in return 0 })
+      .debounce(for: .seconds(0.1), scheduler: RunLoop.main)
+      .eraseToAnyPublisher()
+  }
 }

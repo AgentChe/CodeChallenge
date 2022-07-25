@@ -12,11 +12,24 @@ import SwiftUI
 class HomeCoordinator {
     let navigationController = UINavigationController()
     let store: Store
+    private var popupController: PopupViewController?
 
     init(store: Store) {
         self.store = store
-        let homeView = HomeView(onChallengeTap: { [weak self] challenge in
-            self?.openCodeChallenge(challenge: challenge)
+        let instanceId = UUID()
+        let homeView = HomeView(onChallengeTap: { [weak self] (challenge, group) in
+            self?.openCodeChallenge(challenge: challenge, group: group)
+        }, onCollectionTap: { [weak self] collection in
+            self?.openCollectionView(collection: collection)
+        }, onSearch: { [weak self] text in
+            let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
+                self?.openCodeChallenge(challenge: challenge, group: nil)
+            })
+                .environmentObject(store)
+                .environment(\.instanceID, instanceId)
+            let controller = UIHostingController(rootView: view)
+            self?.navigationController.pushViewController(controller, animated: true)
+            self?.store.dispatch(LoadSearchResults(instanceId: instanceId))
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)
@@ -27,11 +40,75 @@ class HomeCoordinator {
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
+
+        DispatchQueue.main.async { [weak self] in
+            self?.presentGetStartedIfNecessary()
+        }
     }
 
-    func openCodeChallenge(challenge: Challenge) {
-        let challengeView = CodeChallengeView(codeChallenge: challenge)
+    private func presentGetStartedIfNecessary() {
+        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
+        UserDefaults.standard.set(true, forKey: "getStartedPresented")
+        let view = GetStartedView { [weak self] in
+            self?.navigationController.dismiss(animated: true)
+        }
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: view)
+        controller.modalPresentationStyle = .fullScreen
+        navigationController.present(controller, animated: false)
+    }
+
+    func openCodeChallenge(challenge: Challenge, group: ChallengeGroup?) {
+        let challengeView = CodeChallengeView(codeChallenge: challenge, group: group) { [weak self] challengeDetail in
+            guard let challengeDetail = challengeDetail else { return }
+            self?.showSolution(challengeDetail: challengeDetail, challenge: challenge, group: group)
+        } onSuccess: { [weak self] challenge in
+            guard let challenge = challenge else { return }
+            self?.runSuccessPopup(challenge: challenge)
+        } onDismiss: { [weak self] in
+            self?.navigationController.popViewController(animated: true)
+        }
+            .environmentObject(store)
         let controller = UIHostingController(rootView: challengeView)
+        controller.hidesBottomBarWhenPushed = true
         navigationController.pushViewController(controller, animated: true)
+    }
+
+    private func showSolution(challengeDetail: ChallengeDetail, challenge: Challenge, group: ChallengeGroup?) {
+        store.dispatch(TrackAnalyticsEvent(event: .solutionOpened(challenge, group)))
+        let view = SolutionView(solution: challengeDetail.solutionCode.python?.code?.removingPercentEncoding ?? "")
+        view.onDismiss = { [weak self] in
+            self?.popupController?.hide()
+        }
+        popupController = PopupViewController(contentView: view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if let rootController = UIApplication.shared.windows.first?.rootViewController {
+            popupController?.present(from: rootController, bottomOffset: 0)
+        }
+    }
+
+    private func openCollectionView(collection: ChallengeGroup) {
+        let collectionView = CollectionItemsView(collection: collection) { [weak self] (challenge, group) in
+            self?.openCodeChallenge(challenge: challenge, group: group)
+        }
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: collectionView)
+        controller.hidesBottomBarWhenPushed = true
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+    private func runSuccessPopup(challenge: ChallengeDetail) {
+        let view = CelebrationView(challenge: challenge, store: store)
+        view.onDismiss = { [weak self] in
+            self?.popupController?.hide()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                self?.navigationController.popViewController(animated: true)
+            }
+        }
+        popupController = PopupViewController(contentView: view)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if let rootController = UIApplication.shared.windows.first?.rootViewController {
+            popupController?.present(from: rootController, bottomOffset: 0)
+        }
     }
 }

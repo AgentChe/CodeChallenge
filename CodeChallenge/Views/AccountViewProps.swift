@@ -19,4 +19,12 @@ extension AccountViewProps {
     var isLoading: Bool {
         store.state.account.isLoading
     }
+
+    var user: User? {
+        store.state.user.value
+    }
+
+    var inProgressChallenges: [Challenge] {
+        store.state.inProgressChallenges.value ?? []
+    }
 }

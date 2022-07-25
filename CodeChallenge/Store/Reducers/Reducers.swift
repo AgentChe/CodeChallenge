@@ -14,7 +14,13 @@ struct Reducers {
         AppState(
             user: userReducer(state.user, action),
             account: accountReducer(state.account, action),
-            challengeGroups: challengeGroupsReducer(state.challengeGroups, action)
+            challengeGroups: challengeGroupsReducer(state.challengeGroups, action),
+            challengeDetails: challengeDetailsReducer(state.challengeDetails, action),
+            challengeProgresses: challengeProgressReducer(state.challengeProgresses, action),
+            challengeResults: challengeResultsReducer(state.challengeResults, action),
+            searchByInstances: searchesByInstancesReducer(state.searchByInstances, action),
+            inProgressChallenges: inProgressChallengesReducer(state.inProgressChallenges, action),
+            payments: paymentsReducer(state.payments, action)
         )
     }
 }
@@ -44,6 +50,90 @@ extension Reducers {
         switch action {
         case .loadChallengeGroups(let groups):
             return groups
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let challengeDetailsReducer: Reducer<[Int: Resolvable<ChallengeDetail>]> = { state, action in
+        switch action {
+        case .loadChallengeDetails(let details):
+            var copy = state
+            copy[details.0] = details.1
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let challengeResultsReducer: Reducer<[Int: Resolvable<ChallengeCompiledResult>]> = { state, action in
+        switch action {
+        case .loadChallengeCompiledResult(let details):
+            var copy = state
+            copy[details.0] = details.1
+            return copy
+        case .logout: return [:]
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let challengeProgressReducer: Reducer<[Int: Resolvable<ChallengeProgress>]> = { state, action in
+        switch action {
+        case .loadChallengeProgress(let progress):
+            var copy = state
+            copy[progress.0] = progress.1
+            return copy
+        case .logout: return [:]
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let searchesByInstancesReducer: Reducer<[String: SearchState]> = { state, action in
+        switch action {
+        case let .updateSearchQuery(identifier, query):
+            var copyState = state
+            copyState[identifier] = SearchState(query: query, results: state[identifier]?.results ?? .pending, hashtags: state[identifier]?.hashtags ?? .pending)
+            return copyState
+        case .loadSearchResults(let id, let results):
+            var copyState = state
+            copyState[id] = SearchState(query: state[id]?.query, results: results, hashtags: state[id]?.hashtags ?? .pending)
+            return copyState
+        case .resetSearch(let instanceId):
+            var copyState = state
+            copyState[instanceId] = SearchState(query: nil, results: .pending, hashtags: state[instanceId]?.hashtags ?? .pending)
+            return copyState
+        case .loadHashtags(let hashtags, let id):
+            var copyState = state
+            copyState[id] = SearchState(query: state[id]?.query, results: state[id]?.results ?? .pending, hashtags: hashtags)
+            return copyState
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let inProgressChallengesReducer: Reducer<Resolvable<[Challenge]>> = { state, action in
+        switch action {
+        case .loadInProgressChallenges(let challenges):
+            return challenges
+        case .logout:
+            return .success([])
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let paymentsReducer: Reducer<Resolvable<[AppStorePayment]>> = { state, action in
+        switch action {
+        case .loadPayments(let result):
+            return result
         default: return state
         }
     }

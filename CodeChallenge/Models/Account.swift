@@ -7,14 +7,29 @@
 
 import Foundation
 
-struct Account: Decodable {
-    let name: String
-    let username: String
-    let solvedChallenges: Int
-    let followersCount: Int
-    let followingsCount: Int
-    let streak: Int
-    let streakWeekdays: [String]
+class Account {
+    var id: Int?
+    var name: String?
+    var username: String?
+    var solvedChallenges: Int?
+    var followersCount: Int?
+    var followingsCount: Int?
+    var streak: Int?
+    var xp: Int?
+
+    init() {}
+}
+
+extension Account: Equatable {
+    static func == (lhs: Account, rhs: Account) -> Bool {
+        return lhs.id == rhs.id && lhs.xp == rhs.xp && rhs.solvedChallenges == lhs.solvedChallenges
+    }
+}
+
+extension Account {
+    var imageUrl: String {
+        "\(Configuration.host)/user/getImage/\(id ?? 0)/"
+    }
 }
 
 extension Account {
@@ -22,11 +37,16 @@ extension Account {
         let key: String
         let value: Bool
     }
-    func streaktoKeyValueTuple() -> [StreakWeekdayInfo] {
-        let weekdays = [("Mon", "M"), ("Tue", "T"), ("Wed", "W"), ("Thu", "T"), ("Fri", "F"), ("Sat", "S"), ("Sun", "S")]
+    func streaktoKeyValueTuple(from number: Int) -> [StreakWeekdayInfo] {
+        let weekdays = [("Sun", "S"), ("Mon", "M"), ("Tue", "T"), ("Wed", "W"), ("Thu", "T"), ("Fri", "F"), ("Sat", "S")]
+        let weekday = Calendar.current.component(.weekday, from: Date()) - 1
         let weekdayDisplay = weekdays.reduce([StreakWeekdayInfo]()) { partialResult, result in
-            return partialResult + [StreakWeekdayInfo(key: result.1, value: streakWeekdays.contains(result.0))]
+            let correspondingWeekday = (weekdays.firstIndex { $0.0 == result.0 }) ?? 0
+            let valueSelected = correspondingWeekday <= weekday && (number > 6 || correspondingWeekday + number > weekday )
+            return partialResult + [StreakWeekdayInfo(key: result.1,
+                                                      value: valueSelected)]
         }
         return weekdayDisplay
     }
 }
+

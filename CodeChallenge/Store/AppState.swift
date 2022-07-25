@@ -11,12 +11,36 @@ struct AppState {
     let user: Resolvable<User>
     let account: Resolvable<Account>
     let challengeGroups: Resolvable<[ChallengeGroup]>
+    let challengeDetails: [Int: Resolvable<ChallengeDetail>]
+    let challengeProgresses: [Int: Resolvable<ChallengeProgress>]
+    let challengeResults: [Int: Resolvable<ChallengeCompiledResult>]
+    let searchByInstances: [String: SearchState]
+    let inProgressChallenges: Resolvable<[Challenge]>
+    let payments: Resolvable<[AppStorePayment]>
 
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
-         challengeGroups: Resolvable<[ChallengeGroup]> = .pending) {
+         challengeGroups: Resolvable<[ChallengeGroup]> = .pending,
+         challengeDetails: [Int: Resolvable<ChallengeDetail>] = [:],
+         challengeProgresses: [Int: Resolvable<ChallengeProgress>] = [:],
+         challengeResults: [Int: Resolvable<ChallengeCompiledResult>] = [:],
+         searchByInstances: [String: SearchState] = [:],
+         inProgressChallenges: Resolvable<[Challenge]> = .pending,
+         payments: Resolvable<[AppStorePayment]> = .pending) {
         self.user = user
         self.account = account
         self.challengeGroups = challengeGroups
+        self.challengeDetails = challengeDetails
+        self.challengeProgresses = challengeProgresses
+        self.challengeResults = challengeResults
+        self.searchByInstances = searchByInstances
+        self.inProgressChallenges = inProgressChallenges
+        self.payments = payments
     }
+}
+
+struct SearchState {
+    let query: String?
+    let results: Resolvable<[Challenge]>
+    let hashtags: Resolvable<[String]>
 }

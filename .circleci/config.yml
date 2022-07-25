@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build-and-test:
     macos:
-      xcode: 13.0
+      xcode: 13.4.1
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test
@@ -20,10 +20,10 @@ jobs:
 
   run-qa-build:
     macos:
-      xcode: 13.0
+      xcode: 13.4.1
     environment:
       FL_OUTPUT_DIR: output
-      FASTLANE_LANE: run_qa
+      FASTLANE_LANE: run_all
     steps:
       - checkout
       - run: bundle install
@@ -36,10 +36,8 @@ jobs:
 workflows:
   build-test-qa-build:
     jobs:
-      - build-and-test
+#      - build-and-test
       - run-qa-build:
           filters:
             branches:
               only: main
-          requires:
-            - build-and-test

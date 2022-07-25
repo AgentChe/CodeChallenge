@@ -21,9 +21,12 @@ extension HomeViewProps {
     }
 
     var homeViewComponents: [HomeView.Component] {
-        guard let challengeGroups = challengeGroups else { return [] }
+        guard let allGroups = challengeGroups else { return [] }
+        let challengeGroups = allGroups.filter { $0.style != .collection }
         var components = challengeGroups.map { HomeView.Component.challengesGroup($0) }
-        components.insert(.premium, at: 1)
+        let collections = allGroups.filter { $0.style == .collection }
+//        components.insert(.premium, at: 1)
+        components.insert(.collection(collections), at: 1)
         return components
     }
 }

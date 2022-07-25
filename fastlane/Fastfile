@@ -12,16 +12,34 @@ app_store_connect_api_key()
     scan
   end
 
+lane :certificates do
+match(type: "appstore", app_identifier: "com.tome.codechallenge")
+match(type: "development", app_identifier: "com.tome.codechallenge")
+match(type: "appstore", app_identifier: "com.tome.codechallenge.staging")
+match(type: "development", app_identifier: "com.tome.codechallenge.staging")
+end
+
+lane :run_all do
+  run_qa()
+  run_staging()
+end
+
 lane :run_qa do
-match(type: "appstore", readonly: true, app_identifier: "com.tome.codechallenge")
-match(type: "development", readonly: true, app_identifier: "com.tome.codechallenge")
+match(type: "appstore", app_identifier: "com.tome.codechallenge")
+match(type: "development", app_identifier: "com.tome.codechallenge")
 
     profileMapping = {}
     profileMapping["com.tome.codechallenge"] = "match AppStore com.tome.codechallenge"
     current_build = latest_testflight_build_number(app_identifier: "com.tome.codechallenge")
+    update_app_identifier(
+      xcodeproj: "CodeChallenge.xcodeproj",
+      plist_path: "CodeChallenge/Resources/Info.plist",
+      app_identifier: "com.tome.codechallenge"
+    )
     increment_build_number({build_number: current_build + 1})
 
     build_app(
+      scheme: "CodeChallenge",
       silent: true,
       clean: true,
       export_method: "app-store",
@@ -35,6 +53,39 @@ match(type: "development", readonly: true, app_identifier: "com.tome.codechallen
 
     upload_to_testflight(
       app_identifier: "com.tome.codechallenge", 
+      skip_waiting_for_build_processing: true
+    )
+end
+
+lane :run_staging do
+match(type: "appstore", app_identifier: "com.tome.codechallenge.staging")
+match(type: "development", app_identifier: "com.tome.codechallenge.staging")
+
+    profileMapping = {}
+    profileMapping["com.tome.codechallenge.staging"] = "match AppStore com.tome.codechallenge.staging"
+    current_build_staging = latest_testflight_build_number(app_identifier: "com.tome.codechallenge.staging")
+    update_app_identifier(
+      xcodeproj: "CodeChallenge.xcodeproj",
+      plist_path: "CodeChallenge/Resources/Info.plist",
+      app_identifier: "com.tome.codechallenge.staging"
+    )
+    increment_build_number({build_number: current_build_staging + 1})
+
+    build_app(
+      scheme: "Codehub Staging",
+      silent: true,
+      clean: true,
+      export_method: "app-store",
+      export_options: {
+        method: "app-store",
+        provisioningProfiles: profileMapping
+      },
+      output_name: "CodeChallenge.ipa",
+      archive_path: "CodeChallenge.xcarchive"
+    )
+
+    upload_to_testflight(
+      app_identifier: "com.tome.codechallenge.staging", 
       skip_waiting_for_build_processing: true
     )
 end

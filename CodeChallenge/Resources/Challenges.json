@@ -1,0 +1,56 @@
+{
+    "id": 1,
+    "date_created": 1662049464914.766,
+    "date_modified": 1666112974948.558,
+    "icon": "/home/app/web/app/images/challange/dcqeawuardaiuwgjkuyc.svg",
+    "difficulty": "Easy",
+    "time": 1,
+    "supported_compilers": [
+        "python"
+    ],
+    "is_premium": false,
+    "xp": 10,
+    "published": true,
+    "unit_tests": {
+        "python": "def%20test_1(record_property)%3A%0A%20%20output%20%3D%20tax(120000%2C25)%0A%20%20record_property(%22output%22%2C%20output)%0A%20%20assert%20output%20%3D%3D%2090000%2C%20%22incorrect%20result%22%0A%0Adef%20test_2(record_property)%3A%0A%20%20output%20%3D%20tax(120000%2C24)%0A%20%20record_property(%22output%22%2C%20output)%0A%20%20assert%20output%20%3D%3D%2091200%2C%20%22incorrect%20result%22%0A%0Adef%20test_3(record_property)%3A%0A%20%20output%20%3D%20tax(22000%2C26)%0A%20%20record_property(%22output%22%2C%20output)%0A%20%20assert%20output%20%3D%3D%2016280%20%2C%20%22incorrect%20result%22%0A",
+        "python_output": [
+            {
+                "test_id": 1,
+                "input": "120000, 25",
+                "expected_output": "90000"
+            },
+            {
+                "test_id": 2,
+                "input": "120000,24",
+                "expected_output": "91200"
+            },
+            {
+                "test_id": 3,
+                "input": "22000,26",
+                "expected_output": "16280"
+            }
+        ]
+    },
+    "solutionCode": {
+        "python": {
+            "code": "def%20tax(sp%3A%20int%2C%20tax%3A%20int)%20-%3E%20int%3A%0A%20%20%23%20Subtract%20the%20sales%20tax%20from%20the%20sales%20price%0A%20%20return%20sp%20-%20(sp*tax)%2F100",
+            "run": "if%20__name__%20%3D%3D%20%22__main__%22%3A%0A%20%20tax(120000%2C25)"
+        }
+    },
+    "name": "Tax Calculator",
+    "tags": [
+        {
+            "name": "MathOperators",
+            "color": "#209bfa"
+        }
+    ],
+    "body": {
+        "python": {
+            "description": "Given+the+sales+price+and+sales+tax%0D%0AExample%3A%0D%0AInput%3A%0D%0A120%2C+20%0D%0A%0D%0AOutput%3A%0D%0A96%0D%0A%22%2C%22template%22%3A%22%23+replace+__+with+your+code++%0D%0A+++++%0D%0Adef+tax%28sp%3A+int%2C+tax%3A+int%29+-%3E+int%3A%0D%0A++%23+sp+is+the+Sales+Price%0D%0A++%23+Subtract+the+sales+tax+from+the+sales+price%0D%0A++__"
+        }
+    },
+    "hint": [
+        ""
+    ],
+    "solution": {}
+}

@@ -13,16 +13,26 @@ struct AutocompleteDropdownView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
-                ForEach(options, id: \.self) { option in
-                    Text(option)
-                        .onTapGesture {
-                            onSelect(option)
-                        }
-                        .background(Color.red)
+            HStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    ForEach(options, id: \.self) { option in
+                        Text(option)
+                            .font(.systemFont(ofSize: 18))
+                            .foregroundColor(.white)
+                            .onTapGesture {
+                                onSelect(option)
+                            }
+                            .frame(height: 26)
+                    }
                 }
+                .padding(.horizontal, 30)
+                .padding(.vertical, 8)
+
+                Spacer()
             }
         }
+        .background(.CodeChallenge.background)
+        .cornerRadius(10)
     }
 }
 

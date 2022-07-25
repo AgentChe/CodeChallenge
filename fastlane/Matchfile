@@ -1,6 +1,5 @@
 git_url("git@github.com:tateviktome/code_challenge_ios_certificates.git")
 
-app_identifier(["com.tome.codechallenge"])
 username("vt.futuristics@gmail.com") # Your Apple Developer Portal username
 
 # For all available options run `fastlane match --help`

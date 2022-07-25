@@ -6,27 +6,187 @@
 //
 
 import Foundation
+import UIKit
 
-struct ChallengeGroup: Codable {
+struct ChallengeGroup: Codable, Equatable {
+    enum Style: String, Codable {
+        case large
+        case medium
+        case collection
+    }
     let name: String
-    let icon: String
     let description: String
     let challenges: [Challenge]
+    let style: Style
+    let id: String?
 }
 
 struct Challenge: Codable {
+    struct Tag: Codable, Hashable {
+        let name: String
+        let color: String
+    }
     let challangeId: Int
     let name: String
-    let body: String
-    let icon: String
-    let tags: [String]
+    let body: String?
+    let tags: [Tag]
     let level: String
+    let isPremium: Bool
+    let xp: Int
+}
+
+extension Challenge: Equatable {}
+
+extension Challenge {
+    var isHard: Bool {
+        level.lowercased() == "hard"
+    }
+
+    var isMedium: Bool {
+        level.lowercased() == "medium"
+    }
+
+    var isEasy: Bool {
+        level.lowercased() == "easy"
+    }
+
+    var allTags: [Tag] {
+        [Tag(name: level.lowercased().capitalized, color: level.lowercased().capitalized.toColorHex())] + tags
+    }
 }
 
 extension Challenge {
     var tagsDescription: String {
         tags.reduce("") { partialResult, result in
-            return partialResult + " #\(result)"
+            return partialResult + " #\(result.name)"
         }
     }
+}
+
+
+struct ChallengeProgress: Codable {
+    struct Solution: Codable {
+        let python: String
+    }
+    let id: Int?
+    let dateCreated, dateModified: Double?
+    let challengeId: Int?
+    let userId: Int?
+    let type: String?
+    let progress: Int?
+    let solution: Solution?
+    let spentTime: Int?
+}
+
+struct TestCase {
+    let id: Int
+    let input: String?
+    let output: String?
+    let expectedOutput: String?
+    let isFailed: Bool
+    let isLocked: Bool
+}
+
+extension String {
+    func toColorHex() -> String {
+        if self == "Easy" {
+            return "20BB82"
+        } else if self == "Medium" {
+            return "FFC169"
+        } else if self == "Hard" {
+            return "FF7A4F"
+        } else {
+            return "806FFF"
+        }
+    }
+}
+
+
+struct ChallengeDetail: Codable, Equatable {
+    let id: Int
+    let dateCreated, dateModified: Double
+    let icon, difficulty: String
+    let time: Int
+    let supportedCompilers: [String]
+    let isPremium: Bool
+    let xp: Int
+    let published: Bool
+    let unitTests: UnitTests
+    let solutionCode: SolutionCode
+    let name: String
+    let tags: Hint
+    let body: Body
+    let hint, solution: Hint
+}
+
+// MARK: - Body
+struct Body: Codable, Equatable {
+    let python: BodyPython
+    let input, output: String?
+}
+
+// MARK: - BodyPython
+struct BodyPython: Codable, Equatable {
+    let description, template: String
+}
+
+extension BodyPython {
+    func toAttributedString() -> NSMutableAttributedString {
+        guard let cleared = description.removingPercentEncoding else { return NSMutableAttributedString(string: description) }
+        let data = cleared.replacingOccurrences(of: "\n", with: "<br>").data(using: .utf8)
+        return try! NSMutableAttributedString(data: data!, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+    }
+}
+
+// MARK: - Hint
+struct Hint: Codable, Equatable {
+}
+
+// MARK: - SolutionCode
+struct SolutionCode: Codable, Equatable {
+    let python: SolutionCodePython?
+}
+
+// MARK: - SolutionCodePython
+struct SolutionCodePython: Codable, Equatable {
+    let code: String?
+}
+
+// MARK: - UnitTests
+struct UnitTests: Codable, Equatable {
+    let python: String
+    let pythonOutput: [PythonOutputs]
+}
+
+struct PythonOutputs: Codable, Equatable {
+    let testId: Int
+    let input: String
+    let expectedOutput: String
+}
+
+struct ChallengeCompiledResult: Codable, Equatable {
+    struct Code: Codable, Equatable {
+        let statusCode: Int
+        let output: String
+    }
+
+    struct UnitTest: Codable, Equatable {
+        let id: String
+        let output: String?
+        let outcome: Outcome
+    }
+
+    let code: Code
+    let unitTests: [UnitTest]
+}
+
+extension ChallengeCompiledResult {
+    var isSuccesful: Bool {
+        unitTests.filter { $0.outcome == .passed }.count == unitTests.count && unitTests.count != 0
+    }
+}
+
+enum Outcome: String, Codable, Equatable {
+    case passed
+    case failed
 }

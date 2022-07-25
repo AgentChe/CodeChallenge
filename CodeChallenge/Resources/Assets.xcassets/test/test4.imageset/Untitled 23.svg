@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Created with Vectornator (http://vectornator.io/) -->
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 100 100" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs/>
+<g id="Layer-1" vectornator:layerName="Layer 1">
+<path d="M19.5502 74.3652C-4.10472 59.981 18.8644 40.7321 31.2651 27.3767C50.5458 6.61162 72.1517 7.73974 83.5069 22.6647C94.8621 37.5897 81.9302 57.3916 76.9036 61.8656C66.7401 70.9115 35.464 84.0422 19.5502 74.3652Z" fill="#6590be" fill-rule="nonzero" opacity="1" stroke="none"/>
+</g>
+<g id="Layer-2" vectornator:layerName="Layer 2">
+<path d="M23.3519 91.9325L23.1589 6.95826L77.0767 6.71771L76.8087 92.0747L23.3519 91.9325Z" fill="none" opacity="1" stroke="#fafaf9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+<path d="M23.2332 39.6961L76.9736 39.5707L23.2332 39.6961Z" fill="none" opacity="1" stroke="#fafaf9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+<path d="M44.2105 6.86434L44.02 39.6476" fill="none" opacity="1" stroke="#fafaf9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+<path d="M23.2051 27.3113L44.0907 27.4807" fill="none" opacity="1" stroke="#fafaf9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+<path d="M35.7619 27.4132L35.8839 39.6666L35.8085 32.0968L44.0654 31.8413" fill="none" opacity="1" stroke="#fafaf9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+<path d="M39.3361 27.4421L39.633 31.9785" fill="none" opacity="1" stroke="#fafaf9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+</g>
+<clipPath id="ArtboardFrame">
+<rect height="100" width="100" x="0" y="0"/>
+</clipPath>
+<g clip-path="url(#ArtboardFrame)" id="Layer-3-copy" vectornator:layerName="Layer 3 copy">
+<path d="M25.3482 94.8333C51.0181 97.7649 77.7811 70.6638 77.8681 41.9674C77.9351 19.8797 61.1165 8.79081 45.7775 9.0531C32.2823 9.28387 25.1865 21.1262 25.2052 29.655C25.2253 38.8114 32.4159 42.093 37.6229 42.1066C43.7593 42.1225 45.4976 37.4133 45.5653 34.2014C45.6622 29.596 42.9255 30.0036 40.983 29.7363C38.9561 29.4574 37.4717 31.462 37.5317 32.6131C37.5916 33.7642 39.5479 34.3943 41.2228 34.3406" fill="none" opacity="1" stroke="#2c3237" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+<path d="M142.238 118.913L142.362 118.913L142.362 119.037L142.238 119.037L142.238 118.913Z" fill="none" opacity="1" stroke="#2c3237" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/>
+</g>
+<g id="Layer-3" vectornator:layerName="Layer 3">
+<path d="M23.3512 91.6128C49.5601 94.5027 76.885 67.7872 76.9738 39.4991C77.0422 17.7256 59.8704 6.79448 44.2094 7.05304C30.4309 7.28052 23.1861 18.9543 23.2052 27.3618C23.2257 36.3879 30.5673 39.6229 35.8836 39.6363C42.1488 39.652 43.9237 35.0097 43.9927 31.8435C44.0917 27.3037 41.2975 27.7055 39.3142 27.442C37.2448 27.167 35.7292 29.1432 35.7904 30.2779C35.8517 31.4126 37.849 32.0337 39.5591 31.9808" fill="none" opacity="1" stroke="#f4c076" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+</g>
+</svg>

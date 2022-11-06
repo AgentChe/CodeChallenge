@@ -331,6 +331,8 @@
 			isa = PBXGroup;
 			children = (
 				E0B9582528B2AC8800247DE9 /* NotificationsView.swift */,
+				E0B9582228B2A80A00247DE9 /* SettingsView.swift */,
+				E09FA68028C37F1100D3349D /* SettingsViewProps.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -398,37 +400,16 @@
 		E0BD3247285A8D15000C37A9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E0FB612A29185BBA00DB1E9A /* Community */,
+				E0FB612929185B9C00DB1E9A /* Challenge */,
+				E0FB612829185B6700DB1E9A /* Premium */,
+				E0FB612729185B3400DB1E9A /* Browse */,
+				E0FB612629185B0900DB1E9A /* Home */,
+				E0FB612329185AB100DB1E9A /* Account */,
 				E0B9582428B2AC7F00247DE9 /* Settings */,
 				E01AECA5289F0D0500615B52 /* KeywordsView */,
 				E05254FF288C796800FD87C3 /* Playground */,
-				E0BD323E285A8723000C37A9 /* LoginView.swift */,
-				E0BD327F285CF48A000C37A9 /* LoginViewProps.swift */,
-				E0BD329C285D01BF000C37A9 /* AccountView.swift */,
-				E06AAE3428778DAC00995D3D /* AccountViewProps.swift */,
-				E06AAE2C287788B700995D3D /* HomeView.swift */,
-				E01AEC8D2899C83E00615B52 /* HomeCollectionVIew.swift */,
-				E01AEC8F2899C8FB00615B52 /* HomeGroupView.swift */,
-				E0EBB7E1288B06EE00DE7C53 /* HomeViewProps.swift */,
-				E06AAE2E287788C000995D3D /* BrowseView.swift */,
-				E06AAE30287788C700995D3D /* CommunityView.swift */,
-				E06AAE32287788CD00995D3D /* PremiumView.swift */,
-				E0EBB7EF288B524B00DE7C53 /* CodeChallengeView.swift */,
-				E0EBB7F1288B525500DE7C53 /* CodeChallengeViewProps.swift */,
-				E01AEC95289B315400615B52 /* PremiumViewProps.swift */,
-				E01AEC99289B3B5500615B52 /* PremiumAllPlansView.swift */,
-				E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */,
-				E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */,
-				E0B9582228B2A80A00247DE9 /* SettingsView.swift */,
-				E08B445928B2E49B006BC50A /* BrowseViewProps.swift */,
-				E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */,
-				E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */,
-				E08B446428B4448E006BC50A /* CollectionItemsView.swift */,
-				E0ECE5C128BBFF5C00A1CB12 /* CelebrationView.swift */,
-				E0ECE5C328BC028700A1CB12 /* XPView.swift */,
-				E09FA68028C37F1100D3349D /* SettingsViewProps.swift */,
 				E08D6F7828C53826006991EB /* GetStartedView.swift */,
-				E0228F6B2904B7A000101A82 /* InviteFriendsView.swift */,
-				E0228F6D2904B92100101A82 /* NoteView.swift */,
 				E0A619D229104D73004EDD41 /* MaintenanceView.swift */,
 			);
 			path = Views;
@@ -526,6 +507,73 @@
 				E0BD3292285CF81B000C37A9 /* Actions.swift */,
 			);
 			path = Actions;
+			sourceTree = "<group>";
+		};
+		E0FB612329185AB100DB1E9A /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				E0BD323E285A8723000C37A9 /* LoginView.swift */,
+				E0BD327F285CF48A000C37A9 /* LoginViewProps.swift */,
+				E0BD329C285D01BF000C37A9 /* AccountView.swift */,
+				E06AAE3428778DAC00995D3D /* AccountViewProps.swift */,
+				E0ECE5C328BC028700A1CB12 /* XPView.swift */,
+				E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		E0FB612629185B0900DB1E9A /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E06AAE2C287788B700995D3D /* HomeView.swift */,
+				E01AEC8D2899C83E00615B52 /* HomeCollectionVIew.swift */,
+				E01AEC8F2899C8FB00615B52 /* HomeGroupView.swift */,
+				E0EBB7E1288B06EE00DE7C53 /* HomeViewProps.swift */,
+				E08B446428B4448E006BC50A /* CollectionItemsView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E0FB612729185B3400DB1E9A /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				E06AAE2E287788C000995D3D /* BrowseView.swift */,
+				E08B445928B2E49B006BC50A /* BrowseViewProps.swift */,
+				E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */,
+				E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */,
+			);
+			path = Browse;
+			sourceTree = "<group>";
+		};
+		E0FB612829185B6700DB1E9A /* Premium */ = {
+			isa = PBXGroup;
+			children = (
+				E06AAE32287788CD00995D3D /* PremiumView.swift */,
+				E01AEC95289B315400615B52 /* PremiumViewProps.swift */,
+				E01AEC99289B3B5500615B52 /* PremiumAllPlansView.swift */,
+			);
+			path = Premium;
+			sourceTree = "<group>";
+		};
+		E0FB612929185B9C00DB1E9A /* Challenge */ = {
+			isa = PBXGroup;
+			children = (
+				E0EBB7EF288B524B00DE7C53 /* CodeChallengeView.swift */,
+				E0EBB7F1288B525500DE7C53 /* CodeChallengeViewProps.swift */,
+				E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */,
+				E0ECE5C128BBFF5C00A1CB12 /* CelebrationView.swift */,
+			);
+			path = Challenge;
+			sourceTree = "<group>";
+		};
+		E0FB612A29185BBA00DB1E9A /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				E06AAE30287788C700995D3D /* CommunityView.swift */,
+				E0228F6B2904B7A000101A82 /* InviteFriendsView.swift */,
+				E0228F6D2904B92100101A82 /* NoteView.swift */,
+			);
+			path = Community;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

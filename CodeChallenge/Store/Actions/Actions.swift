@@ -24,6 +24,8 @@ enum Action: Dispatchable {
     case logout
     case loadPayments(Resolvable<[AppStorePayment]>)
     case loadHashtags(Resolvable<[String]>, String)
+    case loadHomeSections(String, Resolvable<[NewChallengeSection]>)
+    case loadHomeCollectionContent(Int, Resolvable<NewChallengeCollectionContent>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -416,6 +418,39 @@ struct UploadImage: ThunkAction {
             .ephemeralSink { _ in
                 let copyAccount = dispatcher.state.account
                 dispatcher.dispatch(Action.loadAccount(copyAccount))
+            }
+    }
+}
+
+struct LoadHomeSections: ThunkAction {
+    let language: String
+    let humanLanguage: String
+
+    func exec(dispatcher: Dispatcher) {
+        let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
+        dispatcher.dispatch(Action.loadHomeSections("\(language)_\(humanLanguage)", .loading))
+
+        dispatcher.services.challengesService
+            .fetchHomeSections(language: language, humanLanguage: humanLanguage, id: userId)
+            .asResolvable()
+            .ephemeralSink { groups in
+                dispatcher.dispatch(Action.loadHomeSections("\(language)_\(humanLanguage)", groups))
+            }
+    }
+}
+
+struct LoadCollectionContent: ThunkAction {
+    let collection: NewChallengeCollection
+
+    func exec(dispatcher: Dispatcher) {
+        let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
+//        dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, .loading))
+
+        dispatcher.services.challengesService
+            .fetchCollectionContent(id: collection.id)
+            .asResolvable()
+            .ephemeralSink { groups in
+                dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, groups))
             }
     }
 }

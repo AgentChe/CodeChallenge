@@ -1,0 +1,40 @@
+[
+    {
+        "name": "Python basics",
+        "collections": [
+            {
+                "id": 1,
+                "name": "Task about varables  about varables",
+                "description": "Task about varables  about varables",
+                "image": "/image/image.jpg",
+                "progress": 100
+            },
+            {
+                "id": 2,
+                "name": "Task about varables  about varables",
+                "description": "Task about varables  about varables",
+                "image": "/image/image.jpg",
+                "progress": 24
+            }
+        ]
+    },
+    {
+        "name": "Python advanced",
+        "collections": [
+            {
+                "id": 3,
+                "name": "Task about varables  about varables",
+                "description": "Task about varables  about varables",
+                "image": "/image/image.jpg",
+                "progress": 24 
+            },
+            {
+                "id": 4,
+                "name": "Task about varables  about varables",
+                "description": "Task about varables  about varables",
+                "image": "/image/image.jpg",
+                "progress": 50
+            }
+        ]
+    }
+]

@@ -17,20 +17,24 @@ class HomeCoordinator {
     init(store: Store) {
         self.store = store
         let instanceId = UUID()
-        let homeView = HomeView(onChallengeTap: { [weak self] (challenge, group) in
-            self?.openCodeChallenge(challenge: challenge, group: group)
-        }, onCollectionTap: { [weak self] collection in
-            self?.openCollectionView(collection: collection)
-        }, onSearch: { [weak self] text in
-            let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
-                self?.openCodeChallenge(challenge: challenge, group: nil)
-            })
-                .environmentObject(store)
-                .environment(\.instanceID, instanceId)
-            let controller = UIHostingController(rootView: view)
-            self?.navigationController.pushViewController(controller, animated: true)
-            self?.store.dispatch(LoadSearchResults(instanceId: instanceId))
-        })
+//        let homeView = HomeView(onChallengeTap: { [weak self] (challenge, group) in
+//            self?.openCodeChallenge(challenge: challenge, group: group)
+//        }, onCollectionTap: { [weak self] collection in
+//            self?.openCollectionView(collection: collection)
+//        }, onSearch: { [weak self] text in
+//            let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
+//                self?.openCodeChallenge(challenge: challenge, group: nil)
+//            })
+//                .environmentObject(store)
+//                .environment(\.instanceID, instanceId)
+//            let controller = UIHostingController(rootView: view)
+//            self?.navigationController.pushViewController(controller, animated: true)
+//            self?.store.dispatch(LoadSearchResults(instanceId: instanceId))
+//        })
+//            .environmentObject(store)
+        let homeView = NewHomeView(language: "py", humanLanguage: "en") { [weak self] collection, section in
+            self?.openCollectionDetail(collection: collection, section: section)
+        }
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)
         let tabBarItem = UITabBarItem(
@@ -44,6 +48,15 @@ class HomeCoordinator {
         DispatchQueue.main.async { [weak self] in
             self?.presentGetStartedIfNecessary()
         }
+    }
+
+    private func openCollectionDetail(collection: NewChallengeCollection, section: NewChallengeSection) {
+        let view = NewCollectionContentView(collection: collection, section: section, onChallengeOpen: { [weak self] challenge in
+            self?.openCodeChallenge(challenge: challenge, group: nil)
+        })
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: view)
+        navigationController.pushViewController(controller, animated: true)
     }
 
     private func presentGetStartedIfNecessary() {

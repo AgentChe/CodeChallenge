@@ -15,6 +15,8 @@ struct Reducers {
             user: userReducer(state.user, action),
             account: accountReducer(state.account, action),
             challengeGroups: challengeGroupsReducer(state.challengeGroups, action),
+            homeSections: homeSectionsReducer(state.homeSections, action),
+            collections: collectionContentReducer(state.collections, action),
             challengeDetails: challengeDetailsReducer(state.challengeDetails, action),
             challengeProgresses: challengeProgressReducer(state.challengeProgresses, action),
             challengeResults: challengeResultsReducer(state.challengeResults, action),
@@ -134,6 +136,30 @@ extension Reducers {
         switch action {
         case .loadPayments(let result):
             return result
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let homeSectionsReducer: Reducer<[String: Resolvable<[NewChallengeSection]>]> = { state, action in
+        switch action {
+        case .loadHomeSections(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let collectionContentReducer: Reducer<[Int: Resolvable<NewChallengeCollectionContent>]> = { state, action in
+        switch action {
+        case .loadHomeCollectionContent(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
         default: return state
         }
     }

@@ -1,0 +1,142 @@
+//
+//  NewCollectionContentView.swift
+//  CodeChallenge
+//
+//  Created by Tatevik Tovmasyan on 07/11/2022.
+//
+
+import Foundation
+import SwiftUI
+
+struct NewCollectionContentView: View, NewCollectionContentViewProps {
+    let gridItemLayout = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
+    @EnvironmentObject var store: Store
+    let collection: NewChallengeCollection
+    let section: NewChallengeSection
+    let onChallengeOpen: (Challenge) -> Void
+
+    @State private var displayContent: NewChallengeCollectionContent?
+    @State private var displayChallenges: [Challenge] = []
+
+    var body: some View {
+        DoodledView {
+            if let displayContent = displayContent {
+                content(displayContent: displayContent)
+            } else {
+                Text("Loading")
+            }
+        }
+        .onAppear {
+            store.dispatch(LoadCollectionContent(collection: collection))
+            displayContent = content
+            guard let content = content else { return }
+            for index in 0..<content.challenges.count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.05 * Double(index))) {
+                    withAnimation(.easeOut(duration: 0.3)) {
+                        let newItem = content.challenges[index]
+                        displayChallenges.append(newItem)
+                    }
+                }
+            }
+        }
+        .onChange(of: content) { newValue in
+            guard let newValue = newValue else { return }
+            displayChallenges = newValue.challenges
+            displayContent = newValue
+        }
+    }
+
+    func content(displayContent: NewChallengeCollectionContent) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(displayContent.name)
+                .font(.systemFont(ofSize: 30, weight: .semibold))
+                .foregroundColor(.white)
+            Text(displayContent.description)
+                .font(.systemFont(ofSize: 14))
+                .foregroundColor(UIColor.white.withAlphaComponent(0.6))
+            progressBar(displayContent: displayContent)
+                .padding(.top, 16)
+            ScrollView {
+                LazyVGrid(
+                    columns: gridItemLayout,
+                    alignment: .center,
+                    spacing: 16,
+                    pinnedViews: []) {
+                        ForEach(displayChallenges, id: \.challangeId) { challenge in
+                            challengeView(challenge: challenge)
+                                .transition(.move(edge: .bottom))
+                                .onTapGesture {
+                                    onChallengeOpen(challenge)
+                                }
+                        }
+                    }
+            }
+            .padding(.top, 3)
+        }
+        .padding(.horizontal, 16)
+    }
+
+    func progressBar(displayContent: NewChallengeCollectionContent) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 1.5)
+                .fill(Color(UIColor.CodeChallenge.gray2))
+                .frame(height: 3)
+            HStack {
+                RoundedRectangle(cornerRadius: 1.5)
+                    .fill(Color(UIColor.CodeChallenge.blue1))
+                    .frame(width: (.screenWidth - 32) * CGFloat(collection.progress/100), height: 3)
+                Spacer()
+            }
+        }
+    }
+
+    func challengeView(challenge: Challenge) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.CodeChallenge.blue1), lineWidth: 1.5)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    NetworkImage(
+                        viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.challangeId)/",
+                                         store: store,
+                                         placeholder: .init(named: "placeholder_image")),
+                        size: .init(width: 45, height: 45)
+                    )
+                    Spacer()
+                    VStack {
+                        if challenge.isPremium {
+                            Image("challenge_premium_icon")
+                        } else {
+                            Button("\(challenge.xp)XP") {}
+                                .buttonStyle(RoundedButtonStyle(foregroundColor: .white, backgroundColor: .CodeChallenge.background, strokeColor: .white))
+                                .disabled(true)
+                        }
+                        Spacer()
+                    }
+                }
+                .frame(height: 45)
+                VStack(alignment: .leading) {
+                    Text(challenge.name)
+                        .foregroundColor(.CodeChallenge.white)
+                        .font(.systemFont(ofSize: 14, weight: .semibold))
+                        .lineLimit(2)
+                    Spacer()
+                }
+                .padding(.top, 15)
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(challenge.allTags, id: \.self) {
+                            Button($0.name) {}
+                                .buttonStyle(RoundedButtonStyle(foregroundColor: .white, backgroundColor: UIColor(hexString: "#\($0.color.components(separatedBy: "#").last ?? "")")))
+                        }
+                    }
+                    .frame(height: 18)
+                }
+                .frame(height: 18)
+            }
+            .padding(15)
+        }
+        .frame(height: 157)
+    }
+}

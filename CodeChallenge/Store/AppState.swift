@@ -11,6 +11,8 @@ struct AppState {
     let user: Resolvable<User>
     let account: Resolvable<Account>
     let challengeGroups: Resolvable<[ChallengeGroup]>
+    let homeSections: [String: Resolvable<[NewChallengeSection]>]
+    let collections: [Int: Resolvable<NewChallengeCollectionContent>]
     let challengeDetails: [Int: Resolvable<ChallengeDetail>]
     let challengeProgresses: [Int: Resolvable<ChallengeProgress>]
     let challengeResults: [Int: Resolvable<ChallengeCompiledResult>]
@@ -21,6 +23,8 @@ struct AppState {
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
          challengeGroups: Resolvable<[ChallengeGroup]> = .pending,
+         homeSections: [String: Resolvable<[NewChallengeSection]>] = [:],
+         collections: [Int: Resolvable<NewChallengeCollectionContent>] = [:],
          challengeDetails: [Int: Resolvable<ChallengeDetail>] = [:],
          challengeProgresses: [Int: Resolvable<ChallengeProgress>] = [:],
          challengeResults: [Int: Resolvable<ChallengeCompiledResult>] = [:],
@@ -30,6 +34,8 @@ struct AppState {
         self.user = user
         self.account = account
         self.challengeGroups = challengeGroups
+        self.homeSections = homeSections
+        self.collections = collections
         self.challengeDetails = challengeDetails
         self.challengeProgresses = challengeProgresses
         self.challengeResults = challengeResults

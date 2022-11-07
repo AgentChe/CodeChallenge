@@ -18,6 +18,9 @@ protocol ChallengesServiceProtocol {
     func compile(id: Int, challengeId: Int, session: String) -> AnyPublisher<ChallengeCompiledResult, Error>
     func searchChallenges(with query: String, session: String) -> AnyPublisher<[Challenge], Error>
     func loadHashtags() -> AnyPublisher<[String], Error>
+
+    func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error>
+    func fetchCollectionContent(id: Int) -> AnyPublisher<NewChallengeCollectionContent, Error>
 }
 
 struct ChallengesService: ChallengesServiceProtocol {
@@ -89,6 +92,20 @@ struct ChallengesService: ChallengesServiceProtocol {
         return URLRequest
             .create(url: "\(Configuration.host)/tags/", type: .get)
             .flatMap { networkService.load($0, decoding: [String].self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+
+    func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error> {
+        return URLRequest
+            .create(url: "https://run.mocky.io/v3/ae88e999-cde0-4b9c-a98b-85a9fe2ec7d1", type: .get)
+            .flatMap { networkService.load($0, decoding: [NewChallengeSection].self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+
+    func fetchCollectionContent(id: Int) -> AnyPublisher<NewChallengeCollectionContent, Error> {
+        return URLRequest
+            .create(url: "https://run.mocky.io/v3/0c8cf626-45dd-434e-b73d-be162cf18992", type: .get)
+            .flatMap { networkService.load($0, decoding: NewChallengeCollectionContent.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 }

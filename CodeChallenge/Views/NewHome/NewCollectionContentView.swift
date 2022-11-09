@@ -23,7 +23,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
             if let displayContent = displayContent {
                 content(displayContent: displayContent)
             } else {
-                Text("Loading")
+                SkeletonView()
             }
         }
         .onAppear {
@@ -62,7 +62,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                     alignment: .center,
                     spacing: 16,
                     pinnedViews: []) {
-                        ForEach(displayChallenges, id: \.challangeId) { challenge in
+                        ForEach(displayChallenges, id: \.id) { challenge in
                             challengeView(challenge: challenge)
                                 .transition(.move(edge: .bottom))
                                 .onTapGesture {
@@ -92,12 +92,12 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
 
     func challengeView(challenge: Challenge) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: 13)
                 .stroke(Color(.CodeChallenge.blue1), lineWidth: 1.5)
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     NetworkImage(
-                        viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.challangeId)/",
+                        viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.id)/",
                                          store: store,
                                          placeholder: .init(named: "placeholder_image")),
                         size: .init(width: 45, height: 45)
@@ -138,5 +138,75 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
             .padding(15)
         }
         .frame(height: 157)
+        .padding(1)
+    }
+}
+
+fileprivate struct SkeletonView: View {
+    let gridItemLayout = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("displayContent.name")
+                .font(.systemFont(ofSize: 30, weight: .semibold))
+                .foregroundColor(.white)
+            Text("displayContent.description")
+                .font(.systemFont(ofSize: 14))
+                .foregroundColor(UIColor.white.withAlphaComponent(0.6))
+            RoundedRectangle(cornerRadius: 1.5)
+                .padding(.top, 16)
+                .frame(height: 3)
+            ScrollView {
+                LazyVGrid(
+                    columns: gridItemLayout,
+                    alignment: .center,
+                    spacing: 16,
+                    pinnedViews: []) {
+                        element
+                        element
+                        element
+                    }
+            }
+            .padding(.top, 3)
+        }
+        .padding(.horizontal, 16)
+        .redacted(reason: .placeholder)
+    }
+
+    var element: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 13)
+                .stroke(Color(.CodeChallenge.blue1), lineWidth: 1.5)
+            VStack(alignment: .leading, spacing: 0) {
+                HStack {
+                    RoundedRectangle(cornerRadius: 22.5)
+                        .fill(Color(UIColor.CodeChallenge.darkBlue))
+                        .frame(width: 45, height: 45)
+                        .redacted(reason: .placeholder)
+                    Spacer()
+                    VStack {
+                        Image("challenge_premium_icon")
+                            .redacted(reason: .placeholder)
+                        Spacer()
+                    }
+                }
+                .frame(height: 45)
+                VStack(alignment: .leading) {
+                    Text("challenge.name")
+                        .foregroundColor(.CodeChallenge.white)
+                        .font(.systemFont(ofSize: 14, weight: .semibold))
+                        .lineLimit(2)
+                        .redacted(reason: .placeholder)
+                    Spacer()
+                }
+                .padding(.top, 15)
+
+                Spacer()
+                .frame(height: 18)
+            }
+            .padding(15)
+        }
+        .frame(height: 157)
+        .padding(1)
     }
 }

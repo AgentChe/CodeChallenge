@@ -26,32 +26,32 @@ struct Challenge: Codable {
         let name: String
         let color: String
     }
-    let challangeId: Int
+    let id: Int
     let name: String
-    let body: String?
     let tags: [Tag]
-    let level: String
+    let difficulty: String
     let isPremium: Bool
     let xp: Int
+    let progress: String
 }
 
 extension Challenge: Equatable {}
 
 extension Challenge {
     var isHard: Bool {
-        level.lowercased() == "hard"
+        difficulty.lowercased() == "hard"
     }
 
     var isMedium: Bool {
-        level.lowercased() == "medium"
+        difficulty.lowercased() == "medium"
     }
 
     var isEasy: Bool {
-        level.lowercased() == "easy"
+        difficulty.lowercased() == "easy"
     }
 
     var allTags: [Tag] {
-        [Tag(name: level.lowercased().capitalized, color: level.lowercased().capitalized.toColorHex())] + tags
+        [Tag(name: difficulty.lowercased().capitalized, color: difficulty.lowercased().capitalized.toColorHex())] + tags
     }
 }
 

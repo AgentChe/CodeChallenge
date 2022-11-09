@@ -28,7 +28,7 @@ struct BrowsedChallengesView: View, BrowsedChallengesViewProps {
                     }
 
                     if !isLoading {
-                        ForEach(challenges, id: \.challangeId) { challenge in
+                        ForEach(challenges, id: \.id) { challenge in
                             UniversalCodeChallengeView(codeChallenge: challenge)
                                 .onTapGesture {
                                     onEnterDetails(challenge)

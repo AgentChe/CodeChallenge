@@ -63,31 +63,31 @@ enum AnalyticsEvent {
         case .challengeSelected(let challenge, let group, let source):
             return [
                 "challengeTags": challenge.tagsDescription,
-                "challengeId": challenge.challangeId,
+                "challengeId": challenge.id,
                 "challengeGroup": group?.name ?? "",
-                "challengeLevel": challenge.level,
+                "challengeLevel": challenge.progress,
                 "source": source]
         case .startedSolving(let challenge, let group):
             return [
                 "challengeTags": challenge.tagsDescription,
-                "challengeId": challenge.challangeId,
+                "challengeId": challenge.id,
                 "challengeGroup": group?.name ?? "",
-                "challengeLevel": challenge.level]
+                "challengeLevel": challenge.progress]
         case .challengeCompleted(let challenge, let completed):
             return [
                 "completedStatus": completed,
                 "challengeTags": challenge.tagsDescription,
-                "challengeId": challenge.challangeId,
-                "challengeLevel": challenge.level
+                "challengeId": challenge.id,
+                "challengeLevel": challenge.progress
             ]
         case .challengeSearched(let searchTerm, let type):
             return ["searchTerm": searchTerm, "type": type]
         case .solutionOpened(let challenge, let group):
             return [
                 "challengeTags": challenge.tagsDescription,
-                "challengeId": challenge.challangeId,
+                "challengeId": challenge.id,
                 "challengeGroup": group?.name ?? "",
-                "challengeLevel": challenge.level]
+                "challengeLevel": challenge.progress]
         case .planSelected(let type):
             return ["type": type]
         default: return [:]

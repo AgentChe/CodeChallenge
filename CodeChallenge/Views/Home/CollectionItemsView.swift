@@ -41,7 +41,7 @@ struct CollectionItemsView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        ForEach(collection.challenges, id: \.challangeId) { challenge in
+                        ForEach(collection.challenges, id: \.id) { challenge in
                             UniversalCodeChallengeView(codeChallenge: challenge)
                                 .onTapGesture {
                                     onEnterDetails(challenge, collection)

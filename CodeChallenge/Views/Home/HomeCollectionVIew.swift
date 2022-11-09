@@ -88,7 +88,7 @@ struct HomeCollectionView: View {
                 .background(.CodeChallenge.purple)
             HStack(alignment: .top) {
                 NetworkImage(
-                    viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.challangeId)/",
+                    viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.id)/",
                                      store: store,
                                      placeholder: .init(named: "placeholder_image")),
                     size: .init(width: 41, height: 41)

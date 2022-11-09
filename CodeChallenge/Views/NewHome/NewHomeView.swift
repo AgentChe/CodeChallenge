@@ -25,7 +25,7 @@ struct NewHomeView: View, NewHomeViewProps {
                     .foregroundColor(.white)
                     .padding(.bottom, 32)
                     .padding(.leading, 16)
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     LazyVGrid(
                         columns: gridItemLayout,
                         alignment: .leading,

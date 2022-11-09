@@ -19,7 +19,7 @@ struct UniversalCodeChallengeView: View {
             HStack(spacing: 10) {
                 VStack {
                     NetworkImage(
-                        viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(codeChallenge.challangeId)/",
+                        viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(codeChallenge.id)/",
                                          store: store,
                                          placeholder: .init(named: "placeholder_image")),
                         size: .init(width: 41, height: 41)

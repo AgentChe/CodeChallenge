@@ -57,8 +57,8 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             }
         }
         .onAppear(perform: {
-            store.dispatch(LoadChallengeDetails(id: codeChallenge.challangeId))
-            store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.challangeId))
+            store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
+            store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id))
             displayCode = removeTrailingNewLines(string: code.removingPercentEncoding ?? code)
         })
         .onChange(of: code, perform: { newValue in
@@ -184,7 +184,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                             displayCode = removeTrailingNewLines(string: code)
                         }
                     }
-                    QuickAccessCharsView(challengeId: codeChallenge.challangeId, onRun: {
+                    QuickAccessCharsView(challengeId: codeChallenge.id, onRun: {
                         showsError = true
                         store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: displayCode ?? "", compile: true))
                     }) { char in

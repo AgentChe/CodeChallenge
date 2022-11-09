@@ -20,7 +20,7 @@ protocol ChallengesServiceProtocol {
     func loadHashtags() -> AnyPublisher<[String], Error>
 
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error>
-    func fetchCollectionContent(id: Int) -> AnyPublisher<NewChallengeCollectionContent, Error>
+    func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<NewChallengeCollectionContent, Error>
 }
 
 struct ChallengesService: ChallengesServiceProtocol {
@@ -97,14 +97,14 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error> {
         return URLRequest
-            .create(url: "https://run.mocky.io/v3/ae88e999-cde0-4b9c-a98b-85a9fe2ec7d1", type: .get)
+            .create(url: "https://api.stage.codehub.ninja/v1/home/\(id)/\(language)", type: .get)
             .flatMap { networkService.load($0, decoding: [NewChallengeSection].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 
-    func fetchCollectionContent(id: Int) -> AnyPublisher<NewChallengeCollectionContent, Error> {
+    func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<NewChallengeCollectionContent, Error> {
         return URLRequest
-            .create(url: "https://run.mocky.io/v3/0c8cf626-45dd-434e-b73d-be162cf18992", type: .get)
+            .create(url: "https://api.stage.codehub.ninja/v1/challange/group/\(groupId)/\(id)", type: .get)
             .flatMap { networkService.load($0, decoding: NewChallengeCollectionContent.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

@@ -50,7 +50,7 @@ struct HomeGroupView: View {
                     .frame(height: large ? 15 : 10)
                     HStack {
                         NetworkImage(
-                            viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.challangeId)/",
+                            viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.id)/",
                                              store: store,
                                              placeholder: .init(named: "placeholder_image")),
                             size: .init(width: 50, height: 50)

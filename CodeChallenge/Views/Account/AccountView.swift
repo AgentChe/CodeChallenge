@@ -169,7 +169,7 @@ struct AccountView: View, AccountViewProps {
                 .foregroundColor(.white)
                 .font(.systemFont(ofSize: 14))
 
-            ForEach(displayInProgressChallenges, id: \.challangeId) { challenge in
+            ForEach(displayInProgressChallenges, id: \.id) { challenge in
                 UniversalCodeChallengeView(codeChallenge: challenge)
                     .onTapGesture {
                         self.onOpenChallengeDetails(challenge)

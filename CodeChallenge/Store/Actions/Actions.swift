@@ -287,9 +287,9 @@ struct UpdateChallengeProgress: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session") ?? ""
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        let challengeId = challenge.challangeId
+        let challengeId = challenge.id
 
-        let currentProgressType = dispatcher.state.challengeProgresses[challenge.challangeId]?.value?.type ?? "inprogress"
+        let currentProgressType = dispatcher.state.challengeProgresses[challenge.id]?.value?.progress ?? 0
 
         let compileIfNeeded = {
             guard compile else { return }
@@ -303,7 +303,7 @@ struct UpdateChallengeProgress: ThunkAction {
 
                     let progress = dispatcher.state.challengeProgresses[challengeId]?.value
 
-                    if result.value?.isSuccesful == true, currentProgressType != "done" {
+                    if result.value?.isSuccesful == true, currentProgressType != 100 {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
                                 dispatcher.dispatch(LoadAccount())
@@ -322,7 +322,7 @@ struct UpdateChallengeProgress: ThunkAction {
             dispatcher.dispatch(Action.loadChallengeProgress((challengeId, .loading)))
             dispatcher
                 .services.challengesService
-                .updateChallengeProgress(id: challengeId, progressId: progress.id ?? 0, session: session, solution: solution, type: currentProgressType)
+                .updateChallengeProgress(id: challengeId, progressId: progress.id ?? 0, session: session, solution: solution, type: currentProgressType != 100 ? "inprogress": "done")
                 .asResolvable()
                 .ephemeralSink{ nothing in
                     if nothing.isSuccess {
@@ -428,7 +428,9 @@ struct LoadHomeSections: ThunkAction {
 
     func exec(dispatcher: Dispatcher) {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        dispatcher.dispatch(Action.loadHomeSections("\(language)_\(humanLanguage)", .loading))
+        if dispatcher.state.homeSections["\(language)_\(humanLanguage)"]?.value == nil {
+            dispatcher.dispatch(Action.loadHomeSections("\(language)_\(humanLanguage)", .loading))
+        }
 
         dispatcher.services.challengesService
             .fetchHomeSections(language: language, humanLanguage: humanLanguage, id: userId)
@@ -444,10 +446,12 @@ struct LoadCollectionContent: ThunkAction {
 
     func exec(dispatcher: Dispatcher) {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-//        dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, .loading))
+        if dispatcher.state.collections[collection.id]?.value == nil {
+            dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, .loading))
+        }
 
         dispatcher.services.challengesService
-            .fetchCollectionContent(id: collection.id)
+            .fetchCollectionContent(id: userId, groupId: collection.id)
             .asResolvable()
             .ephemeralSink { groups in
                 dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, groups))

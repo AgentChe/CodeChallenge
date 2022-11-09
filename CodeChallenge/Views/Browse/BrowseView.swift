@@ -41,7 +41,7 @@ struct BrowseView: View, BrowseViewProps {
                         VStack(alignment: .leading, spacing: 40) {
                             if !challengesToSuggest.isEmpty && searchFieldIsFocused {
                                 VStack(spacing: 10) {
-                                    ForEach(challengesToSuggest, id: \.challangeId) { challenge in
+                                    ForEach(challengesToSuggest, id: \.id) { challenge in
                                         UniversalCodeChallengeView(codeChallenge: challenge)
                                             .onTapGesture {
                                                 onOpenChallenge(challenge)

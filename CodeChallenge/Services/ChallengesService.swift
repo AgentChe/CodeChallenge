@@ -97,7 +97,7 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error> {
         return URLRequest
-            .create(url: "https://api.stage.codehub.ninja/v1/home/\(id)/\(language)", type: .get)
+            .create(url: "https://run.mocky.io/v3/d7795584-62ad-4ef3-98e5-396c744956b8", type: .get)
             .flatMap { networkService.load($0, decoding: [NewChallengeSection].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

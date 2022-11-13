@@ -7,9 +7,10 @@
 
 import Foundation
 import SwiftUI
+import UIKit
 
 struct NewHomeView: View, NewHomeViewProps {
-    let gridItemLayout = [GridItem(.flexible())]
+    let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     @EnvironmentObject var store: Store
     let language: String
     let humanLanguage: String
@@ -31,7 +32,7 @@ struct NewHomeView: View, NewHomeViewProps {
                         alignment: .leading,
                         spacing: 0,
                         pinnedViews: []) {
-                            ForEach(displaySections, id: \.name) { section in
+                            ForEach(Array(displaySections.enumerated()), id: \.offset) { (sectionOffset, section) in
                                 Section(
                                     header:
                                         Text(section.name)
@@ -40,8 +41,8 @@ struct NewHomeView: View, NewHomeViewProps {
                                     .padding(.leading, 10.0)
                                     .padding(.bottom, 16)
                                 ) {
-                                    ForEach(section.collections, id: \.id) { collection in
-                                        NewHomeViewElementView(model: collection)
+                                    ForEach(Array(section.collections.enumerated()), id: \.element.id) { (offset, collection) in
+                                        homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
                                             .onTapGesture {
                                                 onCollectionTap?(collection, section)
                                             }
@@ -62,22 +63,60 @@ struct NewHomeView: View, NewHomeViewProps {
             displaySections = newValue ?? []
         }
     }
+
+    private func homeViewElementView(offset: Int, sectionOffset: Int, section: NewChallengeSection, collection: NewChallengeCollection) -> some View {
+        NewHomeViewElementView(model: collection,
+                               progressImageName: progressImageName(index: offset, sectionIndex: sectionOffset),
+                               progressTopInset: progressTopInset(index: offset, sectionIndex: sectionOffset),
+                               progressBottomInset: progressBottomInset(index: offset, sectionIndex: sectionOffset),
+                               progressPreviousPeaceHeight: progressPreviousPeaceHeight(index: offset, sectionIndex: sectionOffset),
+                               expectedHeight: expectedHeight(index: offset, sectionIndex: sectionOffset),
+                               previousModel: section.collections.element(at: offset - 1),
+                               nextModel: section.collections.element(at: offset + 1))
+    }
 }
 
 struct NewHomeViewElementView: View {
     let model: NewChallengeCollection
+    let progressImageName: String
+    let progressTopInset: CGFloat
+    let progressBottomInset: CGFloat
+    let progressPreviousPeaceHeight: CGFloat
+    let expectedHeight: CGFloat
+
+    let previousModel: NewChallengeCollection?
+    let nextModel: NewChallengeCollection?
 
     var body: some View {
         HStack {
             Spacer()
-                .frame(width: 44)
-            VStack {
+                .frame(width: 15)
+
+            ZStack {
+                HStack {
+                    Spacer()
+                        .frame(width: 3)
+                    progressView
+                    Spacer()
+                        .frame(width: 3)
+                }
+                if model.progress == 100 {
+                    completionView
+                }
+            }
+
+            Spacer()
+                .frame(width: 9)
+
+            VStack(spacing: 0) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 13)
                         .fill(Color(UIColor.CodeChallenge.dark))
                     RoundedRectangle(cornerRadius: 13)
-                        .stroke(Color(model.progress == 100 ? .CodeChallenge.blue1 : .CodeChallenge.gray1), lineWidth: 1.5)
-//                        .frame(width: .screenWidth - 32, height: 130)
+                        .stroke(
+                            Color(model.progress > 0 ? (model.progress == 100 ? .CodeChallenge.blue1 : .CodeChallenge.white) : .CodeChallenge.gray1),
+                                lineWidth: 1.5
+                        )
                     HStack(spacing: 0) {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(model.name)
@@ -85,6 +124,7 @@ struct NewHomeViewElementView: View {
                             Text(model.description)
                                 .font(.systemFont(ofSize: 12))
                                 .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
+                            Spacer()
                         }
                         Spacer()
                         Image("test1")
@@ -98,6 +138,94 @@ struct NewHomeViewElementView: View {
                 Spacer()
                     .frame(height: 27)
             }
+            .frame(height: 157)
         }
+    }
+
+    private var progressView: some View {
+        VStack {
+            Spacer()
+                .frame(height: progressTopInset)
+            ZStack {
+                Image(progressImageName)
+                    .colorMultiply(Color(UIColor.CodeChallenge.gray2))
+                if model.progress > 0 {
+                    VStack(spacing: 0) {
+                        Image(progressImageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 14, height: (currentPeaceProgress ?? 0) + progressPreviousPeaceHeight, alignment: .top)
+                            .clipped()
+                            .colorMultiply(Color(UIColor.CodeChallenge.blue1))
+                        if !(currentPeaceProgress == 134 || currentPeaceProgress == 108 || currentPeaceProgress == 104) {
+                            Spacer()
+                        }
+                    }
+                }
+                VStack(spacing: 0) {
+                    Image(progressImageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 14, height: progressPreviousPeaceHeight > 0 ? progressPreviousPeaceHeight - 4 : 0, alignment: .top)
+                        .clipped()
+                        .colorMultiply(Color(UIColor.CodeChallenge.gray2))
+                    Spacer()
+                }
+                if let previousPeaceProgress = previousPeaceProgress {
+                    VStack(spacing: 0) {
+                        Image(progressImageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 14, height: previousPeaceProgress, alignment: .top)
+                            .clipped()
+                            .colorMultiply(Color(UIColor.CodeChallenge.blue1))
+                        Spacer()
+                    }
+                }
+            }
+            Spacer()
+                .frame(height: progressBottomInset)
+        }
+    }
+
+    var completionView: some View {
+        VStack {
+            Spacer()
+                .frame(height: completionViewTopInset)
+            Image("home_progress_done")
+                .resizable()
+                .frame(width: 20, height: 20)
+            Spacer()
+        }
+    }
+
+    var completionViewTopInset: CGFloat {
+        if previousModel != nil {
+            return 19
+        } else if nextModel != nil {
+            return 18
+        }
+        return 20
+    }
+
+    var previousPeaceProgress: CGFloat? {
+        guard let previousModel = previousModel else { return nil }
+        //158 is total, 134 is visible in previous model
+        let heightToCover = CGFloat(previousModel.progress)/100 * 158.0
+        if heightToCover >= expectedHeight {
+            return 24 - (158.0 - heightToCover)
+        }
+        return nil
+    }
+
+    var currentPeaceProgress: CGFloat? {
+        if let _ = nextModel {
+            let heightToCover = CGFloat(model.progress)/100 * 158.0
+            if heightToCover >= expectedHeight {
+                return expectedHeight
+            }
+            return heightToCover
+        }
+        return CGFloat(model.progress)/100 * expectedHeight
     }
 }

@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build-and-test:
     macos:
-      xcode: 13.4.1
+      xcode: 14.0.1
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: test
@@ -20,7 +20,7 @@ jobs:
 
   run-qa-build:
     macos:
-      xcode: 13.4.1
+      xcode: 14.0.1
     environment:
       FL_OUTPUT_DIR: output
       FASTLANE_LANE: run_all

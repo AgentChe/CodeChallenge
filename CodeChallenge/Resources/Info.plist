@@ -25,6 +25,8 @@
 	<string>We need this permission to have better analytics</string>
 	<key>TARGET_NAME</key>
 	<string>$(TARGET_NAME)</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

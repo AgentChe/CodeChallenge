@@ -90,7 +90,7 @@ struct NewHomeViewElementView: View {
     var body: some View {
         HStack {
             Spacer()
-                .frame(width: 15)
+                .frame(width: 1)
 
             ZStack {
                 HStack {
@@ -121,10 +121,11 @@ struct NewHomeViewElementView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(model.name)
                                 .font(.systemFont(ofSize: 18, weight: .medium))
+                                .multilineTextAlignment(.leading)
                             Text(model.description)
                                 .font(.systemFont(ofSize: 12))
                                 .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
-                            Spacer()
+                                .multilineTextAlignment(.leading)
                         }
                         Spacer()
                         Image("test1")

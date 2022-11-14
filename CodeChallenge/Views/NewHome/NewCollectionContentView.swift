@@ -14,6 +14,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
     let collection: NewChallengeCollection
     let section: NewChallengeSection
     let onChallengeOpen: (Challenge) -> Void
+    @State private var displayXp: Int = 0
 
     @State private var displayContent: NewChallengeCollectionContent?
     @State private var displayChallenges: [Challenge] = []
@@ -43,6 +44,22 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
             guard let newValue = newValue else { return }
             displayChallenges = newValue.challenges
             displayContent = newValue
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                XPView(
+                    xpText: "\(displayXp)",
+                    backgroundColor: .CodeChallenge.dark,
+                    xpIconColor: "white",
+                    strokeColor: .CodeChallenge.blue1
+                )
+            }
+        }
+        .onChange(of: xp) { newValue in
+            displayXp = xp
+        }
+        .onAppear {
+            displayXp = xp
         }
     }
 

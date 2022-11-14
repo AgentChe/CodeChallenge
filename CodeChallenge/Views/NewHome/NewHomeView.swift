@@ -15,6 +15,7 @@ struct NewHomeView: View, NewHomeViewProps {
     let language: String
     let humanLanguage: String
     let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
+    @State private var displayXp: Int = 0
 
     @State private var displaySections: [NewChallengeSection] = []
 
@@ -24,7 +25,7 @@ struct NewHomeView: View, NewHomeViewProps {
                 Text("Code Challenges")
                     .font(.systemFont(ofSize: 30, weight: .semibold))
                     .foregroundColor(.white)
-                    .padding(.bottom, 32)
+                    .padding(.bottom, 16)
                     .padding(.leading, 16)
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(
@@ -53,6 +54,7 @@ struct NewHomeView: View, NewHomeViewProps {
                         .foregroundColor(.white)
                         .padding(.horizontal, 16)
                 }
+                .padding(.top, 16)
             }
         }
         .onAppear {
@@ -61,6 +63,22 @@ struct NewHomeView: View, NewHomeViewProps {
         }
         .onChange(of: sections) { newValue in
             displaySections = newValue ?? []
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                XPView(
+                    xpText: "\(displayXp)",
+                    backgroundColor: .CodeChallenge.dark,
+                    xpIconColor: "white",
+                    strokeColor: .CodeChallenge.blue1
+                )
+            }
+        }
+        .onChange(of: xp) { newValue in
+            displayXp = xp
+        }
+        .onAppear {
+            displayXp = xp
         }
     }
 

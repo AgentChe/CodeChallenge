@@ -32,6 +32,16 @@ struct HomeView: View, HomeViewProps {
             displayHomeViewComponents = homeViewComponents
         }
         .background(.clear)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                XPView(
+                    xpText: "\(xp)",
+                    backgroundColor: .CodeChallenge.dark,
+                    xpIconColor: "white",
+                    strokeColor: .CodeChallenge.blue1
+                )
+            }
+        }
     }
 
     func contentView(_ homeViewComponents: [HomeView.Component]) -> some View {

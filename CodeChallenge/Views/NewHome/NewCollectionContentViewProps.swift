@@ -21,4 +21,8 @@ extension NewCollectionContentViewProps {
     var isLoading: Bool {
         store.state.collections[collection.id]?.isLoading == true
     }
+
+    var xp: Int {
+        store.state.account.value?.xp ?? 0
+    }
 }

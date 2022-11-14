@@ -159,6 +159,7 @@ extension RootCoordinator {
             .foregroundColor: UIColor.CodeChallenge.white,
             .font: UIFont.systemFont(ofSize: 20)
         ]
+        barAppearance.setBackIndicatorImage(.init(named: "back"), transitionMaskImage: .init(named: "back"))
         UINavigationBar.appearance().compactAppearance = barAppearance
         UINavigationBar.appearance().standardAppearance = barAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = barAppearance

@@ -53,6 +53,13 @@ struct AccountView: View, AccountViewProps {
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $inputImage)
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Image("settings").onTapGesture {
+                    onOpenSettings()
+                }
+            }
+        }
     }
 
     func loadImage() {
@@ -94,18 +101,6 @@ struct AccountView: View, AccountViewProps {
                         }
                         Spacer()
                             .frame(height: 4)
-                    }
-
-                    VStack {
-                        HStack {
-                            Spacer()
-                            Image("settings").onTapGesture {
-                                onOpenSettings()
-                            }
-                            Spacer()
-                                .frame(width: 30)
-                        }
-                        Spacer()
                     }
                 }
                 .frame(height: 120)

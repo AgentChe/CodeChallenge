@@ -20,6 +20,10 @@ extension HomeViewProps {
         store.state.challengeGroups.isLoading
     }
 
+    var xp: Int {
+        store.state.account.value?.xp ?? 0
+    }
+
     var homeViewComponents: [HomeView.Component] {
         guard let allGroups = challengeGroups else { return [] }
         let challengeGroups = allGroups.filter { $0.style != .collection }

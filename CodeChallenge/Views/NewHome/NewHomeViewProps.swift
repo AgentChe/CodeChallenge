@@ -26,6 +26,10 @@ extension NewHomeViewProps {
         "\(language)_\(humanLanguage)"
     }
 
+    var xp: Int {
+        store.state.account.value?.xp ?? 0
+    }
+
     func progressImageName(index: Int, sectionIndex: Int) -> String {
         guard let collections = sections?[sectionIndex].collections else { return "" }
         if index == 0 && collections.count == 1 {

@@ -106,9 +106,10 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
         })
         .toolbar {
             if selection == 1 && removeTrailingNewLines(string: template.removingPercentEncoding ?? template) != displayCode {
-                Button("Reset") {
-                    showsResetProgressPopup = true
-                }
+                Image("reset")
+                    .onTapGesture {
+                        showsResetProgressPopup = true
+                    }
             } else {
                 EmptyView()
             }

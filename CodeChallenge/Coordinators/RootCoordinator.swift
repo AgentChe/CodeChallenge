@@ -42,11 +42,9 @@ final class RootCoordinator {
         var tabs = [
             homeCoordinator.navigationController,
             browseCoordinator.navigationController,
+            buddiesCoordinator.navigationController,
             accountCoordinator.navigationController
         ]
-        if UserDefaults.standard.bool(forKey: "buddies_enabled") {
-            tabs.insert(buddiesCoordinator.navigationController, at: 2)
-        }
         tabBarController.setViewControllers(tabs, animated: false)
         tabBarController.tabBar.items?.forEach {
             $0.image = $0.image?.withRenderingMode(.alwaysOriginal)
@@ -228,8 +226,6 @@ extension RootCoordinator {
             .asResolvable()
             .compactMap(\.value)
             .map {
-                let buddiesEnabled = $0.buddies == nil || $0.buddies == true
-                UserDefaults.standard.set(buddiesEnabled, forKey: "buddies_enabled")
                 return $0.maintenance
             }
             .eraseToAnyPublisher()
@@ -238,5 +234,4 @@ extension RootCoordinator {
 
 struct Maintenance: Codable {
     let maintenance: Bool
-    let buddies: Bool?
 }

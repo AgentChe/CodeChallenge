@@ -104,7 +104,7 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<NewChallengeCollectionContent, Error> {
         return URLRequest
-            .create(url: "https://api.stage.codehub.ninja/v1/challange/group/\(groupId)/\(id)", type: .get)
+            .create(url: "\(Configuration.host)/v1/challange/group/\(groupId)/\(id)", type: .get)
             .flatMap { networkService.load($0, decoding: NewChallengeCollectionContent.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

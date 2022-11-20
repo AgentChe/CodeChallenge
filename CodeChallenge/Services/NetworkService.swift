@@ -60,8 +60,10 @@ final class NetworkService: NetworkServiceProtocol {
         decoding _: T.Type,
         with decoder: JSONDecoder = .init()
     ) -> AnyPublisher<T, Error> {
+        var newRequest = request
+        newRequest.cachePolicy = .reloadIgnoringLocalCacheData
         return session
-            .dataTask(for: request)
+            .dataTask(for: newRequest)
             .mapResponse()
             .tryMap {
                 do {

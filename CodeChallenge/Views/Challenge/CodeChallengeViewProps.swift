@@ -14,11 +14,7 @@ protocol CodeChallengeViewProps {
 
 extension CodeChallengeViewProps {
     var details: ChallengeDetail? {
-        if store.state.challengeDetails.keys.count >= 1 {
-            return store.state.challengeDetails[codeChallenge.id]?.value
-        } else {
-            return nil
-        }
+        store.state.challengeDetails[codeChallenge.id]?.value
     }
 
     var code: String {

@@ -52,7 +52,7 @@ class HomeCoordinator {
 
     private func openCollectionDetail(collection: NewChallengeCollection, section: NewChallengeSection) {
         let view = NewCollectionContentView(collection: collection, section: section, onChallengeOpen: { [weak self] challenge in
-            self?.openCodeChallenge(challenge: challenge, group: nil)
+            self?.openCodeChallenge(challenge: challenge, group: nil, collection: collection)
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
@@ -71,13 +71,16 @@ class HomeCoordinator {
         navigationController.present(controller, animated: false)
     }
 
-    func openCodeChallenge(challenge: Challenge, group: ChallengeGroup?) {
+    func openCodeChallenge(challenge: Challenge, group: ChallengeGroup?, collection: NewChallengeCollection?) {
         let challengeView = CodeChallengeView(codeChallenge: challenge, group: group) { [weak self] challengeDetail in
             guard let challengeDetail = challengeDetail else { return }
             self?.showSolution(challengeDetail: challengeDetail, challenge: challenge, group: group)
         } onSuccess: { [weak self] challenge in
             guard let challenge = challenge else { return }
             self?.runSuccessPopup(challenge: challenge)
+            if let collection = collection {
+                self?.store.dispatch(LoadCollectionContent(collection: collection))
+            }
         } onDismiss: { [weak self] in
             self?.navigationController.popViewController(animated: true)
         }
@@ -102,7 +105,7 @@ class HomeCoordinator {
 
     private func openCollectionView(collection: ChallengeGroup) {
         let collectionView = CollectionItemsView(collection: collection) { [weak self] (challenge, group) in
-            self?.openCodeChallenge(challenge: challenge, group: group)
+            self?.openCodeChallenge(challenge: challenge, group: group, collection: nil)
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: collectionView)

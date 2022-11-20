@@ -101,7 +101,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
             HStack {
                 RoundedRectangle(cornerRadius: 1.5)
                     .fill(Color(UIColor.CodeChallenge.blue1))
-                    .frame(width: (.screenWidth - 32) * CGFloat(collection.progress/100), height: 3)
+                    .frame(width: (.screenWidth - 32) * CGFloat(displayContent.progress)/100, height: 3)
                 Spacer()
             }
         }
@@ -121,7 +121,9 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                     )
                     Spacer()
                     VStack {
-                        if challenge.isPremium {
+                        if challenge.progress == "done" {
+                            Image("challenge_progress_done")
+                        } else if challenge.isPremium {
                             Image("challenge_premium_icon")
                         } else {
                             Button("\(challenge.xp)XP") {}

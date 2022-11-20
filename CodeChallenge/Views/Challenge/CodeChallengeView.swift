@@ -18,7 +18,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     let onDismiss: () -> Void
     @State var selection: Int = 0
     @State var specialCharacter: String?
-//    @State var displayDetails: ChallengeDetail?
     @State private var displayCode: String?
     @State private var showsError: Bool = false
     @State private var enabledSections: [String] = ["Task", "Code"]
@@ -26,7 +25,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     @State private var resettedTemplate: String?
     @State private var bottomSheetShown = false
     @State private var keyboardHeight: CGFloat = 0
-    @State private var displayDetails: ChallengeDetail?
+    @State var displayDetails: ChallengeDetail?
     let quickAccessCharBottomToCover: CGFloat = UIDevice.hasSmallScreen ? 10 : 17
     let quickAccessCharViewHeight: CGFloat = UIDevice.hasSmallScreen ? 65 : 95
 
@@ -74,6 +73,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             if let details = details, (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
                 if !celebratedChallenges.contains(details.id) {
                     set(celebratedChallenge: details)
+                    store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         onSuccess(details)
                     }
@@ -113,7 +113,8 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             } else {
                 EmptyView()
             }
-        }.onChange(of: output) { _ in
+        }
+        .onChange(of: output) { _ in
             keyboardHeight = 0
             UIApplication.shared.endEditing()
         }
@@ -375,5 +376,17 @@ struct SkeletonCodeChallengeView: View {
 extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+extension View{
+    func sync<T:Equatable>(_ published:Binding<T>, with binding:Binding<T>)-> some View{
+        self
+            .onChange(of: published.wrappedValue) { published in
+                binding.wrappedValue = published
+            }
+            .onChange(of: binding.wrappedValue) { binding in
+                published.wrappedValue = binding
+            }
     }
 }

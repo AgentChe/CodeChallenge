@@ -32,6 +32,10 @@ extension UIColor.CodeChallenge {
         UIColor(red: 39/255, green: 40/255, blue: 44/255, alpha: 1)
     }
 
+    static var gray: UIColor {
+        UIColor(red: 39/255, green: 42/255, blue: 51/255, alpha: 1)
+    }
+
     static var purple: UIColor {
         UIColor(red: 128/255, green: 111/255, blue: 255/255, alpha: 1)
     }
@@ -82,6 +86,10 @@ extension UIColor.CodeChallenge {
 
     static var darkBlue: UIColor {
         UIColor.init(red: 24/255, green: 31/255, blue: 59/255, alpha: 1.0)
+    }
+
+    static var dustyBlue: UIColor {
+        UIColor.init(red: 56/255, green: 75/255, blue: 114/255, alpha: 1.0)
     }
 }
 

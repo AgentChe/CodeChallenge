@@ -51,3 +51,37 @@ struct XPView: View {
         .frame(height: 32)
     }
 }
+
+struct ChallengeXPView: View {
+    let xpText: String
+
+    var body: some View {
+        content
+            .background(
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color(.CodeChallenge.white), lineWidth: 1)
+            )
+    }
+
+    private var content: some View {
+        VStack(spacing: 0) {
+            Spacer()
+                .frame(height: 3)
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: 8)
+                Text(xpText)
+                    .foregroundColor(.white)
+                    .font(.systemFont(ofSize: 10))
+                Spacer()
+                    .frame(width: 2)
+                Image("xpIcon_white")
+                Spacer()
+                    .frame(width: 8)
+            }
+            Spacer()
+                .frame(height: 3)
+        }
+        .frame(height: 19)
+    }
+}

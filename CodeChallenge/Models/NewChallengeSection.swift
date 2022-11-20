@@ -16,15 +16,17 @@ struct NewChallengeCollection: Codable, Equatable {
     let id: Int
     let name: String
     let description: String
-//    let icon: String
+    let icon: String
     let progress: Int
+    let isNew: Bool
 
     enum CodingKeys: CodingKey {
         case id
         case name
         case description
-//        case icon
+        case icon
         case progress
+        case isNew
     }
 
     init(from decoder: Decoder) throws {
@@ -32,8 +34,9 @@ struct NewChallengeCollection: Codable, Equatable {
         self.id = try container.decode(Int.self, forKey: .id)
         self.name = try container.decode(String.self, forKey: .name)
         self.description = try container.decode(String.self, forKey: .description).removingPercentEncoding ?? ""
-//        self.icon = try container.decode(String.self, forKey: .icon)
+        self.icon = try container.decode(String.self, forKey: .icon)
         self.progress = try container.decode(Int.self, forKey: .progress)
+        self.isNew = try container.decode(Bool.self, forKey: .isNew)
     }
 }
 

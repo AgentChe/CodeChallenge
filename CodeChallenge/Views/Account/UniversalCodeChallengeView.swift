@@ -14,15 +14,22 @@ struct UniversalCodeChallengeView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color(UIColor.CodeChallenge.background))
+            if codeChallenge.progress == "inprogress" {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color(UIColor.CodeChallenge.gray))
+            } else {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color(UIColor.CodeChallenge.blue1))
+                    .background(.CodeChallenge.dark)
+            }
             HStack(spacing: 10) {
                 VStack {
+                    Spacer()
                     NetworkImage(
                         viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(codeChallenge.id)/",
                                          store: store,
                                          placeholder: .init(named: "placeholder_image")),
-                        size: .init(width: 41, height: 41)
+                        size: .init(width: 40, height: 40)
                     )
                     Spacer()
                 }
@@ -34,9 +41,11 @@ struct UniversalCodeChallengeView: View {
                             .foregroundColor(.white)
                             .font(.systemFont(ofSize: 14))
                         Spacer()
-                        Button("\(codeChallenge.xp)XP") {}
-                            .buttonStyle(RoundedButtonStyle(foregroundColor: .white, backgroundColor: .CodeChallenge.background, strokeColor: .white))
-                            .disabled(true)
+                        if codeChallenge.progress == "inprogress" {
+                            ChallengeXPView(xpText: "\(codeChallenge.xp)")
+                        } else if codeChallenge.progress == "done" {
+                            Image("challenge_progress_done")
+                        }
                     }
                     Spacer()
                     HStack {
@@ -49,8 +58,9 @@ struct UniversalCodeChallengeView: View {
                     .frame(height: 18)
                 }
             }
-            .padding(10)
+            .padding(.horizontal, 15)
+            .padding(.vertical, 10)
         }
-        .frame(height: 76)
+        .frame(height: 80)
     }
 }

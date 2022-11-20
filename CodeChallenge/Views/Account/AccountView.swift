@@ -14,6 +14,7 @@ struct AccountView: View, AccountViewProps {
     let onLogin: () -> Void
     let onOpenSettings: () -> Void
     let onOpenChallengeDetails: (Challenge) -> Void
+    let onOpenCompletedChallenges: () -> Void
     @State var displayAccount: Account?
     @State var displayInProgressChallenges: [Challenge] = []
     @State private var showingImagePicker = false
@@ -132,8 +133,11 @@ struct AccountView: View, AccountViewProps {
 //                    }
 //                }
                 Text("\(account.solvedChallenges ?? 0) challenge\(account.solvedChallenges == 1 ? "" : "s")")
-                .font(.systemFont(ofSize: 16))
-                .foregroundColor(.white)
+                .font(.systemFont(ofSize: 14))
+                .foregroundColor(.CodeChallenge.purple)
+                .onTapGesture {
+                    onOpenCompletedChallenges()
+                }
 
                 if UserDefaults.standard.bool(forKey: "isLoggedIn") == false {
                     Button("Sign in") {
@@ -145,7 +149,7 @@ struct AccountView: View, AccountViewProps {
                 }
                 
                 streakView(account: account)
-                    .padding(.top, 20)
+                    .padding(.top, 10)
 
                 if !inProgressChallenges.isEmpty {
                     inProgressChallengesView
@@ -158,7 +162,7 @@ struct AccountView: View, AccountViewProps {
     }
 
     private var inProgressChallengesView: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 16) {
             Text("Continue Your in Progress Challenges")
                 .padding(.bottom, 5)
                 .foregroundColor(.white)
@@ -177,34 +181,32 @@ struct AccountView: View, AccountViewProps {
     private func streakView(account: Account) -> some View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(.CodeChallenge.background))
+                .stroke(Color(.CodeChallenge.dustyBlue), lineWidth: 1.5)
             VStack(alignment: .leading, spacing: 0) {
-                Text("You're on a")
-                    .font(.systemFont(ofSize: 16))
-                Text("\(account.streak ?? 0)-Day Streak")
-                    .font(.boldSystemFont(ofSize: 30))
-                    .padding(.bottom, 30)
-                HStack(spacing: (.screenWidth - 50)/7 - 30) {
+                Text("You're on a \(account.streak ?? 0)-Day Streak")
+                    .padding(.bottom, 10)
+                HStack(spacing: 12) {
                     ForEach(account.streaktoKeyValueTuple(from: account.streak ?? 0), id: \.self) { item in
                         ZStack {
                             if item.value {
-                                RoundedRectangle(cornerRadius: 15)
+                                RoundedRectangle(cornerRadius: 12.5)
                                     .fill(Color(.CodeChallenge.blue1))
-                                    .frame(width: 30, height: 30)
+                                    .frame(width: 25, height: 25)
                             } else {
-                                RoundedRectangle(cornerRadius: 15)
+                                RoundedRectangle(cornerRadius: 12.5)
                                     .stroke(Color(.CodeChallenge.blue1), lineWidth: 1)
-                                    .frame(width: 30, height: 30)
+                                    .frame(width: 25, height: 25)
                             }
 
                             Text(item.key)
                                 .foregroundColor(item.value ? .CodeChallenge.white : .CodeChallenge.blue1)
+                                .font(.systemFont(ofSize: 13))
                         }
                     }
+                    Spacer()
                 }
-                .padding(.horizontal, 5)
             }
-            .padding(UIDevice.hasSmallScreen ? 12 : 20)
+            .padding(UIDevice.hasSmallScreen ? 12 : 15)
             .foregroundColor(.white)
         }
         .padding(.horizontal, UIDevice.hasSmallScreen ? 10 : 20)

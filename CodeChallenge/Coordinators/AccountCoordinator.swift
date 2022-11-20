@@ -40,6 +40,11 @@ class AccountCoordinator {
             self?.navigationController.pushViewController(controller, animated: true)
         }, onOpenChallengeDetails: { [weak self] challenge in
             self?.openCodeChallenge(challenge: challenge)
+        }, onOpenCompletedChallenges: { [weak self] in
+            let controller = UIHostingController(rootView: CompletedChallengesView(onEnterDetails: { [weak self] challenge in
+                self?.openCodeChallenge(challenge: challenge)
+            }).environmentObject(store))
+            self?.navigationController.pushViewController(controller, animated: true)
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: accountView)

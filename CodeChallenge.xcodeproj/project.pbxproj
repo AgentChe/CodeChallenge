@@ -70,6 +70,8 @@
 		E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FA68028C37F1100D3349D /* SettingsViewProps.swift */; };
 		E0A0D7D9286E575F00113316 /* CodeChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A0D7D8286E575F00113316 /* CodeChallengeTests.swift */; };
 		E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A619D229104D73004EDD41 /* MaintenanceView.swift */; };
+		E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */; };
+		E0A69CCC292AE8B9009D5C0C /* CompletedChallengesViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */; };
 		E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */; };
 		E0B9582328B2A80B00247DE9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582228B2A80A00247DE9 /* SettingsView.swift */; };
 		E0B9582628B2AC8800247DE9 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582528B2AC8800247DE9 /* NotificationsView.swift */; };
@@ -205,6 +207,8 @@
 		E0A0D7D6286E575F00113316 /* CodeChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A0D7D8286E575F00113316 /* CodeChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTests.swift; sourceTree = "<group>"; };
 		E0A619D229104D73004EDD41 /* MaintenanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceView.swift; sourceTree = "<group>"; };
+		E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengesView.swift; sourceTree = "<group>"; };
+		E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengesViewProps.swift; sourceTree = "<group>"; };
 		E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalCodeChallengeView.swift; sourceTree = "<group>"; };
 		E0B9582228B2A80A00247DE9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E0B9582528B2AC8800247DE9 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
@@ -539,6 +543,8 @@
 				E06AAE3428778DAC00995D3D /* AccountViewProps.swift */,
 				E0ECE5C328BC028700A1CB12 /* XPView.swift */,
 				E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */,
+				E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */,
+				E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -825,6 +831,7 @@
 				E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */,
 				E0EBB7E2288B06EE00DE7C53 /* HomeViewProps.swift in Sources */,
 				E0BD324B285A8D6B000C37A9 /* AppDelegate.swift in Sources */,
+				E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */,
 				E0BD3283285CF4A5000C37A9 /* Store.swift in Sources */,
 				E05254FE288C796000FD87C3 /* CodePlaygroundView.swift in Sources */,
 				E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */,
@@ -832,6 +839,7 @@
 				E0EBB7EC288B204900DE7C53 /* NetworkImageViewModel.swift in Sources */,
 				E06AAE272877888C00995D3D /* BrowseCoordinator.swift in Sources */,
 				E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */,
+				E0A69CCC292AE8B9009D5C0C /* CompletedChallengesViewProps.swift in Sources */,
 				E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */,
 				E0EBB7F0288B524B00DE7C53 /* CodeChallengeView.swift in Sources */,
 				E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */,

@@ -15,6 +15,7 @@ protocol AccountServiceProtocol {
     func getFollowersCount(userId: Int) -> AnyPublisher<Int, Error>
     func getFollowingCount(userId: Int) -> AnyPublisher<Int, Error>
     func getChallengeProgress(userId: Int) -> AnyPublisher<[Challenge], Error>
+    func getChallengeDones(userId: Int) -> AnyPublisher<[Challenge], Error>
     func addStreak(session: String) -> AnyPublisher<Void, Error>
     func uploadImage(session: String, imageData: Data) -> AnyPublisher<Void, Error>
 }
@@ -50,6 +51,13 @@ struct AccountService: AccountServiceProtocol {
     func getChallengeProgress(userId: Int) -> AnyPublisher<[Challenge], Error> {
         return URLRequest
             .create(url: "\(Configuration.host)/challange/progress/\(userId)/inprogress", type: .get)
+            .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+
+    func getChallengeDones(userId: Int) -> AnyPublisher<[Challenge], Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/challange/progress/\(userId)/done", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

@@ -21,6 +21,7 @@ enum Action: Dispatchable {
     case loadSearchResults(String, Resolvable<[Challenge]>)
     case resetSearch(String)
     case loadInProgressChallenges(Resolvable<[Challenge]>)
+    case loadDoneChallenges(Resolvable<[Challenge]>)
     case logout
     case loadPayments(Resolvable<[AppStorePayment]>)
     case loadHashtags(Resolvable<[String]>, String)
@@ -187,6 +188,7 @@ struct LoadAccount: ThunkAction {
             }
 
         dispatcher.dispatch(LoadInProgressChallenges())
+        dispatcher.dispatch(LoadCompletedChallenges())
 
 //        dispatchGroup.enter()
 //        dispatcher.services.accountService
@@ -216,6 +218,20 @@ struct LoadInProgressChallenges: ThunkAction {
             .asResolvable()
             .ephemeralSink { progresses in
                 dispatcher.dispatch(Action.loadInProgressChallenges(progresses))
+            }
+    }
+}
+
+struct LoadCompletedChallenges: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.loadInProgressChallenges(.loading))
+        let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
+
+        dispatcher.services.accountService
+            .getChallengeDones(userId: userId)
+            .asResolvable()
+            .ephemeralSink { progresses in
+                dispatcher.dispatch(Action.loadDoneChallenges(progresses))
             }
     }
 }
@@ -309,6 +325,7 @@ struct UpdateChallengeProgress: ThunkAction {
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadChallengeGroups())
                                 dispatcher.dispatch(LoadInProgressChallenges())
+                                dispatcher.dispatch(LoadCompletedChallenges())
                             }
                     }
                 }

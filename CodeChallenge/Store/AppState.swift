@@ -18,6 +18,7 @@ struct AppState {
     let challengeResults: [Int: Resolvable<ChallengeCompiledResult>]
     let searchByInstances: [String: SearchState]
     let inProgressChallenges: Resolvable<[Challenge]>
+    let doneChallenges: Resolvable<[Challenge]>
     let payments: Resolvable<[AppStorePayment]>
 
     init(user: Resolvable<User> = .pending,
@@ -30,6 +31,7 @@ struct AppState {
          challengeResults: [Int: Resolvable<ChallengeCompiledResult>] = [:],
          searchByInstances: [String: SearchState] = [:],
          inProgressChallenges: Resolvable<[Challenge]> = .pending,
+         doneChallenges: Resolvable<[Challenge]> = .pending,
          payments: Resolvable<[AppStorePayment]> = .pending) {
         self.user = user
         self.account = account
@@ -42,6 +44,7 @@ struct AppState {
         self.searchByInstances = searchByInstances
         self.inProgressChallenges = inProgressChallenges
         self.payments = payments
+        self.doneChallenges = doneChallenges
     }
 }
 

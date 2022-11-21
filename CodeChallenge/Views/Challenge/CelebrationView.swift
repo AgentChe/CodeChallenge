@@ -27,7 +27,7 @@ class CelebrationView: UIView, PopupContentView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .h2
         return label
     }()
 
@@ -35,7 +35,7 @@ class CelebrationView: UIView, PopupContentView {
         let label = UILabel()
         label.text = "Code Challenge is Solved"
         label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .regular)
+        label.font = .regular(size: 16)
         label.numberOfLines = 0
         label.setContentHuggingPriority(.defaultHigh, for: .vertical)
         label.textAlignment = .center
@@ -57,7 +57,7 @@ class CelebrationView: UIView, PopupContentView {
         button.setTitle("Continue", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 26
-        button.titleLabel?.font = .systemFont(ofSize: 18, weight: .medium)
+        button.titleLabel?.font = .button
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
         return button
     }()
@@ -110,7 +110,7 @@ class CelebrationView: UIView, PopupContentView {
     private func drawRewardView(challenge: ChallengeDetail) {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .h4
         label.text = "Your reward:"
 
         let xpView = XPView(xpText: "+\(challenge.xp)", backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)

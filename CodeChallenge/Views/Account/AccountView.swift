@@ -107,11 +107,11 @@ struct AccountView: View, AccountViewProps {
                 .frame(height: 120)
                 Text(account.name ?? "")
                     .foregroundColor(.white)
-                    .font(.boldSystemFont(ofSize: 25))
+                    .font(.h3)
                     .padding(.top, -20)
                 Text(account.username != nil ? "@\(account.username ?? "")" : "My Profile")
                     .foregroundColor(.white)
-                    .font(.systemFont(ofSize: 24, weight: .bold))
+                    .font(.h3)
 //                HStack(spacing: 50) {
 //                    VStack {
 //                        Text("\(account.solvedChallenges ?? 0)")
@@ -133,7 +133,7 @@ struct AccountView: View, AccountViewProps {
 //                    }
 //                }
                 Text("\(account.solvedChallenges ?? 0) challenge\(account.solvedChallenges == 1 ? "" : "s")")
-                .font(.systemFont(ofSize: 14))
+                .font(.regular(size: 14))
                 .foregroundColor(.CodeChallenge.purple)
                 .onTapGesture {
                     onOpenCompletedChallenges()
@@ -166,7 +166,7 @@ struct AccountView: View, AccountViewProps {
             Text("Continue Your in Progress Challenges")
                 .padding(.bottom, 5)
                 .foregroundColor(.white)
-                .font(.systemFont(ofSize: 14))
+                .font(.bodyText)
 
             ForEach(displayInProgressChallenges, id: \.id) { challenge in
                 UniversalCodeChallengeView(codeChallenge: challenge)
@@ -183,7 +183,15 @@ struct AccountView: View, AccountViewProps {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color(.CodeChallenge.dustyBlue), lineWidth: 1.5)
             VStack(alignment: .leading, spacing: 0) {
-                Text("You're on a \(account.streak ?? 0)-Day Streak")
+                HStack(spacing: 0) {
+                    Text("You're on a ")
+                        .foregroundColor(UIColor.lightGray)
+                        .font(.regular(size: 18))
+                    Text("\(account.streak ?? 0)-Day Streak")
+                        .foregroundColor(.white)
+                        .font(.bold(size: 18))
+                    Spacer()
+                }
                     .padding(.bottom, 10)
                 HStack(spacing: 12) {
                     ForEach(account.streaktoKeyValueTuple(from: account.streak ?? 0), id: \.self) { item in
@@ -200,7 +208,7 @@ struct AccountView: View, AccountViewProps {
 
                             Text(item.key)
                                 .foregroundColor(item.value ? .CodeChallenge.white : .CodeChallenge.blue1)
-                                .font(.systemFont(ofSize: 13))
+                                .font(.regular(size: 13))
                         }
                     }
                     Spacer()
@@ -222,10 +230,10 @@ struct SkeletonAccountView: View {
 
             Text("My Profile")
                 .foregroundColor(.white)
-                .font(.systemFont(ofSize: 24, weight: .bold))
+                .font(.h3)
 
             Text("My Challenges")
-            .font(.systemFont(ofSize: 16))
+            .font(.bodyText)
             .foregroundColor(.white)
             .padding(.bottom, 20)
 

@@ -23,7 +23,7 @@ struct NewHomeView: View, NewHomeViewProps {
         DoodledView {
             VStack(alignment: .leading, spacing: 0) {
                 Text("Code Challenges")
-                    .font(.systemFont(ofSize: 30, weight: .semibold))
+                    .font(.pageNameH1)
                     .foregroundColor(.white)
                     .padding(.bottom, 16)
                     .padding(.leading, 16)
@@ -37,7 +37,7 @@ struct NewHomeView: View, NewHomeViewProps {
                                 Section(
                                     header:
                                         Text(section.name)
-                                        .font(.systemFont(ofSize: 18, weight: .semibold))
+                                        .font(.h3)
                                     .bold()
                                     .padding(.leading, 10.0)
                                     .padding(.bottom, 16)
@@ -142,20 +142,20 @@ struct NewHomeViewElementView: View {
                                 NewLabelView()
                                     .padding(.bottom, 9)
                                 Text(model.name)
-                                    .font(.systemFont(ofSize: 18, weight: .medium))
+                                    .font(.h4)
                                     .multilineTextAlignment(.leading)
                                 Text(model.description)
-                                    .font(.systemFont(ofSize: 12))
+                                    .font(.smallText)
                                     .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
                                     .lineLimit(1)
                                     .multilineTextAlignment(.leading)
                                     .padding(.top, 3)
                             } else {
                                 Text(model.name)
-                                    .font(.systemFont(ofSize: 18, weight: .medium))
+                                    .font(.h4)
                                     .multilineTextAlignment(.leading)
                                 Text(model.description)
-                                    .font(.systemFont(ofSize: 12))
+                                    .font(.smallText)
                                     .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
                                     .multilineTextAlignment(.leading)
                                     .padding(.top, 10)

@@ -23,7 +23,7 @@ struct LabelledField: View {
                         .placeholder(when: text.isEmpty) {
                             Text(title).foregroundColor(UIColor.lightGray)
                         }
-                        .font(.systemFont(ofSize: 16))
+                        .font(.regular(size: 16))
                 } else {
                     TextField("", text: $text, onEditingChanged: { changed in
                         if changed {
@@ -33,7 +33,7 @@ struct LabelledField: View {
                     .placeholder(when: text.isEmpty) {
                         Text(title).foregroundColor(UIColor.lightGray)
                     }
-                    .font(.systemFont(ofSize: 16))
+                    .font(.regular(size: 16))
                 }
             }
             .frame(height: 36)

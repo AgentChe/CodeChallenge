@@ -18,7 +18,7 @@ struct CompletedChallengesView: View, CompletedChallengesViewProps {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Completed Challenges")
-                        .font(.systemFont(ofSize: 30, weight: .semibold))
+                        .font(.pageNameH1)
                         .foregroundColor(.CodeChallenge.white)
                         .multilineTextAlignment(.leading)
                     ForEach(challenges, id: \.id) { challenge in

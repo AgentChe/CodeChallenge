@@ -49,7 +49,7 @@ class SolutionView: UIView, PopupContentView {
         ])
 
         label.text = "Solution"
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.font = .h3
         label.setContentHuggingPriority(.required, for: .vertical)
         label.textColor = .CodeChallenge.purple
         label.textAlignment = .center

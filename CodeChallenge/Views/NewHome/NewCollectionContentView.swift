@@ -66,10 +66,10 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
     func content(displayContent: NewChallengeCollectionContent) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(displayContent.name)
-                .font(.systemFont(ofSize: 30, weight: .semibold))
+                .font(.h2)
                 .foregroundColor(.white)
             Text(displayContent.description)
-                .font(.systemFont(ofSize: 14))
+                .font(.bodyText)
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
             progressBar(displayContent: displayContent)
                 .padding(.top, 16)
@@ -137,7 +137,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                 VStack(alignment: .leading) {
                     Text(challenge.name)
                         .foregroundColor(.CodeChallenge.white)
-                        .font(.systemFont(ofSize: 14, weight: .semibold))
+                        .font(.bodyText)
                         .lineLimit(2)
                     Spacer()
                 }
@@ -167,10 +167,10 @@ fileprivate struct SkeletonView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("displayContent.name")
-                .font(.systemFont(ofSize: 30, weight: .semibold))
+                .font(.h2)
                 .foregroundColor(.white)
             Text("displayContent.description")
-                .font(.systemFont(ofSize: 14))
+                .font(.bodyText)
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
             RoundedRectangle(cornerRadius: 1.5)
                 .padding(.top, 16)
@@ -213,7 +213,7 @@ fileprivate struct SkeletonView: View {
                 VStack(alignment: .leading) {
                     Text("challenge.name")
                         .foregroundColor(.CodeChallenge.white)
-                        .font(.systemFont(ofSize: 14, weight: .semibold))
+                        .font(.bodyText)
                         .lineLimit(2)
                         .redacted(reason: .placeholder)
                     Spacer()

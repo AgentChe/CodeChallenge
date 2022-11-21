@@ -17,7 +17,7 @@ struct NotificationsView: View {
                 VStack(alignment: .leading, spacing: 30) {
                     HStack {
                         Text("Notifications")
-                            .font(.systemFont(ofSize: 30, weight: .semibold))
+                            .font(.pageNameH1)
                             .padding(.bottom, 10)
                         Spacer()
                     }

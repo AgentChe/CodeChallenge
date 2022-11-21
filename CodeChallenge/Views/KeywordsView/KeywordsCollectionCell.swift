@@ -11,6 +11,7 @@ import UIKit
 class KeywordsCollectionCell: UICollectionViewCell {
     var label: UILabel = {
         let label = UILabel()
+        label.font = .bodyText
         return label
     }()
 

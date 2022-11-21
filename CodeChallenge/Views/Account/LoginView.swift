@@ -74,7 +74,7 @@ struct LoginView: View, LoginViewProps {
             Spacer()
                 .frame(height: 15)
             Text(mode == .login ? "Login" : "Sign up")
-                .font(.systemFont(ofSize: 40, weight: .bold))
+                .font(.pageNameH1)
                 .foregroundColor(.CodeChallenge.white)
             Spacer()
                 .frame(height: 10)

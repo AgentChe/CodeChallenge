@@ -17,7 +17,7 @@ struct HtmlAttributedLabel: UIViewRepresentable {
     }
     func updateUIView(_ uiView: ViewWithLabel, context: Context) {
         htmlAttributedString.addAttributes(
-            [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 18),
+            [NSAttributedString.Key.font: UIFont.regular(size: 18),
              NSAttributedString.Key.foregroundColor: UIColor.white],
             range: NSRange(location: 0, length: htmlAttributedString.length)
         )

@@ -69,6 +69,7 @@ struct CodeChallengeTestCasesView: View {
                     Text("Test case #\(index + 1)")
                         .foregroundColor(.white)
                         .opacity(testCase.isLocked ? 0.5 : 1)
+                        .font(.h5)
                     Spacer()
                     if testCase.isLocked {
                         Image("lock")
@@ -95,11 +96,11 @@ struct CodeChallengeTestCasesView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
                 .foregroundColor(.white)
-                .font(.systemFont(ofSize: 16))
+                .font(.h5)
 
             HStack {
                 Text(value ?? "")
-                    .font(.systemFont(ofSize: 14))
+                    .font(.bodyText)
                     .foregroundColor(.white)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 4)
@@ -120,10 +121,10 @@ struct CodeChallengeTestCasesView: View {
                 Spacer()
                     .frame(height: 0)
                 Text("Need help?")
-                    .font(.systemFont(ofSize: 18, weight: .semibold))
+                    .font(.h2)
                     .padding(.horizontal, 20)
                 Text("No worries, we got you covered! Just tap to see the solution.")
-                    .font(.systemFont(ofSize: 14))
+                    .font(.smallText)
                     .padding(.horizontal, 20)
                 ZStack {
                     RoundedCornersShape(corners: [.bottomLeft, .bottomRight], radius: 10)
@@ -131,7 +132,7 @@ struct CodeChallengeTestCasesView: View {
                         .frame(height: 38)
                     HStack {
                         Text("See Solution")
-                            .font(.systemFont(ofSize: 12, weight: .semibold))
+                            .font(.button)
                             .padding(.leading, 15)
                         Spacer()
                     }

@@ -16,7 +16,7 @@ struct NoteView: View {
             Image("note_mark")
             Text(text)
                 .foregroundColor(.white)
-                .font(.systemFont(ofSize: 14))
+                .font(.regular(size: 14))
                 .lineSpacing(10)
         }
         .padding(15)

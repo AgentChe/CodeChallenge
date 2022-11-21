@@ -24,7 +24,7 @@ struct SettingsView: View, SettingsViewProps {
                 VStack(alignment: .leading, spacing: 30) {
                     HStack {
                         Text("Settings")
-                            .font(.systemFont(ofSize: 30, weight: .semibold))
+                            .font(.pageNameH1)
                             .padding(.bottom, 10)
                         Spacer()
                     }
@@ -34,8 +34,8 @@ struct SettingsView: View, SettingsViewProps {
                                             Spacer()
 
                     Text("App version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")")
-                        .font(.systemFont(ofSize: 14))
-                        .foregroundColor(.white)
+                        .font(.bodyText)
+                        .foregroundColor(UIColor.lightGray)
                 }
                 .foregroundColor(.CodeChallenge.white)
             }
@@ -96,6 +96,6 @@ struct SettingsView: View, SettingsViewProps {
                 }
             }
         }
-        .font(.systemFont(ofSize: 18))
+        .font(.h4)
     }
 }

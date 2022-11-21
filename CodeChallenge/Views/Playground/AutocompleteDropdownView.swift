@@ -17,7 +17,7 @@ struct AutocompleteDropdownView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(options, id: \.self) { option in
                         Text(option)
-                            .font(.systemFont(ofSize: 18))
+                            .font(.bodyText)
                             .foregroundColor(.white)
                             .onTapGesture {
                                 onSelect(option)

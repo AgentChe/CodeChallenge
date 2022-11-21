@@ -21,7 +21,7 @@ struct BrowseView: View, BrowseViewProps {
         DoodledView {
             VStack(alignment: .leading, spacing: 40) {
                 Text("Browse")
-                    .font(.systemFont(ofSize: 30, weight: .semibold))
+                    .font(.pageNameH1)
                     .foregroundColor(.CodeChallenge.white)
                     .padding(.horizontal, 20)
                 searchBar
@@ -59,7 +59,7 @@ struct BrowseView: View, BrowseViewProps {
                                     VStack(alignment: .leading, spacing: 15) {
                                         Text("By hashtag")
                                             .foregroundColor(.white)
-                                            .font(.systemFont(ofSize: 18, weight: .bold))
+                                            .font(.h4)
                                             .padding(.horizontal, 20)
                                         if !displayHashtags.isEmpty {
                                             KeywordsSwiftUIView(keywords: displayHashtags, onKeywordTap: { keyword in
@@ -115,7 +115,7 @@ struct BrowseView: View, BrowseViewProps {
                         searchFieldVM.text = ""
                     } label: {
                         Text("Cancel")
-                            .font(.systemFont(ofSize: 16))
+                            .font(.regular(size: 16))
                             .foregroundColor(.CodeChallenge.white)
                             .accessibilityLabel("cancel")
                             .accessibilityHint("cancel search")

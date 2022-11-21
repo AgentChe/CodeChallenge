@@ -49,7 +49,7 @@ final class RootCoordinator {
         tabBarController.tabBar.items?.forEach {
             $0.image = $0.image?.withRenderingMode(.alwaysOriginal)
         }
-        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white, .font: UIFont.tabbar], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.CodeChallenge.blue1], for: .selected)
         window.rootViewController = tabBarController
 

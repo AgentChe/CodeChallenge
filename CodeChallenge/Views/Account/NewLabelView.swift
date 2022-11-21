@@ -27,7 +27,7 @@ struct NewLabelView: View {
                     .frame(width: 10)
                 Text("New")
                     .foregroundColor(.CodeChallenge.purple)
-                    .font(.systemFont(ofSize: 10))
+                    .font(.tag)
                 Spacer()
                     .frame(width: 10)
             }

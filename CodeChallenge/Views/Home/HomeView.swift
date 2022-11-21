@@ -109,7 +109,7 @@ struct RoundedButtonStyle: ButtonStyle {
             configuration.label
                 .padding(.horizontal, 8)
                 .padding(.vertical, 3)
-                .font(.systemFont(ofSize: 10))
+                .font(.tag)
                 .background(
                     Group {
                         if let strokeColor = strokeColor {

@@ -28,10 +28,10 @@ struct GetStartedView: View {
                 Group {
                     Spacer()
                     Text("Learn to code in 5 minutes a day")
-                        .font(.systemFont(ofSize: 30, weight: .bold))
+                        .font(.pageNameH1)
                         .padding(.top, -90)
                     Text("Bringing you over 100 of the best free python coding challenges in a bite-sized format")
-                        .font(.systemFont(ofSize: 16))
+                        .font(.bodyText)
                     Spacer()
                     Button("Get Started") {
                         onDimiss()
@@ -68,7 +68,7 @@ struct GetStartedView: View {
                     .underline()
                 )
                 .frame(maxWidth: .infinity, alignment: .center)
-                .font(.systemFont(ofSize: 12))
+                .font(.regular(size: 12))
                 .foregroundColor(Color.white)
                 .fixedSize(horizontal: false, vertical: true)
         })

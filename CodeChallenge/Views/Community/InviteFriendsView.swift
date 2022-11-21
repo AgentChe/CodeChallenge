@@ -23,9 +23,9 @@ struct InviteFriendsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: UIDevice.hasSmallScreen ? 20 : 60) {
                 Text("Bring your friends!")
-                    .font(.systemFont(ofSize: 30, weight: .semibold))
+                    .font(.pageNameH1)
                     .foregroundColor(.CodeChallenge.white)
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 25)
                 HStack {
                     Spacer()
                     Image("invite_friends_steps")

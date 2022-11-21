@@ -95,6 +95,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 HStack {
                     Text(codeChallenge.name)
                         .foregroundColor(.white)
+                        .font(.h3)
                     Spacer()
                 }
             }
@@ -141,10 +142,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                     Spacer()
                         .frame(height: 25)
                     Text(codeChallenge.name)
-                        .font(.systemFont(ofSize: 24, weight: .bold))
-                    Text(codeChallenge.tagsDescription)
-                        .font(.systemFont(ofSize: 14))
-                        .foregroundColor(.CodeChallenge.mediumBlue)
+                        .font(.h3)
                     HtmlAttributedLabel(htmlAttributedString: challengeDetails.body.python.toAttributedString())
                         .frame(width: .screenWidth - 40)
 
@@ -152,20 +150,22 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("Input:")
                                 .foregroundColor(.CodeChallenge.mediumBlue)
+                                .font(.medium(size: 20))
                             Text(input)
                                 .foregroundColor(.white)
+                                .font(.h5)
                         }
-                        .font(.systemFont(ofSize: 18))
                     }
 
                     if let output = taskOutput {
                         VStack(alignment: .leading, spacing: 6) {
                             Text("Output:")
                                 .foregroundColor(.CodeChallenge.mediumBlue)
+                                .font(.medium(size: 20))
                             Text(output)
                                 .foregroundColor(.white)
+                                .font(.h5)
                         }
-                        .font(.systemFont(ofSize: 18))
                     }
                 }
                 .frame(width: .screenWidth - 40)
@@ -219,7 +219,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                                 .foregroundColor(gotCompileError != nil ?
                                                  (gotCompileError == true ? .red : .green) :
                                         .CodeChallenge.blue1)
-                                .font(.systemFont(ofSize: 20))
+                                .font(.h3)
                             Spacer()
                         }
                         ZStack {
@@ -367,12 +367,12 @@ struct SkeletonCodeChallengeView: View {
             Spacer()
                 .frame(height: 25)
             Text("random title")
-                .font(.systemFont(ofSize: 24, weight: .bold))
+                .font(.h3)
             Text("a random description")
-                .font(.systemFont(ofSize: 14))
+                .font(.h5)
                 .foregroundColor(.CodeChallenge.blue1)
             Text("this text is a lot of details and its supposed to look big redacted. So I am just gonna continue this poem and think that im a poet")
-                .font(.systemFont(ofSize: 18))
+                .font(.h5)
             Spacer()
         }
         .foregroundColor(.CodeChallenge.white)

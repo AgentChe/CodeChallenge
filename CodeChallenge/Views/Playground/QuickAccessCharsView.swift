@@ -66,7 +66,7 @@ struct QuickAccessCharsView: View {
                 .fill(Color(UIColor.CodeChallenge.lightBlue))
                 .frame(height: 33)
             Text(char)
-                .font(.systemFont(ofSize: 20, weight: .bold))
+                .font(.bold(size: 20))
                 .foregroundColor(.white)
                 .padding(.horizontal, 14)
         }

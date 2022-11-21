@@ -39,7 +39,7 @@ struct UniversalCodeChallengeView: View {
                             .lineLimit(2)
                             .padding(.top, 5)
                             .foregroundColor(.white)
-                            .font(.systemFont(ofSize: 14))
+                            .font(.bodyText)
                         Spacer()
                         if codeChallenge.progress == "inprogress" {
                             ChallengeXPView(xpText: "\(codeChallenge.xp)")

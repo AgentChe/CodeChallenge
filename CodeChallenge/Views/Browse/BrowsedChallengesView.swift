@@ -20,7 +20,7 @@ struct BrowsedChallengesView: View, BrowsedChallengesViewProps {
                 VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Text("Results By \(query)")
-                            .font(.systemFont(ofSize: 30, weight: .semibold))
+                            .font(.pageNameH1)
                             .foregroundColor(.CodeChallenge.white)
                             .padding(.bottom, 20)
                             .lineLimit(1)

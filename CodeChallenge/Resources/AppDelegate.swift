@@ -27,6 +27,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("BranchSDK", params, error)
         })
 
+        for family in UIFont.familyNames.sorted() {
+            let names = UIFont.fontNames(forFamilyName: family)
+            print("Family: \(family) Font names: \(names)")
+        }
+
         Branch.getInstance().setIdentity(UIDevice.current.identifierForVendor?.uuidString ?? "")
 
         FirebaseApp.configure()

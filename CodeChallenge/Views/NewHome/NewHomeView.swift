@@ -95,6 +95,7 @@ struct NewHomeView: View, NewHomeViewProps {
 }
 
 struct NewHomeViewElementView: View {
+    @EnvironmentObject var store: Store
     let model: NewChallengeCollection
     let progressImageName: String
     let progressTopInset: CGFloat
@@ -136,19 +137,37 @@ struct NewHomeViewElementView: View {
                                 lineWidth: 1.5
                         )
                     HStack(spacing: 0) {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text(model.name)
-                                .font(.systemFont(ofSize: 18, weight: .medium))
-                                .multilineTextAlignment(.leading)
-                            Text(model.description)
-                                .font(.systemFont(ofSize: 12))
-                                .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
-                                .multilineTextAlignment(.leading)
+                        VStack(alignment: .leading) {
+                            if model.isNew {
+                                NewLabelView()
+                                    .padding(.bottom, 9)
+                                Text(model.name)
+                                    .font(.systemFont(ofSize: 18, weight: .medium))
+                                    .multilineTextAlignment(.leading)
+                                Text(model.description)
+                                    .font(.systemFont(ofSize: 12))
+                                    .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
+                                    .lineLimit(1)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.top, 3)
+                            } else {
+                                Text(model.name)
+                                    .font(.systemFont(ofSize: 18, weight: .medium))
+                                    .multilineTextAlignment(.leading)
+                                Text(model.description)
+                                    .font(.systemFont(ofSize: 12))
+                                    .foregroundColor(Color(UIColor.white.withAlphaComponent(0.6)))
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.top, 10)
+                            }
                         }
                         Spacer()
-                        Image("test1")
-                            .resizable()
-                            .frame(width: 80, height: 80)
+                        NetworkImage(
+                            viewModel: .init(url: "\(Configuration.host)\(model.icon)",
+                                             store: store,
+                                             placeholder: .init(named: "placeholder_image")),
+                            size: .init(width: 80, height: 80)
+                        )
                         Spacer()
                             .frame(width: 5)
                     }

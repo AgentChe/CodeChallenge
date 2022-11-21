@@ -121,7 +121,9 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                     )
                     Spacer()
                     VStack {
-                        if challenge.progress == "done" {
+                        if challenge.isNew {
+                            NewLabelView()
+                        } else if challenge.progress == "done" {
                             Image("challenge_progress_done")
                         } else if challenge.isPremium {
                             Image("challenge_premium_icon")

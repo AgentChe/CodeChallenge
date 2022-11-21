@@ -33,6 +33,7 @@ struct Challenge: Codable {
     let isPremium: Bool
     let xp: Int
     let progress: String
+    let isNew: Bool
 }
 
 extension Challenge: Equatable {}

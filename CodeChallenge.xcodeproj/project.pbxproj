@@ -72,6 +72,7 @@
 		E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A619D229104D73004EDD41 /* MaintenanceView.swift */; };
 		E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */; };
 		E0A69CCC292AE8B9009D5C0C /* CompletedChallengesViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */; };
+		E0A69CCE292AF74F009D5C0C /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */; };
 		E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */; };
 		E0B9582328B2A80B00247DE9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582228B2A80A00247DE9 /* SettingsView.swift */; };
 		E0B9582628B2AC8800247DE9 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582528B2AC8800247DE9 /* NotificationsView.swift */; };
@@ -209,6 +210,7 @@
 		E0A619D229104D73004EDD41 /* MaintenanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceView.swift; sourceTree = "<group>"; };
 		E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengesView.swift; sourceTree = "<group>"; };
 		E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengesViewProps.swift; sourceTree = "<group>"; };
+		E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
 		E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalCodeChallengeView.swift; sourceTree = "<group>"; };
 		E0B9582228B2A80A00247DE9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E0B9582528B2AC8800247DE9 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 				E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */,
 				E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */,
 				E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */,
+				E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -850,6 +853,7 @@
 				E0FB612F29185C1500DB1E9A /* NewHomeViewProps.swift in Sources */,
 				E0EBB7EB288B204900DE7C53 /* NetworkImage.swift in Sources */,
 				E0EBB7EE288B207700DE7C53 /* ImageService.swift in Sources */,
+				E0A69CCE292AF74F009D5C0C /* NewLabelView.swift in Sources */,
 				E08D6F7B28C67EAB006991EB /* ImagePicker.swift in Sources */,
 				E0BD323F285A8723000C37A9 /* LoginView.swift in Sources */,
 				E0BD329F285D022F000C37A9 /* AccountCoordinator.swift in Sources */,

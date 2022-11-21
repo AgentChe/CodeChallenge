@@ -90,7 +90,15 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 enabledSections = ["Task", "Code", "Result"]
             }
         }
-        .navigationTitle(codeChallenge.name)
+        .toolbar(content: {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Text(codeChallenge.name)
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+            }
+        })
         .background(Color.dark.edgesIgnoringSafeArea(.all))
         .alert(isPresented: $showsResetProgressPopup, content: {
             Alert(title: Text("Are you sure you want to reset the progress?"),

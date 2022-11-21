@@ -14,7 +14,7 @@ struct UniversalCodeChallengeView: View {
 
     var body: some View {
         ZStack {
-            if codeChallenge.progress == "inprogress" {
+            if codeChallenge.progress != "done" {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color(UIColor.CodeChallenge.gray))
             } else {

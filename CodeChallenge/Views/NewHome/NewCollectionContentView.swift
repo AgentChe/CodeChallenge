@@ -126,9 +126,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                         } else if challenge.isPremium {
                             Image("challenge_premium_icon")
                         } else {
-                            Button("\(challenge.xp)XP") {}
-                                .buttonStyle(RoundedButtonStyle(foregroundColor: .white, backgroundColor: .CodeChallenge.background, strokeColor: .white))
-                                .disabled(true)
+                            ChallengeXPView(xpText: "\(challenge.xp)")
                         }
                         Spacer()
                     }

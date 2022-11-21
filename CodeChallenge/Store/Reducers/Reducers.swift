@@ -21,6 +21,7 @@ struct Reducers {
             challengeProgresses: challengeProgressReducer(state.challengeProgresses, action),
             challengeResults: challengeResultsReducer(state.challengeResults, action),
             searchByInstances: searchesByInstancesReducer(state.searchByInstances, action),
+            recommendedChallenges: recommendedChallengesReducer(state.recommendedChallenges, action),
             inProgressChallenges: inProgressChallengesReducer(state.inProgressChallenges, action),
             doneChallenges: doneChallengesReducer(state.doneChallenges, action),
             payments: paymentsReducer(state.payments, action)
@@ -139,6 +140,16 @@ extension Reducers {
             return challenges
         case .logout:
             return .success([])
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let recommendedChallengesReducer: Reducer<Resolvable<[Challenge]>> = { state, action in
+        switch action {
+        case .loadRecommendedChallenges(let challenges):
+            return challenges
         default: return state
         }
     }

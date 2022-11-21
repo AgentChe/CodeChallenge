@@ -68,6 +68,8 @@ struct BrowseView: View, BrowseViewProps {
                                             })
                                                 .background(.clear)
                                         }
+                                        RecommendationsView(onChallengeTap: onOpenChallenge)
+                                            .padding(.top, 10)
                                     }
                                 }
                             }

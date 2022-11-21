@@ -21,6 +21,7 @@ enum Action: Dispatchable {
     case loadSearchResults(String, Resolvable<[Challenge]>)
     case resetSearch(String)
     case loadInProgressChallenges(Resolvable<[Challenge]>)
+    case loadRecommendedChallenges(Resolvable<[Challenge]>)
     case loadDoneChallenges(Resolvable<[Challenge]>)
     case logout
     case loadPayments(Resolvable<[AppStorePayment]>)
@@ -232,6 +233,20 @@ struct LoadCompletedChallenges: ThunkAction {
             .asResolvable()
             .ephemeralSink { progresses in
                 dispatcher.dispatch(Action.loadDoneChallenges(progresses))
+            }
+    }
+}
+
+struct LoadRecommendedChallenges: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.loadRecommendedChallenges(.loading))
+        let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
+
+        dispatcher.services.challengesService
+            .getRecommendedChallenges(userId: userId)
+            .asResolvable()
+            .ephemeralSink { progresses in
+                dispatcher.dispatch(Action.loadRecommendedChallenges(progresses))
             }
     }
 }

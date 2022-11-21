@@ -63,6 +63,7 @@ final class RootCoordinator {
 
         store.dispatch(LoadChallengeGroups())
         store.dispatch(AddStreakIfNeeded())
+        store.dispatch(LoadRecommendedChallenges())
 
         isAppVersionSupported(store.services.networkService)
             .filter { !$0 }

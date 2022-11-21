@@ -92,6 +92,8 @@
 		E0A69CF3292BD3FF009D5C0C /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E0A69CE1292BD3FE009D5C0C /* SF-Pro-Text-Medium.otf */; };
 		E0A69CF4292BD3FF009D5C0C /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E0A69CE2292BD3FE009D5C0C /* SF-Pro-Text-SemiboldItalic.otf */; };
 		E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF5292BD624009D5C0C /* UIFont.swift */; };
+		E0A69CF8292BF6E8009D5C0C /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */; };
+		E0A69CFA292BF762009D5C0C /* RecommendationsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */; };
 		E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */; };
 		E0B9582328B2A80B00247DE9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582228B2A80A00247DE9 /* SettingsView.swift */; };
 		E0B9582628B2AC8800247DE9 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582528B2AC8800247DE9 /* NotificationsView.swift */; };
@@ -249,6 +251,8 @@
 		E0A69CE1292BD3FE009D5C0C /* SF-Pro-Text-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-Medium.otf"; sourceTree = "<group>"; };
 		E0A69CE2292BD3FE009D5C0C /* SF-Pro-Text-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		E0A69CF5292BD624009D5C0C /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
+		E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
+		E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewProps.swift; sourceTree = "<group>"; };
 		E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalCodeChallengeView.swift; sourceTree = "<group>"; };
 		E0B9582228B2A80A00247DE9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E0B9582528B2AC8800247DE9 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
@@ -644,6 +648,8 @@
 				E08B445928B2E49B006BC50A /* BrowseViewProps.swift */,
 				E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */,
 				E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */,
+				E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */,
+				E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */,
 			);
 			path = Browse;
 			sourceTree = "<group>";
@@ -959,10 +965,12 @@
 				E01AECA7289F0D5800615B52 /* KeywordsSwiftUIView.swift in Sources */,
 				E0BD3280285CF48A000C37A9 /* LoginViewProps.swift in Sources */,
 				E08B445E28B2E988006BC50A /* BrowsedChallengesViewProps.swift in Sources */,
+				E0A69CF8292BF6E8009D5C0C /* RecommendationsView.swift in Sources */,
 				E01AECA2289EE8F300615B52 /* KeywordsView.swift in Sources */,
 				E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */,
 				E01AECAB28A03FD800615B52 /* UIControlSubscription.swift in Sources */,
 				E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */,
+				E0A69CFA292BF762009D5C0C /* RecommendationsViewProps.swift in Sources */,
 				E01AEC9A289B3B5500615B52 /* PremiumAllPlansView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

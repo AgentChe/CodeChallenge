@@ -14,7 +14,6 @@ struct Reducers {
         AppState(
             user: userReducer(state.user, action),
             account: accountReducer(state.account, action),
-            challengeGroups: challengeGroupsReducer(state.challengeGroups, action),
             homeSections: homeSectionsReducer(state.homeSections, action),
             collections: collectionContentReducer(state.collections, action),
             challengeDetails: challengeDetailsReducer(state.challengeDetails, action),
@@ -44,16 +43,6 @@ extension Reducers {
         switch action {
         case .loadAccount(let account):
             return account
-        default: return state
-        }
-    }
-}
-
-extension Reducers {
-    static let challengeGroupsReducer: Reducer<Resolvable<[ChallengeGroup]>> = { state, action in
-        switch action {
-        case .loadChallengeGroups(let groups):
-            return groups
         default: return state
         }
     }

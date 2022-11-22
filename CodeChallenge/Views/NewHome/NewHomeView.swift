@@ -27,34 +27,11 @@ struct NewHomeView: View, NewHomeViewProps {
                     .foregroundColor(.white)
                     .padding(.bottom, 16)
                     .padding(.leading, 16)
-                ScrollView(showsIndicators: false) {
-                    LazyVGrid(
-                        columns: gridItemLayout,
-                        alignment: .leading,
-                        spacing: 0,
-                        pinnedViews: []) {
-                            ForEach(Array(displaySections.enumerated()), id: \.offset) { (sectionOffset, section) in
-                                Section(
-                                    header:
-                                        Text(section.name)
-                                        .font(.h3)
-                                    .bold()
-                                    .padding(.leading, 10.0)
-                                    .padding(.bottom, 16)
-                                ) {
-                                    ForEach(Array(section.collections.enumerated()), id: \.element.id) { (offset, collection) in
-                                        homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
-                                            .onTapGesture {
-                                                onCollectionTap?(collection, section)
-                                            }
-                                    }
-                                }
-                            }
-                        }
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
+                if isLoading {
+                    SkeletonView()
+                } else {
+                    sectionsView
                 }
-                .padding(.top, 16)
             }
         }
         .onAppear {
@@ -80,6 +57,37 @@ struct NewHomeView: View, NewHomeViewProps {
         .onAppear {
             displayXp = xp
         }
+    }
+
+    private var sectionsView: some View {
+        ScrollView(showsIndicators: false) {
+            LazyVGrid(
+                columns: gridItemLayout,
+                alignment: .leading,
+                spacing: 0,
+                pinnedViews: []) {
+                    ForEach(Array(displaySections.enumerated()), id: \.offset) { (sectionOffset, section) in
+                        Section(
+                            header:
+                                Text(section.name)
+                                .font(.h3)
+                            .bold()
+                            .padding(.leading, 10.0)
+                            .padding(.bottom, 16)
+                        ) {
+                            ForEach(Array(section.collections.enumerated()), id: \.element.id) { (offset, collection) in
+                                homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
+                                    .onTapGesture {
+                                        onCollectionTap?(collection, section)
+                                    }
+                            }
+                        }
+                    }
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+        }
+        .padding(.top, 16)
     }
 
     private func homeViewElementView(offset: Int, sectionOffset: Int, section: NewChallengeSection, collection: NewChallengeCollection) -> some View {
@@ -265,5 +273,65 @@ struct NewHomeViewElementView: View {
             return heightToCover
         }
         return CGFloat(model.progress)/100 * expectedHeight
+    }
+}
+
+fileprivate struct SkeletonView: View {
+    let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
+    let model1 = NewChallengeCollection(id: 1)
+    let model2 = NewChallengeCollection(id: 2)
+    let model3 = NewChallengeCollection(id: 3)
+    let model4 = NewChallengeCollection(id: 4)
+    let model5 = NewChallengeCollection(id: 5)
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            LazyVGrid(
+                columns: gridItemLayout,
+                alignment: .leading,
+                spacing: 0,
+                pinnedViews: []) {
+                    Section(
+                        header:
+                            Text("something")
+                            .font(.h3)
+                        .bold()
+                        .padding(.leading, 10.0)
+                        .padding(.bottom, 16)
+                    ) {
+                        NewHomeViewElementView(
+                            model: model1, progressImageName: "home_progress_start",
+                            progressTopInset: 21, progressBottomInset: 2,
+                            progressPreviousPeaceHeight: 0, expectedHeight: 134,
+                            previousModel: nil, nextModel: model2
+                        )
+                        NewHomeViewElementView(
+                            model: model2, progressImageName: "home_progress_end",
+                            progressTopInset: 2, progressBottomInset: 28,
+                            progressPreviousPeaceHeight: 24, expectedHeight: 104,
+                            previousModel: model1, nextModel: model3
+                        )
+                    }
+                    Section(
+                        header:
+                            Text("something 2")
+                            .font(.h3)
+                        .bold()
+                        .padding(.leading, 10.0)
+                        .padding(.bottom, 16)
+                    ) {
+                        NewHomeViewElementView(
+                            model: model4, progressImageName: "home_progress_only_section",
+                            progressTopInset: 23, progressBottomInset: 26,
+                            progressPreviousPeaceHeight: 0, expectedHeight: 108,
+                            previousModel: nil, nextModel: model5
+                        )
+                    }
+                }
+                .foregroundColor(.white)
+                .padding(.horizontal, 16)
+        }
+        .padding(.top, 16)
+        .redacted(reason: .placeholder)
     }
 }

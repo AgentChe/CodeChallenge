@@ -230,10 +230,10 @@ struct SkeletonAccountView: View {
 
             Text("My Profile")
                 .foregroundColor(.white)
-                .font(.h3)
+                .font(.systemFont(ofSize: 24, weight: .semibold))
 
             Text("My Challenges")
-            .font(.bodyText)
+            .font(.systemFont(ofSize: 14, weight: .semibold))
             .foregroundColor(.white)
             .padding(.bottom, 20)
 

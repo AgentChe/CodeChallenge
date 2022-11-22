@@ -103,16 +103,6 @@ class HomeCoordinator {
         }
     }
 
-    private func openCollectionView(collection: ChallengeGroup) {
-        let collectionView = CollectionItemsView(collection: collection) { [weak self] (challenge, group) in
-            self?.openCodeChallenge(challenge: challenge, group: group, collection: nil)
-        }
-            .environmentObject(store)
-        let controller = UIHostingController(rootView: collectionView)
-        controller.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(controller, animated: true)
-    }
-
     private func runSuccessPopup(challenge: ChallengeDetail) {
         let view = CelebrationView(challenge: challenge, store: store)
         view.onDismiss = { [weak self] in

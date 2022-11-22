@@ -38,6 +38,15 @@ struct NewChallengeCollection: Codable, Equatable {
         self.progress = try container.decode(Int.self, forKey: .progress)
         self.isNew = try container.decode(Bool.self, forKey: .isNew)
     }
+
+    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", progress: Int = 0, isNew: Bool = false) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.icon = icon
+        self.progress = progress
+        self.isNew = isNew
+    }
 }
 
 struct NewChallengeCollectionContent: Codable, Equatable {

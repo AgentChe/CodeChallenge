@@ -15,8 +15,8 @@
             filePath = "CodeChallenge/Views/NewHome/NewHomeView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "260"
-            endingLineNumber = "260"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
             landmarkName = "currentPeaceProgress"
             landmarkType = "24">
          </BreakpointContent>

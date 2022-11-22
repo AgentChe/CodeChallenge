@@ -61,7 +61,6 @@ final class RootCoordinator {
             store.dispatch(LoadAccount())
         }
 
-        store.dispatch(LoadChallengeGroups())
         store.dispatch(AddStreakIfNeeded())
         store.dispatch(LoadRecommendedChallenges())
 
@@ -94,7 +93,6 @@ final class RootCoordinator {
                 guard let self = self else { return }
                 if isLoggedIn == true {
                     self.store.dispatch(LoadAccount())
-                    self.store.dispatch(LoadChallengeGroups())
                     self.authNavigationController?.dismiss(animated: true)
 //                    self.accountCoordinator.start()
                 }

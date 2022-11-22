@@ -13,7 +13,6 @@ protocol Dispatchable {}
 enum Action: Dispatchable {
     case loadUser(Resolvable<User>)
     case loadAccount(Resolvable<Account>)
-    case loadChallengeGroups(Resolvable<[ChallengeGroup]>)
     case loadChallengeDetails((Int, Resolvable<ChallengeDetail>))
     case loadChallengeProgress((Int, Resolvable<ChallengeProgress>))
     case loadChallengeCompiledResult((Int, Resolvable<ChallengeCompiledResult>))
@@ -47,6 +46,7 @@ struct Login: ThunkAction {
             .ephemeralSink { user in
                 if user.isSuccess {
                     dispatcher.dispatch(AddStreakIfNeeded())
+                    dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
                     dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
@@ -71,6 +71,7 @@ struct Logout: ThunkAction {
                 UserDefaults.standard.set(nil, forKey: "cc_user_id")
                 dispatcher.dispatch(Action.logout)
                 dispatcher.dispatch(GuestAuth())
+                dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
             }
     }
 }
@@ -123,7 +124,6 @@ struct GuestAuth: ThunkAction {
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.loadUser(user))
                     dispatcher.dispatch(LoadAccount())
-                    dispatcher.dispatch(LoadChallengeGroups())
                 }
             }
     }
@@ -251,20 +251,6 @@ struct LoadRecommendedChallenges: ThunkAction {
     }
 }
 
-struct LoadChallengeGroups: ThunkAction {
-    func exec(dispatcher: Dispatcher) {
-        let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        dispatcher.dispatch(Action.loadChallengeGroups(.loading))
-
-        dispatcher.services.challengesService
-            .fetchChallengeGroups(id: userId, lang: "en")
-            .asResolvable()
-            .ephemeralSink { groups in
-                dispatcher.dispatch(Action.loadChallengeGroups(groups))
-            }
-    }
-}
-
 struct AddStreakIfNeeded: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session")
@@ -338,7 +324,6 @@ struct UpdateChallengeProgress: ThunkAction {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
                                 dispatcher.dispatch(LoadAccount())
-                                dispatcher.dispatch(LoadChallengeGroups())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())
                             }
@@ -384,7 +369,6 @@ struct UpdateChallengeProgress: ThunkAction {
                 .asResolvable()
                 .ephemeralSink { progress in
                     dispatcher.dispatch(LoadInProgressChallenges())
-                    dispatcher.dispatch(LoadChallengeGroups())
                     dispatcher.dispatch(Action.loadChallengeProgress((challengeId, progress)))
                     compileIfNeeded()
                 }

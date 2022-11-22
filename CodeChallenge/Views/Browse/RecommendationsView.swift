@@ -96,3 +96,40 @@ struct RecommendationsView: View, RecommendationsViewProps {
         }
     }
 }
+
+struct RoundedButtonStyle: ButtonStyle {
+    let foregroundColor: UIColor
+    let backgroundColor: UIColor
+    var strokeColor: UIColor? = nil
+
+    func makeBody(configuration: Self.Configuration) -> some View {
+        ZStack {
+            configuration.label
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .font(.tag)
+                .background(
+                    Group {
+                        if let strokeColor = strokeColor {
+                            RoundedRectangle(cornerRadius: 3)
+                                .stroke(Color(
+                                    red: strokeColor.rgba.red,
+                                    green: strokeColor.rgba.green,
+                                    blue: strokeColor.rgba.blue
+                                ), lineWidth: 1)
+                                .frame(height: 18)
+                        } else {
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(Color(
+                                    red: backgroundColor.rgba.red,
+                                    green: backgroundColor.rgba.green,
+                                    blue: backgroundColor.rgba.blue
+                                ))
+                                .frame(height: 18)
+                        }
+                    }
+                )
+                .foregroundColor(foregroundColor)
+        }
+    }
+}

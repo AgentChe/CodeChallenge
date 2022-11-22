@@ -167,10 +167,10 @@ fileprivate struct SkeletonView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("displayContent.name")
-                .font(.h2)
+                .font(.systemFont(ofSize: 30, weight: .semibold))
                 .foregroundColor(.white)
             Text("displayContent.description")
-                .font(.bodyText)
+                .font(.systemFont(ofSize: 18, weight: .semibold))
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
             RoundedRectangle(cornerRadius: 1.5)
                 .padding(.top, 16)

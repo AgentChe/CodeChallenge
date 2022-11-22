@@ -10,7 +10,6 @@ import Combine
 import UIKit
 
 protocol ChallengesServiceProtocol {
-    func fetchChallengeGroups(id: Int, lang: String) -> AnyPublisher<[ChallengeGroup], Error>
     func fetchChallenge(id: Int) -> AnyPublisher<ChallengeDetail, Error>
     func getChallengeProgress(id: Int, userId: Int) -> AnyPublisher<ChallengeProgress, Error>
     func addChallengeProgress(id: Int, session: String, solution: String) -> AnyPublisher<ChallengeProgress, Error>
@@ -26,21 +25,6 @@ protocol ChallengesServiceProtocol {
 
 struct ChallengesService: ChallengesServiceProtocol {
     let networkService: NetworkServiceProtocol
-
-    func fetchChallengeGroups(id: Int, lang: String) -> AnyPublisher<[ChallengeGroup], Error> {
-//        if let path = Bundle.main.url(forResource: "Challenges", withExtension: "json") {
-//            do {
-//                let jsonData = try Data(contentsOf: path)
-//                let decoder = JSONDecoder.snakeCase
-//                let challenges = try decoder.decode([ChallengeGroup].self, from: jsonData)
-//                return Just(challenges).setFailureType(to: Error.self).eraseToAnyPublisher()
-//            } catch {}
-//        }
-        return URLRequest
-            .create(url: "\(Configuration.host)/home/\(id)/\(lang)", type: .get)
-            .flatMap { networkService.load($0, decoding: [ChallengeGroup].self, with: .snakeCase) }
-            .eraseToAnyPublisher()
-    }
 
     func fetchChallenge(id: Int) -> AnyPublisher<ChallengeDetail, Error> {
         return URLRequest

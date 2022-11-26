@@ -28,14 +28,16 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
             }
         }
         .onAppear {
-            store.dispatch(LoadCollectionContent(collection: collection))
-            displayContent = content
-            guard let content = content else { return }
-            for index in 0..<content.challenges.count {
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.05 * Double(index))) {
-                    withAnimation(.easeOut(duration: 0.3)) {
-                        let newItem = content.challenges[index]
-                        displayChallenges.append(newItem)
+            if displayChallenges.isEmpty {
+                store.dispatch(LoadCollectionContent(collection: collection))
+                displayContent = content
+                guard let content = content else { return }
+                for index in 0..<content.challenges.count {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.05 * Double(index))) {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            let newItem = content.challenges[index]
+                            displayChallenges.append(newItem)
+                        }
                     }
                 }
             }
@@ -82,6 +84,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                         ForEach(displayChallenges, id: \.id) { challenge in
                             challengeView(challenge: challenge)
                                 .transition(.move(edge: .bottom))
+                                .contentShape(Rectangle())
                                 .onTapGesture {
                                     onChallengeOpen(challenge)
                                 }

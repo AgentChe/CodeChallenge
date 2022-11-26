@@ -126,6 +126,12 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
         .onChange(of: output) { _ in
             keyboardHeight = 0
             UIApplication.shared.endEditing()
+
+            if gotCompileError == true {
+                withAnimation {
+                    bottomSheetShown = true
+                }
+            }
         }
         .onChange(of: details) { newValue in
             displayDetails = newValue

@@ -17,7 +17,7 @@ struct NewChallengeCollection: Codable, Equatable {
     let name: String
     let description: String
     let icon: String
-    let progress: Int
+    let progress: CGFloat
     let isNew: Bool
 
     enum CodingKeys: CodingKey {
@@ -35,11 +35,11 @@ struct NewChallengeCollection: Codable, Equatable {
         self.name = try container.decode(String.self, forKey: .name)
         self.description = try container.decode(String.self, forKey: .description).removingPercentEncoding ?? ""
         self.icon = try container.decode(String.self, forKey: .icon)
-        self.progress = try container.decode(Int.self, forKey: .progress)
+        self.progress = try container.decode(CGFloat.self, forKey: .progress)
         self.isNew = try container.decode(Bool.self, forKey: .isNew)
     }
 
-    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", progress: Int = 0, isNew: Bool = false) {
+    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", progress: CGFloat = 0, isNew: Bool = false) {
         self.id = id
         self.name = name
         self.description = description
@@ -55,7 +55,7 @@ struct NewChallengeCollectionContent: Codable, Equatable {
     var description: String
     var icon: String
     var challenges: [Challenge]
-    let progress: Int
+    let progress: CGFloat
 
     enum CodingKeys: CodingKey {
         case id
@@ -73,6 +73,6 @@ struct NewChallengeCollectionContent: Codable, Equatable {
         self.description = try container.decode(String.self, forKey: .description).removingPercentEncoding ?? ""
         self.icon = try container.decode(String.self, forKey: .icon)
         self.challenges = try container.decode([Challenge].self, forKey: .challenges)
-        self.progress = try container.decode(Int.self, forKey: .progress)
+        self.progress = try container.decode(CGFloat.self, forKey: .progress)
     }
 }

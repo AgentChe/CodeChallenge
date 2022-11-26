@@ -74,7 +74,7 @@ struct ChallengeProgress: Codable {
     let challengeId: Int?
     let userId: Int?
     let type: String?
-    let progress: Int?
+    let progress: CGFloat?
     let solution: Solution?
     let spentTime: Int?
 }

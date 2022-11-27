@@ -25,6 +25,7 @@ final class RootCoordinator {
     private var authCancellable: AnyCancellable?
 //    private var logoutCancellable: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
+    private var homePageCancellable: AnyCancellable?
 
     init(window: UIWindow) {
         self.window = window
@@ -77,6 +78,26 @@ final class RootCoordinator {
                 self?.showMaintenanceScreen()
             }
             .store(in: &cancellables)
+
+        DispatchQueue.main.async { [weak self] in
+            let view = HomeLoadingView()
+            let controller = UIHostingController(rootView: view)
+            controller.modalPresentationStyle = .fullScreen
+            self?.window.rootViewController?.present(controller, animated: false)
+
+            self?.homePageCancellable = self?.store
+                .statePublisher
+                .compactMap { $0.homeSections["py_en"]?.value }
+                .removeDuplicates()
+                .sink { [weak self] challenges in
+                    guard let self = self else { return }
+                    if !challenges.isEmpty {
+                        self.homePageCancellable?.cancel()
+                        self.homePageCancellable = nil
+                        controller.dismiss(animated: false)
+                    }
+                }
+        }
     }
 
     private func showMaintenanceScreen() {

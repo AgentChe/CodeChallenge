@@ -259,7 +259,7 @@ struct NewHomeViewElementView: View {
         //158 is total, 134 is visible in previous model
         let heightToCover = CGFloat(previousModel.progress)/100 * 158.0
         if heightToCover >= expectedHeight {
-            return 24 - (158.0 - heightToCover)
+            return 20 - (158.0 - heightToCover)
         }
         return nil
     }

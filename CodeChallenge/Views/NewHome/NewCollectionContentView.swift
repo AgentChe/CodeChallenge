@@ -105,7 +105,9 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                 RoundedRectangle(cornerRadius: 1.5)
                     .fill(Color(UIColor.CodeChallenge.blue1))
                     .frame(width: (.screenWidth - 32) * CGFloat(displayContent.progress)/100, height: 3)
-                Spacer()
+                if displayContent.progress != 100 {
+                    Spacer()
+                }
             }
         }
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */; };
 		E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01666E028F74C9B00693575 /* CompilationOutputView.swift */; };
+		E0177C5829340C030073D6AE /* HomeLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0177C5729340C030073D6AE /* HomeLoadingView.swift */; };
 		E01AEC96289B315400615B52 /* PremiumViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01AEC95289B315400615B52 /* PremiumViewProps.swift */; };
 		E01AEC98289B38FD00615B52 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01AEC97289B38FD00615B52 /* PopupViewController.swift */; };
 		E01AEC9A289B3B5500615B52 /* PremiumAllPlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01AEC99289B3B5500615B52 /* PremiumAllPlansView.swift */; };
@@ -165,6 +166,7 @@
 /* Begin PBXFileReference section */
 		E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessCharsView.swift; sourceTree = "<group>"; };
 		E01666E028F74C9B00693575 /* CompilationOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationOutputView.swift; sourceTree = "<group>"; };
+		E0177C5729340C030073D6AE /* HomeLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLoadingView.swift; sourceTree = "<group>"; };
 		E01AEC95289B315400615B52 /* PremiumViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumViewProps.swift; sourceTree = "<group>"; };
 		E01AEC97289B38FD00615B52 /* PopupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		E01AEC99289B3B5500615B52 /* PremiumAllPlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumAllPlansView.swift; sourceTree = "<group>"; };
@@ -671,6 +673,7 @@
 				E0FB612E29185C1500DB1E9A /* NewHomeViewProps.swift */,
 				E0FB29AD2919A2CA00E75B8E /* NewCollectionContentView.swift */,
 				E0FB29AF2919A2E500E75B8E /* NewCollectionContentViewProps.swift */,
+				E0177C5729340C030073D6AE /* HomeLoadingView.swift */,
 			);
 			path = NewHome;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				E0EBB7E6288B1B6A00DE7C53 /* ChallengesService.swift in Sources */,
 				E0FB612D29185C0C00DB1E9A /* NewHomeView.swift in Sources */,
 				E0228F6A29043C7600101A82 /* HTMLAttributedString.swift in Sources */,
+				E0177C5829340C030073D6AE /* HomeLoadingView.swift in Sources */,
 				E0BD3288285CF6D2000C37A9 /* AppState.swift in Sources */,
 				E0EBB7E4288B1AED00DE7C53 /* ChallengeGroups.swift in Sources */,
 				E0228F6E2904B92100101A82 /* NoteView.swift in Sources */,

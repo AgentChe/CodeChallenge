@@ -70,8 +70,7 @@ struct Logout: ThunkAction {
                 UserDefaults.standard.set(nil, forKey: "cc_user_session")
                 UserDefaults.standard.set(nil, forKey: "cc_user_id")
                 dispatcher.dispatch(Action.logout)
-                dispatcher.dispatch(GuestAuth())
-                dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                dispatcher.dispatch(GuestAuth(reloadHome: true))
             }
     }
 }
@@ -109,6 +108,11 @@ struct DeleteAccount: ThunkAction {
 }
 
 struct GuestAuth: ThunkAction {
+    let reloadHome: Bool
+
+    init(reloadHome: Bool = false) {
+        self.reloadHome = reloadHome
+    }
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session")
         guard session == nil else {
@@ -124,6 +128,9 @@ struct GuestAuth: ThunkAction {
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.loadUser(user))
                     dispatcher.dispatch(LoadAccount())
+                    if reloadHome {
+                        dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                    }
                 }
             }
     }

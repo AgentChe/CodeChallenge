@@ -50,14 +50,14 @@ struct AccountService: AccountServiceProtocol {
 
     func getChallengeProgress(userId: Int) -> AnyPublisher<[Challenge], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/challange/progress/\(userId)/inprogress", type: .get)
+            .create(url: "\(Configuration.host)/v1/challange/progress/\(userId)/inprogress", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 
     func getChallengeDones(userId: Int) -> AnyPublisher<[Challenge], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/challange/progress/\(userId)/done", type: .get)
+            .create(url: "\(Configuration.host)/v1/challange/progress/\(userId)/done", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

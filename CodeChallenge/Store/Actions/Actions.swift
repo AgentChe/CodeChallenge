@@ -306,7 +306,7 @@ struct UpdateChallengeProgress: ThunkAction {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
         let challengeId = challenge.id
 
-        let currentProgressType = dispatcher.state.challengeProgresses[challenge.id]?.value?.progress ?? 0
+        let currentProgressType = dispatcher.state.challengeProgresses[challenge.id]?.value?.type
 
         let compileIfNeeded = {
             guard compile else { return }
@@ -320,7 +320,7 @@ struct UpdateChallengeProgress: ThunkAction {
 
                     let progress = dispatcher.state.challengeProgresses[challengeId]?.value
 
-                    if result.value?.isSuccesful == true, currentProgressType != 100 {
+                    if result.value?.isSuccesful == true, currentProgressType != "done" {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
                                 dispatcher.dispatch(LoadAccount())
@@ -339,7 +339,7 @@ struct UpdateChallengeProgress: ThunkAction {
             dispatcher.dispatch(Action.loadChallengeProgress((challengeId, .loading)))
             dispatcher
                 .services.challengesService
-                .updateChallengeProgress(id: challengeId, progressId: progress.id ?? 0, session: session, solution: solution, type: currentProgressType != 100 ? "inprogress": "done")
+                .updateChallengeProgress(id: challengeId, progressId: progress.id ?? 0, session: session, solution: solution, type: currentProgressType != "done" ? "inprogress": "done")
                 .asResolvable()
                 .ephemeralSink{ nothing in
                     if nothing.isSuccess {

@@ -24,17 +24,97 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "604369EA-2EDE-4711-AF6F-E1F6A7FDF5B9"
+            uuid = "EE54C501-0949-427D-AFE5-5F5697371603"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CodeChallenge/Store/Actions/Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "exec(dispatcher:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EE54C501-0949-427D-AFE5-5F5697371603 - 30360556b95a27e4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.UpdateChallengeProgress.exec(dispatcher: Codehub_Staging.Dispatcher) -&gt; ()"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338"
+                  offsetFromSymbolStart = "4116">
+               </Location>
+               <Location
+                  uuid = "EE54C501-0949-427D-AFE5-5F5697371603 - 30360556b95a27e4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.UpdateChallengeProgress.exec(dispatcher: Codehub_Staging.Dispatcher) -&gt; ()"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "338"
+                  endingLineNumber = "338"
+                  offsetFromSymbolStart = "6861">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Store/Actions/Actions.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "309"
+            endingLineNumber = "309"
+            landmarkName = "exec(dispatcher:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 30360556b95a23a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.UpdateChallengeProgress.exec(dispatcher: Codehub_Staging.Dispatcher) -&gt; ()"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "309"
+                  endingLineNumber = "309"
+                  offsetFromSymbolStart = "1000">
+               </Location>
+               <Location
+                  uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 30360556b95a23a9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.UpdateChallengeProgress.exec(dispatcher: Codehub_Staging.Dispatcher) -&gt; ()"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "309"
+                  endingLineNumber = "309"
+                  offsetFromSymbolStart = "3217">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

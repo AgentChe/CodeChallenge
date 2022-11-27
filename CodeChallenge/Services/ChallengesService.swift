@@ -68,7 +68,7 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func searchChallenges(with query: String, session: String) -> AnyPublisher<[Challenge], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/challange/search?search=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? query)&lang_code=en", type: .get)
+            .create(url: "\(Configuration.host)/v1/challange/search?search=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? query)&lang_code=en", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

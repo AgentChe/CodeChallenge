@@ -24,54 +24,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EE54C501-0949-427D-AFE5-5F5697371603"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Store/Actions/Actions.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "338"
-            endingLineNumber = "338"
-            landmarkName = "exec(dispatcher:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EE54C501-0949-427D-AFE5-5F5697371603 - 30360556b95a27e4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Codehub_Staging.UpdateChallengeProgress.exec(dispatcher: Codehub_Staging.Dispatcher) -&gt; ()"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "338"
-                  endingLineNumber = "338"
-                  offsetFromSymbolStart = "4116">
-               </Location>
-               <Location
-                  uuid = "EE54C501-0949-427D-AFE5-5F5697371603 - 30360556b95a27e4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Codehub_Staging.UpdateChallengeProgress.exec(dispatcher: Codehub_Staging.Dispatcher) -&gt; ()"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "338"
-                  endingLineNumber = "338"
-                  offsetFromSymbolStart = "6861">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -112,9 +64,105 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "309"
                   endingLineNumber = "309"
-                  offsetFromSymbolStart = "3217">
+                  offsetFromSymbolStart = "3211">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3CDC5C13-2CBF-4BEA-AA07-C3073C11AA87"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Challenge/CodeChallengeView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "23A0C3FD-AA34-4A1D-95E3-C4BFCFBA1071"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/CodePlaygroundView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "updateUIView(_:context:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "23A0C3FD-AA34-4A1D-95E3-C4BFCFBA1071 - 2437ac6be1b05d0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.CodePlaygroundView.updateUIView(_: &lt;&lt;opaque return type of Codehub_Staging.CodePlaygroundView.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Codehub_Staging.CodePlaygroundView&gt;) -&gt; some&gt;&gt;.0, context: SwiftUI.UIViewRepresentableContext&lt;Codehub_Staging.CodePlaygroundView&gt;) -&gt; ()"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/CodePlaygroundView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "129">
+               </Location>
+               <Location
+                  uuid = "23A0C3FD-AA34-4A1D-95E3-C4BFCFBA1071 - 2437ac6be1b05d0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.CodePlaygroundView.updateUIView(_: &lt;&lt;opaque return type of Codehub_Staging.CodePlaygroundView.makeUIView(context: SwiftUI.UIViewRepresentableContext&lt;Codehub_Staging.CodePlaygroundView&gt;) -&gt; some&gt;&gt;.0, context: SwiftUI.UIViewRepresentableContext&lt;Codehub_Staging.CodePlaygroundView&gt;) -&gt; ()"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/CodePlaygroundView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "166">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7980F391-5B37-41D6-8986-E0E02A296592"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/CodePlaygroundView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "makeUIView(context:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AF7F3893-DF9F-4AEF-8AA8-D90D1206A8B2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/PlaygroundView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "set(code:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -80,7 +80,7 @@ class PlaygroundView: UIView {
         self.codeToCompile = code.removingPercentEncoding ?? code
         self.codeToCompile = codeToCompile.replacingOccurrences(of: "\t", with: "  ")
         self.codeToCompile = codeToCompile.replacingOccurrences(of: "\n", with: " ")
-        textView.text = code.removingPercentEncoding
+        textView.text = code.removingPercentEncoding ?? code
     }
 
     func reset(newCode: String) {

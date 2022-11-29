@@ -24,6 +24,7 @@ enum AnalyticsEvent {
     case paywallOpened
     case planSelected(String)
     case pricingOpened
+    case homepageLoaded(Double, Error?)
 
     var value: String {
         switch self {
@@ -55,6 +56,8 @@ enum AnalyticsEvent {
             return "Plan Selected"
         case .pricingOpened:
             return "Pricing Opened"
+        case .homepageLoaded:
+            return "Homepage Loaded"
         }
     }
 
@@ -90,6 +93,8 @@ enum AnalyticsEvent {
                 "challengeLevel": challenge.progress]
         case .planSelected(let type):
             return ["type": type]
+        case .homepageLoaded(let seconds, let error):
+            return ["miliseconds": seconds, "error": error?.localizedDescription ?? ""]
         default: return [:]
         }
     }

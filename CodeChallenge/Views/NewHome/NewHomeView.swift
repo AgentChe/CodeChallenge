@@ -35,7 +35,6 @@ struct NewHomeView: View, NewHomeViewProps {
             }
         }
         .onAppear {
-            store.dispatch(LoadHomeSections(language: language, humanLanguage: humanLanguage))
             displaySections = sections ?? []
         }
         .onChange(of: sections) { newValue in

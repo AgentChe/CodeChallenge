@@ -79,22 +79,39 @@ final class RootCoordinator {
             }
             .store(in: &cancellables)
 
+        store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+
         DispatchQueue.main.async { [weak self] in
             let view = HomeLoadingView()
             let controller = UIHostingController(rootView: view)
             controller.modalPresentationStyle = .fullScreen
             self?.window.rootViewController?.present(controller, animated: false)
 
+            let startDate = Date()
+
             self?.homePageCancellable = self?.store
                 .statePublisher
-                .compactMap { $0.homeSections["py_en"]?.value }
+                .compactMap { $0.homeSections["py_en"] }
                 .removeDuplicates()
-                .sink { [weak self] challenges in
-                    guard let self = self else { return }
-                    if !challenges.isEmpty {
-                        self.homePageCancellable?.cancel()
-                        self.homePageCancellable = nil
-                        controller.dismiss(animated: false)
+                .sink { [weak self] result in
+                    if let error = result.error {
+                        let miliseconds = Date().timeIntervalSince(startDate) * 1000
+                        self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, error)))
+                        let alertController = UIAlertController(title: "An error occurred", message: error.localizedDescription, preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Retry", style: .default) { action in
+                            self?.store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                        }
+                        alertController.addAction(action)
+                        controller.present(alertController, animated: true)
+                    } else if let value = result.value {
+                        let miliseconds = Date().timeIntervalSince(startDate) * 1000
+                        self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, nil)))
+                        guard let self = self else { return }
+                        if !value.isEmpty {
+                            self.homePageCancellable?.cancel()
+                            self.homePageCancellable = nil
+                            controller.dismiss(animated: false)
+                        }
                     }
                 }
         }

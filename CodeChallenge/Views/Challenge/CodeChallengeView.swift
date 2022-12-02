@@ -59,6 +59,10 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
             store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id))
             displayCode = removeTrailingNewLines(string: code.removingPercentEncoding ?? code)
+            displayDetails = details
+            if (testCases.filter { !$0.isFailed }.count == testCases.count && !testCases.isEmpty) {
+                enabledSections = ["Task", "Code", "Result"]
+            }
         })
         .onChange(of: code, perform: { newValue in
             let decodedCode = newValue.removingPercentEncoding ?? newValue
@@ -85,11 +89,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 store.dispatch(TrackAnalyticsEvent(event: .startedSolving(codeChallenge, group)))
             }
         })
-        .onAppear {
-            if (testCases.filter { !$0.isFailed }.count == testCases.count && !testCases.isEmpty) {
-                enabledSections = ["Task", "Code", "Result"]
-            }
-        }
         .toolbar(content: {
             ToolbarItem(placement: .principal) {
                 HStack {
@@ -135,9 +134,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
         }
         .onChange(of: details) { newValue in
             displayDetails = newValue
-        }
-        .onAppear {
-            displayDetails = details
         }
     }
 

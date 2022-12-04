@@ -21,35 +21,49 @@ struct PremiumView: View, PremiumViewProps {
 
     var content: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 30) {
-                Image("premium")
-                Text("Start 7-Day Free Trial Today and Now")
-                    .font(.systemFont(ofSize: 24, weight: .bold))
-                ForEach(getPremiumTexts, id: \.self) { text in
-                    HStack(spacing: 15) {
-                        Image("checkmark")
-                        Text(text)
-                            .font(.systemFont(ofSize: 16, weight: .regular))
+            VStack(spacing: 30) {
+                Text("How your free trial works")
+                    .foregroundColor(.white)
+                    .font(.pageNameH1)
+                HStack {
+                    VStack {
+
+                        Image("premium_progress")
+                        Spacer()
                     }
+                    Spacer()
+                        .frame(width: 16)
+                    VStack(alignment: .leading, spacing: 28) {
+                        ForEach(getPremiumTexts, id: \.0) { (title, description) in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(title)
+                                    .font(.h3)
+                                    .foregroundColor(.white)
+                                Text(description)
+                                    .font(.bodyText)
+                                    .foregroundColor(UIColor.lightGray)
+                            }
+                        }
+                    }
+                    Spacer()
                 }
-                VStack(alignment: .center, spacing: 8) {
-                    Button("Start now") {
-
-                    }
-                    .buttonStyle(PrimaryButton())
-                    Text("ari vercru, heto kmtacenq, hesa reccession-a shut ara")
-                        .font(.systemFont(ofSize: 12, weight: .regular))
-
-                    Button("VIEW ALL PLANS") {
+                VStack(spacing: 10) {
+                    Text("Unlimited access for ...")
+                        .foregroundColor(.white)
+                        .font(.h4)
+                    Button("View all plans") {
                         onShowAllPlans(payments)
                         store.dispatch(TrackAnalyticsEvent(event: .paywallOpened))
                     }
                     .foregroundColor(.CodeChallenge.blue1)
-                    .padding(.top, 32)
-                    .font(.systemFont(ofSize: 20, weight: .bold))
+                    .font(.h5)
                 }
-                .padding(.top, 20)
 
+                PremiumNoteView(title: "How can I cancel?", text: "hesht hangist")
+
+                Button("Start my free trial now", action: {
+
+                }).buttonStyle(GradientButton())
                 Spacer()
             }
             .padding(.horizontal, 25)

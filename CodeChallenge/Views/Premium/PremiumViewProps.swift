@@ -12,8 +12,8 @@ protocol PremiumViewProps {
 }
 
 extension PremiumViewProps {
-    var getPremiumTexts: [String] {
-        return ["Unlimited Coding Challenges", "Another random text", "3rd text and a reminder that I wanna sleep"]
+    var getPremiumTexts: [(String, String)] {
+        return [("Today", "do this which \n is a long text"), ("Next day", "do that \n aziz jan "), ("the day", "do this one \n ba ba")]
     }
 
     var payments: [AppStorePayment] {

@@ -23,6 +23,7 @@ class PremiumAllPlansView: UIView, PopupContentView {
         }
     }
     private var hStack: UIStackView?
+    private var getPremiumButton: UIButton?
     private let label = UILabel()
 
     private let stackView: UIStackView = {
@@ -76,11 +77,11 @@ class PremiumAllPlansView: UIView, PopupContentView {
         let button = UIButton()
         button.setTitle("Start 7 Day Trial Now", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
+        button.titleLabel?.font = .button
         stackView.addArrangedSubview(button)
         button.backgroundColor = .CodeChallenge.blue1
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 25
+        button.layer.cornerRadius = 28
 
         let noThanksButton = UIButton()
         noThanksButton.setTitle("NO THANKS", for: .normal)
@@ -88,14 +89,25 @@ class PremiumAllPlansView: UIView, PopupContentView {
         noThanksButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
         stackView.addArrangedSubview(noThanksButton)
         noThanksButton.translatesAutoresizingMaskIntoConstraints = false
+        noThanksButton.addTarget(self, action: #selector(self.noThanksTapped), for: .touchUpInside)
 
         layer.cornerRadius = 20
 
         NSLayoutConstraint.activate([
             button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50),
             noThanksButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50),
-            button.heightAnchor.constraint(equalToConstant: 50)
+            button.heightAnchor.constraint(equalToConstant: 56)
         ])
+        getPremiumButton = button
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        getPremiumButton?.applyGradient(colors: [UIColor.CodeChallenge.blue1.cgColor, UIColor.CodeChallenge.purple.cgColor])
+    }
+
+    @objc func noThanksTapped() {
+        onDismiss?()
     }
 
     private func setupProducts() {

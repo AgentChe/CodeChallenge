@@ -40,10 +40,11 @@ final class RootCoordinator {
 
     func start() {
         store.dispatch(GuestAuth())
-        var tabs = [
+        let tabs = [
             homeCoordinator.navigationController,
             browseCoordinator.navigationController,
             buddiesCoordinator.navigationController,
+            premiumCoordinator.navigationController,
             accountCoordinator.navigationController
         ]
         tabBarController.setViewControllers(tabs, animated: false)
@@ -80,6 +81,8 @@ final class RootCoordinator {
             .store(in: &cancellables)
 
         store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+
+        store.dispatch(LoadAppStorePayments())
 
         DispatchQueue.main.async { [weak self] in
             let view = HomeLoadingView()

@@ -12,11 +12,26 @@ struct PremiumView: View, PremiumViewProps {
     @EnvironmentObject var store: Store
     @State var showOverlay = false
     var onShowAllPlans: ([AppStorePayment]) -> Void
+    @State private var showMessage: String?
 
     var body: some View {
-        DoodledView {
-            content
+        Group {
+            if let showMessage = showMessage {
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Text(showMessage)
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    Spacer()
+                }
+            } else {
+                content
+            }
         }
+            .background(.CodeChallenge.dark)
     }
 
     var content: some View {
@@ -62,7 +77,11 @@ struct PremiumView: View, PremiumViewProps {
                 PremiumNoteView(title: "How can I cancel?", text: "hesht hangist")
 
                 Button("Start my free trial now", action: {
-
+                    IAPManager.shared.purchaseProduct(product: payments.first!, success: {
+                        showMessage = "Success"
+                    }, failure: { error in
+                        showMessage = "fail"
+                    })
                 }).buttonStyle(GradientButton())
                 Spacer()
             }

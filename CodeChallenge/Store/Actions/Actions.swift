@@ -421,7 +421,7 @@ struct LoadAppStorePayments: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         dispatcher.dispatch(Action.loadPayments(.loading))
         IAPManager.shared.startWith(arrayOfIds: Set<String>(
-            ["yeary_7day_trial", "monthly_subscription", "yearly_pro_2week_trial"]
+            ["monthly_subscription", "yearly_pro_2week_trial"]
         ))
         IAPManager.shared.onLoadPayments = { payments in
             dispatcher.dispatch(Action.loadPayments(.success(payments)))

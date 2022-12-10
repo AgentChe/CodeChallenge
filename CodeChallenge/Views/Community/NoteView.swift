@@ -38,11 +38,9 @@ struct PremiumNoteView: View {
                 Text(title)
                     .foregroundColor(.white)
                     .font(.h4)
-                    .lineSpacing(10)
                 Text(text)
                     .foregroundColor(.lightGray)
                     .font(.bodyText)
-                    .lineSpacing(10)
             }
             .padding(.vertical, 5)
             Spacer()

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */; };
+		E00D5BAE2943FFB80086A2BB /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00D5BAD2943FFB80086A2BB /* Formatters.swift */; };
 		E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01666E028F74C9B00693575 /* CompilationOutputView.swift */; };
 		E0177C5829340C030073D6AE /* HomeLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0177C5729340C030073D6AE /* HomeLoadingView.swift */; };
 		E01AEC96289B315400615B52 /* PremiumViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01AEC95289B315400615B52 /* PremiumViewProps.swift */; };
@@ -165,6 +166,7 @@
 
 /* Begin PBXFileReference section */
 		E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessCharsView.swift; sourceTree = "<group>"; };
+		E00D5BAD2943FFB80086A2BB /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		E01666E028F74C9B00693575 /* CompilationOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationOutputView.swift; sourceTree = "<group>"; };
 		E0177C5729340C030073D6AE /* HomeLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLoadingView.swift; sourceTree = "<group>"; };
 		E01AEC95289B315400615B52 /* PremiumViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumViewProps.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				E0228F6929043C7600101A82 /* HTMLAttributedString.swift */,
 				E02542F9292053EB002D2F19 /* ArrayAdditions.swift */,
 				E0A69CF5292BD624009D5C0C /* UIFont.swift */,
+				E00D5BAD2943FFB80086A2BB /* Formatters.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				E0EBB7E8288B1BE100DE7C53 /* JSONDecoderAdditions.swift in Sources */,
 				E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */,
 				E07BBDDD28C29DEC00A1805B /* AnalyticsService.swift in Sources */,
+				E00D5BAE2943FFB80086A2BB /* Formatters.swift in Sources */,
 				E0BD3238285A7181000C37A9 /* CodeChallenge.xcdatamodeld in Sources */,
 				E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */,
 				E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */,

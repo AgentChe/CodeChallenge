@@ -35,7 +35,7 @@ struct PremiumView: View, PremiumViewProps {
     }
 
     var content: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(spacing: 30) {
                 Text("How your free trial works")
                     .foregroundColor(.white)
@@ -62,10 +62,18 @@ struct PremiumView: View, PremiumViewProps {
                     }
                     Spacer()
                 }
-                VStack(spacing: 10) {
-                    Text("Unlimited access for ...")
+                VStack(alignment: .center, spacing: 20) {
+                    if let yearlyPayment = yearlyPayment {
+                        Group {
+                            Text("Unlimited free access for 14 days, then ")
+                                .font(.regular(size: 18)) +
+                            Text("\(NumberFormatter.price(from: yearlyPayment.price.doubleValue)) annually ")
+                                .font(.semibold(size: 18)) +
+                            Text("(\(NumberFormatter.price(from: yearlyPayment.price.doubleValue/12))/month).")
+                                .font(.regular(size: 18))
+                        }
                         .foregroundColor(.white)
-                        .font(.h4)
+                    }
                     Button("View all plans") {
                         onShowAllPlans(payments)
                         store.dispatch(TrackAnalyticsEvent(event: .paywallOpened))
@@ -73,8 +81,9 @@ struct PremiumView: View, PremiumViewProps {
                     .foregroundColor(.CodeChallenge.blue1)
                     .font(.h5)
                 }
+                .padding(.vertical, 10)
 
-                PremiumNoteView(title: "How can I cancel?", text: "hesht hangist")
+                PremiumNoteView(title: "How can I cancel?", text: "It’s easy: Open the Settings app, tap on your name, then tap on Subscriptions. Now select the Codehub Premium subscription and cancel it.")
 
                 Button("Start my free trial now", action: {
                     IAPManager.shared.purchaseProduct(product: payments.first!, success: {

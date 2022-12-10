@@ -12,6 +12,7 @@ struct AppStoreProduct: Equatable {
     let name: String
     let value: String
     let description: String
+    let payment: AppStorePayment
 }
 
 class PremiumAllPlansView: UIView, PopupContentView {
@@ -110,6 +111,17 @@ class PremiumAllPlansView: UIView, PopupContentView {
         onDismiss?()
     }
 
+    @objc func onGetPremiumTapped() {
+        guard let selectedProduct = selectedProduct else { return }
+        self.isUserInteractionEnabled = false
+        IAPManager.shared.purchaseProduct(product: selectedProduct.payment, success: { [weak self] in
+            self?.isUserInteractionEnabled = true
+        }, failure: { [weak self] error in
+            self?.isUserInteractionEnabled = true
+        })
+        onDismiss?()
+    }
+
     private func setupProducts() {
         if hStack == nil {
             hStack = UIStackView()
@@ -162,7 +174,9 @@ fileprivate class ProductView: UIView {
         let label3 = UILabel()
         label1.text = product?.name
         label1.font = .systemFont(ofSize: 18, weight: .medium)
-        label2.text = product?.value
+        if let price = product?.value {
+            label2.text = "$\(price)"
+        }
         label2.font = .systemFont(ofSize: 20, weight: .bold)
         label3.text = product?.description
         label3.font = .systemFont(ofSize: 14, weight: .regular)

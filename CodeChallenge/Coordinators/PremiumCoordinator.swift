@@ -31,10 +31,15 @@ class PremiumCoordinator {
     }
 
     private func showAllPlans(payments: [AppStorePayment]) {
-        let monthlyPayment = payments.first { $0.productIdentifier == "monthly_subscription" }?.price.stringValue ?? ""
-        let yearlyPayment = payments.first { $0.productIdentifier == "yeary_7day_trial" }?.price.stringValue ?? ""
-        let products = [AppStoreProduct(name: "Monthly", value: monthlyPayment, description: "Billed & Recurring Monthly"),
-        AppStoreProduct(name: "Yearly", value: yearlyPayment, description: "Only 6.28$/month Billed & recurring yearly")]
+        guard let monthly = (payments.first { $0.productIdentifier == "monthly_subscription" }),
+        let yearly = (payments.first { $0.productIdentifier == "yearly_pro_2week_trial" }) else { return }
+        let monthlyPayment = monthly.price.stringValue
+        let yearlyPayment = yearly.price.stringValue
+        let yearlyMonthlyPayment = NumberFormatter.price(from: (Double(yearlyPayment) ?? 0) / 12)
+        let products = [
+            AppStoreProduct(name: "Monthly", value: monthlyPayment, description: "Billed & Recurring Monthly", payment: monthly),
+            AppStoreProduct(name: "Yearly", value: yearlyPayment, description: "Only \(yearlyMonthlyPayment)/month Billed & recurring yearly", payment: yearly)
+        ]
         let view = PremiumAllPlansView(products: products)
         view.onDismiss = { [weak self] in
             self?.popupController?.hide()

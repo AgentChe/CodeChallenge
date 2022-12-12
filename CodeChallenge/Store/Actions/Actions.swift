@@ -116,7 +116,6 @@ struct GuestAuth: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session")
         guard session == nil else {
-            dispatcher.dispatch(LoadAccount())
             return
         }
         dispatcher.dispatch(Action.loadAccount(.loading))
@@ -128,6 +127,8 @@ struct GuestAuth: ThunkAction {
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.loadUser(user))
                     dispatcher.dispatch(LoadAccount())
+                    dispatcher.dispatch(LoadInProgressChallenges())
+                    dispatcher.dispatch(LoadCompletedChallenges())
                     if reloadHome {
                         dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
                     }
@@ -194,10 +195,6 @@ struct LoadAccount: ThunkAction {
 
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
             }
-
-        dispatcher.dispatch(LoadInProgressChallenges())
-        dispatcher.dispatch(LoadCompletedChallenges())
-
 //        dispatchGroup.enter()
 //        dispatcher.services.accountService
 //            .getFollowersCount(userId: 4)
@@ -442,6 +439,38 @@ struct UploadImage: ThunkAction {
                 let copyAccount = dispatcher.state.account
                 dispatcher.dispatch(Action.loadAccount(copyAccount))
             }
+    }
+}
+
+struct PurchasePayment: ThunkAction {
+    let payment: AppStorePayment
+
+    func exec(dispatcher: Dispatcher) {
+        let previousAccount = dispatcher.state.account.value
+        dispatcher.dispatch(Action.loadAccount(.pending))
+
+        IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
+            dispatcher.services
+                .challengesService
+                .send(transactionId: identifier)
+                .asResolvable()
+                .ephemeralSink { result in
+                    switch result {
+                    case .success:
+                        dispatcher.dispatch(LoadAccount())
+                        print("TT_loaded")
+                    case .failure:
+                        if let previousAccount = previousAccount {
+                            dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))
+                        }
+                    default: break
+                    }
+                }
+        }, failure: { error in
+            if let previousAccount = previousAccount {
+                dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))
+            }
+        })
     }
 }
 

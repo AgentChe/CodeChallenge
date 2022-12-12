@@ -61,6 +61,8 @@ final class RootCoordinator {
 
         if UserDefaults.standard.string(forKey: "cc_user_session") != nil {
             store.dispatch(LoadAccount())
+            store.dispatch(LoadInProgressChallenges())
+            store.dispatch(LoadCompletedChallenges())
         }
 
         store.dispatch(AddStreakIfNeeded())
@@ -134,6 +136,8 @@ final class RootCoordinator {
                 guard let self = self else { return }
                 if isLoggedIn == true {
                     self.store.dispatch(LoadAccount())
+                    self.store.dispatch(LoadInProgressChallenges())
+                    self.store.dispatch(LoadCompletedChallenges())
                     self.authNavigationController?.dismiss(animated: true)
 //                    self.accountCoordinator.start()
                 }

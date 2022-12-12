@@ -8,7 +8,7 @@
 import UIKit
 import StoreKit
 
-public typealias SuccessBlock = () -> Void
+public typealias SuccessBlock = (String) -> Void
 public typealias FailureBlock = (Error?) -> Void
 
 typealias AppStorePayment = SKProduct
@@ -127,7 +127,7 @@ class IAPManager : NSObject{
                 }
             }
         }
-        self.refreshSubscriptionSuccessBlock?()
+//        self.refreshSubscriptionSuccessBlock?()
         self.cleanUpRefeshReceiptBlocks()
     }
 
@@ -156,9 +156,9 @@ class IAPManager : NSObject{
 extension IAPManager : SKRequestDelegate {
 
     func requestDidFinish(_ request: SKRequest) {
-        if request is SKReceiptRefreshRequest {
-            refreshSubscriptionsStatus(callback: self.successBlock ?? {}, failure: self.failureBlock ?? {_ in})
-        }
+//        if request is SKReceiptRefreshRequest {
+//            refreshSubscriptionsStatus(callback: self.successBlock ?? {}, failure: self.failureBlock ?? {_ in})
+//        }
     }
 
     func request(_ request: SKRequest, didFailWithError error: Error){
@@ -212,14 +212,15 @@ extension IAPManager: SKPaymentTransactionObserver {
     }
 
     private func notifyIsPurchased(transaction: SKPaymentTransaction) {
-        refreshSubscriptionsStatus(callback: {
-            self.successBlock?()
-            self.cleanUp()
-        }) { (error) in
-            // couldn't verify receipt
-            self.failureBlock?(error)
-            self.cleanUp()
-        }
+//        refreshSubscriptionsStatus(callback: {
+//            self.successBlock?(transaction.transactionIdentifier ?? "")
+//            self.cleanUp()
+//        }) { (error) in
+//            // couldn't verify receipt
+//            self.failureBlock?(error)
+//            self.cleanUp()
+//        }
+        self.successBlock?(transaction.transactionIdentifier ?? "")
     }
 
     func cleanUp(){

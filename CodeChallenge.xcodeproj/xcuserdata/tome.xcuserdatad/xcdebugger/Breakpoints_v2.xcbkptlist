@@ -14,13 +14,13 @@
             filePath = "CodeChallenge/Store/Actions/Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "316"
-            endingLineNumber = "316"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "exec(dispatcher:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 634b55b861fd4add"
+                  uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 634b55b861fd4942"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,12 +30,12 @@
                   urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "316"
-                  endingLineNumber = "316"
-                  offsetFromSymbolStart = "1000">
+                  startingLineNumber = "313"
+                  endingLineNumber = "313"
+                  offsetFromSymbolStart = "720">
                </Location>
                <Location
-                  uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 634b55b861fd4add"
+                  uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 634b55b861fd4942"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,9 +45,9 @@
                   urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Store/Actions/Actions.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "316"
-                  endingLineNumber = "316"
-                  offsetFromSymbolStart = "3211">
+                  startingLineNumber = "313"
+                  endingLineNumber = "313"
+                  offsetFromSymbolStart = "1964">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -96,7 +96,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
                   endingLineNumber = "32"
-                  offsetFromSymbolStart = "129">
+                  offsetFromSymbolStart = "68">
                </Location>
                <Location
                   uuid = "23A0C3FD-AA34-4A1D-95E3-C4BFCFBA1071 - 76f7e5c30d437b18"
@@ -111,7 +111,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
                   endingLineNumber = "32"
-                  offsetFromSymbolStart = "166">
+                  offsetFromSymbolStart = "108">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -135,32 +135,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AF7F3893-DF9F-4AEF-8AA8-D90D1206A8B2"
+            uuid = "602FD1B3-33C0-441F-BD35-58C364B5432A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Views/Playground/PlaygroundView.swift"
+            filePath = "CodeChallenge/Store/Actions/Actions.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "set(code:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A6DC2C32-8432-48AD-8463-3AFFAE6DFAB5"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Helpers/Formatters.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "12"
-            endingLineNumber = "12"
-            landmarkName = "price(from:)"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
+            landmarkName = "exec(dispatcher:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -17,6 +17,7 @@ struct AppStoreProduct: Equatable {
 
 class PremiumAllPlansView: UIView, PopupContentView {
     var onDismiss: (() -> Void)?
+    var onPurchaseProduct: ((AppStoreProduct) -> Void)?
     let products: [AppStoreProduct]
     var selectedProduct: AppStoreProduct? {
         didSet {
@@ -83,6 +84,7 @@ class PremiumAllPlansView: UIView, PopupContentView {
         button.backgroundColor = .CodeChallenge.blue1
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 28
+        button.addTarget(self, action: #selector(onGetPremiumTapped), for: .touchUpInside)
 
         let noThanksButton = UIButton()
         noThanksButton.setTitle("NO THANKS", for: .normal)
@@ -113,12 +115,7 @@ class PremiumAllPlansView: UIView, PopupContentView {
 
     @objc func onGetPremiumTapped() {
         guard let selectedProduct = selectedProduct else { return }
-        self.isUserInteractionEnabled = false
-        IAPManager.shared.purchaseProduct(product: selectedProduct.payment, success: { [weak self] in
-            self?.isUserInteractionEnabled = true
-        }, failure: { [weak self] error in
-            self?.isUserInteractionEnabled = true
-        })
+        onPurchaseProduct?(selectedProduct)
         onDismiss?()
     }
 
@@ -174,8 +171,8 @@ fileprivate class ProductView: UIView {
         let label3 = UILabel()
         label1.text = product?.name
         label1.font = .systemFont(ofSize: 18, weight: .medium)
-        if let price = product?.value {
-            label2.text = "$\(price)"
+        if let price = product?.payment.price.doubleValue {
+            label2.text = NumberFormatter.price(from: price)
         }
         label2.font = .systemFont(ofSize: 20, weight: .bold)
         label3.text = product?.description

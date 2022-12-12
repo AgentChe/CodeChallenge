@@ -41,6 +41,9 @@ class PremiumCoordinator {
             AppStoreProduct(name: "Yearly", value: yearlyPayment, description: "Only \(yearlyMonthlyPayment)/month Billed & recurring yearly", payment: yearly)
         ]
         let view = PremiumAllPlansView(products: products)
+        view.onPurchaseProduct = { [weak self] product in
+            self?.store.dispatch(PurchasePayment(payment: product.payment))
+        }
         view.onDismiss = { [weak self] in
             self?.popupController?.hide()
         }

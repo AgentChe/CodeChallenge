@@ -42,7 +42,6 @@ struct PremiumView: View, PremiumViewProps {
                     .font(.pageNameH1)
                 HStack {
                     VStack {
-
                         Image("premium_progress")
                         Spacer()
                     }
@@ -62,36 +61,14 @@ struct PremiumView: View, PremiumViewProps {
                     }
                     Spacer()
                 }
-                VStack(alignment: .center, spacing: 20) {
-                    if let yearlyPayment = yearlyPayment {
-                        Group {
-                            Text("Unlimited free access for 14 days, then ")
-                                .font(.regular(size: 18)) +
-                            Text("\(NumberFormatter.price(from: yearlyPayment.price.doubleValue)) annually ")
-                                .font(.semibold(size: 18)) +
-                            Text("(\(NumberFormatter.price(from: yearlyPayment.price.doubleValue/12))/month).")
-                                .font(.regular(size: 18))
-                        }
-                        .foregroundColor(.white)
-                    }
-                    Button("View all plans") {
-                        onShowAllPlans(payments)
-                        store.dispatch(TrackAnalyticsEvent(event: .paywallOpened))
-                    }
-                    .foregroundColor(.CodeChallenge.blue1)
-                    .font(.h5)
-                }
-                .padding(.vertical, 10)
-
+                yearlyPaymentText
                 PremiumNoteView(title: "How can I cancel?", text: "It’s easy: Open the Settings app, tap on your name, then tap on Subscriptions. Now select the Codehub Premium subscription and cancel it.")
 
                 Button("Start my free trial now", action: {
-                    IAPManager.shared.purchaseProduct(product: payments.first!, success: {
-                        showMessage = "Success"
-                    }, failure: { error in
-                        showMessage = "fail"
-                    })
-                }).buttonStyle(GradientButton())
+                    if let yearlyPayment = yearlyPayment {
+                        store.dispatch(PurchasePayment(payment: yearlyPayment))
+                    }
+                }).buttonStyle(GradientButton(status: buttonStatus))
                 Spacer()
             }
             .padding(.horizontal, 25)
@@ -100,5 +77,28 @@ struct PremiumView: View, PremiumViewProps {
             }
         }
         .foregroundColor(.white)
+    }
+
+    var yearlyPaymentText: some View {
+        VStack(alignment: .center, spacing: 20) {
+            if let yearlyPayment = yearlyPayment {
+                Group {
+                    Text("Unlimited free access for 14 days, then ")
+                        .font(.regular(size: 18)) +
+                    Text("\(NumberFormatter.price(from: yearlyPayment.price.doubleValue)) annually ")
+                        .font(.semibold(size: 18)) +
+                    Text("(\(NumberFormatter.price(from: yearlyPayment.price.doubleValue/12))/month).")
+                        .font(.regular(size: 18))
+                }
+                .foregroundColor(.white)
+            }
+            Button("View all plans") {
+                onShowAllPlans(payments)
+                store.dispatch(TrackAnalyticsEvent(event: .paywallOpened))
+            }
+            .foregroundColor(.CodeChallenge.blue1)
+            .font(.h5)
+        }
+        .padding(.vertical, 10)
     }
 }

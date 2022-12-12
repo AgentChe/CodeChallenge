@@ -32,4 +32,12 @@ extension PremiumViewProps {
     var yearlyPayment: AppStorePayment? {
         return payments.first { $0.productIdentifier == "yearly_pro_2week_trial" }
     }
+
+    var buttonStatus: GradientButton.Status {
+        if store.state.account.isLoading || store.state.account.isPending {
+            return .loading
+        } else {
+            return .enabled
+        }
+    }
 }

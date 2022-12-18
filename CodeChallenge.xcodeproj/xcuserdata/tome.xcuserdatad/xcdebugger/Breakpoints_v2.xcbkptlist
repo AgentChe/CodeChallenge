@@ -32,7 +32,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "313"
                   endingLineNumber = "313"
-                  offsetFromSymbolStart = "720">
+                  offsetFromSymbolStart = "1000">
                </Location>
                <Location
                   uuid = "FA1971B9-B4F3-4A93-9B8F-E763D76DFE26 - 634b55b861fd4942"
@@ -47,7 +47,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "313"
                   endingLineNumber = "313"
-                  offsetFromSymbolStart = "1964">
+                  offsetFromSymbolStart = "3211">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -96,7 +96,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
                   endingLineNumber = "32"
-                  offsetFromSymbolStart = "68">
+                  offsetFromSymbolStart = "129">
                </Location>
                <Location
                   uuid = "23A0C3FD-AA34-4A1D-95E3-C4BFCFBA1071 - 76f7e5c30d437b18"
@@ -111,7 +111,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "32"
                   endingLineNumber = "32"
-                  offsetFromSymbolStart = "108">
+                  offsetFromSymbolStart = "166">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -145,6 +145,22 @@
             startingLineNumber = "458"
             endingLineNumber = "458"
             landmarkName = "exec(dispatcher:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "87974D64-9C07-4733-A3D7-56C72FA4271A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Services/NetworkService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "load(_:decoding:with:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

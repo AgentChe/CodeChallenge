@@ -44,7 +44,7 @@ final class RootCoordinator {
             homeCoordinator.navigationController,
             browseCoordinator.navigationController,
             buddiesCoordinator.navigationController,
-            premiumCoordinator.navigationController,
+//            premiumCoordinator.navigationController,
             accountCoordinator.navigationController
         ]
         tabBarController.setViewControllers(tabs, animated: false)

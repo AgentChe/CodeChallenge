@@ -11,6 +11,7 @@ import SwiftUI
 
 class HomeCoordinator {
     let navigationController = UINavigationController()
+    var onboardingNavigationController: UINavigationController?
     let store: Store
     private var popupController: PopupViewController?
 
@@ -32,7 +33,7 @@ class HomeCoordinator {
 //            self?.store.dispatch(LoadSearchResults(instanceId: instanceId))
 //        })
 //            .environmentObject(store)
-        let homeView = NewHomeView(language: "py", humanLanguage: "en") { [weak self] collection, section in
+        let homeView = NewHomeView(humanLanguage: "en") { [weak self] collection, section in
             self?.openCollectionDetail(collection: collection, section: section)
         }
             .environmentObject(store)
@@ -60,15 +61,27 @@ class HomeCoordinator {
     }
 
     private func presentGetStartedIfNecessary() {
-        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
+//        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
         UserDefaults.standard.set(true, forKey: "getStartedPresented")
         let view = GetStartedView { [weak self] in
-            self?.navigationController.dismiss(animated: true)
+            self?.presentProgrammingLanguagesView()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
-        controller.modalPresentationStyle = .fullScreen
-        navigationController.present(controller, animated: false)
+        onboardingNavigationController = UINavigationController(rootViewController: controller)
+        onboardingNavigationController?.modalPresentationStyle = .fullScreen
+        if let onboardingNavigationController = onboardingNavigationController {
+            navigationController.present(onboardingNavigationController, animated: false)
+        }
+    }
+
+    private func presentProgrammingLanguagesView() {
+        let view = OnboardingLanguagesView { [weak self] in
+            self?.onboardingNavigationController?.dismiss(animated: true)
+        }
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: view)
+        onboardingNavigationController?.pushViewController(controller, animated: true)
     }
 
     func openCodeChallenge(challenge: Challenge, group: ChallengeGroup?, collection: NewChallengeCollection?) {

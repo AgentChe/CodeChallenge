@@ -87,4 +87,8 @@ extension CodeChallengeViewProps {
         challenges.append(celebratedChallenge.id)
         UserDefaults.standard.set(challenges, forKey: "celebratedChallenges")
     }
+
+    var programmingLanguage: ProgrammingLanguage {
+        store.state.programmingLanguage
+    }
 }

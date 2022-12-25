@@ -13,11 +13,13 @@ struct CodePlaygroundView: UIViewRepresentable {
     @Binding var code: String?
     @Binding var resettedTemplate: String?
     let bottomInset: CGFloat
+    let programmingLanguage: ProgrammingLanguage
     let onCodeChange: (String) -> Void
 
     func makeUIView(context: Context) -> some UIView {
         let view = PlaygroundView(frame: .zero)
         view.onCodeChange = onCodeChange
+        view.language = programmingLanguage
         view.set(code: code ?? "")
         view.translatesAutoresizingMaskIntoConstraints = false
 

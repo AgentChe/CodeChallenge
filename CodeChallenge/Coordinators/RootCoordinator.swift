@@ -82,7 +82,7 @@ final class RootCoordinator {
             }
             .store(in: &cancellables)
 
-        store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+        store.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
 
         store.dispatch(LoadAppStorePayments())
 
@@ -104,7 +104,7 @@ final class RootCoordinator {
                         self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, error)))
                         let alertController = UIAlertController(title: "An error occurred", message: error.localizedDescription, preferredStyle: .alert)
                         let action = UIAlertAction(title: "Retry", style: .default) { action in
-                            self?.store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                            self?.store.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
                         }
                         alertController.addAction(action)
                         controller.present(alertController, animated: true)

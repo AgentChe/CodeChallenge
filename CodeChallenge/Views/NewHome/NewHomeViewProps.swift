@@ -9,7 +9,6 @@ import Foundation
 
 protocol NewHomeViewProps {
     var store: Store { get }
-    var language: String { get }
     var humanLanguage: String { get }
 }
 
@@ -23,11 +22,15 @@ extension NewHomeViewProps {
     }
 
     var identifier: String {
-        "\(language)_\(humanLanguage)"
+        "\(programmingLanguage.apiRequestParam)_\(humanLanguage)"
     }
 
     var xp: Int {
         store.state.account.value?.xp ?? 0
+    }
+
+    var programmingLanguage: ProgrammingLanguage {
+        store.state.programmingLanguage
     }
 
     func progressImageName(index: Int, sectionIndex: Int) -> String {

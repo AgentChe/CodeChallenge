@@ -10,6 +10,7 @@ import Foundation
 struct AppState {
     let user: Resolvable<User>
     let account: Resolvable<Account>
+    let programmingLanguage: ProgrammingLanguage
     let homeSections: [String: Resolvable<[NewChallengeSection]>]
     let collections: [Int: Resolvable<NewChallengeCollectionContent>]
     let challengeDetails: [Int: Resolvable<ChallengeDetail>]
@@ -23,6 +24,7 @@ struct AppState {
 
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
+         programmingLanguage: ProgrammingLanguage = .python,
          homeSections: [String: Resolvable<[NewChallengeSection]>] = [:],
          collections: [Int: Resolvable<NewChallengeCollectionContent>] = [:],
          challengeDetails: [Int: Resolvable<ChallengeDetail>] = [:],
@@ -35,6 +37,7 @@ struct AppState {
          payments: Resolvable<[AppStorePayment]> = .pending) {
         self.user = user
         self.account = account
+        self.programmingLanguage = programmingLanguage
         self.homeSections = homeSections
         self.collections = collections
         self.challengeDetails = challengeDetails

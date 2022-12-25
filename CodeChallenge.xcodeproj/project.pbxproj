@@ -47,6 +47,9 @@
 		E06D28C728CE6EB800E211A0 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = E06D28C628CE6EB800E211A0 /* OneSignal */; };
 		E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */; };
 		E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6A28A85C9A004B81DA /* SolutionView.swift */; };
+		E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */; };
+		E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */; };
+		E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */; };
 		E07BBDDB28C29DDB00A1805B /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = E07BBDDA28C29DDB00A1805B /* Mixpanel */; };
 		E07BBDDD28C29DEC00A1805B /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */; };
 		E08B445828B2E2A3006BC50A /* EnvironmentAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */; };
@@ -204,6 +207,9 @@
 		E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAnalyticsService.swift; sourceTree = "<group>"; };
 		E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTestCasesView.swift; sourceTree = "<group>"; };
 		E0750D6A28A85C9A004B81DA /* SolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionView.swift; sourceTree = "<group>"; };
+		E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingLanguage.swift; sourceTree = "<group>"; };
+		E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguagesView.swift; sourceTree = "<group>"; };
+		E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentAdditions.swift; sourceTree = "<group>"; };
 		E08B445928B2E49B006BC50A /* BrowseViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewProps.swift; sourceTree = "<group>"; };
@@ -499,6 +505,7 @@
 				E05254FF288C796800FD87C3 /* Playground */,
 				E08D6F7828C53826006991EB /* GetStartedView.swift */,
 				E0A619D229104D73004EDD41 /* MaintenanceView.swift */,
+				E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -582,6 +589,7 @@
 				E06AAE3628778DDC00995D3D /* Account.swift */,
 				E0EBB7E3288B1AED00DE7C53 /* ChallengeGroups.swift */,
 				E0FB613429185C5500DB1E9A /* NewChallengeSection.swift */,
+				E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -677,6 +685,7 @@
 				E0FB29AD2919A2CA00E75B8E /* NewCollectionContentView.swift */,
 				E0FB29AF2919A2E500E75B8E /* NewCollectionContentViewProps.swift */,
 				E0177C5729340C030073D6AE /* HomeLoadingView.swift */,
+				E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */,
 			);
 			path = NewHome;
 			sourceTree = "<group>";
@@ -862,6 +871,7 @@
 				E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */,
 				E0BD3295285CF886000C37A9 /* Services.swift in Sources */,
 				E0ECE5C428BC028700A1CB12 /* XPView.swift in Sources */,
+				E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */,
 				E08B446028B4366C006BC50A /* IAPManager.swift in Sources */,
 				E0DA79C228F20AB00038B0E1 /* Configuration.swift in Sources */,
 				E0BD3286285CF568000C37A9 /* NetworkService.swift in Sources */,
@@ -916,6 +926,7 @@
 				E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */,
 				E0BD3283285CF4A5000C37A9 /* Store.swift in Sources */,
 				E05254FE288C796000FD87C3 /* CodePlaygroundView.swift in Sources */,
+				E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */,
 				E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */,
 				E0BD3235285A7181000C37A9 /* Persistence.swift in Sources */,
 				E0EBB7EC288B204900DE7C53 /* NetworkImageViewModel.swift in Sources */,
@@ -942,6 +953,7 @@
 				E0BD324D285A8DA3000C37A9 /* SceneDelegate.swift in Sources */,
 				E096DF212871BEA8008A2A98 /* DoodledView.swift in Sources */,
 				E052550E288C79FC00FD87C3 /* AutocompleteTermsHelper.swift in Sources */,
+				E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */,
 				E01AECA7289F0D5800615B52 /* KeywordsSwiftUIView.swift in Sources */,
 				E0BD3280285CF48A000C37A9 /* LoginViewProps.swift in Sources */,
 				E08B445E28B2E988006BC50A /* BrowsedChallengesViewProps.swift in Sources */,

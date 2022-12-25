@@ -27,6 +27,7 @@ enum Action: Dispatchable {
     case loadHashtags(Resolvable<[String]>, String)
     case loadHomeSections(String, Resolvable<[NewChallengeSection]>)
     case loadHomeCollectionContent(Int, Resolvable<NewChallengeCollectionContent>)
+    case changeProgrammingLanguage(ProgrammingLanguage)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -46,7 +47,7 @@ struct Login: ThunkAction {
             .ephemeralSink { user in
                 if user.isSuccess {
                     dispatcher.dispatch(AddStreakIfNeeded())
-                    dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                    dispatcher.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
                     dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
@@ -130,7 +131,7 @@ struct GuestAuth: ThunkAction {
                     dispatcher.dispatch(LoadInProgressChallenges())
                     dispatcher.dispatch(LoadCompletedChallenges())
                     if reloadHome {
-                        dispatcher.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                        dispatcher.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
                     }
                 }
             }
@@ -475,20 +476,20 @@ struct PurchasePayment: ThunkAction {
 }
 
 struct LoadHomeSections: ThunkAction {
-    let language: String
+    let language: ProgrammingLanguage
     let humanLanguage: String
 
     func exec(dispatcher: Dispatcher) {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        if dispatcher.state.homeSections["\(language)_\(humanLanguage)"]?.value == nil {
-            dispatcher.dispatch(Action.loadHomeSections("\(language)_\(humanLanguage)", .loading))
+        if dispatcher.state.homeSections["\(language.apiRequestParam)_\(humanLanguage)"]?.value == nil {
+            dispatcher.dispatch(Action.loadHomeSections("\(language.apiRequestParam)_\(humanLanguage)", .loading))
         }
 
         dispatcher.services.challengesService
-            .fetchHomeSections(language: language, humanLanguage: humanLanguage, id: userId)
+            .fetchHomeSections(language: language.apiRequestParam, humanLanguage: humanLanguage, id: userId)
             .asResolvable()
             .ephemeralSink { groups in
-                dispatcher.dispatch(Action.loadHomeSections("\(language)_\(humanLanguage)", groups))
+                dispatcher.dispatch(Action.loadHomeSections("\(language.apiRequestParam)_\(humanLanguage)", groups))
             }
     }
 }
@@ -508,5 +509,13 @@ struct LoadCollectionContent: ThunkAction {
             .ephemeralSink { groups in
                 dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, groups))
             }
+    }
+}
+
+struct ChangeProgrammingLanguage: ThunkAction {
+    let language: ProgrammingLanguage
+
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.changeProgrammingLanguage(language))
     }
 }

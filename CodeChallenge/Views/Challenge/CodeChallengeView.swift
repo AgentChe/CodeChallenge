@@ -77,7 +77,9 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             if let details = details, (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
                 if !celebratedChallenges.contains(details.id) {
                     set(celebratedChallenge: details)
-                    store.dispatch(LoadHomeSections(language: "py", humanLanguage: "en"))
+                    store.dispatch(LoadHomeSections(
+                        language: programmingLanguage, humanLanguage: "en"
+                    ))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         onSuccess(details)
                     }
@@ -89,16 +91,25 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 store.dispatch(TrackAnalyticsEvent(event: .startedSolving(codeChallenge, group)))
             }
         })
-        .toolbar(content: {
+        .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
                     Text(codeChallenge.name)
                         .foregroundColor(.white)
                         .font(.h3)
                     Spacer()
+
+                    if selection == 1 && removeTrailingNewLines(string: template.removingPercentEncoding ?? template) != displayCode {
+                        Image("reset")
+                            .onTapGesture {
+                                showsResetProgressPopup = true
+                            }
+                    } else {
+                        EmptyView()
+                    }
                 }
             }
-        })
+        }
         .background(Color.dark.edgesIgnoringSafeArea(.all))
         .alert(isPresented: $showsResetProgressPopup, content: {
             Alert(title: Text("Are you sure you want to reset the progress?"),
@@ -112,16 +123,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 }
             }))
         })
-        .toolbar {
-            if selection == 1 && removeTrailingNewLines(string: template.removingPercentEncoding ?? template) != displayCode {
-                Image("reset")
-                    .onTapGesture {
-                        showsResetProgressPopup = true
-                    }
-            } else {
-                EmptyView()
-            }
-        }
         .onChange(of: output) { _ in
             keyboardHeight = 0
             UIApplication.shared.endEditing()
@@ -191,7 +192,12 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
         ZStack {
             GeometryReader { geometry in
                 VStack(spacing: 0) {
-                    CodePlaygroundView(specialCharacter: $specialCharacter, code: $displayCode, resettedTemplate: $resettedTemplate, bottomInset: geometry.size.height - quickAccessCharViewHeight) { code in
+                    CodePlaygroundView(
+                        specialCharacter: $specialCharacter,
+                        code: $displayCode,
+                        resettedTemplate: $resettedTemplate,
+                        bottomInset: geometry.size.height - quickAccessCharViewHeight,
+                        programmingLanguage: programmingLanguage) { code in
                         DispatchQueue.main.async {
                             displayCode = removeTrailingNewLines(string: code)
                         }

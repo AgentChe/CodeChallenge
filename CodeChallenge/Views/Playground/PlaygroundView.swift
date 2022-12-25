@@ -21,7 +21,6 @@ class PlaygroundView: UIView {
     }
     let textView: UITextView = {
         let textStorage = CodeAttributedString()
-        textStorage.language = "python"
         textStorage.highlightr.setTheme(to: "atom-one-dark-reasonable")
         textStorage.highlightr.theme.setCodeFont(UIFont(name: "CourierNewPSMT", size: Constants.fontSize)!)
         let layoutManager = NSLayoutManager()
@@ -49,6 +48,7 @@ class PlaygroundView: UIView {
     private var scrollViewBottomConstraint: NSLayoutConstraint?
     private var justAutocompleted: Bool = false
     private var fontHeight: CGFloat = UIFont(name: "CourierNewPSMT", size: Constants.fontSize)?.lineHeight ?? 0
+    var language: ProgrammingLanguage = .python
     var onCodeChange: ((String) -> Void)?
 
     private let lineNumerStackView: UIStackView = {
@@ -171,6 +171,7 @@ extension PlaygroundView {
         textViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: Constants.lineNumberBoxWidth)
         textViewHeightConstraint?.isActive = true
         textView.delegate = self
+        (textView.textStorage as? CodeAttributedString)?.language = language.rawValue
 
         lineNumerStackView.addArrangedSubview(justView)
     }

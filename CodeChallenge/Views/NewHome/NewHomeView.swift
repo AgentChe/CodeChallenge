@@ -12,12 +12,9 @@ import UIKit
 struct NewHomeView: View, NewHomeViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     @EnvironmentObject var store: Store
-    let language: String
     let humanLanguage: String
     let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
     @State private var displayXp: Int = 0
-
-    @State private var displaySections: [NewChallengeSection] = []
 
     var body: some View {
         DoodledView {
@@ -34,20 +31,20 @@ struct NewHomeView: View, NewHomeViewProps {
                 }
             }
         }
-        .onAppear {
-            displaySections = sections ?? []
-        }
-        .onChange(of: sections) { newValue in
-            displaySections = newValue ?? []
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                XPView(
-                    xpText: "\(displayXp)",
-                    backgroundColor: .CodeChallenge.dark,
-                    xpIconColor: "white",
-                    strokeColor: .CodeChallenge.blue1
-                )
+                HStack(spacing: 10) {
+                    LanguagePickerIconView()
+                        .onTapGesture {
+                            store.dispatch(ChangeProgrammingLanguage(language: programmingLanguage == .python ? .java : .python))
+                        }
+                    XPView(
+                        xpText: "\(displayXp)",
+                        backgroundColor: .CodeChallenge.dark,
+                        xpIconColor: "white",
+                        strokeColor: .CodeChallenge.blue1
+                    )
+                }
             }
         }
         .onChange(of: xp) { newValue in
@@ -55,6 +52,9 @@ struct NewHomeView: View, NewHomeViewProps {
         }
         .onAppear {
             displayXp = xp
+        }
+        .onChange(of: programmingLanguage) { newValue in
+            store.dispatch(LoadHomeSections(language: newValue, humanLanguage: "en"))
         }
     }
 
@@ -65,7 +65,7 @@ struct NewHomeView: View, NewHomeViewProps {
                 alignment: .leading,
                 spacing: 0,
                 pinnedViews: []) {
-                    ForEach(Array(displaySections.enumerated()), id: \.offset) { (sectionOffset, section) in
+                    ForEach(Array((sections ?? []).enumerated()), id: \.offset) { (sectionOffset, section) in
                         Section(
                             header:
                                 Text(section.name)

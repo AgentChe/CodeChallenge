@@ -14,6 +14,7 @@ struct Reducers {
         AppState(
             user: userReducer(state.user, action),
             account: accountReducer(state.account, action),
+            programmingLanguage: programmingLanguageReducer(state.programmingLanguage, action),
             homeSections: homeSectionsReducer(state.homeSections, action),
             collections: collectionContentReducer(state.collections, action),
             challengeDetails: challengeDetailsReducer(state.challengeDetails, action),
@@ -173,6 +174,16 @@ extension Reducers {
             var copy = state
             copy[identifier] = result
             return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let programmingLanguageReducer: Reducer<ProgrammingLanguage> = { state, action in
+        switch action {
+        case .changeProgrammingLanguage(let language):
+            return language
         default: return state
         }
     }

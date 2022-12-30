@@ -1159,7 +1159,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1193,7 +1193,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1290,7 +1290,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1401,7 +1401,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

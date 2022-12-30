@@ -23,7 +23,8 @@ struct RecommendationsView: View, RecommendationsViewProps {
                     Spacer()
                         .frame(width: 0)
                     ForEach(Array(challenges.enumerated()), id: \.offset) { (_, challenge) in
-                        itemView(challenge: challenge)
+                        itemView(challenge: challenge, progress: getProgress(challenge: challenge))
+                            .frame(width: (UIScreen.main.bounds.width - 20)/2)
                     }
                     Spacer()
                         .frame(width: 0)
@@ -32,47 +33,43 @@ struct RecommendationsView: View, RecommendationsViewProps {
         }
     }
 
-    private func itemView(challenge: Challenge) -> some View {
+    private func itemView(challenge: Challenge, progress: String?) -> some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.CodeChallenge.background))
-                .frame(width: 200)
+            RoundedRectangle(cornerRadius: 13)
+                .stroke(Color(progress != "todo" ? (progress == "done" ? .CodeChallenge.blue1 : .CodeChallenge.white) : .CodeChallenge.gray1),
+                        lineWidth: 1.5
+                )
             VStack(alignment: .leading, spacing: 0) {
-                Spacer()
-                    .frame(height:15)
-                    HStack {
-                        NetworkImage(
-                            viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.id)/",
-                                             store: store,
-                                             placeholder: .init(named: "placeholder_image")),
-                            size: .init(width: 50, height: 50)
-                        )
-                        Spacer()
-                        VStack {
-                            if challenge.progress == "done" {
-                                Image("challenge_progress_done")
-                            } else if challenge.isNew {
-                                NewLabelView()
-                            }  else if challenge.isPremium {
-                                Image("challenge_premium_icon")
-                            } else {
-                                ChallengeXPView(xpText: "\(challenge.xp)")
-                            }
-                            Spacer()
+                HStack {
+                    NetworkImage(
+                        viewModel: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.id)/",
+                                         store: store,
+                                         placeholder: .init(named: "placeholder_image")),
+                        size: .init(width: 45, height: 45)
+                    )
+                    Spacer()
+                    VStack {
+                        if challenge.progress == "done" {
+                            Image("challenge_progress_done")
+                        } else if challenge.isNew {
+                            NewLabelView()
+                        }  else if challenge.isPremium {
+                            Image("challenge_premium_icon")
+                        } else {
+                            ChallengeXPView(xpText: "\(challenge.xp)")
                         }
+                        Spacer()
                     }
-                    .frame(height: 50)
-                    .padding(.horizontal, 20)
-                    VStack(alignment: .leading) {
-                        Text(challenge.name)
-                            .foregroundColor(.CodeChallenge.white)
-                            .font(.h5)
-                            .lineLimit(2)
-                            .padding(.top, 10)
-                    }
-                    .padding(.horizontal, 20)
-
-                Spacer()
+                }
+                .frame(height: 45)
+                VStack(alignment: .leading) {
+                    Text(challenge.name)
+                        .foregroundColor(.CodeChallenge.white)
+                        .font(.bodyText)
+                        .lineLimit(2)
+                    Spacer()
+                }
+                .padding(.top, 15)
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -83,17 +80,12 @@ struct RecommendationsView: View, RecommendationsViewProps {
                     }
                     .frame(height: 18)
                 }
-                        .padding(.horizontal, 20)
-                        .frame(height: 18)
-                Spacer()
-                    .frame(height: 10)
+                .frame(height: 18)
             }
-            .frame(width: 200, height: 150)
+            .padding(15)
         }
-        .onTapGesture {
-            store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, nil, "Browse")))
-            onChallengeTap?(challenge)
-        }
+        .frame(height: 157)
+        .padding(1)
     }
 }
 

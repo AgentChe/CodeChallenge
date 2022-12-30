@@ -82,7 +82,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                     spacing: 16,
                     pinnedViews: []) {
                         ForEach(displayChallenges, id: \.id) { challenge in
-                            challengeView(challenge: challenge)
+                            challengeView(challenge: challenge, progress: getProgress(challenge: challenge))
                                 .transition(.move(edge: .bottom))
                                 .contentShape(Rectangle())
                                 .onTapGesture {
@@ -112,10 +112,12 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
         }
     }
 
-    func challengeView(challenge: Challenge) -> some View {
+    func challengeView(challenge: Challenge, progress: String?) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 13)
-                .stroke(Color(.CodeChallenge.blue1), lineWidth: 1.5)
+                .stroke(Color(progress != "todo" ? (progress == "done" ? .CodeChallenge.blue1 : .CodeChallenge.white) : .CodeChallenge.gray1),
+                        lineWidth: 1.5
+                )
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     NetworkImage(

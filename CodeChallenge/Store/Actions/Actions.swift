@@ -305,6 +305,8 @@ struct UpdateChallengeProgress: ThunkAction {
     let challenge: Challenge
     let solution: String
     let compile: Bool
+    let programmingLanguage: ProgrammingLanguage
+    let language: String
 
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session") ?? ""
@@ -328,6 +330,7 @@ struct UpdateChallengeProgress: ThunkAction {
                     if result.value?.isSuccesful == true, currentProgressType != "done" {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
+                                dispatcher.dispatch(LoadHomeSections(language: programmingLanguage, humanLanguage: language))
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())

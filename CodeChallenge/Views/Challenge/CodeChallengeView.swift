@@ -77,9 +77,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             if let details = details, (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
                 if !celebratedChallenges.contains(details.id) {
                     set(celebratedChallenge: details)
-                    store.dispatch(LoadHomeSections(
-                        language: programmingLanguage, humanLanguage: "en"
-                    ))
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         onSuccess(details)
                     }
@@ -117,7 +114,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                   primaryButton: .default(Text("No")),
                   secondaryButton: .destructive(Text("Yes"), action: {
                 resettedTemplate = template
-                store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: template, compile: false))
+                store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: template, compile: false, programmingLanguage: programmingLanguage, language: "en"))
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     resettedTemplate = nil
                 }
@@ -204,7 +201,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                     }
                     QuickAccessCharsView(challengeId: codeChallenge.id, onRun: {
                         showsError = true
-                        store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: displayCode ?? "", compile: true))
+                        store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: displayCode ?? "", compile: true, programmingLanguage: programmingLanguage, language: "en"))
                     }) { char in
                         specialCharacter = char
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
@@ -296,7 +293,6 @@ struct CodeChallengePickerView: UIViewRepresentable {
         let view = CodeChallengePickerUIView(
             sections: sections, enabledSections: enabledSections, onValueChange: onValueChange
         )
-//        view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 31).isActive = true
         view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50).isActive = true
         return view
@@ -392,17 +388,5 @@ struct SkeletonCodeChallengeView: View {
 extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-extension View{
-    func sync<T:Equatable>(_ published:Binding<T>, with binding:Binding<T>)-> some View{
-        self
-            .onChange(of: published.wrappedValue) { published in
-                binding.wrappedValue = published
-            }
-            .onChange(of: binding.wrappedValue) { binding in
-                published.wrappedValue = binding
-            }
     }
 }

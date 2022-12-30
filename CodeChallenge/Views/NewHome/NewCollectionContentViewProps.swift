@@ -25,4 +25,12 @@ extension NewCollectionContentViewProps {
     var xp: Int {
         store.state.account.value?.xp ?? 0
     }
+
+    func getProgress(challenge: Challenge) -> String? {
+        let progress = store.state.challengeProgresses[challenge.id]?.value?.type
+        if progress == nil {
+            return content?.challenges.first { $0.id == challenge.id }?.progress
+        }
+        return progress
+    }
 }

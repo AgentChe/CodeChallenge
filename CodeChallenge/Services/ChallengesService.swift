@@ -83,7 +83,7 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/v1/home/\(id)/\(humanLanguage)/\(language)", type: .get)
+            .create(url: "\(Configuration.host)/v2/home/\(id)/\(humanLanguage)/\(language)", type: .get)
             .flatMap { networkService.load($0, decoding: [NewChallengeSection].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

@@ -105,7 +105,7 @@ class HomeCoordinator {
 
     private func showSolution(challengeDetail: ChallengeDetail, challenge: Challenge, group: ChallengeGroup?) {
         store.dispatch(TrackAnalyticsEvent(event: .solutionOpened(challenge, group)))
-        let view = SolutionView(solution: challengeDetail.solutionCode.python?.code?.removingPercentEncoding ?? "")
+        let view = SolutionView(solution: challengeDetail.solutionCode.code?.removingPercentEncoding ?? "")
         view.onDismiss = { [weak self] in
             self?.popupController?.hide()
         }

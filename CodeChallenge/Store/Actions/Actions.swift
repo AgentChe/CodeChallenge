@@ -47,11 +47,11 @@ struct Login: ThunkAction {
             .ephemeralSink { user in
                 if user.isSuccess {
                     dispatcher.dispatch(AddStreakIfNeeded())
-                    dispatcher.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
                     dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
+                    dispatcher.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
                     dispatcher.dispatch(Action.loadUser(user))
@@ -334,6 +334,7 @@ struct UpdateChallengeProgress: ThunkAction {
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())
+                                dispatcher.dispatch(LoadChallengeProgress(challengeId: challengeId))
                             }
                     }
                 }

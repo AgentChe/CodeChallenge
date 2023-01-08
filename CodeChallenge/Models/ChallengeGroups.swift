@@ -108,7 +108,6 @@ struct ChallengeDetail: Codable, Equatable {
     let dateCreated, dateModified: Double
     let icon, difficulty: String
     let time: Int
-    let supportedCompilers: [String]
     let isPremium: Bool
     let xp: Int
     let published: Bool
@@ -120,18 +119,12 @@ struct ChallengeDetail: Codable, Equatable {
     let hint, solution: Hint
 }
 
-// MARK: - Body
-struct Body: Codable, Equatable {
-    let python: BodyPython
-    let input, output: String?
-}
-
 // MARK: - BodyPython
-struct BodyPython: Codable, Equatable {
+struct Body: Codable, Equatable {
     let description, template: String
 }
 
-extension BodyPython {
+extension Body {
     func toAttributedString() -> NSMutableAttributedString {
         guard let cleared = description.removingPercentEncoding else { return NSMutableAttributedString(string: description) }
         let data = cleared.replacingOccurrences(of: "\n", with: "<br>").data(using: .utf8)
@@ -145,21 +138,16 @@ struct Hint: Codable, Equatable {
 
 // MARK: - SolutionCode
 struct SolutionCode: Codable, Equatable {
-    let python: SolutionCodePython?
-}
-
-// MARK: - SolutionCodePython
-struct SolutionCodePython: Codable, Equatable {
     let code: String?
 }
 
 // MARK: - UnitTests
 struct UnitTests: Codable, Equatable {
-    let python: String
-    let pythonOutput: [PythonOutputs]
+    let test: String
+    let output: [Output]
 }
 
-struct PythonOutputs: Codable, Equatable {
+struct Output: Codable, Equatable {
     let testId: Int
     let input: String
     let expectedOutput: String

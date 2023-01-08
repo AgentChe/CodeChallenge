@@ -26,7 +26,16 @@ extension ProgrammingLanguage {
         case .python:
             return "py"
         case .java:
-            return "java"
+            return "jv"
+        }
+    }
+
+    var openingSymbol: Character {
+        switch self {
+        case .python:
+            return ":"
+        case .java:
+            return "{"
         }
     }
 }

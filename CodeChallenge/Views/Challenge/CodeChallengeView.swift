@@ -25,7 +25,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     @State private var resettedTemplate: String?
     @State private var bottomSheetShown = false
     @State private var keyboardHeight: CGFloat = 0
-    @State var displayDetails: ChallengeDetail?
+//    @State var displayDetails: ChallengeDetail?
     let quickAccessCharBottomToCover: CGFloat = UIDevice.hasSmallScreen ? 10 : 17
     let quickAccessCharViewHeight: CGFloat = UIDevice.hasSmallScreen ? 65 : 95
 
@@ -39,34 +39,33 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             .padding(.horizontal, 25)
             .frame(height: 31)
 
-            Group {
-                switch selection {
-                case 0:
-                    if let details = displayDetails {
-                        problemScreen(challengeDetails: details)
-                    } else {
-                        SkeletonCodeChallengeView()
-                    }
-                case 1:
-                    codeScreen
-                case 2:
-                    resultScreen
-                default: Text("")
+            switch selection {
+            case 0:
+                if !detailsAreLoading, let details = details {
+                    problemScreen(challengeDetails: details)
+                } else {
+                    SkeletonCodeChallengeView()
                 }
+            case 1:
+                codeScreen
+            case 2:
+                resultScreen
+            default: Text("")
             }
         }
         .onAppear(perform: {
             store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
             store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id))
             displayCode = removeTrailingNewLines(string: code.removingPercentEncoding ?? code)
-            displayDetails = details
             if (testCases.filter { !$0.isFailed }.count == testCases.count && !testCases.isEmpty) {
                 enabledSections = ["Task", "Code", "Result"]
             }
         })
         .onChange(of: code, perform: { newValue in
             let decodedCode = newValue.removingPercentEncoding ?? newValue
-            displayCode = removeTrailingNewLines(string: decodedCode)
+            DispatchQueue.main.async {
+                displayCode = removeTrailingNewLines(string: decodedCode)
+            }
         })
         .onChange(of: compilerTestCases) { newValue in
             guard gotCompileError == false, let _ = newValue else { return }
@@ -108,18 +107,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             }
         }
         .background(Color.dark.edgesIgnoringSafeArea(.all))
-        .alert(isPresented: $showsResetProgressPopup, content: {
-            Alert(title: Text("Are you sure you want to reset the progress?"),
-                  message: Text("You won't be able to recover the progress on approve"),
-                  primaryButton: .default(Text("No")),
-                  secondaryButton: .destructive(Text("Yes"), action: {
-                resettedTemplate = template
-                store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: template, compile: false, programmingLanguage: programmingLanguage, language: "en"))
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    resettedTemplate = nil
-                }
-            }))
-        })
         .onChange(of: output) { _ in
             keyboardHeight = 0
             UIApplication.shared.endEditing()
@@ -129,9 +116,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                     bottomSheetShown = true
                 }
             }
-        }
-        .onChange(of: details) { newValue in
-            displayDetails = newValue
         }
     }
 
@@ -143,7 +127,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         .frame(height: 25)
                     Text(codeChallenge.name)
                         .font(.h3)
-                    HtmlAttributedLabel(htmlAttributedString: challengeDetails.body.python.toAttributedString())
+                    HtmlAttributedLabel(htmlAttributedString: challengeDetails.body.toAttributedString())
                         .frame(width: .screenWidth - 40)
 
                     if let input = taskInput {
@@ -257,6 +241,18 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 }
             }
         }
+        .alert(isPresented: $showsResetProgressPopup, content: {
+            Alert(title: Text("Are you sure you want to reset the progress?"),
+                  message: Text("You won't be able to recover the progress on approve"),
+                  primaryButton: .default(Text("No")),
+                  secondaryButton: .destructive(Text("Yes"), action: {
+                resettedTemplate = template
+                store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: template, compile: false, programmingLanguage: programmingLanguage, language: "en"))
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    resettedTemplate = nil
+                }
+            }))
+        })
         .onDisappear {
             keyboardHeight = 0
             bottomSheetShown = false
@@ -264,7 +260,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     }
 
     var resultScreen: some View {
-        CodeChallengeTestCasesView(testCases: testCases, showsSolution: details?.solutionCode.python?.code != nil, onSeeSolution: {
+        CodeChallengeTestCasesView(testCases: testCases, showsSolution: details?.solutionCode.code != nil, onSeeSolution: {
             onSeeSolution(details)
         }) {
             selection = 1

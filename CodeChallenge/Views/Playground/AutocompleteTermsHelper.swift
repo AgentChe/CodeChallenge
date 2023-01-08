@@ -16,8 +16,8 @@ struct AutocompleteTermsHelper {
         return [:]
     }
 
-    static func getMatches(string: String) -> [String] {
-        if let pythonTerms = terms?["python"] {
+    static func getMatches(string: String, language: String) -> [String] {
+        if let pythonTerms = terms?[language] {
             return pythonTerms.filter { $0.lowercased().starts(with: string.lowercased()) }
         }
         return []

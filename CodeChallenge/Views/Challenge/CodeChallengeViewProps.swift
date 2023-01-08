@@ -17,24 +17,28 @@ extension CodeChallengeViewProps {
         store.state.challengeDetails[codeChallenge.id]?.value
     }
 
+    var detailsAreLoading: Bool {
+        store.state.challengeDetails[codeChallenge.id]?.isLoading ?? false
+    }
+
     var code: String {
         if let progress = store.state.challengeProgresses[codeChallenge.id]?.value {
-            return progress.solution?.python ?? details?.body.python.template ?? ""
+            return progress.solution?.python ?? template
         } else {
             return template
         }
     }
 
     var taskInput: String? {
-        details?.body.input
+        "details?.body.input"
     }
 
     var taskOutput: String? {
-        details?.body.output
+        "details?.body.output"
     }
 
     var template: String {
-        return details?.body.python.template ?? ""
+        return details?.body.template ?? ""
     }
 
     var isLoading: Bool {
@@ -57,8 +61,8 @@ extension CodeChallengeViewProps {
         return store.state.challengeResults[codeChallenge.id]?.value?.unitTests
     }
 
-    var testCasesInputs: [PythonOutputs] {
-        return details?.unitTests.pythonOutput ?? []
+    var testCasesInputs: [Output] {
+        return details?.unitTests.output ?? []
     }
     
     var testCases: [TestCase] {

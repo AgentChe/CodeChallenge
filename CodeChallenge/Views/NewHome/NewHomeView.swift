@@ -14,7 +14,7 @@ struct NewHomeView: View, NewHomeViewProps {
     @EnvironmentObject var store: Store
     let humanLanguage: String
     let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
-    @State private var displayXp: Int = 0
+//    @State private var displayXp: Int = 0
 
     var body: some View {
         DoodledView {
@@ -39,7 +39,7 @@ struct NewHomeView: View, NewHomeViewProps {
                             store.dispatch(ChangeProgrammingLanguage(language: programmingLanguage == .python ? .java : .python))
                         }
                     XPView(
-                        xpText: "\(displayXp)",
+                        xpText: "\(xp)",
                         backgroundColor: .CodeChallenge.dark,
                         xpIconColor: "white",
                         strokeColor: .CodeChallenge.blue1
@@ -47,12 +47,12 @@ struct NewHomeView: View, NewHomeViewProps {
                 }
             }
         }
-        .onChange(of: xp) { newValue in
-            displayXp = xp
-        }
-        .onAppear {
-            displayXp = xp
-        }
+//        .onChange(of: xp) { newValue in
+//            displayXp = xp
+//        }
+//        .onAppear {
+//            displayXp = xp
+//        }
         .onChange(of: programmingLanguage) { newValue in
             store.dispatch(LoadHomeSections(language: newValue, humanLanguage: "en"))
         }

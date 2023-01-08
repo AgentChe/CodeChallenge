@@ -48,7 +48,11 @@ class PlaygroundView: UIView {
     private var scrollViewBottomConstraint: NSLayoutConstraint?
     private var justAutocompleted: Bool = false
     private var fontHeight: CGFloat = UIFont(name: "CourierNewPSMT", size: Constants.fontSize)?.lineHeight ?? 0
-    var language: ProgrammingLanguage = .python
+    var language: ProgrammingLanguage = .python {
+        didSet {
+            (textView.textStorage as? CodeAttributedString)?.language = language.rawValue
+        }
+    }
     var onCodeChange: ((String) -> Void)?
 
     private let lineNumerStackView: UIStackView = {
@@ -171,7 +175,6 @@ extension PlaygroundView {
         textViewHeightConstraint = textView.heightAnchor.constraint(equalToConstant: Constants.lineNumberBoxWidth)
         textViewHeightConstraint?.isActive = true
         textView.delegate = self
-        (textView.textStorage as? CodeAttributedString)?.language = language.rawValue
 
         lineNumerStackView.addArrangedSubview(justView)
     }
@@ -279,9 +282,9 @@ extension PlaygroundView: UITextViewDelegate {
             textView.text.prefix(range.location).enumerateLines(invoking: { line, stop in
                 linesBefore.append(line)
             })
-            let lastLineTabs = linesBefore.last { $0.last == ":" }?.prefix(while: { $0 == " " }) ?? ""
+            let lastLineTabs = linesBefore.last { $0.last == language.openingSymbol }?.prefix(while: { $0 == " " }) ?? ""
             let evenNumberTabs = lastLineTabs.count % 2 == 0 ? lastLineTabs : lastLineTabs.prefix(lastLineTabs.count - 1)
-            let newTab = linesBefore.last { $0.last == ":" } != nil ? "  " : ""
+            let newTab = linesBefore.last { $0.last == language.openingSymbol } != nil ? "  " : ""
             onSelect(specialChar: "\n\(evenNumberTabs)\(newTab)", updateCodeToCompile: false)
             let spacesForTabs = String(repeating: "  ", count: lastLineTabs.count + 1)
             codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: " \(spacesForTabs)")
@@ -326,7 +329,7 @@ extension PlaygroundView {
     private func autocomplete(phrase: String, range: NSRange) {
         guard let selectedRange = textView.selectedTextRange else { return }
         let endPosition: UITextPosition = selectedRange.end
-        let matches = AutocompleteTermsHelper.getMatches(string: phrase)
+        let matches = AutocompleteTermsHelper.getMatches(string: phrase, language: language.rawValue)
         let matchesWithoutPhrase = matches.filter { $0 != phrase }
         if !matchesWithoutPhrase.isEmpty {
             var rect = textView.caretRect(for: endPosition)

@@ -25,7 +25,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     @State private var resettedTemplate: String?
     @State private var bottomSheetShown = false
     @State private var keyboardHeight: CGFloat = 0
-//    @State var displayDetails: ChallengeDetail?
     let quickAccessCharBottomToCover: CGFloat = UIDevice.hasSmallScreen ? 10 : 17
     let quickAccessCharViewHeight: CGFloat = UIDevice.hasSmallScreen ? 65 : 95
 
@@ -61,8 +60,8 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 enabledSections = ["Task", "Code", "Result"]
             }
         })
-        .onChange(of: code, perform: { newValue in
-            let decodedCode = newValue.removingPercentEncoding ?? newValue
+        .onChange(of: details, perform: { _ in
+            let decodedCode = code.removingPercentEncoding ?? code
             DispatchQueue.main.async {
                 displayCode = removeTrailingNewLines(string: decodedCode)
             }

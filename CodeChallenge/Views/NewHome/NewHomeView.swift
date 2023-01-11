@@ -54,7 +54,7 @@ struct NewHomeView: View, NewHomeViewProps {
 //            displayXp = xp
 //        }
         .onChange(of: programmingLanguage) { newValue in
-            store.dispatch(LoadHomeSections(language: newValue, humanLanguage: "en"))
+            store.dispatch(LoadHomeSections(language: newValue))
         }
     }
 

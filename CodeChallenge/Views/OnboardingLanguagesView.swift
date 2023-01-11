@@ -58,11 +58,10 @@ struct OnboardingLanguagesView: View {
                         lineWidth: 1.5)
 
             VStack(alignment: .leading, spacing: 10) {
-                ZStack {
-                    RoundedCornersShape(corners: [.topLeft, .topRight], radius: 13)
-                        .frame(height: .screenHeight * 0.2)
-                    Image(language.icon)
-                }
+                Image(language.rawValue)
+                    .resizable()
+                    .frame(width: .screenWidth - 120, height: .screenHeight * 0.18)
+                    .padding([.top, .horizontal], 10)
                 Text(language.rawValue.capitalized)
                     .font(.h3)
                     .padding(.top, 9)

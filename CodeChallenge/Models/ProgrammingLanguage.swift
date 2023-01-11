@@ -13,10 +13,6 @@ enum ProgrammingLanguage: String, CaseIterable {
 }
 
 extension ProgrammingLanguage {
-    var icon: String {
-        "language_image"
-    }
-
     var description: String {
         "some random text for now"
     }

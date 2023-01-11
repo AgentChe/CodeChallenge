@@ -32,22 +32,14 @@ struct XPView: View {
     }
 
     private var content: some View {
-        VStack(spacing: 0) {
-            Spacer()
-                .frame(height: 7)
-            HStack(spacing: 4) {
-                Spacer()
-                    .frame(width: 10)
-                Text(xpText)
-                    .foregroundColor(.white)
-                    .font(.h5)
-                Image("xpIcon_\(xpIconColor)")
-                Spacer()
-                    .frame(width: 10)
-            }
-            Spacer()
-                .frame(height: 7)
+        HStack(spacing: 4) {
+            Text(xpText)
+                .foregroundColor(.white)
+                .font(.h5)
+            Image("xpIcon_\(xpIconColor)")
         }
+        .padding(.vertical, 7)
+        .padding(.horizontal, 10)
         .frame(height: 32)
     }
 }

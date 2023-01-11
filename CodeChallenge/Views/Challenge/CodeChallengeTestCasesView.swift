@@ -17,10 +17,8 @@ struct CodeChallengeTestCasesView: View {
 
     var body: some View {
         ScrollView(showsIndicators: false) {
-            if testCases.isEmpty {
-                SkeletonCodeChallengeTestCasesView()
-            } else {
-                VStack(spacing: 30) {
+            VStack(spacing: 30) {
+                if !testCases.isEmpty {
                     ForEach(Array(testCases.enumerated()), id: \.offset) { index, testCase in
                         testCaseView(index: index, testCase: testCase)
                             .onTapGesture {
@@ -32,11 +30,13 @@ struct CodeChallengeTestCasesView: View {
                                 }
                             }
                     }
+                }
 
-                    if showsSolution {
-                        seeSolutionView
-                    }
+                if showsSolution {
+                    seeSolutionView
+                }
 
+                if !testCases.isEmpty {
                     Spacer()
 
                     if (testCases.filter { $0.isFailed == false }.count == testCases.count) {
@@ -143,19 +143,5 @@ struct CodeChallengeTestCasesView: View {
             }
             .foregroundColor(.white)
         }
-    }
-}
-
-struct SkeletonCodeChallengeTestCasesView: View {
-    var body: some View {
-        VStack(spacing: 30) {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color(.CodeChallenge.background))
-                .frame(height: 65)
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color(.CodeChallenge.background))
-                .frame(height: 65)
-        }
-        .redacted(reason: .placeholder)
     }
 }

@@ -17,10 +17,6 @@ extension CodeChallengeViewProps {
         store.state.challengeDetails[codeChallenge.id]?.value
     }
 
-    var detailsAreLoading: Bool {
-        store.state.challengeDetails[codeChallenge.id]?.isLoading ?? false
-    }
-
     var code: String {
         if let progress = store.state.challengeProgresses[codeChallenge.id]?.value {
             return progress.solution?.python ?? template
@@ -30,11 +26,11 @@ extension CodeChallengeViewProps {
     }
 
     var taskInput: String? {
-        "details?.body.input"
+        details?.body.input
     }
 
     var taskOutput: String? {
-        "details?.body.output"
+        details?.body.output
     }
 
     var template: String {

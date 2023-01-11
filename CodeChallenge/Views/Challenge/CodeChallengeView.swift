@@ -20,7 +20,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     @State var specialCharacter: String?
     @State private var displayCode: String?
     @State private var showsError: Bool = false
-    @State private var enabledSections: [String] = ["Task", "Code"]
     @State private var showsResetProgressPopup = false
     @State private var resettedTemplate: String?
     @State private var bottomSheetShown = false
@@ -32,7 +31,10 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
         VStack(spacing: 0) {
             Spacer()
                 .frame(height: 10)
-            CodeChallengePickerView(selection: $selection, sections: ["Task", "Code", "Result"], enabledSections: enabledSections, onValueChange: { selection in
+            CodeChallengePickerView(
+                selection: $selection,
+                sections: ["Task", "Code", "Result"],
+                onValueChange: { selection in
                 self.selection = selection
             })
             .padding(.horizontal, 25)
@@ -40,7 +42,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
 
             switch selection {
             case 0:
-                if !detailsAreLoading, let details = details {
+                if !isLoading, let details = details {
                     problemScreen(challengeDetails: details)
                 } else {
                     SkeletonCodeChallengeView()
@@ -56,22 +58,14 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
             store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id))
             displayCode = removeTrailingNewLines(string: code.removingPercentEncoding ?? code)
-            if (testCases.filter { !$0.isFailed }.count == testCases.count && !testCases.isEmpty) {
-                enabledSections = ["Task", "Code", "Result"]
-            }
         })
-        .onChange(of: details, perform: { _ in
-            let decodedCode = code.removingPercentEncoding ?? code
-            DispatchQueue.main.async {
-                displayCode = removeTrailingNewLines(string: decodedCode)
-            }
+        .onChange(of: code, perform: { newValue in
+            let decodedCode = newValue.removingPercentEncoding ?? newValue
+            displayCode = removeTrailingNewLines(string: decodedCode)
         })
         .onChange(of: compilerTestCases) { newValue in
             guard gotCompileError == false, let _ = newValue else { return }
             selection = 2
-            if enabledSections.count == 2 {
-                enabledSections = ["Task", "Code", "Result"]
-            }
             if let details = details, (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
                 if !celebratedChallenges.contains(details.id) {
                     set(celebratedChallenge: details)
@@ -281,12 +275,11 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
 struct CodeChallengePickerView: UIViewRepresentable {
     @Binding var selection: Int
     let sections: [String]
-    let enabledSections: [String]
     let onValueChange: (Int) -> Void
 
     func makeUIView(context: Context) -> some UIView {
         let view = CodeChallengePickerUIView(
-            sections: sections, enabledSections: enabledSections, onValueChange: onValueChange
+            sections: sections, onValueChange: onValueChange
         )
         view.heightAnchor.constraint(equalToConstant: 31).isActive = true
         view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 50).isActive = true
@@ -295,48 +288,36 @@ struct CodeChallengePickerView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
         (uiView as? CodeChallengePickerUIView)?.segmentedControl.selectedSegmentIndex = selection
-        (uiView as? CodeChallengePickerUIView)?.setupSegmentedControlEnabledSections(enabledSections: enabledSections)
     }
 }
 
 fileprivate class CodeChallengePickerUIView: UIView {
     let sections: [String]
-    let enabledSections: [String]
     let onValueChange: (Int) -> Void
     var segmentedControl: UISegmentedControl!
 
     override init(frame: CGRect) {
         self.sections = []
-        self.enabledSections = []
         self.onValueChange = { _ in }
         super.init(frame: frame)
     }
 
     required init?(coder: NSCoder) {
         self.sections = []
-        self.enabledSections = []
         self.onValueChange = { _ in }
         super.init(coder: coder)
     }
 
-    init(sections: [String], enabledSections: [String],
+    init(sections: [String],
          onValueChange: @escaping (Int) -> Void) {
         self.sections = sections
         self.onValueChange = onValueChange
-        self.enabledSections = enabledSections
         super.init(frame: .zero)
         commonInit()
     }
 
-    func setupSegmentedControlEnabledSections(enabledSections: [String]) {
-        for (index, item) in sections.enumerated() {
-            segmentedControl.setEnabled(enabledSections.contains(item), forSegmentAt: index)
-        }
-    }
-
     func commonInit() {
         segmentedControl = UISegmentedControl(items: sections)
-        setupSegmentedControlEnabledSections(enabledSections: enabledSections)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentTintColor = UIColor.CodeChallenge.blue1
         segmentedControl.backgroundColor = UIColor.CodeChallenge.dark

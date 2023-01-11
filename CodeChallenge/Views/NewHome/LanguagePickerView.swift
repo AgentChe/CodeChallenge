@@ -12,22 +12,14 @@ struct LanguagePickerIconView: View {
     @EnvironmentObject var store: Store
     
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-                .frame(height: 7)
-            HStack(spacing: 4) {
-                Spacer()
-                    .frame(width: 10)
-                Text(store.state.programmingLanguage.rawValue.capitalized)
-                    .foregroundColor(.white)
-                    .font(.h5)
-                Image("language_picker_down_arrow")
-                Spacer()
-                    .frame(width: 10)
-            }
-            Spacer()
-                .frame(height: 7)
+        HStack(spacing: 4) {
+            Text(store.state.programmingLanguage.rawValue.capitalized)
+                .foregroundColor(.white)
+                .font(.h5)
+            Image("language_picker_down_arrow")
         }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 7)
         .frame(height: 32)
             .background(
                 RoundedRectangle(cornerRadius: 16)

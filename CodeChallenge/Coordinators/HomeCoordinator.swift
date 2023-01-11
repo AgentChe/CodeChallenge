@@ -61,7 +61,7 @@ class HomeCoordinator {
     }
 
     private func presentGetStartedIfNecessary() {
-//        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
+        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
         UserDefaults.standard.set(true, forKey: "getStartedPresented")
         let view = GetStartedView { [weak self] in
             self?.presentProgrammingLanguagesView()

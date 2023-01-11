@@ -14,7 +14,7 @@ protocol ChallengesServiceProtocol {
     func getChallengeProgress(id: Int, userId: Int) -> AnyPublisher<ChallengeProgress, Error>
     func addChallengeProgress(id: Int, session: String, solution: String) -> AnyPublisher<ChallengeProgress, Error>
     func updateChallengeProgress(id: Int, progressId: Int, session: String, solution: String, type: String) -> AnyPublisher<Void, Error>
-    func compile(id: Int, challengeId: Int, session: String) -> AnyPublisher<ChallengeCompiledResult, Error>
+    func compile(id: Int, challengeId: Int, session: String, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<ChallengeCompiledResult, Error>
     func searchChallenges(with query: String, session: String) -> AnyPublisher<[Challenge], Error>
     func loadHashtags() -> AnyPublisher<[String], Error>
 
@@ -59,10 +59,10 @@ struct ChallengesService: ChallengesServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func compile(id: Int, challengeId: Int, session: String) -> AnyPublisher<ChallengeCompiledResult, Error> {
-        let params = ["challangeId": challengeId, "session": session, "userId": id, "lang": "python", "inputs": ("{}".stringByAddingPercentEncodingForRFC3986() ?? "")] as [String: Any]
+    func compile(id: Int, challengeId: Int, session: String, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<ChallengeCompiledResult, Error> {
+        let params = ["challangeId": challengeId, "userId": id] as [String: Any]
         return URLRequest
-            .create(url: "\(Configuration.host)/compiler/", type: .post, params: params)
+            .create(url: "\(Configuration.host)/compiler/\(programmingLanguage.rawValue)/", type: .post, params: params)
             .flatMap { networkService.load($0, decoding: ChallengeCompiledResult.self, with: .init()) }
             .eraseToAnyPublisher()
     }

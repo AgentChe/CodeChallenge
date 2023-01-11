@@ -51,7 +51,7 @@ struct Login: ThunkAction {
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
-                    dispatcher.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
+                    dispatcher.dispatch(LoadHomeSections())
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
                     dispatcher.dispatch(Action.loadUser(user))
@@ -103,7 +103,7 @@ struct DeleteAccount: ThunkAction {
                 UserDefaults.standard.set(nil, forKey: "cc_user_session")
                 UserDefaults.standard.set(nil, forKey: "cc_user_id")
                 dispatcher.dispatch(Action.logout)
-                dispatcher.dispatch(GuestAuth())
+                dispatcher.dispatch(GuestAuth(reloadHome: true))
             }
     }
 }
@@ -131,7 +131,7 @@ struct GuestAuth: ThunkAction {
                     dispatcher.dispatch(LoadInProgressChallenges())
                     dispatcher.dispatch(LoadCompletedChallenges())
                     if reloadHome {
-                        dispatcher.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
+                        dispatcher.dispatch(LoadHomeSections())
                     }
                 }
             }
@@ -160,19 +160,6 @@ struct SignUp: ThunkAction {
                 } else {
                     dispatcher.dispatch(Action.loadUser(user))
                 }
-            }
-    }
-}
-
-struct Signout: ThunkAction {
-    func exec(dispatcher: Dispatcher) {
-        guard let session = dispatcher.state.user.value?.session else { return }
-
-        dispatcher.services.authService.logout(session: session)
-            .ephemeralSink { _ in
-                dispatcher.dispatch(Action.loadUser(.pending))
-                UserDefaults.standard.removeObject(forKey: "cc_user_session")
-                UserDefaults.standard.removeObject(forKey: "cc_user_id")
             }
     }
 }
@@ -312,6 +299,7 @@ struct UpdateChallengeProgress: ThunkAction {
         let session = UserDefaults.standard.string(forKey: "cc_user_session") ?? ""
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
         let challengeId = challenge.id
+        let programmingLanguage = dispatcher.state.programmingLanguage
 
         let currentProgressType = dispatcher.state.challengeProgresses[challenge.id]?.value?.type
 
@@ -319,7 +307,7 @@ struct UpdateChallengeProgress: ThunkAction {
             guard compile else { return }
             dispatcher.dispatch(Action.loadChallengeCompiledResult((challengeId, .loading)))
             dispatcher.services
-                .challengesService.compile(id: userId, challengeId: challengeId, session: session)
+                .challengesService.compile(id: userId, challengeId: challengeId, session: session, programmingLanguage: programmingLanguage)
                 .asResolvable()
                 .ephemeralSink { result in
                     dispatcher.dispatch(TrackAnalyticsEvent(event: .challengeCompleted(challenge, result.value?.isSuccesful == true)))
@@ -330,7 +318,7 @@ struct UpdateChallengeProgress: ThunkAction {
                     if result.value?.isSuccesful == true, currentProgressType != "done" {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
-                                dispatcher.dispatch(LoadHomeSections(language: programmingLanguage, humanLanguage: language))
+                                dispatcher.dispatch(LoadHomeSections()) // FIXME: 
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())
@@ -480,10 +468,16 @@ struct PurchasePayment: ThunkAction {
 }
 
 struct LoadHomeSections: ThunkAction {
-    let language: ProgrammingLanguage
+    let language: ProgrammingLanguage?
     let humanLanguage: String
 
+    init(language: ProgrammingLanguage? = nil) {
+        self.humanLanguage = "en"
+        self.language = language
+    }
+
     func exec(dispatcher: Dispatcher) {
+        let language = language ?? dispatcher.state.programmingLanguage
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
         if dispatcher.state.homeSections["\(language.apiRequestParam)_\(humanLanguage)"]?.value == nil {
             dispatcher.dispatch(Action.loadHomeSections("\(language.apiRequestParam)_\(humanLanguage)", .loading))
@@ -521,5 +515,14 @@ struct ChangeProgrammingLanguage: ThunkAction {
 
     func exec(dispatcher: Dispatcher) {
         dispatcher.dispatch(Action.changeProgrammingLanguage(language))
+        UserDefaults.standard.set(language.rawValue, forKey: "programmingLanguage")
+    }
+}
+
+struct LoadProgrammingLanguage: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        let language = UserDefaults.standard.string(forKey: "programmingLanguage") ?? "python"
+        guard let programmingLanguage = ProgrammingLanguage(rawValue: language) else { return }
+        dispatcher.dispatch(Action.changeProgrammingLanguage(programmingLanguage))
     }
 }

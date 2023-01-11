@@ -39,7 +39,13 @@ final class RootCoordinator {
     }
 
     func start() {
-        store.dispatch(GuestAuth())
+        if !UserDefaults.standard.bool(forKey: "isLoggedIn") {
+            store.dispatch(GuestAuth())
+        } else {
+            store.dispatch(LoadAccount())
+            store.dispatch(LoadInProgressChallenges())
+            store.dispatch(LoadCompletedChallenges())
+        }
         let tabs = [
             homeCoordinator.navigationController,
             browseCoordinator.navigationController,
@@ -82,9 +88,15 @@ final class RootCoordinator {
             }
             .store(in: &cancellables)
 
-        store.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
-
+        store.dispatch(LoadProgrammingLanguage())
+        store.dispatch(LoadHomeSections())
         store.dispatch(LoadAppStorePayments())
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            // The first time you create an attributed string of HTML, iOS creates all sorts of extra threads needed to parse the string, among which JavascriptCore engine.
+            let data = "<span>html enabled</span>".data(using: .utf8)
+            let _ = try! NSAttributedString(data: data!, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+        }
 
         DispatchQueue.main.async { [weak self] in
             let view = HomeLoadingView()
@@ -96,7 +108,7 @@ final class RootCoordinator {
 
             self?.homePageCancellable = self?.store
                 .statePublisher
-                .compactMap { $0.homeSections["py_en"] }
+                .compactMap { $0.homeSections["\($0.programmingLanguage.apiRequestParam)_en"] }
                 .removeDuplicates()
                 .sink { [weak self] result in
                     if let error = result.error {
@@ -104,7 +116,7 @@ final class RootCoordinator {
                         self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, error)))
                         let alertController = UIAlertController(title: "An error occurred", message: error.localizedDescription, preferredStyle: .alert)
                         let action = UIAlertAction(title: "Retry", style: .default) { action in
-                            self?.store.dispatch(LoadHomeSections(language: .python, humanLanguage: "en"))
+                            self?.store.dispatch(LoadHomeSections())
                         }
                         alertController.addAction(action)
                         controller.present(alertController, animated: true)

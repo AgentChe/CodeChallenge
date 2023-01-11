@@ -121,7 +121,7 @@ struct ChallengeDetail: Codable, Equatable {
 
 // MARK: - BodyPython
 struct Body: Codable, Equatable {
-    let description, template: String
+    let description, template, input, output: String
 }
 
 extension Body {

@@ -27,6 +27,8 @@ struct CodePlaygroundView: UIViewRepresentable {
             view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
             view.heightAnchor.constraint(equalToConstant: bottomInset)
         ])
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
         return view
     }
 

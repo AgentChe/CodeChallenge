@@ -218,6 +218,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                                     Spacer()
                                 }
                             }
+                            .frame(height: 180)
                         }
                         .frame(height: 200)
                     }

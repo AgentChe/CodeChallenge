@@ -233,9 +233,10 @@ struct LoadRecommendedChallenges: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         dispatcher.dispatch(Action.loadRecommendedChallenges(.loading))
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
+        let programmingLanguage = dispatcher.state.programmingLanguage
 
         dispatcher.services.challengesService
-            .getRecommendedChallenges(userId: userId)
+            .getRecommendedChallenges(userId: userId, programmingLanguage: programmingLanguage)
             .asResolvable()
             .ephemeralSink { progresses in
                 dispatcher.dispatch(Action.loadRecommendedChallenges(progresses))
@@ -388,10 +389,11 @@ struct LoadSearchResults: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let searchState = dispatcher.state.searchByInstances[instanceId.uuidString] else { return }
         dispatcher.dispatch(Action.loadSearchResults(instanceId.uuidString, .loading))
+        let programmingLanguage = dispatcher.state.programmingLanguage
 
         dispatcher.services
             .challengesService
-            .searchChallenges(with: searchState.query ?? "", session: "")
+            .searchChallenges(with: searchState.query ?? "", programmingLanguage: programmingLanguage, session: "")
             .asResolvable()
             .ephemeralSink { results in
                 dispatcher.dispatch(Action.loadSearchResults(instanceId.uuidString, results))

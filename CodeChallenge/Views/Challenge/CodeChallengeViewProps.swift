@@ -89,6 +89,6 @@ extension CodeChallengeViewProps {
     }
 
     var programmingLanguage: ProgrammingLanguage {
-        store.state.programmingLanguage
+        details?.codehubProgrammingLanguage ?? .python
     }
 }

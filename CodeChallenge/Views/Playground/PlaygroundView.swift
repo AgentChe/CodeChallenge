@@ -264,6 +264,7 @@ extension PlaygroundView: UITextViewDelegate {
             return
         }
 
+        print("TT_ on code chaneg", textView.text)
         onCodeChange?(textView.text)
 
         let cursorRect = textView.caretRect(for: range.start)
@@ -346,6 +347,7 @@ extension PlaygroundView {
                 if let newPosition = self.textView.position(from: endPosition, offset: (item.count - (range.upperBound - range.lowerBound) + 1)) {
                     print("TT_position", newPosition)
                     self.textView.selectedTextRange = self.textView.textRange(from: newPosition, to: newPosition)
+                    self.textViewDidChange(self.textView)
                 }
                 self.justAutocompleted = true
                 print("TT_", self.codeToCompile)

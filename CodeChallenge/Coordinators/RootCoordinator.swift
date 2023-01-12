@@ -72,7 +72,6 @@ final class RootCoordinator {
         }
 
         store.dispatch(AddStreakIfNeeded())
-        store.dispatch(LoadRecommendedChallenges())
 
         isAppVersionSupported(store.services.networkService)
             .filter { !$0 }
@@ -91,6 +90,7 @@ final class RootCoordinator {
         store.dispatch(LoadProgrammingLanguage())
         store.dispatch(LoadHomeSections())
         store.dispatch(LoadAppStorePayments())
+        store.dispatch(LoadRecommendedChallenges())
 
         DispatchQueue.global(qos: .userInitiated).async {
             // The first time you create an attributed string of HTML, iOS creates all sorts of extra threads needed to parse the string, among which JavascriptCore engine.

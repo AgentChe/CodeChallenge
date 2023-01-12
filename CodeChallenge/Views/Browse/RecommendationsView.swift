@@ -25,6 +25,9 @@ struct RecommendationsView: View, RecommendationsViewProps {
                     ForEach(Array(challenges.enumerated()), id: \.offset) { (_, challenge) in
                         itemView(challenge: challenge, progress: getProgress(challenge: challenge))
                             .frame(width: (UIScreen.main.bounds.width - 20)/2)
+                            .onTapGesture {
+                                onChallengeTap?(challenge)
+                            }
                     }
                     Spacer()
                         .frame(width: 0)

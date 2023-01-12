@@ -117,6 +117,16 @@ struct ChallengeDetail: Codable, Equatable {
     let tags: Hint
     let body: Body
     let hint, solution: Hint
+    let programmingLanguage: String
+}
+
+extension ChallengeDetail {
+    var codehubProgrammingLanguage: ProgrammingLanguage {
+        switch programmingLanguage {
+        case "jv": return .java
+        default: return .python
+        }
+    }
 }
 
 // MARK: - BodyPython

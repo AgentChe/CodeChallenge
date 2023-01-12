@@ -37,6 +37,7 @@ struct NewHomeView: View, NewHomeViewProps {
                     LanguagePickerIconView()
                         .onTapGesture {
                             store.dispatch(ChangeProgrammingLanguage(language: programmingLanguage == .python ? .java : .python))
+                            store.dispatch(LoadRecommendedChallenges())
                         }
                     XPView(
                         xpText: "\(xp)",

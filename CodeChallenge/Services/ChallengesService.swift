@@ -15,12 +15,12 @@ protocol ChallengesServiceProtocol {
     func addChallengeProgress(id: Int, session: String, solution: String) -> AnyPublisher<ChallengeProgress, Error>
     func updateChallengeProgress(id: Int, progressId: Int, session: String, solution: String, type: String) -> AnyPublisher<Void, Error>
     func compile(id: Int, challengeId: Int, session: String, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<ChallengeCompiledResult, Error>
-    func searchChallenges(with query: String, session: String) -> AnyPublisher<[Challenge], Error>
+    func searchChallenges(with query: String, programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<[Challenge], Error>
     func loadHashtags() -> AnyPublisher<[String], Error>
 
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error>
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<NewChallengeCollectionContent, Error>
-    func getRecommendedChallenges(userId: Int) -> AnyPublisher<[Challenge], Error>
+    func getRecommendedChallenges(userId: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[Challenge], Error>
     func send(transactionId: String) -> AnyPublisher<Void, Error>
 }
 
@@ -67,9 +67,9 @@ struct ChallengesService: ChallengesServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func searchChallenges(with query: String, session: String) -> AnyPublisher<[Challenge], Error> {
+    func searchChallenges(with query: String, programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<[Challenge], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/v1/challange/search?search=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? query)&lang_code=en", type: .get)
+            .create(url: "\(Configuration.host)/v2/challange/search?search=\(query.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? query)&lang_code=en&pl=\(programmingLanguage.apiRequestParam)", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
@@ -95,9 +95,9 @@ struct ChallengesService: ChallengesServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func getRecommendedChallenges(userId: Int) -> AnyPublisher<[Challenge], Error> {
+    func getRecommendedChallenges(userId: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[Challenge], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/challange/recomendations/\(userId)/en", type: .get)
+            .create(url: "\(Configuration.host)/v1/challange/recomendations/\(userId)/en/\(programmingLanguage.apiRequestParam)", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

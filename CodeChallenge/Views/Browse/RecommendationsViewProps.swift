@@ -17,7 +17,7 @@ extension RecommendationsViewProps {
     }
 
     var isLoading: Bool {
-        store.state.recommendedChallenges.isLoading ?? false
+        store.state.recommendedChallenges.isLoading
     }
 
     func getProgress(challenge: Challenge) -> String? {

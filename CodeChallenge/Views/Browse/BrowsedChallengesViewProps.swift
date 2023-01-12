@@ -9,16 +9,19 @@ import Foundation
 
 protocol BrowsedChallengesViewProps {
     var store: Store { get }
-    var instanceID: UUID { get }
     var query: String { get }
 }
 
 extension BrowsedChallengesViewProps {
+    var programmingLanguage: ProgrammingLanguage {
+        store.state.programmingLanguage
+    }
+
     var challenges: [Challenge] {
-        store.state.searchByInstances[instanceID.uuidString]?.results.value ?? []
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.value ?? []
     }
 
     var isLoading: Bool {
-        store.state.searchByInstances[instanceID.uuidString]?.results.isLoading ?? false
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.isLoading ?? false
     }
 }

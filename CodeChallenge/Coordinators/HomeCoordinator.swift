@@ -17,22 +17,6 @@ class HomeCoordinator {
 
     init(store: Store) {
         self.store = store
-        let instanceId = UUID()
-//        let homeView = HomeView(onChallengeTap: { [weak self] (challenge, group) in
-//            self?.openCodeChallenge(challenge: challenge, group: group)
-//        }, onCollectionTap: { [weak self] collection in
-//            self?.openCollectionView(collection: collection)
-//        }, onSearch: { [weak self] text in
-//            let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
-//                self?.openCodeChallenge(challenge: challenge, group: nil)
-//            })
-//                .environmentObject(store)
-//                .environment(\.instanceID, instanceId)
-//            let controller = UIHostingController(rootView: view)
-//            self?.navigationController.pushViewController(controller, animated: true)
-//            self?.store.dispatch(LoadSearchResults(instanceId: instanceId))
-//        })
-//            .environmentObject(store)
         let homeView = NewHomeView(humanLanguage: "en") { [weak self] collection, section in
             self?.openCollectionDetail(collection: collection, section: section)
         }

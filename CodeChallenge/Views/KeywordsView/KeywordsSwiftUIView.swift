@@ -41,5 +41,7 @@ fileprivate struct KeywordsVieww: UIViewRepresentable {
         return view
     }
 
-    func updateUIView(_ uiView: UIViewType, context: Context) {}
+    func updateUIView(_ uiView: UIViewType, context: Context) {
+        (uiView as? KeywordsView)?.update(keywords: keywords)
+    }
 }

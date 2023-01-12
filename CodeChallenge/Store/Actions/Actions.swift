@@ -77,7 +77,6 @@ struct Logout: ThunkAction {
 }
 
 struct LoadHashtags: ThunkAction {
-    let instanceID: UUID
     let programmingLanguage: ProgrammingLanguage
 
     func exec(dispatcher: Dispatcher) {
@@ -377,27 +376,25 @@ struct UpdateChallengeProgress: ThunkAction {
 
 struct UpdateSearchQuery: ThunkAction {
     let query: String
-    let instanceId: UUID
 
     func exec(dispatcher: Dispatcher) {
-        dispatcher.dispatch(Action.updateSearchQuery(instanceId.uuidString, query))
+        let programmingLanguage = dispatcher.state.programmingLanguage
+        dispatcher.dispatch(Action.updateSearchQuery(programmingLanguage.apiRequestParam, query))
     }
 }
 
 struct LoadSearchResults: ThunkAction {
-    let instanceId: UUID
-
     func exec(dispatcher: Dispatcher) {
-        guard let searchState = dispatcher.state.searchByInstances[instanceId.uuidString] else { return }
-        dispatcher.dispatch(Action.loadSearchResults(instanceId.uuidString, .loading))
         let programmingLanguage = dispatcher.state.programmingLanguage
+        guard let searchState = dispatcher.state.searchByInstances[programmingLanguage.apiRequestParam] else { return }
+        dispatcher.dispatch(Action.loadSearchResults(programmingLanguage.apiRequestParam, .loading))
 
         dispatcher.services
             .challengesService
             .searchChallenges(with: searchState.query ?? "", programmingLanguage: programmingLanguage, session: "")
             .asResolvable()
             .ephemeralSink { results in
-                dispatcher.dispatch(Action.loadSearchResults(instanceId.uuidString, results))
+                dispatcher.dispatch(Action.loadSearchResults(programmingLanguage.apiRequestParam, results))
             }
     }
 }

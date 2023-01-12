@@ -9,16 +9,15 @@ import Foundation
 
 protocol BrowseViewProps {
     var store: Store { get }
-    var instanceID: UUID { get }
 }
 
 extension BrowseViewProps {
     var challengesToSuggest: [Challenge] {
-        store.state.searchByInstances[instanceID.uuidString]?.results.value ?? []
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.value ?? []
     }
 
     var challengesAreLoading: Bool {
-        store.state.searchByInstances[instanceID.uuidString]?.results.isLoading ?? false
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.isLoading ?? false
     }
 
     var programmingLanguage: ProgrammingLanguage {
@@ -30,6 +29,6 @@ extension BrowseViewProps {
     }
 
     var hashtagsAreLoading: Bool {
-        store.state.searchByInstances[instanceID.uuidString]?.hashtags.isLoading ?? false
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.hashtags.isLoading ?? false
     }
 }

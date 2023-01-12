@@ -33,7 +33,7 @@ class KeywordsView: UIView {
 
     private let collectionView: UICollectionView
     private let collectionViewHeightConstraint: NSLayoutConstraint
-    private let keywords: [String]
+    private var keywords: [String] = []
     var onHeightChange: ((Double) -> Void)?
     var onKeywordTap: ((String) -> Void)?
 
@@ -66,6 +66,11 @@ class KeywordsView: UIView {
         super.layoutSubviews()
         self.collectionViewHeightConstraint.constant = collectionView.contentSize.height
         onHeightChange?(collectionView.contentSize.height)
+    }
+
+    func update(keywords: [String]) {
+        self.keywords = keywords
+        self.collectionView.reloadData()
     }
 }
 

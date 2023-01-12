@@ -16,22 +16,17 @@ class BrowseCoordinator {
 
     init(store: Store) {
         self.store = store
-        let instanceId = UUID()
-        let instanceId2 = UUID()
         let browseView = BrowseView(onSearch: { [weak self] text in
             let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
                 self?.openChallengeView(challenge: challenge)
             })
                 .environmentObject(store)
-                .environment(\.instanceID, instanceId)
             let controller = UIHostingController(rootView: view)
             self?.navigationController.pushViewController(controller, animated: true)
-            self?.store.dispatch(LoadSearchResults(instanceId: instanceId))
         }, onOpenChallenge: { [weak self] challenge in
             self?.openChallengeView(challenge: challenge)
         })
             .environmentObject(store)
-            .environment(\.instanceID, instanceId)
         let controller = UIHostingController(rootView: browseView)
         let tabBarItem = UITabBarItem(
             title: "Browse",
@@ -40,8 +35,8 @@ class BrowseCoordinator {
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
-        store.dispatch(LoadHashtags(instanceID: instanceId, programmingLanguage: .python))
-        store.dispatch(LoadHashtags(instanceID: instanceId2, programmingLanguage: .java))
+        store.dispatch(LoadHashtags(programmingLanguage: .python))
+        store.dispatch(LoadHashtags(programmingLanguage: .java))
     }
 
     func openChallengeView(challenge: Challenge) {

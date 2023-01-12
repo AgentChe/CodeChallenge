@@ -10,12 +10,10 @@ import SwiftUI
 
 struct BrowseView: View, BrowseViewProps {
     @ObservedObject var searchFieldVM = FocusableSearchField.ViewModel()
-    let onSearch: ((String) -> Void)?
-    let onOpenChallenge: (Challenge) -> Void
-    @Environment(\.instanceID) var instanceID
     @EnvironmentObject var store: Store
     @State private var searchFieldIsFocused = false
-    @State private var displayHashtags: [String] = []
+    let onSearch: ((String) -> Void)?
+    let onOpenChallenge: (Challenge) -> Void
 
     var body: some View {
         DoodledView {
@@ -61,8 +59,8 @@ struct BrowseView: View, BrowseViewProps {
                                             .foregroundColor(.white)
                                             .font(.h4)
                                             .padding(.horizontal, 20)
-                                        if !displayHashtags.isEmpty {
-                                            KeywordsSwiftUIView(keywords: displayHashtags, onKeywordTap: { keyword in
+                                        if !hashtags.isEmpty {
+                                            KeywordsSwiftUIView(keywords: hashtags, onKeywordTap: { keyword in
                                                 store.dispatch(TrackAnalyticsEvent(event: .challengeSearched(keyword, "keyword")))
                                                 onSearch?(keyword)
                                             })
@@ -77,26 +75,18 @@ struct BrowseView: View, BrowseViewProps {
                     }
                 }
             }
-            .onAppear {
-                store.dispatch(TrackAnalyticsEvent(event: .browseOpened))
-                DispatchQueue.main.async {
-                    displayHashtags = hashtags
-                }
-            }
+        }
+        .onAppear {
+            store.dispatch(TrackAnalyticsEvent(event: .browseOpened))
         }
         .onChange(of: searchFieldVM.text) { newValue in
-            store.dispatch(UpdateSearchQuery(query: newValue, instanceId: instanceID))
-            store.dispatch(LoadSearchResults(instanceId: instanceID))
+            store.dispatch(UpdateSearchQuery(query: newValue))
+            store.dispatch(LoadSearchResults())
         }
         .onChange(of: searchFieldVM.isFocused) { newValue in
             searchFieldIsFocused = newValue
-            store.dispatch(UpdateSearchQuery(query: searchFieldVM.text, instanceId: instanceID))
-            store.dispatch(LoadSearchResults(instanceId: instanceID))
-        }
-        .onChange(of: hashtags) { newValue in
-            DispatchQueue.main.async {
-                displayHashtags = newValue
-            }
+            store.dispatch(UpdateSearchQuery(query: searchFieldVM.text))
+            store.dispatch(LoadSearchResults())
         }
     }
 

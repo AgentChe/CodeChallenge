@@ -10,7 +10,6 @@ import SwiftUI
 
 struct BrowsedChallengesView: View, BrowsedChallengesViewProps {
     @EnvironmentObject var store: Store
-    @Environment(\.instanceID) var instanceID
     let query: String
     let onEnterDetails: ((Challenge) -> Void)
 
@@ -45,8 +44,8 @@ struct BrowsedChallengesView: View, BrowsedChallengesViewProps {
             }
         }
         .onAppear {
-            store.dispatch(UpdateSearchQuery(query: query, instanceId: instanceID))
-            store.dispatch(LoadSearchResults(instanceId: instanceID))
+            store.dispatch(UpdateSearchQuery(query: query))
+            store.dispatch(LoadSearchResults())
         }
     }
 }

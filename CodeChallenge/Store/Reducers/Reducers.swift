@@ -102,9 +102,10 @@ extension Reducers {
             var copyState = state
             copyState[instanceId] = SearchState(query: nil, results: .pending, hashtags: state[instanceId]?.hashtags ?? .pending)
             return copyState
-        case .loadHashtags(let hashtags, let id):
+        case .loadHashtags(let hashtags, let programmingLanguage):
             var copyState = state
-            copyState[id] = SearchState(query: state[id]?.query, results: state[id]?.results ?? .pending, hashtags: hashtags)
+            copyState[programmingLanguage.apiRequestParam] =
+            SearchState(query: state[programmingLanguage.apiRequestParam]?.query, results: state[programmingLanguage.apiRequestParam]?.results ?? .pending, hashtags: hashtags)
             return copyState
         default: return state
         }

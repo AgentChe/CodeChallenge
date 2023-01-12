@@ -17,6 +17,7 @@ class BrowseCoordinator {
     init(store: Store) {
         self.store = store
         let instanceId = UUID()
+        let instanceId2 = UUID()
         let browseView = BrowseView(onSearch: { [weak self] text in
             let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
                 self?.openChallengeView(challenge: challenge)
@@ -39,7 +40,8 @@ class BrowseCoordinator {
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
-        store.dispatch(LoadHashtags(instanceID: instanceId))
+        store.dispatch(LoadHashtags(instanceID: instanceId, programmingLanguage: .python))
+        store.dispatch(LoadHashtags(instanceID: instanceId2, programmingLanguage: .java))
     }
 
     func openChallengeView(challenge: Challenge) {

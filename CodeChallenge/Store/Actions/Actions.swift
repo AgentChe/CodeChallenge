@@ -24,7 +24,7 @@ enum Action: Dispatchable {
     case loadDoneChallenges(Resolvable<[Challenge]>)
     case logout
     case loadPayments(Resolvable<[AppStorePayment]>)
-    case loadHashtags(Resolvable<[String]>, String)
+    case loadHashtags(Resolvable<[String]>, ProgrammingLanguage)
     case loadHomeSections(String, Resolvable<[NewChallengeSection]>)
     case loadHomeCollectionContent(Int, Resolvable<NewChallengeCollectionContent>)
     case changeProgrammingLanguage(ProgrammingLanguage)
@@ -78,15 +78,16 @@ struct Logout: ThunkAction {
 
 struct LoadHashtags: ThunkAction {
     let instanceID: UUID
+    let programmingLanguage: ProgrammingLanguage
 
     func exec(dispatcher: Dispatcher) {
-        dispatcher.dispatch(Action.loadHashtags(.loading, instanceID.uuidString))
+        dispatcher.dispatch(Action.loadHashtags(.loading, programmingLanguage))
         dispatcher.services
             .challengesService
-            .loadHashtags()
+            .loadHashtags(programmingLanguage: programmingLanguage)
             .asResolvable()
             .ephemeralSink { strings in
-                dispatcher.dispatch(Action.loadHashtags(strings, instanceID.uuidString))
+                dispatcher.dispatch(Action.loadHashtags(strings, programmingLanguage))
             }
     }
 }

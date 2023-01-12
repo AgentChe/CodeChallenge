@@ -16,7 +16,7 @@ protocol ChallengesServiceProtocol {
     func updateChallengeProgress(id: Int, progressId: Int, session: String, solution: String, type: String) -> AnyPublisher<Void, Error>
     func compile(id: Int, challengeId: Int, session: String, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<ChallengeCompiledResult, Error>
     func searchChallenges(with query: String, programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<[Challenge], Error>
-    func loadHashtags() -> AnyPublisher<[String], Error>
+    func loadHashtags(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[String], Error>
 
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[NewChallengeSection], Error>
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<NewChallengeCollectionContent, Error>
@@ -74,9 +74,9 @@ struct ChallengesService: ChallengesServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func loadHashtags() -> AnyPublisher<[String], Error> {
+    func loadHashtags(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[String], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/tags/", type: .get)
+            .create(url: "\(Configuration.host)/v1/tags/\(programmingLanguage.apiRequestParam)/", type: .get)
             .flatMap { networkService.load($0, decoding: [String].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

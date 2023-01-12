@@ -21,8 +21,12 @@ extension BrowseViewProps {
         store.state.searchByInstances[instanceID.uuidString]?.results.isLoading ?? false
     }
 
+    var programmingLanguage: ProgrammingLanguage {
+        store.state.programmingLanguage
+    }
+
     var hashtags: [String] {
-        store.state.searchByInstances[instanceID.uuidString]?.hashtags.value ?? []
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.hashtags.value ?? []
     }
 
     var hashtagsAreLoading: Bool {

@@ -22,6 +22,7 @@ protocol ChallengesServiceProtocol {
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<NewChallengeCollectionContent, Error>
     func getRecommendedChallenges(userId: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[Challenge], Error>
     func send(transactionId: String) -> AnyPublisher<Void, Error>
+    func send(receipt: String, userId: Int) -> AnyPublisher<Void, Error>
 }
 
 struct ChallengesService: ChallengesServiceProtocol {
@@ -105,6 +106,14 @@ struct ChallengesService: ChallengesServiceProtocol {
     func send(transactionId: String) -> AnyPublisher<Void, Error> {
         return URLRequest
             .create(url: "\(Configuration.host)/purchase/get/\(transactionId)", type: .get)
+            .flatMap { networkService.send($0) }
+            .eraseToAnyPublisher()
+    }
+
+    func send(receipt: String, userId: Int) -> AnyPublisher<Void, Error> {
+        let params = ["receipt": receipt]
+        return URLRequest
+            .create(url: "\(Configuration.host)/purchase/verify/\(userId)", type: .post, params: params)
             .flatMap { networkService.send($0) }
             .eraseToAnyPublisher()
     }

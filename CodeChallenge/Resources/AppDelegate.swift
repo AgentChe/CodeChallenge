@@ -35,7 +35,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         Branch.getInstance().setIdentity(UIDevice.current.identifierForVendor?.uuidString ?? "")
 
         FirebaseApp.configure()
-        UIApplication.shared.statusBarStyle = .lightContent
         return true
     }
 

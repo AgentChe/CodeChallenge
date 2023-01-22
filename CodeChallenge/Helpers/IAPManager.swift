@@ -67,23 +67,26 @@ class IAPManager : NSObject{
     /* It's the most simple way to send verify receipt request. Consider this code as for learning purposes. You shouldn't use current code in production apps.
      This code doesn't handle errors.
      */
+    var receiptData: String? {
+        guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
+            refreshReceipt()
+            // do not call block in this case. It will be called inside after receipt refreshing finishes.
+            return nil
+        }
+        let receiptData = try? Data(contentsOf: receiptUrl).base64EncodedString()
+        return receiptData
+    }
+
     func refreshSubscriptionsStatus(callback : @escaping SuccessBlock, failure : @escaping FailureBlock){
 
         self.refreshSubscriptionSuccessBlock = callback
         self.refreshSubscriptionFailureBlock = failure
-
-        guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
-            refreshReceipt()
-            // do not call block in this case. It will be called inside after receipt refreshing finishes.
-            return
-        }
 
         #if DEBUG
         let urlString = "https://sandbox.itunes.apple.com/verifyReceipt"
         #else
         let urlString = "https://buy.itunes.apple.com/verifyReceipt"
         #endif
-        let receiptData = try? Data(contentsOf: receiptUrl).base64EncodedString()
         let requestData = ["receipt-data" : receiptData ?? "", "password" : self.sharedSecret, "exclude-old-transactions" : true] as [String : Any]
         var request = URLRequest(url: URL(string: urlString)!)
         request.httpMethod = "POST"

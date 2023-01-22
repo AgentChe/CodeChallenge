@@ -451,7 +451,16 @@ struct PurchasePayment: ThunkAction {
                     switch result {
                     case .success:
                         dispatcher.dispatch(LoadAccount())
-                        print("TT_loaded")
+//                        IAPManager.shared.refreshSubscriptionsStatus(callback: { _ in
+//
+//                        }, failure: { _ in
+//
+//                        })
+                        dispatcher.services.challengesService.send(
+                            receipt: IAPManager.shared.receiptData ?? "",
+                            userId: previousAccount?.id ?? 0
+                        )
+                        .ephemeralSink { _ in }
                     case .failure:
                         if let previousAccount = previousAccount {
                             dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))

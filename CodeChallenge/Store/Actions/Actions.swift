@@ -180,7 +180,7 @@ struct LoadAccount: ThunkAction {
                 account.id = user.id
                 account.xp = user.xp
                 account.solvedChallenges = user.doneChallangeCount
-
+                account.isPremium = user.isPremium
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
             }
 //        dispatchGroup.enter()
@@ -443,31 +443,34 @@ struct PurchasePayment: ThunkAction {
         dispatcher.dispatch(Action.loadAccount(.pending))
 
         IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
-            dispatcher.services
-                .challengesService
-                .send(transactionId: identifier)
-                .asResolvable()
-                .ephemeralSink { result in
-                    switch result {
-                    case .success:
-                        dispatcher.dispatch(LoadAccount())
-//                        IAPManager.shared.refreshSubscriptionsStatus(callback: { _ in
+//            dispatcher.services
+//                .challengesService
+//                .send(transactionId: identifier)
+//                .asResolvable()
+//                .ephemeralSink { result in
+//                    switch result {
+//                    case .success:
+////                        IAPManager.shared.refreshSubscriptionsStatus(callback: { _ in
+////
+////                        }, failure: { _ in
+////
+////                        })
 //
-//                        }, failure: { _ in
-//
-//                        })
-                        dispatcher.services.challengesService.send(
-                            receipt: IAPManager.shared.receiptData ?? "",
-                            userId: previousAccount?.id ?? 0
-                        )
-                        .ephemeralSink { _ in }
-                    case .failure:
-                        if let previousAccount = previousAccount {
-                            dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))
-                        }
-                    default: break
-                    }
-                }
+//                    case .failure:
+//                        if let previousAccount = previousAccount {
+//                            dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))
+//                        }
+//                    default: break
+//                    }
+//                }
+
+            dispatcher.services.challengesService.send(
+                receipt: IAPManager.shared.receiptData ?? "",
+                userId: previousAccount?.id ?? 0
+            )
+            .ephemeralSink { _ in
+                dispatcher.dispatch(LoadAccount())
+            }
         }, failure: { error in
             if let previousAccount = previousAccount {
                 dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))

@@ -50,7 +50,6 @@ final class RootCoordinator {
             homeCoordinator.navigationController,
             browseCoordinator.navigationController,
             buddiesCoordinator.navigationController,
-            premiumCoordinator.navigationController,
             accountCoordinator.navigationController
         ]
         tabBarController.setViewControllers(tabs, animated: false)
@@ -63,6 +62,22 @@ final class RootCoordinator {
 
         accountCoordinator.onLogin = { [weak self] in
             self?.showLogin()
+        }
+
+        accountCoordinator.onGoPremium = { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self?.tabBarController.selectedIndex = 3
+            }
+        }
+        browseCoordinator.onGoPremium = { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self?.tabBarController.selectedIndex = 3
+            }
+        }
+        homeCoordinator.onGoPremium = { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self?.tabBarController.selectedIndex = 3
+            }
         }
 
         if UserDefaults.standard.string(forKey: "cc_user_session") != nil {
@@ -132,6 +147,33 @@ final class RootCoordinator {
                     }
                 }
         }
+
+        self.store
+            .statePublisher
+            .compactMap { $0.account.value?.isPremium }
+            .ephemeralSink({ [weak self] isPremium in
+                guard let self = self else { return }
+                if isPremium == true {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        var viewControllers = self.tabBarController.viewControllers
+                        let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+                        if let index = index {
+                            self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                viewControllers?.remove(at: index)
+                                self.tabBarController.viewControllers = viewControllers
+                            }
+                        }
+                    }
+                } else {
+                    let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+                    guard index == nil else { return }
+                    var viewControllers = self.tabBarController.viewControllers
+                    viewControllers?.insert(self.premiumCoordinator.navigationController, at: 3)
+                    self.tabBarController.viewControllers = viewControllers
+                }
+            })
+//            .store(in: cancellables)
     }
 
     private func showMaintenanceScreen() {

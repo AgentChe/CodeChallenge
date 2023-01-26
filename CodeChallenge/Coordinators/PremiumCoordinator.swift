@@ -23,7 +23,7 @@ class PremiumCoordinator {
         let controller = UIHostingController(rootView: premiumView)
         let tabBarItem = UITabBarItem(
             title: "Premium",
-            image: UIImage(named: "premiumTabIcon"),
+            image: UIImage(named: "premiumTabIcon")?.withRenderingMode(.alwaysOriginal),
             selectedImage: UIImage(named: "premiumTabIcon")
         )
         controller.tabBarItem = tabBarItem

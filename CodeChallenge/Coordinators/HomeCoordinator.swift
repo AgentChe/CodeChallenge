@@ -13,6 +13,7 @@ class HomeCoordinator {
     let navigationController = UINavigationController()
     var onboardingNavigationController: UINavigationController?
     let store: Store
+    var onGoPremium: (() -> Void)?
     private var popupController: PopupViewController?
 
     init(store: Store) {
@@ -80,6 +81,9 @@ class HomeCoordinator {
             }
         } onDismiss: { [weak self] in
             self?.navigationController.popViewController(animated: true)
+        } onGoPremium: { [weak self] in
+            self?.navigationController.popViewController(animated: true)
+            self?.onGoPremium?()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: challengeView)

@@ -94,6 +94,8 @@
 		E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF5292BD624009D5C0C /* UIFont.swift */; };
 		E0A69CF8292BF6E8009D5C0C /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */; };
 		E0A69CFA292BF762009D5C0C /* RecommendationsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */; };
+		E0B53BAA29817591009A49CA /* account_premium_stars.json in Resources */ = {isa = PBXBuildFile; fileRef = E0B53BA929817591009A49CA /* account_premium_stars.json */; };
+		E0B53BAC29828538009A49CA /* LottieFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B53BAB29828538009A49CA /* LottieFile.swift */; };
 		E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */; };
 		E0B9582328B2A80B00247DE9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582228B2A80A00247DE9 /* SettingsView.swift */; };
 		E0B9582628B2AC8800247DE9 /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582528B2AC8800247DE9 /* NotificationsView.swift */; };
@@ -250,6 +252,8 @@
 		E0A69CF5292BD624009D5C0C /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
 		E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewProps.swift; sourceTree = "<group>"; };
+		E0B53BA929817591009A49CA /* account_premium_stars.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = account_premium_stars.json; sourceTree = "<group>"; };
+		E0B53BAB29828538009A49CA /* LottieFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieFile.swift; sourceTree = "<group>"; };
 		E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalCodeChallengeView.swift; sourceTree = "<group>"; };
 		E0B9582228B2A80A00247DE9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E0B9582528B2AC8800247DE9 /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
@@ -372,6 +376,7 @@
 			children = (
 				E096DF202871BEA8008A2A98 /* DoodledView.swift */,
 				E096DF26287210AE008A2A98 /* LabelledField.swift */,
+				E0B53BAB29828538009A49CA /* LottieFile.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -513,6 +518,7 @@
 				E0525500288C79CE00FD87C3 /* Plists */,
 				E0BD3234285A7181000C37A9 /* Persistence.swift */,
 				E0BD322F285A7181000C37A9 /* Assets.xcassets */,
+				E0B53BA929817591009A49CA /* account_premium_stars.json */,
 				E04D067A28BD5F30003DB450 /* confetti.json */,
 				E0BD3236285A7181000C37A9 /* CodeChallenge.xcdatamodeld */,
 				E0BD324A285A8D6B000C37A9 /* AppDelegate.swift */,
@@ -808,6 +814,7 @@
 				E0A69CED292BD3FF009D5C0C /* SF-Pro-Text-ThinItalic.otf in Resources */,
 				E0A69CF3292BD3FF009D5C0C /* SF-Pro-Text-Medium.otf in Resources */,
 				E0A69CE4292BD3FF009D5C0C /* SF-Pro-Text-Heavy.otf in Resources */,
+				E0B53BAA29817591009A49CA /* account_premium_stars.json in Resources */,
 				E0A69CE7292BD3FF009D5C0C /* SF-Pro-Text-BlackItalic.otf in Resources */,
 				E0A69CF0292BD3FF009D5C0C /* SF-Pro-Text-Semibold.otf in Resources */,
 				E0A69CE3292BD3FF009D5C0C /* SF-Pro-Text-UltralightItalic.otf in Resources */,
@@ -957,6 +964,7 @@
 				E01AECA2289EE8F300615B52 /* KeywordsView.swift in Sources */,
 				E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */,
 				E01AECAB28A03FD800615B52 /* UIControlSubscription.swift in Sources */,
+				E0B53BAC29828538009A49CA /* LottieFile.swift in Sources */,
 				E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */,
 				E0A69CFA292BF762009D5C0C /* RecommendationsViewProps.swift in Sources */,
 				E01AEC9A289B3B5500615B52 /* PremiumAllPlansView.swift in Sources */,

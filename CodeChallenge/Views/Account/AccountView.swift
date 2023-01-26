@@ -15,8 +15,6 @@ struct AccountView: View, AccountViewProps {
     let onOpenSettings: () -> Void
     let onOpenChallengeDetails: (Challenge) -> Void
     let onOpenCompletedChallenges: () -> Void
-    @State var displayAccount: Account?
-    @State var displayInProgressChallenges: [Challenge] = []
     @State private var showingImagePicker = false
     @State private var showingRequestPhotoAccess = false
     @GestureState var press = false
@@ -24,23 +22,7 @@ struct AccountView: View, AccountViewProps {
     private let photos = PHPhotoLibrary.authorizationStatus()
 
     var body: some View {
-        DoodledView {
-            if isLoading {
-                SkeletonAccountView()
-            } else if let account = displayAccount {
-                content(account: account)
-            }
-        }
-        .onChange(of: account) { newValue in
-            displayAccount = newValue
-        }
-        .onAppear {
-            displayAccount = account
-            displayInProgressChallenges = inProgressChallenges
-        }
-        .onChange(of: inProgressChallenges) { newValue in
-            displayInProgressChallenges = newValue
-        }
+        content
         .onChange(of: inputImage) { _ in loadImage() }
         .onChange(of: showingRequestPhotoAccess) { _ in
             if photos == .notDetermined {
@@ -61,6 +43,49 @@ struct AccountView: View, AccountViewProps {
                 }
             }
         }
+        .onAppear {
+            self.store.objectWillChange.send()
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if account?.isPremium == true {
+            ZStack {
+                VStack(spacing: 0) {
+                    ZStack {
+                        HStack {
+                            Image("account_premium_doodle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 200)
+                            Spacer()
+                        }
+                    }
+                    .frame(width: .screenWidth, height: .navbarBackgroundHeight, alignment: .center)
+                    .clipped()
+                    .background(.CodeChallenge.dark)
+                    Spacer()
+                }
+                .edgesIgnoringSafeArea(.top)
+                .padding(.top, -50)
+                .background(.CodeChallenge.dark)
+
+                if isLoading {
+                    SkeletonAccountView()
+                } else if let account = account {
+                    content(account: account)
+                }
+            }
+        } else {
+            DoodledView {
+                if isLoading {
+                    SkeletonAccountView()
+                } else if let account = account {
+                    content(account: account)
+                }
+            }
+        }
     }
 
     func loadImage() {
@@ -72,6 +97,13 @@ struct AccountView: View, AccountViewProps {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 10) {
                 ZStack {
+                    if account.isPremium == true {
+                        LottieView(lottieFile: "account_premium_stars")
+                            .frame(width: .screenWidth, height: 160)
+                        Image("premium_image_background")
+                            .resizable()
+                            .frame(width: 140, height: 140)
+                    }
                     NetworkImage(
                         viewModel: .init(url: account.imageUrl,
                                          store: store,
@@ -96,12 +128,12 @@ struct AccountView: View, AccountViewProps {
                         Spacer()
                         HStack(spacing: 0) {
                             Spacer()
-                                .frame(width: UIScreen.main.bounds.width/2 + 40)
+                                .frame(width: UIScreen.main.bounds.width/2 + 20)
                             XPView(xpText: "\(account.xp ?? 0)", backgroundColor: .CodeChallenge.dark, xpIconColor: "white", strokeColor: .CodeChallenge.blue1)
                             Spacer()
                         }
                         Spacer()
-                            .frame(height: 4)
+                            .frame(height: account.isPremium == true ? 26 : 4)
                     }
                 }
                 .frame(height: 120)
@@ -112,26 +144,6 @@ struct AccountView: View, AccountViewProps {
                 Text(account.username != nil ? "@\(account.username ?? "")" : "My Profile")
                     .foregroundColor(.white)
                     .font(.h3)
-//                HStack(spacing: 50) {
-//                    VStack {
-//                        Text("\(account.solvedChallenges ?? 0)")
-//                            .font(.systemFont(ofSize: 18))
-//                        Text("Challenges")
-//                            .font(.systemFont(ofSize: 14))
-//                    }
-//                    VStack {
-//                        Text("\(account.followersCount ?? 0)")
-//                            .font(.systemFont(ofSize: 18))
-//                        Text("Followers")
-//                            .font(.systemFont(ofSize: 14))
-//                    }
-//                    VStack {
-//                        Text("\(account.followingsCount ?? 0)")
-//                            .font(.systemFont(ofSize: 18))
-//                        Text("Following")
-//                            .font(.systemFont(ofSize: 14))
-//                    }
-//                }
                 Text("\(account.solvedChallenges ?? 0) challenge\(account.solvedChallenges == 1 ? "" : "s")")
                 .font(.regular(size: 14))
                 .foregroundColor(.CodeChallenge.purple)
@@ -168,7 +180,7 @@ struct AccountView: View, AccountViewProps {
                 .foregroundColor(.white)
                 .font(.bodyText)
 
-            ForEach(displayInProgressChallenges, id: \.id) { challenge in
+            ForEach(inProgressChallenges, id: \.id) { challenge in
                 UniversalCodeChallengeView(codeChallenge: challenge)
                     .onTapGesture {
                         self.onOpenChallengeDetails(challenge)
@@ -197,18 +209,18 @@ struct AccountView: View, AccountViewProps {
                     ForEach(account.streaktoKeyValueTuple(from: account.streak ?? 0), id: \.self) { item in
                         ZStack {
                             if item.value {
-                                RoundedRectangle(cornerRadius: 12.5)
-                                    .fill(Color(.CodeChallenge.blue1))
-                                    .frame(width: 25, height: 25)
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1))
+                                    .frame(width: 32, height: 32)
                             } else {
-                                RoundedRectangle(cornerRadius: 12.5)
-                                    .stroke(Color(.CodeChallenge.blue1), lineWidth: 1)
-                                    .frame(width: 25, height: 25)
+                                RoundedRectangle(cornerRadius: 16)
+                                    .stroke(Color(account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1), lineWidth: 1)
+                                    .frame(width: 32, height: 32)
                             }
 
                             Text(item.key)
-                                .foregroundColor(item.value ? .CodeChallenge.white : .CodeChallenge.blue1)
-                                .font(.regular(size: 13))
+                                .foregroundColor(item.value ? .CodeChallenge.white : (account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1))
+                                .font(.regular(size: 16))
                         }
                     }
                     Spacer()

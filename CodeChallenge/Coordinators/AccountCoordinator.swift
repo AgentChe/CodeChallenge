@@ -12,6 +12,7 @@ class AccountCoordinator {
     let navigationController = UINavigationController()
     let store: Store
     var onLogin: (() -> Void)?
+    var onGoPremium: (() -> Void)?
     private var popupController: PopupViewController?
 
     init(store: Store) {
@@ -48,13 +49,29 @@ class AccountCoordinator {
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: accountView)
-        let tabBarItem = UITabBarItem(
-            title: "Account",
-            image: UIImage(named: "accountTabIcon"),
-            selectedImage: UIImage(named: "accountTabIcon")
-        )
-        controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
+
+        store.statePublisher
+            .map { $0.account.value?.isPremium }
+            .ephemeralSink { [weak self] isPremium in
+                guard let self = self else { return }
+                if isPremium == false {
+                    let tabBarItem = UITabBarItem(
+                        title: "Account",
+                        image: UIImage(named: "accountTabIcon")?.withRenderingMode(.alwaysOriginal),
+                        selectedImage: UIImage(named: "accountTabIcon")
+                    )
+                    self.navigationController.viewControllers.first?.tabBarItem = tabBarItem
+                } else {
+                    let tabBarItem = UITabBarItem(
+                        title: "Account",
+                        image: UIImage(named: "accountTabIcon")?.withRenderingMode(.alwaysOriginal),
+                        selectedImage: UIImage(named: "accountTabIcon_premium_selected")?.withRenderingMode(.alwaysOriginal)
+                    )
+                    tabBarItem.setTitleTextAttributes([.foregroundColor: UIColor.CodeChallenge.purple], for: .selected)
+                    self.navigationController.viewControllers.first?.tabBarItem = tabBarItem
+                }
+            }
     }
 
     func openCodeChallenge(challenge: Challenge) {
@@ -66,6 +83,9 @@ class AccountCoordinator {
             self?.runSuccessPopup(challenge: challenge)
         } onDismiss: { [weak self] in
             self?.navigationController.popViewController(animated: true)
+        } onGoPremium: { [weak self] in
+            self?.navigationController.popViewController(animated: true)
+            self?.onGoPremium?()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: challengeView)

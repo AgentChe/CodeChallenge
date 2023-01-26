@@ -16,6 +16,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     let onSeeSolution: (ChallengeDetail?) -> Void
     let onSuccess: (ChallengeDetail?) -> Void
     let onDismiss: () -> Void
+    let onGoPremium: () -> Void
     @State var selection: Int = 0
     @State var specialCharacter: String?
     @State private var displayCode: String?
@@ -26,32 +27,38 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     @State private var keyboardHeight: CGFloat = 0
     let quickAccessCharBottomToCover: CGFloat = UIDevice.hasSmallScreen ? 10 : 17
     let quickAccessCharViewHeight: CGFloat = UIDevice.hasSmallScreen ? 65 : 95
+    @State private var showPremiumPopup: Bool = false
 
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer()
-                .frame(height: 10)
-            CodeChallengePickerView(
-                selection: $selection,
-                sections: ["Task", "Code", "Result"],
-                onValueChange: { selection in
-                self.selection = selection
-            })
-            .padding(.horizontal, 25)
-            .frame(height: 31)
+        ZStack {
+            VStack(spacing: 0) {
+                Spacer()
+                    .frame(height: 10)
+                CodeChallengePickerView(
+                    selection: $selection,
+                    sections: ["Task", "Code", "Result"],
+                    onValueChange: { selection in
+                    self.selection = selection
+                })
+                .padding(.horizontal, 25)
+                .frame(height: 31)
 
-            switch selection {
-            case 0:
-                if !isLoading, let details = details {
-                    problemScreen(challengeDetails: details)
-                } else {
-                    SkeletonCodeChallengeView()
+                switch selection {
+                case 0:
+                    if !isLoading, let details = details {
+                        problemScreen(challengeDetails: details)
+                    } else {
+                        SkeletonCodeChallengeView()
+                    }
+                case 1:
+                    codeScreen
+                case 2:
+                    resultScreen
+                default: Text("")
                 }
-            case 1:
-                codeScreen
-            case 2:
-                resultScreen
-            default: Text("")
+            }
+            if showPremiumPopup {
+                premiumPopup
             }
         }
         .onAppear(perform: {
@@ -148,11 +155,26 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 .frame(width: .screenWidth - 40)
             }
             Spacer()
-            Button("Start solving") {
-                selection = 1
+            if details?.isPremium == true {
+                Button("Start solving", action: {
+                    if shouldShowPremiumPopup {
+                        withAnimation {
+                            showPremiumPopup = true
+                        }
+                    } else {
+                        selection = 1
+                    }
+                })
+                .buttonStyle(GradientButton())
+                .padding(.bottom, 20)
+            } else {
+                Button("Start solving") {
+                    selection = 1
+                }
+                .buttonStyle(PrimaryButton())
+                .padding(.bottom, 20)
             }
-            .buttonStyle(PrimaryButton())
-            .padding(.bottom, 20)
+
         }
         .foregroundColor(.CodeChallenge.white)
         .padding(.horizontal, 20)
@@ -269,6 +291,67 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             return removeTrailingNewLines(string: newString)
         } else {
             return string
+        }
+    }
+
+    private var premiumPopup: some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.black)
+                .opacity(0.3)
+                .edgesIgnoringSafeArea(.all)
+                .transition(.opacity.animation(.easeInOut(duration: 0.2)))
+                .onTapGesture {
+                    withAnimation {
+                        showPremiumPopup = false
+                    }
+                }
+            VStack {
+                Spacer()
+                ZStack(alignment: .leading) {
+                    VStack(spacing: 12) {
+                        Spacer()
+                            .frame(height: 18)
+                        Text("Challenge Locked")
+                            .font(.h2)
+                            .padding(.horizontal, 4)
+                        Text("Go Premium to unlock the challenge")
+                            .font(.smallText)
+                            .padding(.horizontal, 4)
+                            .padding(.bottom, 15)
+                        HStack {
+                            Spacer()
+                            Text("Go Premium")
+                                .font(.button)
+                            Spacer()
+                        }
+                        .background {
+                            LinearGradient(
+                                gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
+                                    startPoint: .init(x: 0.0, y: 0.0),
+                                    endPoint: .init(x: 1, y: 1)
+                                )
+                                .mask(
+                                    RoundedCornersShape(corners: [.bottomLeft, .bottomRight], radius: 10)
+                                        .fill(Color(.CodeChallenge.green))
+                                        .frame(height: 41)
+                                )
+                        }
+                        .onTapGesture {
+                            onGoPremium()
+                        }
+                    }
+                    .foregroundColor(.white)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(.CodeChallenge.background))
+                    }
+                }
+                .padding(.horizontal, 16)
+                Spacer()
+            }
+            .transition(.move(edge: .bottom).animation(.easeIn(duration: 0.4)))
+            .frame(width: .screenWidth)
         }
     }
 }

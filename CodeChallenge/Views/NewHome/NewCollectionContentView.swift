@@ -122,10 +122,10 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                     VStack {
                         if progress == "done" {
                             Image("challenge_progress_done")
+                        } else if challenge.isPremium {
+                            Image("challenge_premium_icon")
                         } else if challenge.isNew {
                             NewLabelView()
-                        }  else if challenge.isPremium {
-                            Image("challenge_premium_icon")
                         } else {
                             ChallengeXPView(xpText: "\(challenge.xp)")
                         }

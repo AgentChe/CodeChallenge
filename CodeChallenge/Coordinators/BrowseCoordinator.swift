@@ -13,6 +13,7 @@ class BrowseCoordinator {
     let navigationController = UINavigationController()
     let store: Store
     private var popupController: PopupViewController?
+    var onGoPremium: (() -> Void)?
 
     init(store: Store) {
         self.store = store
@@ -48,6 +49,9 @@ class BrowseCoordinator {
             self?.runSuccessPopup(challenge: challenge)
         } onDismiss: { [weak self] in
             self?.navigationController.popViewController(animated: true)
+        } onGoPremium: { [weak self] in
+            self?.navigationController.popViewController(animated: true)
+            self?.onGoPremium?()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: challengeView)

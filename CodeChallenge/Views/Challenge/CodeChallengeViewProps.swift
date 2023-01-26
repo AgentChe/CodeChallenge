@@ -25,6 +25,10 @@ extension CodeChallengeViewProps {
         }
     }
 
+    var account: Account? {
+        store.state.account.value
+    }
+
     var taskInput: String? {
         details?.body.input
     }
@@ -90,5 +94,9 @@ extension CodeChallengeViewProps {
 
     var programmingLanguage: ProgrammingLanguage {
         details?.codehubProgrammingLanguage ?? .python
+    }
+
+    var shouldShowPremiumPopup: Bool {
+        details?.isPremium == true && account?.isPremium == false
     }
 }

@@ -101,8 +101,8 @@ struct PremiumGradientModifier: ViewModifier {
                     .stroke (
                         LinearGradient(
                             gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
-                            startPoint: .init(x: 0.0, y: 0.0),
-                            endPoint: .init(x: 1, y: 1)
+                            startPoint: .leading,
+                            endPoint: .trailing
                         ), style: StrokeStyle(lineWidth: 1)
                     )
                     .background {
@@ -115,8 +115,8 @@ struct PremiumGradientModifier: ViewModifier {
                 .background {
                     LinearGradient(
                         gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
-                        startPoint: .init(x: 0.0, y: 0.0),
-                        endPoint: .init(x: 1, y: 1)
+                        startPoint: .leading,
+                        endPoint: .trailing
                     )
                     .mask(
                         RoundedCornersShape(corners: corners,

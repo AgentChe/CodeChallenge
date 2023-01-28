@@ -150,16 +150,16 @@ final class RootCoordinator {
 
         self.store
             .statePublisher
-            .compactMap { $0.account.value?.isPremium }
-            .ephemeralSink({ [weak self] isPremium in
+            .compactMap { $0.account.value }
+            .ephemeralSink({ [weak self] account in
                 guard let self = self else { return }
-                if isPremium == true {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                if account.isPremium == true {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         var viewControllers = self.tabBarController.viewControllers
                         let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
                         if let index = index {
                             self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 viewControllers?.remove(at: index)
                                 self.tabBarController.viewControllers = viewControllers
                             }

@@ -41,7 +41,8 @@ struct Login: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
         let id = UserDefaults.standard.integer(forKey: "cc_user_id")
-
+        let previousAccount = dispatcher.state.account
+        dispatcher.dispatch(Action.loadAccount(.pending))
         dispatcher.services.authService.login(id: id, session: session, username: username, password: password)
             .asResolvable()
             .ephemeralSink { user in
@@ -55,6 +56,7 @@ struct Login: ThunkAction {
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
                     dispatcher.dispatch(Action.loadUser(user))
+                    dispatcher.dispatch(Action.loadAccount(previousAccount))
                 }
             }
     }
@@ -64,14 +66,21 @@ struct Logout: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session")
         guard let session = session else { return }
+        let previousAccount = dispatcher.state.account
+        dispatcher.dispatch(Action.loadAccount(.pending))
         dispatcher.services.authService
             .logout(session: session)
-            .ephemeralSink { _ in
-                UserDefaults.standard.set(false, forKey: "isLoggedIn")
-                UserDefaults.standard.set(nil, forKey: "cc_user_session")
-                UserDefaults.standard.set(nil, forKey: "cc_user_id")
-                dispatcher.dispatch(Action.logout)
-                dispatcher.dispatch(GuestAuth(reloadHome: true))
+            .asResolvable()
+            .ephemeralSink { result in
+                if result.isSuccess {
+                    UserDefaults.standard.set(false, forKey: "isLoggedIn")
+                    UserDefaults.standard.set(nil, forKey: "cc_user_session")
+                    UserDefaults.standard.set(nil, forKey: "cc_user_id")
+                    dispatcher.dispatch(Action.logout)
+                    dispatcher.dispatch(GuestAuth(reloadHome: true))
+                } else {
+                    dispatcher.dispatch(Action.loadAccount(previousAccount))
+                }
             }
     }
 }
@@ -96,14 +105,21 @@ struct DeleteAccount: ThunkAction {
         let session = UserDefaults.standard.string(forKey: "cc_user_session")
         let id = UserDefaults.standard.integer(forKey: "cc_user_id")
         guard let session = session else { return }
+        let previousAccount = dispatcher.state.account
+        dispatcher.dispatch(Action.loadAccount(.pending))
         dispatcher.services.authService
             .deleteAccount(session: session, id: id)
-            .ephemeralSink { _ in
-                UserDefaults.standard.set(false, forKey: "isLoggedIn")
-                UserDefaults.standard.set(nil, forKey: "cc_user_session")
-                UserDefaults.standard.set(nil, forKey: "cc_user_id")
-                dispatcher.dispatch(Action.logout)
-                dispatcher.dispatch(GuestAuth(reloadHome: true))
+            .asResolvable()
+            .ephemeralSink { result in
+                if result.isSuccess {
+                    UserDefaults.standard.set(false, forKey: "isLoggedIn")
+                    UserDefaults.standard.set(nil, forKey: "cc_user_session")
+                    UserDefaults.standard.set(nil, forKey: "cc_user_id")
+                    dispatcher.dispatch(Action.logout)
+                    dispatcher.dispatch(GuestAuth(reloadHome: true))
+                } else {
+                    dispatcher.dispatch(Action.loadAccount(previousAccount))
+                }
             }
     }
 }
@@ -146,7 +162,8 @@ struct SignUp: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let id = UserDefaults.standard.integer(forKey: "cc_user_id")
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
-
+        let previousAccount = dispatcher.state.account
+        dispatcher.dispatch(Action.loadAccount(.pending))
         dispatcher.services.authService.signUp(id: id, session: session, username: username, email: email, password: password)
             .asResolvable()
             .ephemeralSink { user in
@@ -159,6 +176,7 @@ struct SignUp: ThunkAction {
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
                     dispatcher.dispatch(Action.loadUser(user))
+                    dispatcher.dispatch(Action.loadAccount(previousAccount))
                 }
             }
     }

@@ -25,7 +25,7 @@ struct InviteFriendsView: View {
                 Text("Bring your friends!")
                     .font(.pageNameH1)
                     .foregroundColor(.CodeChallenge.white)
-                    .padding(.horizontal, 25)
+                    .padding(.horizontal, 27)
                 HStack {
                     Spacer()
                     Image("invite_friends_steps")

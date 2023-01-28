@@ -92,6 +92,7 @@ struct PremiumGradientModifier: ViewModifier {
     var changeStrokeColor: Bool = false
     var cornerRadius: Int = 0
     var corners: UIRectCorner = [.allCorners]
+    var strokeWidth: CGFloat = 1
 
     func body(content: Content) -> some View {
         if changeStrokeColor {
@@ -103,7 +104,7 @@ struct PremiumGradientModifier: ViewModifier {
                             gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
                             startPoint: .leading,
                             endPoint: .trailing
-                        ), style: StrokeStyle(lineWidth: 1)
+                        ), style: StrokeStyle(lineWidth: strokeWidth)
                     )
                     .background {
                         RoundedRectangle(cornerRadius: CGFloat(cornerRadius))

@@ -75,7 +75,7 @@ struct ChallengeXPView: View {
     private var content: some View {
         VStack(spacing: 0) {
             Spacer()
-                .frame(height: 3)
+                .frame(height: 4)
             HStack(spacing: 0) {
                 Spacer()
                     .frame(width: 8)
@@ -89,8 +89,42 @@ struct ChallengeXPView: View {
                     .frame(width: 8)
             }
             Spacer()
-                .frame(height: 3)
+                .frame(height: 4)
         }
-        .frame(height: 19)
+    }
+}
+
+struct ChallengePremiumXPView: View {
+    let xpText: String
+
+    var body: some View {
+        content
+            .modifier(PremiumGradientModifier(cornerRadius: 10))
+            .padding(3.5)
+            .background {
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(Color(.CodeChallenge.xpGrayishBackground))
+            }
+    }
+
+    private var content: some View {
+        VStack(spacing: 0) {
+            Spacer()
+                .frame(height: 4)
+            HStack(spacing: 0) {
+                Spacer()
+                    .frame(width: 8)
+                Text(xpText)
+                    .foregroundColor(.white)
+                    .font(.tag)
+                Spacer()
+                    .frame(width: 2)
+                Image("challenge_premium_icon")
+                Spacer()
+                    .frame(width: 8)
+            }
+            Spacer()
+                .frame(height: 4)
+        }
     }
 }

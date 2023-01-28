@@ -208,7 +208,7 @@ struct AccountView: View, AccountViewProps {
     }
 
     private func streakView(account: Account) -> some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(spacing: 0) {
             HStack(spacing: 0) {
                 Text("You're on a ")
                     .foregroundColor(UIColor.lightGray)
@@ -218,8 +218,8 @@ struct AccountView: View, AccountViewProps {
                     .font(.bold(size: 18))
                 Spacer()
             }
-                .padding(.bottom, 10)
-            HStack(spacing: 12) {
+                .padding(.bottom, 15)
+            HStack(alignment: .center, spacing: (.screenWidth - (UIDevice.hasSmallScreen ? 44 : 70)) / 7 - 30) {
                 ForEach(account.streaktoKeyValueTuple(from: account.streak ?? 0), id: \.self) { item in
                     ZStack {
                         if item.value {
@@ -237,7 +237,6 @@ struct AccountView: View, AccountViewProps {
                             .font(.regular(size: 16))
                     }
                 }
-                Spacer()
             }
         }
         .padding(UIDevice.hasSmallScreen ? 12 : 15)

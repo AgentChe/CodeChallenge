@@ -91,6 +91,10 @@ extension UIColor.CodeChallenge {
     static var dustyBlue: UIColor {
         UIColor.init(red: 56/255, green: 75/255, blue: 114/255, alpha: 1.0)
     }
+
+    static var xpGrayishBackground: UIColor {
+        UIColor.init(red: 37/255, green: 38/255, blue: 43/255, alpha: 1.0)
+    }
 }
 
 extension Color {

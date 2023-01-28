@@ -51,7 +51,6 @@ struct PremiumView: View, PremiumViewProps {
                     content
                 }
             }
-            .background(.CodeChallenge.dark)
         }
     }
 

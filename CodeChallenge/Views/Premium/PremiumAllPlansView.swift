@@ -152,10 +152,13 @@ fileprivate class ProductView: UIView {
     var onSelect: ((Bool) -> Void)?
     var isSelected: Bool
 
+    let numberFormatter = NumberFormatter()
+
     init(product: AppStoreProduct?, isSelected: Bool) {
         self.product = product
         self.isSelected = isSelected
         super.init(frame: .zero)
+        numberFormatter.locale = Locale(identifier: "en_us")
         setupViews()
     }
 

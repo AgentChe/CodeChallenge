@@ -32,16 +32,18 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                Spacer()
-                    .frame(height: 10)
-                CodeChallengePickerView(
-                    selection: $selection,
-                    sections: ["Task", "Code", "Result"],
-                    onValueChange: { selection in
-                    self.selection = selection
-                })
-                .padding(.horizontal, 25)
-                .frame(height: 31)
+                if !shouldShowPremiumPopup {
+                    Spacer()
+                        .frame(height: 10)
+                    CodeChallengePickerView(
+                        selection: $selection,
+                        sections: ["Task", "Code", "Result"],
+                        onValueChange: { selection in
+                        self.selection = selection
+                    })
+                    .padding(.horizontal, 25)
+                    .frame(height: 31)
+                }
 
                 switch selection {
                 case 0:
@@ -325,18 +327,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                                 .font(.button)
                             Spacer()
                         }
-                        .background {
-                            LinearGradient(
-                                gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
-                                    startPoint: .init(x: 0.0, y: 0.0),
-                                    endPoint: .init(x: 1, y: 1)
-                                )
-                                .mask(
-                                    RoundedCornersShape(corners: [.bottomLeft, .bottomRight], radius: 10)
-                                        .fill(Color(.CodeChallenge.green))
-                                        .frame(height: 41)
-                                )
-                        }
+                        .modifier(PremiumGradientModifier(cornerRadius: 10, corners: [.bottomLeft, .bottomRight]))
                         .onTapGesture {
                             onGoPremium()
                         }

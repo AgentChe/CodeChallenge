@@ -15,23 +15,44 @@ struct PremiumView: View, PremiumViewProps {
     @State private var showMessage: String?
 
     var body: some View {
-        Group {
-            if let showMessage = showMessage {
-                VStack {
-                    Spacer()
+        ZStack {
+            VStack(spacing: 0) {
+                ZStack {
                     HStack {
-                        Spacer()
-                        Text(showMessage)
-                            .foregroundColor(.white)
+                        Image("account_premium_doodle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 200)
                         Spacer()
                     }
-                    Spacer()
                 }
-            } else {
-                content
+                .frame(width: .screenWidth, height: .navbarBackgroundHeight, alignment: .center)
+                .clipped()
+                .background(.CodeChallenge.dark)
+                Spacer()
             }
-        }
+            .edgesIgnoringSafeArea(.top)
+            .padding(.top, -50)
             .background(.CodeChallenge.dark)
+
+            Group {
+                if let showMessage = showMessage {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Spacer()
+                            Text(showMessage)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                } else {
+                    content
+                }
+            }
+            .background(.CodeChallenge.dark)
+        }
     }
 
     var content: some View {

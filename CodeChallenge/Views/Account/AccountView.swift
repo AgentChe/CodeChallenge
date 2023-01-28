@@ -129,7 +129,11 @@ struct AccountView: View, AccountViewProps {
                         HStack(spacing: 0) {
                             Spacer()
                                 .frame(width: UIScreen.main.bounds.width/2 + 20)
-                            XPView(xpText: "\(account.xp ?? 0)", backgroundColor: .CodeChallenge.dark, xpIconColor: "white", strokeColor: .CodeChallenge.blue1)
+                            if account.isPremium == true {
+                                AccountPremiumXPView(xpText: "\(account.xp ?? 0)")
+                            } else {
+                                XPView(xpText: "\(account.xp ?? 0)", backgroundColor: .CodeChallenge.dark, xpIconColor: "white", strokeColor: .CodeChallenge.blue1)
+                            }
                             Spacer()
                         }
                         Spacer()
@@ -159,9 +163,22 @@ struct AccountView: View, AccountViewProps {
                     .padding(.horizontal, 25)
                     .padding(.top, 20)
                 }
+
+                Spacer()
+                    .frame(height: 1)
                 
-                streakView(account: account)
-                    .padding(.top, 10)
+                if account.isPremium == true {
+                    streakView(account: account)
+                        .modifier(PremiumGradientModifier(changeStrokeColor: true, cornerRadius: 10))
+                        .padding(.horizontal, UIDevice.hasSmallScreen ? 10 : 20)
+                } else {
+                    streakView(account: account)
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color(.CodeChallenge.dustyBlue), lineWidth: 1.5)
+                        }
+                        .padding(.horizontal, UIDevice.hasSmallScreen ? 10 : 20)
+                }
 
                 if !inProgressChallenges.isEmpty {
                     inProgressChallengesView
@@ -191,45 +208,40 @@ struct AccountView: View, AccountViewProps {
     }
 
     private func streakView(account: Account) -> some View {
-        ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(Color(.CodeChallenge.dustyBlue), lineWidth: 1.5)
-            VStack(alignment: .leading, spacing: 0) {
-                HStack(spacing: 0) {
-                    Text("You're on a ")
-                        .foregroundColor(UIColor.lightGray)
-                        .font(.regular(size: 18))
-                    Text("\(account.streak ?? 0)-Day Streak")
-                        .foregroundColor(.white)
-                        .font(.bold(size: 18))
-                    Spacer()
-                }
-                    .padding(.bottom, 10)
-                HStack(spacing: 12) {
-                    ForEach(account.streaktoKeyValueTuple(from: account.streak ?? 0), id: \.self) { item in
-                        ZStack {
-                            if item.value {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color(account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1))
-                                    .frame(width: 32, height: 32)
-                            } else {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .stroke(Color(account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1), lineWidth: 1)
-                                    .frame(width: 32, height: 32)
-                            }
-
-                            Text(item.key)
-                                .foregroundColor(item.value ? .CodeChallenge.white : (account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1))
-                                .font(.regular(size: 16))
-                        }
-                    }
-                    Spacer()
-                }
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 0) {
+                Text("You're on a ")
+                    .foregroundColor(UIColor.lightGray)
+                    .font(.regular(size: 18))
+                Text("\(account.streak ?? 0)-Day Streak")
+                    .foregroundColor(.white)
+                    .font(.bold(size: 18))
+                Spacer()
             }
-            .padding(UIDevice.hasSmallScreen ? 12 : 15)
-            .foregroundColor(.white)
+                .padding(.bottom, 10)
+            HStack(spacing: 12) {
+                ForEach(account.streaktoKeyValueTuple(from: account.streak ?? 0), id: \.self) { item in
+                    ZStack {
+                        if item.value {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color(account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1))
+                                .frame(width: 32, height: 32)
+                        } else {
+                            RoundedRectangle(cornerRadius: 16)
+                                .stroke(Color(account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1), lineWidth: 1)
+                                .frame(width: 32, height: 32)
+                        }
+
+                        Text(item.key)
+                            .foregroundColor(item.value ? .CodeChallenge.white : (account.isPremium == true ? .CodeChallenge.purple : .CodeChallenge.blue1))
+                            .font(.regular(size: 16))
+                    }
+                }
+                Spacer()
+            }
         }
-        .padding(.horizontal, UIDevice.hasSmallScreen ? 10 : 20)
+        .padding(UIDevice.hasSmallScreen ? 12 : 15)
+        .foregroundColor(.white)
     }
 }
 

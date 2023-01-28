@@ -77,7 +77,11 @@ class PremiumAllPlansView: UIView, PopupContentView {
         backgroundColor = .CodeChallenge.dark
 
         let button = UIButton()
-        button.setTitle("Start 7 Day Trial Now", for: .normal)
+        if selectedProduct?.payment.productIdentifier == "yearly_pro_2week_trial" {
+            button.setTitle("Start 7 Day Trial Now", for: .normal)
+        } else {
+            button.setTitle("Start Now", for: .normal)
+        }
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .button
         stackView.addArrangedSubview(button)
@@ -123,7 +127,6 @@ class PremiumAllPlansView: UIView, PopupContentView {
         if hStack == nil {
             hStack = UIStackView()
         }
-//        hStack?.translatesAutoresizingMaskIntoConstraints = false
         hStack?.arrangedSubviews.forEach { $0.removeFromSuperview() }
         hStack?.spacing = 20
         hStack?.axis = .horizontal
@@ -141,7 +144,6 @@ class PremiumAllPlansView: UIView, PopupContentView {
             hStack?.addArrangedSubview(productView)
         }
         stackView.addArrangedSubview(hStack!)
-//        stackView.addArrangedSubview(UIView())
     }
 }
 

@@ -44,6 +44,23 @@ struct XPView: View {
     }
 }
 
+struct AccountPremiumXPView: View {
+    let xpText: String
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(xpText)
+                .foregroundColor(.white)
+                .font(.h5)
+            Image("xpIcon_white")
+        }
+        .padding(.vertical, 7)
+        .padding(.horizontal, 10)
+        .frame(height: 32)
+        .modifier(PremiumGradientModifier(changeStrokeColor: true, cornerRadius: 16))
+    }
+}
+
 struct ChallengeXPView: View {
     let xpText: String
 

@@ -18,6 +18,7 @@ extension PremiumViewProps {
         let dates = (calendar.date(byAdding: .day, value: 12, to: date)!,
                      calendar.date(byAdding: .day, value: 14, to: date)!)
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_us")
         formatter.dateFormat = "MMMM dd"
         return (formatter.string(from: dates.0), formatter.string(from: dates.1))
     }

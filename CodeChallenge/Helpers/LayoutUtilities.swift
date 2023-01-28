@@ -10,7 +10,7 @@ import UIKit
 extension CGFloat {
     static var screenWidth: CGFloat { UIScreen.main.bounds.size.width }
     static var screenHeight: CGFloat { UIScreen.main.bounds.size.height }
-    static var navbarBackgroundHeight: CGFloat { UIDevice.hasDisplayNotch ? 240 : 76 }
+    static var navbarBackgroundHeight: CGFloat { 240 }
 }
 
 extension UIDevice {

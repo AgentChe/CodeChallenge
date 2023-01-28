@@ -58,18 +58,7 @@ struct GradientButton: ButtonStyle {
         }
         .frame(height: 56)
         .foregroundColor(status == .enabled ? .white : .CodeChallenge.whiteDisabled)
-        .background {
-            LinearGradient(
-                gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
-                    startPoint: .init(x: 0.0, y: 0.0),
-                    endPoint: .init(x: 1, y: 1)
-                )
-                .mask(
-                    Rectangle()
-                        .frame(height: 56)
-                        .clipShape(Capsule())
-                )
-        }
+        .modifier(PremiumGradientModifier())
         .font(.button)
     }
 }
@@ -96,5 +85,45 @@ extension UIButton {
         self.setTitleColor(UIColor.white, for: .normal)
         self.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17.0)
         self.titleLabel?.textColor = UIColor.white
+    }
+}
+
+struct PremiumGradientModifier: ViewModifier {
+    var changeStrokeColor: Bool = false
+    var cornerRadius: Int = 0
+    var corners: UIRectCorner = [.allCorners]
+
+    func body(content: Content) -> some View {
+        if changeStrokeColor {
+            content
+                .background {
+                    RoundedRectangle(cornerRadius: CGFloat(cornerRadius))
+                    .stroke (
+                        LinearGradient(
+                            gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
+                            startPoint: .init(x: 0.0, y: 0.0),
+                            endPoint: .init(x: 1, y: 1)
+                        ), style: StrokeStyle(lineWidth: 1)
+                    )
+                    .background {
+                        RoundedRectangle(cornerRadius: CGFloat(cornerRadius))
+                            .fill(Color(UIColor.CodeChallenge.dark))
+                    }
+                }
+        } else {
+            content
+                .background {
+                    LinearGradient(
+                        gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
+                        startPoint: .init(x: 0.0, y: 0.0),
+                        endPoint: .init(x: 1, y: 1)
+                    )
+                    .mask(
+                        RoundedCornersShape(corners: corners,
+                                            radius: CGFloat(cornerRadius))
+                            .clipShape(Capsule())
+                    )
+                }
+        }
     }
 }

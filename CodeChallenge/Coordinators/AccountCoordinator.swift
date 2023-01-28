@@ -94,7 +94,7 @@ class AccountCoordinator {
     }
 
     private func showSolution(challengeDetail: ChallengeDetail, challenge: Challenge) {
-        store.dispatch(TrackAnalyticsEvent(event: .solutionOpened(challenge, nil)))
+        store.dispatch(TrackAnalyticsEvent(event: .solutionOpened(challenge, store.state.programmingLanguage)))
         let view = SolutionView(solution: challengeDetail.solutionCode.code?.removingPercentEncoding ?? "")
         view.onDismiss = { [weak self] in
             self?.popupController?.hide()

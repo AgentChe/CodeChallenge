@@ -27,6 +27,7 @@ class PremiumAllPlansView: UIView, PopupContentView {
     private var hStack: UIStackView?
     private var getPremiumButton: UIButton?
     private let label = UILabel()
+    let store: Store
 
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -35,9 +36,10 @@ class PremiumAllPlansView: UIView, PopupContentView {
         return stackView
     }()
 
-    init(products: [AppStoreProduct]) {
+    init(products: [AppStoreProduct], store: Store) {
         self.products = products
         self.selectedProduct = products.last
+        self.store = store
         super.init(frame: .zero)
         setupViews()
     }
@@ -135,6 +137,7 @@ class PremiumAllPlansView: UIView, PopupContentView {
             let productView = ProductView(product: product, isSelected: product == selectedProduct)
             productView.translatesAutoresizingMaskIntoConstraints = false
             productView.onSelect = { [weak self] isSelected in
+                self?.store.dispatch(TrackAnalyticsEvent(event: .planSelected(product.name)))
                 self?.selectedProduct = product
             }
             NSLayoutConstraint.activate([

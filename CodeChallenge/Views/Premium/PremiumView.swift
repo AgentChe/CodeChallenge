@@ -93,7 +93,7 @@ struct PremiumView: View, PremiumViewProps {
             }
             .padding(.horizontal, 25)
             .onAppear {
-                store.dispatch(TrackAnalyticsEvent(event: .pricingOpened))
+                store.dispatch(TrackAnalyticsEvent(event: .paywallOpened))
             }
         }
         .foregroundColor(.white)
@@ -114,7 +114,7 @@ struct PremiumView: View, PremiumViewProps {
             }
             Button("View all plans") {
                 onShowAllPlans(payments)
-                store.dispatch(TrackAnalyticsEvent(event: .paywallOpened))
+                store.dispatch(TrackAnalyticsEvent(event: .viewAllPlansClicked))
             }
             .foregroundColor(.CodeChallenge.blue1)
             .font(.h5)

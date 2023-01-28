@@ -15,15 +15,16 @@ enum AnalyticsEvent {
     case loginSelected
     case signUpSuccessful
     case loginSuccessful
-    case challengeSelected(Challenge, ChallengeGroup?, String)
-    case startedSolving(Challenge, ChallengeGroup?)
+    case challengeSelected(Challenge, String, ProgrammingLanguage)
+    case startedSolving(Challenge, ProgrammingLanguage)
     case challengeCompleted(Challenge, Bool)
     case browseOpened
     case challengeSearched(String, String)
-    case solutionOpened(Challenge, ChallengeGroup?)
+    case solutionOpened(Challenge, ProgrammingLanguage)
     case paywallOpened
     case planSelected(String)
-    case pricingOpened
+    case premiumSucceeded(String)
+    case viewAllPlansClicked
     case homepageLoaded(Double, Error?)
 
     var value: String {
@@ -54,8 +55,10 @@ enum AnalyticsEvent {
             return "Paywall Opened"
         case .planSelected:
             return "Plan Selected"
-        case .pricingOpened:
-            return "Pricing Opened"
+        case .premiumSucceeded:
+            return "Premium Succeeded"
+        case .viewAllPlansClicked:
+            return "View All Plans Clicked"
         case .homepageLoaded:
             return "Homepage Loaded"
         }
@@ -63,18 +66,18 @@ enum AnalyticsEvent {
 
     var properties: [String: MixpanelType] {
         switch self {
-        case .challengeSelected(let challenge, let group, let source):
+        case .challengeSelected(let challenge, let source, let programmingLanguage):
             return [
                 "challengeTags": challenge.tagsDescription,
                 "challengeId": challenge.id,
-                "challengeGroup": group?.name ?? "",
+                "challengeGroup": programmingLanguage.rawValue,
                 "challengeLevel": challenge.progress,
                 "source": source]
-        case .startedSolving(let challenge, let group):
+        case .startedSolving(let challenge, let programmingLanguage):
             return [
                 "challengeTags": challenge.tagsDescription,
                 "challengeId": challenge.id,
-                "challengeGroup": group?.name ?? "",
+                "challengeGroup": programmingLanguage.rawValue,
                 "challengeLevel": challenge.progress]
         case .challengeCompleted(let challenge, let completed):
             return [
@@ -85,16 +88,18 @@ enum AnalyticsEvent {
             ]
         case .challengeSearched(let searchTerm, let type):
             return ["searchTerm": searchTerm, "type": type]
-        case .solutionOpened(let challenge, let group):
+        case .solutionOpened(let challenge, let programmingLanguage):
             return [
                 "challengeTags": challenge.tagsDescription,
                 "challengeId": challenge.id,
-                "challengeGroup": group?.name ?? "",
+                "challengeGroup": programmingLanguage.rawValue,
                 "challengeLevel": challenge.progress]
         case .planSelected(let type):
             return ["type": type]
         case .homepageLoaded(let seconds, let error):
             return ["miliseconds": seconds, "error": error?.localizedDescription ?? ""]
+        case .premiumSucceeded(let type):
+            return ["type": type]
         default: return [:]
         }
     }

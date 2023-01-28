@@ -40,7 +40,7 @@ class PremiumCoordinator {
             AppStoreProduct(name: "Monthly", value: monthlyPayment, description: "Billed & Recurring Monthly", payment: monthly),
             AppStoreProduct(name: "Yearly", value: yearlyPayment, description: "Only \(yearlyMonthlyPayment)/month Billed & recurring yearly", payment: yearly)
         ]
-        let view = PremiumAllPlansView(products: products)
+        let view = PremiumAllPlansView(products: products, store: store)
         view.onPurchaseProduct = { [weak self] product in
             self?.store.dispatch(PurchasePayment(payment: product.payment))
         }

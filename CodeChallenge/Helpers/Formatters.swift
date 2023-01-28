@@ -14,6 +14,7 @@ extension NumberFormatter {
         formatter.maximumFractionDigits = 2
         formatter.roundingMode = .down
         formatter.decimalSeparator = "."
+        formatter.locale = Locale(identifier: "en_us")
         return formatter.string(from: NSNumber(value: double)) ?? ""
     }
 }

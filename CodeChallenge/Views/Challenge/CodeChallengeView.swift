@@ -86,7 +86,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
         }
         .onChange(of: selection, perform: { newValue in
             if newValue == 1 {
-                store.dispatch(TrackAnalyticsEvent(event: .startedSolving(codeChallenge, group)))
+                store.dispatch(TrackAnalyticsEvent(event: .startedSolving(codeChallenge, programmingLanguage)))
             }
         })
         .toolbar {

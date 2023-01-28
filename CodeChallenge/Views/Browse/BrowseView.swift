@@ -43,7 +43,7 @@ struct BrowseView: View, BrowseViewProps {
                                         UniversalCodeChallengeView(codeChallenge: challenge)
                                             .onTapGesture {
                                                 onOpenChallenge(challenge)
-                                                store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, nil, "Browse")))
+                                                store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, "Browse", programmingLanguage)))
                                             }
                                     }
                                 }

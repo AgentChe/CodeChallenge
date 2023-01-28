@@ -201,7 +201,7 @@ struct AccountView: View, AccountViewProps {
                 UniversalCodeChallengeView(codeChallenge: challenge)
                     .onTapGesture {
                         self.onOpenChallengeDetails(challenge)
-                        store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, nil, "Profile")))
+                        store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, "Profile", store.state.programmingLanguage)))
                     }
             }
         }

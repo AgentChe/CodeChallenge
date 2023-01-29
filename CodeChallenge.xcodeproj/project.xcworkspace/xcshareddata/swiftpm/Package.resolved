@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "asn1swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tikhop/ASN1Swift",
+      "state" : {
+        "revision" : "b53bee03a942623db25afc5bfb80227b2cb3b425",
+        "version" : "1.2.4"
+      }
+    },
+    {
       "identity" : "boringssl-swiftpm",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/boringssl-SwiftPM.git",
@@ -142,6 +151,15 @@
       "state" : {
         "revision" : "5016b3aee6e08e9a8e55b2197e60a40ee3d3ebe5",
         "version" : "3.11.2"
+      }
+    },
+    {
+      "identity" : "paywall-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/superwall-me/paywall-ios",
+      "state" : {
+        "revision" : "fb4d9c8d670eba30006cedcdb3cfbe653d8d8dc8",
+        "version" : "2.5.8"
       }
     },
     {

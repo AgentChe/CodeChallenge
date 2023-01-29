@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
+import Paywall
 
 final class RootCoordinator {
     private let window: UIWindow
@@ -27,6 +28,8 @@ final class RootCoordinator {
     private var cancellables = Set<AnyCancellable>()
     private var homePageCancellable: AnyCancellable?
 
+    private let paywallService: PaywallService
+
     init(window: UIWindow) {
         self.window = window
         accountCoordinator = AccountCoordinator(store: store)
@@ -35,6 +38,7 @@ final class RootCoordinator {
         communityCoordinator = CommunityCoordinator(store: store)
         premiumCoordinator = PremiumCoordinator(store: store)
         buddiesCoordinator = BuddiesCoordinator(store: store)
+        paywallService = PaywallService(store: store)
         setupAppAppearance()
     }
 

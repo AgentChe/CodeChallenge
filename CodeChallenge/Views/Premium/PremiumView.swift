@@ -84,7 +84,7 @@ struct PremiumView: View, PremiumViewProps {
                 yearlyPaymentText
                 PremiumNoteView(title: "How can I cancel?", text: "It’s easy: Open the Settings app, tap on your name, then tap on Subscriptions. Now select the Codehub Premium subscription and cancel it.")
 
-                Button("Start my free trial now", action: {
+                Button("Start My 14-day Fee Trial", action: {
                     if let yearlyPayment = yearlyPayment {
                         store.dispatch(PurchasePayment(payment: yearlyPayment))
                     }
@@ -106,9 +106,7 @@ struct PremiumView: View, PremiumViewProps {
                     Text("Unlimited free access for 14 days, then ")
                         .font(.regular(size: 18)) +
                     Text("\(NumberFormatter.price(from: yearlyPayment.price.doubleValue)) annually ")
-                        .font(.semibold(size: 18)) +
-                    Text("(\(NumberFormatter.price(from: yearlyPayment.price.doubleValue/12))/month).")
-                        .font(.regular(size: 18))
+                        .font(.semibold(size: 18))
                 }
                 .foregroundColor(.white)
             }

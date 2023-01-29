@@ -55,8 +55,12 @@ struct UniversalCodeChallengeView: View {
                         .foregroundColor(.white)
                         .font(.bodyText)
                     Spacer()
-                    if codeChallenge.isPremium == true && codeChallenge.progress == "inprogress" {
-                        ChallengePremiumXPView(xpText: "\(codeChallenge.xp)")
+                    if codeChallenge.isPremium == true {
+                        if codeChallenge.progress == "done" {
+                            Image("premium_challenge_progress_done")
+                        } else {
+                            ChallengePremiumXPView(xpText: "\(codeChallenge.xp)")
+                        }
                     } else if codeChallenge.progress == "inprogress" {
                         ChallengeXPView(xpText: "\(codeChallenge.xp)")
                     } else if codeChallenge.progress == "done" {

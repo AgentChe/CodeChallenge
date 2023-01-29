@@ -77,6 +77,7 @@ struct Logout: ThunkAction {
                     UserDefaults.standard.set(nil, forKey: "cc_user_session")
                     UserDefaults.standard.set(nil, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.logout)
+                    dispatcher.services.identifyService.removeIdentity()
                     dispatcher.dispatch(GuestAuth(reloadHome: true))
                 } else {
                     dispatcher.dispatch(Action.loadAccount(previousAccount))
@@ -116,6 +117,7 @@ struct DeleteAccount: ThunkAction {
                     UserDefaults.standard.set(nil, forKey: "cc_user_session")
                     UserDefaults.standard.set(nil, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.logout)
+                    dispatcher.services.identifyService.removeIdentity()
                     dispatcher.dispatch(GuestAuth(reloadHome: true))
                 } else {
                     dispatcher.dispatch(Action.loadAccount(previousAccount))
@@ -200,6 +202,7 @@ struct LoadAccount: ThunkAction {
                 account.solvedChallenges = user.doneChallangeCount
                 account.isPremium = user.isPremium
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
+                dispatcher.services.identifyService.identify(id: user.id)
             }
 //        dispatchGroup.enter()
 //        dispatcher.services.accountService
@@ -461,6 +464,7 @@ struct PurchasePayment: ThunkAction {
         dispatcher.dispatch(Action.loadAccount(.pending))
 
         IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
+            guard previousAccount?.isPremium == false else { return }
             dispatcher.services.challengesService.send(
                 receipt: IAPManager.shared.receiptData ?? "",
                 userId: previousAccount?.id ?? 0

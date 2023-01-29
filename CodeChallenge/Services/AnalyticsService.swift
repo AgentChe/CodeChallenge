@@ -7,7 +7,7 @@
 
 import Foundation
 import Mixpanel
-import OneSignal
+import Paywall
 
 enum AnalyticsEvent {
     case getStarted
@@ -112,5 +112,6 @@ protocol AnalyticsServiceProtocol {
 struct AnalyticsService: AnalyticsServiceProtocol {
     func track(event: AnalyticsEvent, properties: [String: MixpanelType]) {
         Mixpanel.mainInstance().track(event: event.value, properties: properties)
+        Paywall.track(event.value, properties.mapValues { "\($0)" })
     }
 }

@@ -7,23 +7,21 @@
 
 import Foundation
 import OneSignal
+import Paywall
 
-protocol NotificationsAnalyticsServiceProtocol {
+protocol IdentifyServiceProtocol {
     func identify(id: Int)
     func removeIdentity()
-    func track(event: AnalyticsEvent, properties: [String: String])
 }
 
-struct NotificationsAnalyticsService: NotificationsAnalyticsServiceProtocol {
+struct IdentifyService: IdentifyServiceProtocol {
     func identify(id: Int) {
         OneSignal.setExternalUserId("\(id)")
+        Paywall.identify(userId: "\(id)")
     }
 
     func removeIdentity() {
         OneSignal.removeExternalUserId()
-    }
-
-    func track(event: AnalyticsEvent, properties: [String: String]) {
-        
+        Paywall.reset()
     }
 }

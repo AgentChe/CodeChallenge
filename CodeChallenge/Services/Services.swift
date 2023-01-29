@@ -14,6 +14,7 @@ protocol ServicesProtocol {
     var challengesService: ChallengesServiceProtocol { get }
     var imageService: ImageServiceProtocol { get }
     var analyticsService: AnalyticsServiceProtocol { get }
+    var identifyService: IdentifyServiceProtocol { get }
 }
 
 struct Services: ServicesProtocol {
@@ -23,6 +24,7 @@ struct Services: ServicesProtocol {
     let challengesService: ChallengesServiceProtocol
     let imageService: ImageServiceProtocol
     let analyticsService: AnalyticsServiceProtocol
+    let identifyService: IdentifyServiceProtocol
 
     init() {
         networkService = NetworkService()
@@ -31,5 +33,6 @@ struct Services: ServicesProtocol {
         self.challengesService = ChallengesService(networkService: networkService)
         self.imageService = ImageService()
         self.analyticsService = AnalyticsService()
+        self.identifyService = IdentifyService()
     }
 }

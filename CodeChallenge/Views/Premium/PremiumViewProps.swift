@@ -23,7 +23,7 @@ extension PremiumViewProps {
         return (formatter.string(from: dates.0), formatter.string(from: dates.1))
     }
     var getPremiumTexts: [(String, String)] {
-        return [("Today", "Get instant access and see how it\ncan improve your Python skills."), (infoDates.0, "We’ll remind you with an email or push\nnotification that your trial is ending."), (infoDates.1, "You’ll be charged on \(infoDates.1);\ncancel anytime before.")]
+        return [("Today", "Get instant access and see how it\ncan improve your coding skills."), (infoDates.0, "We’ll remind you with an email or push\nnotification that your trial is ending."), (infoDates.1, "You’ll be charged on \(infoDates.1);\ncancel anytime before.")]
     }
 
     var payments: [AppStorePayment] {

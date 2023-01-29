@@ -80,9 +80,9 @@ class PremiumAllPlansView: UIView, PopupContentView {
 
         let button = UIButton()
         if selectedProduct?.payment.productIdentifier == "yearly_pro_2week_trial" {
-            button.setTitle("Start 7 Day Trial Now", for: .normal)
+            button.setTitle("Start 14-day Free Trial", for: .normal)
         } else {
-            button.setTitle("Start Now", for: .normal)
+            button.setTitle("Select Plan", for: .normal)
         }
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .button

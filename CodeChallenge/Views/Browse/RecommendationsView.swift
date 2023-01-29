@@ -61,10 +61,14 @@ struct RecommendationsView: View, RecommendationsViewProps {
                 )
                 Spacer()
                 VStack {
-                    if challenge.progress == "done" {
+                    if challenge.progress == "done" && challenge.isPremium == false {
                         Image("challenge_progress_done")
                     } else if challenge.isPremium {
-                        ChallengePremiumXPView(xpText: "\(challenge.xp)")
+                        if challenge.progress == "done" {
+                            Image("premium_challenge_progress_done")
+                        } else {
+                            ChallengePremiumXPView(xpText: "\(challenge.xp)")
+                        }
                     } else if challenge.isNew {
                         NewLabelView()
                     } else {

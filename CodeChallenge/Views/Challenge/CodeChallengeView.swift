@@ -302,7 +302,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 .fill(Color.black)
                 .opacity(0.3)
                 .edgesIgnoringSafeArea(.all)
-                .transition(.opacity.animation(.easeInOut(duration: 0.2)))
                 .onTapGesture {
                     withAnimation {
                         showPremiumPopup = false
@@ -323,10 +322,11 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                             .padding(.bottom, 15)
                         HStack {
                             Spacer()
-                            Text("Go Premium")
+                            Text("Start 14-day Free Trial")
                                 .font(.button)
                             Spacer()
                         }
+                        .padding(.vertical, 12)
                         .modifier(PremiumGradientModifier(cornerRadius: 10, corners: [.bottomLeft, .bottomRight]))
                         .onTapGesture {
                             onGoPremium()
@@ -341,7 +341,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 .padding(.horizontal, 16)
                 Spacer()
             }
-            .transition(.move(edge: .bottom).animation(.easeIn(duration: 0.4)))
             .frame(width: .screenWidth)
         }
     }

@@ -10,6 +10,7 @@ import UIKit
 import OneSignal
 import FirebaseCore
 import Branch
+import Paywall
 
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {

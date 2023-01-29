@@ -134,6 +134,8 @@
 		E0EBB7F2288B525500DE7C53 /* CodeChallengeViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7F1288B525500DE7C53 /* CodeChallengeViewProps.swift */; };
 		E0ECE5C228BBFF5C00A1CB12 /* CelebrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0ECE5C128BBFF5C00A1CB12 /* CelebrationView.swift */; };
 		E0ECE5C428BC028700A1CB12 /* XPView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0ECE5C328BC028700A1CB12 /* XPView.swift */; };
+		E0ED53412985E9BB001DE6B1 /* Paywall in Frameworks */ = {isa = PBXBuildFile; productRef = E0ED53402985E9BB001DE6B1 /* Paywall */; };
+		E0ED53432986BFD2001DE6B1 /* PaywallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0ED53422986BFD2001DE6B1 /* PaywallService.swift */; };
 		E0EF278F28E21EAD00597160 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0EF278E28E21EAC00597160 /* GoogleService-Info.plist */; };
 		E0EF279228E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = E0EF279128E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		E0EF279428E21F3000597160 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = E0EF279328E21F3000597160 /* FirebaseCrashlytics */; };
@@ -294,6 +296,7 @@
 		E0EBB7F1288B525500DE7C53 /* CodeChallengeViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeViewProps.swift; sourceTree = "<group>"; };
 		E0ECE5C128BBFF5C00A1CB12 /* CelebrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelebrationView.swift; sourceTree = "<group>"; };
 		E0ECE5C328BC028700A1CB12 /* XPView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPView.swift; sourceTree = "<group>"; };
+		E0ED53422986BFD2001DE6B1 /* PaywallService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallService.swift; sourceTree = "<group>"; };
 		E0EF278E28E21EAC00597160 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0FB29AD2919A2CA00E75B8E /* NewCollectionContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionContentView.swift; sourceTree = "<group>"; };
 		E0FB29AF2919A2E500E75B8E /* NewCollectionContentViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCollectionContentViewProps.swift; sourceTree = "<group>"; };
@@ -324,6 +327,7 @@
 				E099936928C1563700E12E36 /* SVGKit in Frameworks */,
 				E0EF279428E21F3000597160 /* FirebaseCrashlytics in Frameworks */,
 				E08B446328B43AA9006BC50A /* StoreKit.framework in Frameworks */,
+				E0ED53412985E9BB001DE6B1 /* Paywall in Frameworks */,
 				E0EF279228E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -581,6 +585,7 @@
 				E0EBB7ED288B207700DE7C53 /* ImageService.swift */,
 				E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */,
 				E0DA79C128F20AB00038B0E1 /* Configuration.swift */,
+				E0ED53422986BFD2001DE6B1 /* PaywallService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -739,6 +744,7 @@
 				E0EF279128E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				E0EF279328E21F3000597160 /* FirebaseCrashlytics */,
 				E0228F70290547CC00101A82 /* Branch */,
+				E0ED53402985E9BB001DE6B1 /* Paywall */,
 			);
 			productName = CodeChallenge;
 			productReference = E0BD3228285A717E000C37A9 /* Codehub.app */;
@@ -780,6 +786,7 @@
 				E06D28C528CE6EB800E211A0 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				E0EF279028E21F2F00597160 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */,
+				E0ED533F2985E9BB001DE6B1 /* XCRemoteSwiftPackageReference "paywall-ios" */,
 			);
 			productRefGroup = E0BD3229285A717E000C37A9 /* Products */;
 			projectDirPath = "";
@@ -915,6 +922,7 @@
 				E0FB613529185C5500DB1E9A /* NewChallengeSection.swift in Sources */,
 				E08B445828B2E2A3006BC50A /* EnvironmentAdditions.swift in Sources */,
 				E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */,
+				E0ED53432986BFD2001DE6B1 /* PaywallService.swift in Sources */,
 				E06AAE292877889700995D3D /* CommunityCoordinator.swift in Sources */,
 				E0FB29AE2919A2CA00E75B8E /* NewCollectionContentView.swift in Sources */,
 				E0EBB7F2288B525500DE7C53 /* CodeChallengeViewProps.swift in Sources */,
@@ -1525,6 +1533,14 @@
 				kind = branch;
 			};
 		};
+		E0ED533F2985E9BB001DE6B1 /* XCRemoteSwiftPackageReference "paywall-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/superwall-me/paywall-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		E0EF279028E21F2F00597160 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -1570,6 +1586,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E099936728C1563700E12E36 /* XCRemoteSwiftPackageReference "SVGKit" */;
 			productName = SVGKitSwift;
+		};
+		E0ED53402985E9BB001DE6B1 /* Paywall */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0ED533F2985E9BB001DE6B1 /* XCRemoteSwiftPackageReference "paywall-ios" */;
+			productName = Paywall;
 		};
 		E0EF279128E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -112,19 +112,35 @@ struct PremiumGradientModifier: ViewModifier {
                     }
                 }
         } else {
-            content
-                .background {
-                    LinearGradient(
-                        gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                    .mask(
-                        RoundedCornersShape(corners: corners,
-                                            radius: CGFloat(cornerRadius))
+            if corners != [.allCorners] {
+                content
+                    .background {
+                        LinearGradient(
+                            gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .mask(
+                            RoundedCornersShape(corners: corners,
+                                                radius: CGFloat(cornerRadius))
+                        )
+                    }
+            } else {
+                content
+                    .background {
+                        LinearGradient(
+                            gradient: .init(colors: [Color(UIColor.CodeChallenge.blue1), Color(.CodeChallenge.purple)]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .mask(
+                            RoundedCornersShape(corners: corners,
+                                                radius: CGFloat(cornerRadius))
                             .clipShape(Capsule())
-                    )
-                }
+                        )
+                    }
+            }
+
         }
     }
 }

@@ -8,12 +8,14 @@
 import Foundation
 import SwiftUI
 import UIKit
+import Paywall
 
 struct NewHomeView: View, NewHomeViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     @EnvironmentObject var store: Store
     let humanLanguage: String
     let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
+//    @State private var showPaywall = false
 //    @State private var displayXp: Int = 0
 
     var body: some View {
@@ -52,11 +54,14 @@ struct NewHomeView: View, NewHomeViewProps {
 //            displayXp = xp
 //        }
 //        .onAppear {
-//            displayXp = xp
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+//                showPaywall = true
+//            }
 //        }
         .onChange(of: programmingLanguage) { newValue in
             store.dispatch(LoadHomeSections(language: newValue))
         }
+//        .triggerPaywall(forEvent: "custom_campaign", shouldPresent: $showPaywall)
     }
 
     private var sectionsView: some View {

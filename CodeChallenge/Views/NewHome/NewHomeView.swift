@@ -15,8 +15,7 @@ struct NewHomeView: View, NewHomeViewProps {
     @EnvironmentObject var store: Store
     let humanLanguage: String
     let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
-//    @State private var showPaywall = false
-//    @State private var displayXp: Int = 0
+    @State private var showPaywall = false
 
     var body: some View {
         DoodledView {
@@ -50,18 +49,9 @@ struct NewHomeView: View, NewHomeViewProps {
                 }
             }
         }
-//        .onChange(of: xp) { newValue in
-//            displayXp = xp
-//        }
-//        .onAppear {
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-//                showPaywall = true
-//            }
-//        }
         .onChange(of: programmingLanguage) { newValue in
             store.dispatch(LoadHomeSections(language: newValue))
         }
-//        .triggerPaywall(forEvent: "custom_campaign", shouldPresent: $showPaywall)
     }
 
     private var sectionsView: some View {

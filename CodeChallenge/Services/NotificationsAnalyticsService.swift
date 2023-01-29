@@ -8,6 +8,7 @@
 import Foundation
 import OneSignal
 import Paywall
+import Mixpanel
 
 protocol IdentifyServiceProtocol {
     func identify(id: Int)
@@ -18,10 +19,12 @@ struct IdentifyService: IdentifyServiceProtocol {
     func identify(id: Int) {
         OneSignal.setExternalUserId("\(id)")
         Paywall.identify(userId: "\(id)")
+        Mixpanel.mainInstance().identify(distinctId: "\(id)")
     }
 
     func removeIdentity() {
         OneSignal.removeExternalUserId()
         Paywall.reset()
+        Mixpanel.mainInstance().reset()
     }
 }

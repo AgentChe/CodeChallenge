@@ -33,7 +33,7 @@ struct AuthService: AuthServiceProtocol {
     }
 
     func login(id: Int, session: String, username: String, password: String) -> AnyPublisher<User, Error> {
-        let params: [String: Any] = ["username": username, "password": password, "id": id, "session": session]
+        let params: [String: Any] = ["username": username, "password": password, "merge": ["session": session, "merge": true]]
         
         return URLRequest
             .create(url: "\(Configuration.host)/user/signin/", type: .post, params: params)

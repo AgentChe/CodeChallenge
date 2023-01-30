@@ -155,21 +155,33 @@ final class RootCoordinator {
         self.store
             .statePublisher
             .compactMap { $0.account.value }
-            .ephemeralSink({ [weak self] account in
+            .combineLatest(isPremiumEnabled(store.services.networkService))
+            .ephemeralSink({ [weak self] (account, premiumEnabled) in
                 guard let self = self else { return }
                 if account.isPremium == true {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        var viewControllers = self.tabBarController.viewControllers
-                        let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-                        if let index = index {
-                            self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                viewControllers?.remove(at: index)
-                                self.tabBarController.viewControllers = viewControllers
+                    let runTabBarTransformation = {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            var viewControllers = self.tabBarController.viewControllers
+                            let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+                            if let index = index {
+                                self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    viewControllers?.remove(at: index)
+                                    self.tabBarController.viewControllers = viewControllers
+                                }
                             }
                         }
                     }
+                    if self.tabBarController.selectedIndex == 0 {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.homeCoordinator.navigationController.popToRootViewController(animated: true)
+                            runTabBarTransformation()
+                        }
+                    } else {
+                        runTabBarTransformation()
+                    }
                 } else {
+                    guard premiumEnabled else { return }
                     let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
                     guard index == nil else { return }
                     var viewControllers = self.tabBarController.viewControllers
@@ -334,6 +346,28 @@ extension RootCoordinator {
     }
 }
 
+extension RootCoordinator {
+    func isPremiumEnabled(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
+        let url = "https://maintenance.yervandgaloyan.workers.dev/"
+        return
+            URLRequest.create(url: url)
+            .map {
+                var copy = $0
+                copy.cachePolicy = .reloadIgnoringCacheData
+                return copy
+            }
+            .map { networkService.load($0, decoding: Maintenance.self, with: .init()) }
+            .switchToLatest()
+            .asResolvable()
+            .compactMap(\.value)
+            .map {
+                return $0.premium
+            }
+            .eraseToAnyPublisher()
+    }
+}
+
 struct Maintenance: Codable {
     let maintenance: Bool
+    let premium: Bool
 }

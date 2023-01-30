@@ -8,13 +8,13 @@
 import Foundation
 
 extension NumberFormatter {
-    static func price(from double: Double) -> String {
+    static func price(from double: Double, priceLocale: Locale) -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
         formatter.maximumFractionDigits = 2
         formatter.roundingMode = .down
         formatter.decimalSeparator = "."
-        formatter.locale = Locale(identifier: "en_us")
+        formatter.locale = priceLocale
         return formatter.string(from: NSNumber(value: double)) ?? ""
     }
 }

@@ -84,11 +84,25 @@ struct PremiumView: View, PremiumViewProps {
                 yearlyPaymentText
                 PremiumNoteView(title: "How can I cancel?", text: "It’s easy: Open the Settings app, tap on your name, then tap on Subscriptions. Now select the Codehub Premium subscription and cancel it.")
 
-                Button("Start My 14-day Fee Trial", action: {
+                Button("Start My 14-day Free Trial", action: {
                     if let yearlyPayment = yearlyPayment {
                         store.dispatch(PurchasePayment(payment: yearlyPayment))
                     }
                 }).buttonStyle(GradientButton(status: buttonStatus))
+
+                Button(action: {
+                    store.dispatch(RestorePurchases(completionBlock: nil))
+                }, label: {
+                    (Text("By upgrading your account, you agree to the Terms of Service & Privacy Policy. ")
+                        + Text("Restore purchases")
+                            .underline()
+                        )
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .font(.regular(size: 12))
+                        .foregroundColor(Color.white)
+                        .fixedSize(horizontal: false, vertical: true)
+                })
+
                 Spacer()
             }
             .padding(.horizontal, 25)
@@ -103,9 +117,9 @@ struct PremiumView: View, PremiumViewProps {
         VStack(alignment: .center, spacing: 20) {
             if let yearlyPayment = yearlyPayment {
                 Group {
-                    Text("Unlimited free access for 14 days, then ")
+                    Text("100+ Premium coding challenges. Unlimited access for 14 days, then ")
                         .font(.regular(size: 18)) +
-                    Text("\(NumberFormatter.price(from: yearlyPayment.price.doubleValue)) annually ")
+                    Text("\(NumberFormatter.price(from: yearlyPayment.price.doubleValue, priceLocale: yearlyPayment.priceLocale)) annually.")
                         .font(.semibold(size: 18))
                 }
                 .foregroundColor(.white)

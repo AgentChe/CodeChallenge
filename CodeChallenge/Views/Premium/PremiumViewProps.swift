@@ -35,7 +35,7 @@ extension PremiumViewProps {
     }
 
     var buttonStatus: GradientButton.Status {
-        if store.state.account.isLoading || store.state.account.isPending {
+        if IAPManager.shared.isLoading {
             return .loading
         } else {
             return .enabled

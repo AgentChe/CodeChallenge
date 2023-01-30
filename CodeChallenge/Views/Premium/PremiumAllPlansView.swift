@@ -179,15 +179,15 @@ fileprivate class ProductView: UIView {
         let label3 = UILabel()
         label1.text = product?.name
         label1.font = .systemFont(ofSize: 18, weight: .medium)
-        if let price = product?.payment.price.doubleValue {
-            label2.text = NumberFormatter.price(from: price)
+        if let price = product?.payment.price.doubleValue, let locale = product?.payment.priceLocale {
+            label2.text = NumberFormatter.price(from: price, priceLocale: locale)
         }
         label2.font = .systemFont(ofSize: 20, weight: .bold)
         label3.text = product?.description
-        label3.font = .systemFont(ofSize: 14, weight: .regular)
+        label3.font = .systemFont(ofSize: 12, weight: .regular)
         label1.setContentHuggingPriority(.defaultHigh, for: .vertical)
         label2.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        label3.numberOfLines = 3
+        label3.numberOfLines = 4
         label3.textAlignment = .center
 
         [label1, label2, label3].forEach { $0.textColor = .white }

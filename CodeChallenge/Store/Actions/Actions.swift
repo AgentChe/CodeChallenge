@@ -461,7 +461,6 @@ struct PurchasePayment: ThunkAction {
 
     func exec(dispatcher: Dispatcher) {
         let previousAccount = dispatcher.state.account.value
-        dispatcher.dispatch(Action.loadAccount(.pending))
 
         IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
             guard previousAccount?.isPremium == false else { return }
@@ -474,9 +473,28 @@ struct PurchasePayment: ThunkAction {
                 dispatcher.dispatch(LoadAccount())
             }
         }, failure: { error in
-            if let previousAccount = previousAccount {
-                dispatcher.dispatch(Action.loadAccount(.success(previousAccount)))
+        })
+    }
+}
+
+struct RestorePurchases: ThunkAction {
+    let completionBlock: ((Bool) -> Void)?
+
+    func exec(dispatcher: Dispatcher) {
+        let previousAccount = dispatcher.state.account.value
+
+        IAPManager.shared.restorePurchases(success: { identifier in
+            guard previousAccount?.isPremium == false else { return }
+            dispatcher.services.challengesService.send(
+                receipt: IAPManager.shared.receiptData ?? "",
+                userId: previousAccount?.id ?? 0
+            )
+            .ephemeralSink { _ in
+                completionBlock?(true)
+                dispatcher.dispatch(LoadAccount())
             }
+        }, failure: { error in
+            completionBlock?(false)
         })
     }
 }

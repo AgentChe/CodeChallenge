@@ -36,8 +36,8 @@ class PremiumCoordinator {
         let monthlyPayment = monthly.price.stringValue
         let yearlyPayment = yearly.price.stringValue
         let products = [
-            AppStoreProduct(name: "Monthly", value: monthlyPayment, description: "Billed & Recurring Monthly", payment: monthly),
-            AppStoreProduct(name: "Yearly", value: yearlyPayment, description: "Billed & Recurring Yearly", payment: yearly)
+            AppStoreProduct(name: "Monthly", value: monthlyPayment, description: "Access 100+ Premium coding challenges. Billed and Recurring Monthly.", payment: monthly),
+            AppStoreProduct(name: "Yearly", value: yearlyPayment, description: "Access 100+ Premium coding challenges. Billed and Recurring Yearly.", payment: yearly)
         ]
         let view = PremiumAllPlansView(products: products, store: store)
         view.onPurchaseProduct = { [weak self] product in

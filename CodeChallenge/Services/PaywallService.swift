@@ -40,11 +40,7 @@ extension PaywallService: PaywallDelegate {
   }
 
   func restorePurchases(completion: @escaping (Bool) -> Void) {
-      IAPManager.shared.restorePurchases(success: { _ in
-          completion(true)
-      }, failure: { _ in
-          completion(false)
-      })
+      store.dispatch(RestorePurchases(completionBlock: completion))
   }
 
   func isUserSubscribed() -> Bool {

@@ -15,7 +15,7 @@ typealias AppStorePayment = SKProduct
 
 let IAP_PRODUCTS_DID_LOAD_NOTIFICATION = Notification.Name("IAP_PRODUCTS_DID_LOAD_NOTIFICATION")
 
-class IAPManager : NSObject{
+class IAPManager : NSObject {
 
     private var sharedSecret = "238613b2da4f47178ac9bfd52bc85697"
     @objc static let shared = IAPManager()
@@ -29,6 +29,8 @@ class IAPManager : NSObject{
 
     private var refreshSubscriptionSuccessBlock : SuccessBlock?
     private var refreshSubscriptionFailureBlock : FailureBlock?
+
+    @Published var isLoading: Bool = false
 
     var onLoadPayments: (([AppStorePayment]) -> Void)?
 
@@ -175,7 +177,6 @@ extension IAPManager : SKRequestDelegate {
 
 // MARK:- SKProducts Request Delegate
 extension IAPManager: SKProductsRequestDelegate {
-
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         products = response.products
         self.onLoadPayments?(response.products)
@@ -195,18 +196,22 @@ extension IAPManager: SKPaymentTransactionObserver {
             case .purchased:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 notifyIsPurchased(transaction: transaction)
+                isLoading = false
                 break
             case .failed:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 print("purchase error : \(transaction.error?.localizedDescription ?? "")")
                 self.failureBlock?(transaction.error)
                 cleanUp()
+                isLoading = false
                 break
             case .restored:
                 SKPaymentQueue.default().finishTransaction(transaction)
                 notifyIsPurchased(transaction: transaction)
+                isLoading = false
                 break
             case .deferred, .purchasing:
+                isLoading = true
                 break
             default:
                 break

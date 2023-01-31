@@ -143,10 +143,12 @@ final class RootCoordinator {
                         let miliseconds = Date().timeIntervalSince(startDate) * 1000
                         self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, nil)))
                         guard let self = self else { return }
-                        if !value.isEmpty {
-                            self.homePageCancellable?.cancel()
-                            self.homePageCancellable = nil
-                            controller.dismiss(animated: false)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                            if !value.isEmpty {
+                                self.homePageCancellable?.cancel()
+                                self.homePageCancellable = nil
+                                controller.dismiss(animated: false)
+                            }
                         }
                     }
                 }
@@ -154,11 +156,12 @@ final class RootCoordinator {
 
         self.store
             .statePublisher
-            .compactMap { $0.account.value }
+            .compactMap { $0.account.value?.isPremium }
+            .removeDuplicates()
             .combineLatest(isPremiumEnabled(store.services.networkService))
-            .ephemeralSink({ [weak self] (account, premiumEnabled) in
+            .sink(receiveValue: { [weak self] (isPremium, premiumEnabled) in
                 guard let self = self else { return }
-                if account.isPremium == true {
+                if isPremium == true {
                     let runTabBarTransformation = {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                             var viewControllers = self.tabBarController.viewControllers
@@ -189,7 +192,7 @@ final class RootCoordinator {
                     self.tabBarController.viewControllers = viewControllers
                 }
             })
-//            .store(in: cancellables)
+            .store(in: &cancellables)
     }
 
     private func showMaintenanceScreen() {

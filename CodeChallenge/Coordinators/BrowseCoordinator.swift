@@ -81,9 +81,11 @@ class BrowseCoordinator {
             }
         }
         popupController = PopupViewController(contentView: view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        if let rootController = UIApplication.shared.windows.first?.rootViewController {
-            popupController?.present(from: rootController, bottomOffset: 0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
+            view.translatesAutoresizingMaskIntoConstraints = false
+            if let rootController = UIApplication.shared.windows.first?.rootViewController {
+                self?.popupController?.present(from: rootController, bottomOffset: 0)
+            }
         }
     }
 }

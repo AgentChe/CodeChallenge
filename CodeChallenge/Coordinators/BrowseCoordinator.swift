@@ -36,8 +36,9 @@ class BrowseCoordinator {
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
-        store.dispatch(LoadHashtags(programmingLanguage: .python))
-        store.dispatch(LoadHashtags(programmingLanguage: .java))
+        for language in ProgrammingLanguage.allCases {
+            store.dispatch(LoadHashtags(programmingLanguage: language))
+        }
     }
 
     func openChallengeView(challenge: Challenge) {

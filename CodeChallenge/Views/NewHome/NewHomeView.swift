@@ -16,19 +16,37 @@ struct NewHomeView: View, NewHomeViewProps {
     let humanLanguage: String
     let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
     @State private var showPaywall = false
+    @State private var showProgrammingLanguagePopup = false
 
     var body: some View {
         DoodledView {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("Code Challenges")
-                    .font(.pageNameH1)
-                    .foregroundColor(.white)
-                    .padding(.bottom, 16)
-                    .padding(.leading, 16)
-                if isLoading {
-                    SkeletonView()
-                } else {
-                    sectionsView
+            ZStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Code Challenges")
+                        .font(.pageNameH1)
+                        .foregroundColor(.white)
+                        .padding(.bottom, 16)
+                        .padding(.leading, 16)
+                    if isLoading {
+                        SkeletonView()
+                    } else {
+                        sectionsView
+                    }
+                }
+
+                if showProgrammingLanguagePopup {
+                    Rectangle()
+                        .fill(Color.black)
+                        .opacity(0.85)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            withAnimation {
+                                showProgrammingLanguagePopup = false
+                            }
+                        }
+                    changeLanguagePopup
+                        .transition(.move(edge: .bottom).animation(.easeInOut(duration: 0.3)))
+                        .zIndex(3)
                 }
             }
         }
@@ -37,8 +55,9 @@ struct NewHomeView: View, NewHomeViewProps {
                 HStack(spacing: 10) {
                     LanguagePickerIconView()
                         .onTapGesture {
-                            store.dispatch(ChangeProgrammingLanguage(language: programmingLanguage == .python ? .java : .python))
-                            store.dispatch(LoadRecommendedChallenges())
+                            withAnimation {
+                                showProgrammingLanguagePopup = true
+                            }
                         }
                     XPView(
                         xpText: "\(xp)",
@@ -51,6 +70,71 @@ struct NewHomeView: View, NewHomeViewProps {
         }
         .onChange(of: programmingLanguage) { newValue in
             store.dispatch(LoadHomeSections(language: newValue))
+        }
+    }
+
+    private var changeLanguagePopup: some View {
+            VStack {
+                Spacer()
+                ZStack(alignment: .leading) {
+                    VStack(spacing: 16) {
+                        Spacer()
+                            .frame(height: 10)
+                        Text("Choose Language")
+                            .font(.h2)
+                            .padding(.horizontal, 4)
+                        ForEach(ProgrammingLanguage.allCases, id: \.rawValue) { language in
+                            languageView(language: language)
+                                .padding(.horizontal, 20)
+                                .onTapGesture {
+                                    store.dispatch(ChangeProgrammingLanguage(language: language))
+                                    store.dispatch(LoadRecommendedChallenges())
+                                    withAnimation {
+                                        showProgrammingLanguagePopup = false
+                                    }
+                                }
+                                .contentShape(Rectangle())
+                        }
+                        Button("Cancel") {
+                            withAnimation {
+                                showProgrammingLanguagePopup.toggle()
+                            }
+                        }
+                        .foregroundColor(.white.withAlphaComponent(0.6))
+                        .font(.smallText)
+                        .padding(.bottom, 20)
+                    }
+                    .foregroundColor(.white)
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(.CodeChallenge.background))
+                    }
+                }
+                .padding(.horizontal, 16)
+                Spacer()
+            }
+            .frame(width: .screenWidth)
+    }
+
+    private func languageView(language: ProgrammingLanguage) -> some View {
+        HStack(spacing: 12) {
+            Image(language.rawValue)
+                .resizable()
+                .frame(width: 40, height: 40)
+            VStack(alignment: .leading, spacing: 7) {
+                Text(language.rawValue.capitalized)
+                    .font(.h5)
+                Text(language.shortDescription)
+                    .font(.smallText)
+                    .foregroundColor(.white.withAlphaComponent(0.6))
+            }
+            Spacer()
+        }
+        .padding(.vertical, 13)
+        .padding(.horizontal, 10)
+        .background {
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color(UIColor.CodeChallenge.purple), lineWidth: 1.2)
         }
     }
 

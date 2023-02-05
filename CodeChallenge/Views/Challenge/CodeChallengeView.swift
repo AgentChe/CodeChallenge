@@ -60,7 +60,18 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 }
             }
             if showPremiumPopup {
+                Rectangle()
+                    .fill(Color.black)
+                    .opacity(0.85)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation {
+                            showPremiumPopup = false
+                        }
+                    }
                 premiumPopup
+                    .transition(.move(edge: .bottom).animation(.easeInOut(duration: 0.3)))
+                    .zIndex(3)
             }
         }
         .onAppear(perform: {
@@ -297,16 +308,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     }
 
     private var premiumPopup: some View {
-        ZStack {
-            Rectangle()
-                .fill(Color.black)
-                .opacity(0.3)
-                .edgesIgnoringSafeArea(.all)
-                .onTapGesture {
-                    withAnimation {
-                        showPremiumPopup = false
-                    }
-                }
             VStack {
                 Spacer()
                 ZStack(alignment: .leading) {
@@ -342,7 +343,6 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 Spacer()
             }
             .frame(width: .screenWidth)
-        }
     }
 }
 

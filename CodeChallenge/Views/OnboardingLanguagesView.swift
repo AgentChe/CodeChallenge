@@ -58,10 +58,14 @@ struct OnboardingLanguagesView: View {
                         lineWidth: 1.5)
 
             VStack(alignment: .leading, spacing: 10) {
-                Image(language.rawValue)
-                    .resizable()
-                    .frame(width: .screenWidth - 120, height: .screenHeight * 0.18)
-                    .padding([.top, .horizontal], 10)
+                HStack {
+                    Spacer()
+                    Image(language.rawValue)
+                        .resizable()
+                        .frame(width: .screenHeight * 0.18, height: .screenHeight * 0.18)
+                        .padding([.top, .horizontal], 10)
+                    Spacer()
+                }
                 Text(language.rawValue.capitalized)
                     .font(.h3)
                     .padding(.top, 9)

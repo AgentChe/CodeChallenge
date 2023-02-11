@@ -124,7 +124,7 @@ extension ChallengeDetail {
     var codehubProgrammingLanguage: ProgrammingLanguage {
         switch programmingLanguage {
         case "jv": return .java
-        case "swift": return .swift
+        case "sw": return .swift
         default: return .python
         }
     }

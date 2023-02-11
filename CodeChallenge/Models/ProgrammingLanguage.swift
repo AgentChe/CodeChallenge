@@ -42,7 +42,7 @@ extension ProgrammingLanguage {
         case .java:
             return "jv"
         case .swift:
-            return "swift"
+            return "sw"
         }
     }
 

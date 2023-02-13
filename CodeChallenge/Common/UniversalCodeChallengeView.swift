@@ -62,7 +62,7 @@ struct UniversalCodeChallengeView: View {
                             ChallengePremiumXPView(xpText: "\(codeChallenge.xp)")
                         }
                     } else if codeChallenge.progress == "inprogress" {
-                        ChallengeXPView(xpText: "\(codeChallenge.xp)")
+                        ChallengeDefaultXPView(xpText: "\(codeChallenge.xp)")
                     } else if codeChallenge.progress == "done" {
                         Image("challenge_progress_done")
                     }

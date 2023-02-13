@@ -25,8 +25,8 @@ enum Action: Dispatchable {
     case logout
     case loadPayments(Resolvable<[AppStorePayment]>)
     case loadHashtags(Resolvable<[String]>, ProgrammingLanguage)
-    case loadHomeSections(String, Resolvable<[NewChallengeSection]>)
-    case loadHomeCollectionContent(Int, Resolvable<NewChallengeCollectionContent>)
+    case loadHomeSections(String, Resolvable<[ChallengeSection]>)
+    case loadHomeCollectionContent(Int, Resolvable<ChallengeCollectionContent>)
     case changeProgrammingLanguage(ProgrammingLanguage)
 }
 
@@ -464,7 +464,7 @@ struct PurchasePayment: ThunkAction {
 
         IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
             guard previousAccount?.isPremium == false else { return }
-            dispatcher.services.challengesService.send(
+            dispatcher.services.purchasesService.send(
                 receipt: IAPManager.shared.receiptData ?? "",
                 userId: previousAccount?.id ?? 0
             )
@@ -485,7 +485,7 @@ struct RestorePurchases: ThunkAction {
 
         IAPManager.shared.restorePurchases(success: { identifier in
             guard previousAccount?.isPremium == false else { return }
-            dispatcher.services.challengesService.send(
+            dispatcher.services.purchasesService.send(
                 receipt: IAPManager.shared.receiptData ?? "",
                 userId: previousAccount?.id ?? 0
             )
@@ -525,7 +525,7 @@ struct LoadHomeSections: ThunkAction {
 }
 
 struct LoadCollectionContent: ThunkAction {
-    let collection: NewChallengeCollection
+    let collection: ChallengeCollection
 
     func exec(dispatcher: Dispatcher) {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")

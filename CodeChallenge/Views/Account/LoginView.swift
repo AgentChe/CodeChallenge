@@ -83,8 +83,6 @@ struct LoginView: View, LoginViewProps {
             } else {
                 signupView
             }
-
-//            loginOptionsView
         }
         .padding(.horizontal, 25)
     }
@@ -120,14 +118,6 @@ struct LoginView: View, LoginViewProps {
                 .autocapitalization(.none)
             LabelledField(text: $passwordText, title: "Password", isSecure: true)
                 .autocapitalization(.none)
-//            HStack {
-//                Spacer()
-//                Button("Forgot password") {
-//
-//                }
-//                .foregroundColor(UIColor.lightGray)
-//                .font(.systemFont(ofSize: 14))
-//            }
             Button("Login") {
                 store.dispatch(Login(username: userNameText, password: passwordText))
             }

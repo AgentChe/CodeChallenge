@@ -132,7 +132,7 @@ struct AccountView: View, AccountViewProps {
                             if account.isPremium == true {
                                 AccountPremiumXPView(xpText: "\(account.xp ?? 0)")
                             } else {
-                                XPView(xpText: "\(account.xp ?? 0)", backgroundColor: .CodeChallenge.dark, xpIconColor: "white", strokeColor: .CodeChallenge.blue1)
+                                DefaultXPView(xpText: "\(account.xp ?? 0)", backgroundColor: .CodeChallenge.dark, xpIconColor: "white", strokeColor: .CodeChallenge.blue1)
                             }
                             Spacer()
                         }

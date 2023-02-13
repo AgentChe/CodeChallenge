@@ -7,17 +7,17 @@
 
 import Foundation
 
-protocol NewHomeViewProps {
+protocol HomeViewProps {
     var store: Store { get }
     var humanLanguage: String { get }
 }
 
-extension NewHomeViewProps {
+extension HomeViewProps {
     var isLoading: Bool {
         store.state.homeSections[identifier]?.isLoading == true
     }
 
-    var sections: [NewChallengeSection]? {
+    var sections: [ChallengeSection]? {
         store.state.homeSections[identifier]?.value
     }
 

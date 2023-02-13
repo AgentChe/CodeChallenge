@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol NewCollectionContentViewProps {
+protocol CollectionContentViewProps {
     var store: Store { get }
-    var collection: NewChallengeCollection { get }
-    var section: NewChallengeSection { get }
+    var collection: ChallengeCollection { get }
+    var section: ChallengeSection { get }
 }
 
-extension NewCollectionContentViewProps {
-    var content: NewChallengeCollectionContent? {
+extension CollectionContentViewProps {
+    var content: ChallengeCollectionContent? {
         store.state.collections[collection.id]?.value
     }
 

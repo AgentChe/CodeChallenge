@@ -12,8 +12,6 @@ import SwiftUI
 
 protocol AccountServiceProtocol {
     func loadAccount(userId: Int) -> AnyPublisher<User, Error>
-    func getFollowersCount(userId: Int) -> AnyPublisher<Int, Error>
-    func getFollowingCount(userId: Int) -> AnyPublisher<Int, Error>
     func getChallengeProgress(userId: Int) -> AnyPublisher<[Challenge], Error>
     func getChallengeDones(userId: Int) -> AnyPublisher<[Challenge], Error>
     func addStreak(session: String) -> AnyPublisher<Void, Error>
@@ -27,24 +25,6 @@ struct AccountService: AccountServiceProtocol {
         return URLRequest
             .create(url: "\(Configuration.host)/user/profile/\(userId)/\(userId)/", type: .get)
             .flatMap { networkService.load($0, decoding: User.self, with: .snakeCase) }
-            .eraseToAnyPublisher()
-    }
-
-    func getFollowersCount(userId: Int) -> AnyPublisher<Int, Error> {
-        return URLRequest
-            .create(url: "\(Configuration.host)/follower/userFollowersCount/\(userId)", type: .get)
-            .map { networkService.load($0, decoding: CountObject.self, with: .snakeCase) }
-            .switchToLatest()
-            .compactMap { $0.count }
-            .eraseToAnyPublisher()
-    }
-
-    func getFollowingCount(userId: Int) -> AnyPublisher<Int, Error> {
-        return URLRequest
-            .create(url: "\(Configuration.host)/follower/userFollowingCount/\(userId)", type: .get)
-            .map { networkService.load($0, decoding: CountObject.self, with: JSONDecoder()) }
-            .switchToLatest()
-            .compactMap { $0.count }
             .eraseToAnyPublisher()
     }
 
@@ -123,14 +103,6 @@ struct AccountService: AccountServiceProtocol {
         .eraseToAnyPublisher()
         .flatMap { networkService.send($0) }
         .eraseToAnyPublisher()
-    }
-}
-
-fileprivate struct CountObject: Codable {
-    let count: Int
-
-    enum CodingKeys: String, CodingKey {
-        case count = "COUNT"
     }
 }
 

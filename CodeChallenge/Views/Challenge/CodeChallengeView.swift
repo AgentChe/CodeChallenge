@@ -12,7 +12,6 @@ import WebKit
 struct CodeChallengeView: View, CodeChallengeViewProps {
     @EnvironmentObject var store: Store
     let codeChallenge: Challenge
-    let group: ChallengeGroup?
     let onSeeSolution: (ChallengeDetail?) -> Void
     let onSuccess: (ChallengeDetail?) -> Void
     let onDismiss: () -> Void
@@ -178,7 +177,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         selection = 1
                     }
                 })
-                .buttonStyle(GradientButton())
+                .buttonStyle(PremiumGradientButton())
                 .padding(.bottom, 20)
             } else {
                 Button("Start solving") {
@@ -435,7 +434,7 @@ struct SkeletonCodeChallengeView: View {
     }
 }
 
-extension UIApplication {
+fileprivate extension UIApplication {
     func endEditing() {
         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }

@@ -18,7 +18,6 @@ final class RootCoordinator {
     private let accountCoordinator: AccountCoordinator
     private let homeCoordinator: HomeCoordinator
     private let browseCoordinator: BrowseCoordinator
-    private let communityCoordinator: CommunityCoordinator
     private let premiumCoordinator: PremiumCoordinator
     private let buddiesCoordinator: BuddiesCoordinator
 
@@ -35,7 +34,6 @@ final class RootCoordinator {
         accountCoordinator = AccountCoordinator(store: store)
         homeCoordinator = HomeCoordinator(store: store)
         browseCoordinator = BrowseCoordinator(store: store)
-        communityCoordinator = CommunityCoordinator(store: store)
         premiumCoordinator = PremiumCoordinator(store: store)
         buddiesCoordinator = BuddiesCoordinator(store: store)
         paywallService = PaywallService(store: store)
@@ -368,9 +366,4 @@ extension RootCoordinator {
             }
             .eraseToAnyPublisher()
     }
-}
-
-struct Maintenance: Codable {
-    let maintenance: Bool
-    let premium: Bool
 }

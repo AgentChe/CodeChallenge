@@ -36,7 +36,7 @@ enum NetworkError: LocalizedError {
             return error.localizedDescription
         case .invalidResponse:
             return "Invalid Response"
-        case .api: //TODO: map data to error
+        case .api:
             return "Unknown error"
         case .internalInconsistency:
             return "Internal inconsistency"

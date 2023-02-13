@@ -11,8 +11,8 @@ struct AppState {
     let user: Resolvable<User>
     let account: Resolvable<Account>
     let programmingLanguage: ProgrammingLanguage
-    let homeSections: [String: Resolvable<[NewChallengeSection]>]
-    let collections: [Int: Resolvable<NewChallengeCollectionContent>]
+    let homeSections: [String: Resolvable<[ChallengeSection]>]
+    let collections: [Int: Resolvable<ChallengeCollectionContent>]
     let challengeDetails: [Int: Resolvable<ChallengeDetail>]
     let challengeProgresses: [Int: Resolvable<ChallengeProgress>]
     let challengeResults: [Int: Resolvable<ChallengeCompiledResult>]
@@ -25,8 +25,8 @@ struct AppState {
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
          programmingLanguage: ProgrammingLanguage = .python,
-         homeSections: [String: Resolvable<[NewChallengeSection]>] = [:],
-         collections: [Int: Resolvable<NewChallengeCollectionContent>] = [:],
+         homeSections: [String: Resolvable<[ChallengeSection]>] = [:],
+         collections: [Int: Resolvable<ChallengeCollectionContent>] = [:],
          challengeDetails: [Int: Resolvable<ChallengeDetail>] = [:],
          challengeProgresses: [Int: Resolvable<ChallengeProgress>] = [:],
          challengeResults: [Int: Resolvable<ChallengeCompiledResult>] = [:],
@@ -49,10 +49,4 @@ struct AppState {
         self.payments = payments
         self.doneChallenges = doneChallenges
     }
-}
-
-struct SearchState {
-    let query: String?
-    let results: Resolvable<[Challenge]>
-    let hashtags: Resolvable<[String]>
 }

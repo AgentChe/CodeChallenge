@@ -10,11 +10,11 @@ import SwiftUI
 import UIKit
 import Paywall
 
-struct NewHomeView: View, NewHomeViewProps {
+struct HomeView: View, HomeViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     @EnvironmentObject var store: Store
     let humanLanguage: String
-    let onCollectionTap: ((NewChallengeCollection, NewChallengeSection) -> Void)?
+    let onCollectionTap: ((ChallengeCollection, ChallengeSection) -> Void)?
     @State private var showPaywall = false
     @State private var showProgrammingLanguagePopup = false
 
@@ -59,7 +59,7 @@ struct NewHomeView: View, NewHomeViewProps {
                                 showProgrammingLanguagePopup = true
                             }
                         }
-                    XPView(
+                    DefaultXPView(
                         xpText: "\(xp)",
                         backgroundColor: .CodeChallenge.dark,
                         xpIconColor: "white",
@@ -169,8 +169,8 @@ struct NewHomeView: View, NewHomeViewProps {
         .padding(.top, 16)
     }
 
-    private func homeViewElementView(offset: Int, sectionOffset: Int, section: NewChallengeSection, collection: NewChallengeCollection) -> some View {
-        NewHomeViewElementView(model: collection,
+    private func homeViewElementView(offset: Int, sectionOffset: Int, section: ChallengeSection, collection: ChallengeCollection) -> some View {
+        HomeViewElementView(model: collection,
                                progressImageName: progressImageName(index: offset, sectionIndex: sectionOffset),
                                progressTopInset: progressTopInset(index: offset, sectionIndex: sectionOffset),
                                progressBottomInset: progressBottomInset(index: offset, sectionIndex: sectionOffset),
@@ -181,17 +181,17 @@ struct NewHomeView: View, NewHomeViewProps {
     }
 }
 
-struct NewHomeViewElementView: View {
+struct HomeViewElementView: View {
     @EnvironmentObject var store: Store
-    let model: NewChallengeCollection
+    let model: ChallengeCollection
     let progressImageName: String
     let progressTopInset: CGFloat
     let progressBottomInset: CGFloat
     let progressPreviousPeaceHeight: CGFloat
     let expectedHeight: CGFloat
 
-    let previousModel: NewChallengeCollection?
-    let nextModel: NewChallengeCollection?
+    let previousModel: ChallengeCollection?
+    let nextModel: ChallengeCollection?
 
     var body: some View {
         HStack {
@@ -357,11 +357,11 @@ struct NewHomeViewElementView: View {
 
 fileprivate struct SkeletonView: View {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
-    let model1 = NewChallengeCollection(id: 1)
-    let model2 = NewChallengeCollection(id: 2)
-    let model3 = NewChallengeCollection(id: 3)
-    let model4 = NewChallengeCollection(id: 4)
-    let model5 = NewChallengeCollection(id: 5)
+    let model1 = ChallengeCollection(id: 1)
+    let model2 = ChallengeCollection(id: 2)
+    let model3 = ChallengeCollection(id: 3)
+    let model4 = ChallengeCollection(id: 4)
+    let model5 = ChallengeCollection(id: 5)
 
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -378,13 +378,13 @@ fileprivate struct SkeletonView: View {
                         .padding(.leading, 10.0)
                         .padding(.bottom, 16)
                     ) {
-                        NewHomeViewElementView(
+                        HomeViewElementView(
                             model: model1, progressImageName: "home_progress_start",
                             progressTopInset: 21, progressBottomInset: 2,
                             progressPreviousPeaceHeight: 0, expectedHeight: 134,
                             previousModel: nil, nextModel: model2
                         )
-                        NewHomeViewElementView(
+                        HomeViewElementView(
                             model: model2, progressImageName: "home_progress_end",
                             progressTopInset: 2, progressBottomInset: 28,
                             progressPreviousPeaceHeight: 24, expectedHeight: 104,
@@ -399,7 +399,7 @@ fileprivate struct SkeletonView: View {
                         .padding(.leading, 10.0)
                         .padding(.bottom, 16)
                     ) {
-                        NewHomeViewElementView(
+                        HomeViewElementView(
                             model: model4, progressImageName: "home_progress_only_section",
                             progressTopInset: 23, progressBottomInset: 26,
                             progressPreviousPeaceHeight: 0, expectedHeight: 108,

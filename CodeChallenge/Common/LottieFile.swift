@@ -32,7 +32,6 @@ struct LottieView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        guard let view = (uiView as? UIView) else { return }
-        view.subviews.compactMap { $0 as? AnimationView }.first?.play()
+        uiView.subviews.compactMap { $0 as? AnimationView }.first?.play()
     }
 }

@@ -264,7 +264,6 @@ extension PlaygroundView: UITextViewDelegate {
             return
         }
 
-        print("TT_ on code chaneg", textView.text)
         onCodeChange?(textView.text)
 
         let cursorRect = textView.caretRect(for: range.start)

@@ -157,7 +157,7 @@ extension Reducers {
 }
 
 extension Reducers {
-    static let homeSectionsReducer: Reducer<[String: Resolvable<[NewChallengeSection]>]> = { state, action in
+    static let homeSectionsReducer: Reducer<[String: Resolvable<[ChallengeSection]>]> = { state, action in
         switch action {
         case .loadHomeSections(let identifier, let result):
             var copy = state
@@ -169,7 +169,7 @@ extension Reducers {
 }
 
 extension Reducers {
-    static let collectionContentReducer: Reducer<[Int: Resolvable<NewChallengeCollectionContent>]> = { state, action in
+    static let collectionContentReducer: Reducer<[Int: Resolvable<ChallengeCollectionContent>]> = { state, action in
         switch action {
         case .loadHomeCollectionContent(let identifier, let result):
             var copy = state

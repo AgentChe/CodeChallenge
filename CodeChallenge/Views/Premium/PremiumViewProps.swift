@@ -34,7 +34,7 @@ extension PremiumViewProps {
         return payments.first { $0.productIdentifier == "yearly_pro_2week_trial" }
     }
 
-    var buttonStatus: GradientButton.Status {
+    var buttonStatus: PremiumGradientButton.Status {
         if IAPManager.shared.isLoading {
             return .loading
         } else {

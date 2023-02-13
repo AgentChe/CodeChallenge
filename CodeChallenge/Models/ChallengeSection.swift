@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct NewChallengeSection: Codable, Equatable {
+struct ChallengeSection: Codable, Equatable {
     var name: String
-    var collections: [NewChallengeCollection]
+    var collections: [ChallengeCollection]
 }
 
-struct NewChallengeCollection: Codable, Equatable {
+struct ChallengeCollection: Codable, Equatable {
     let id: Int
     let name: String
     let description: String
@@ -49,7 +49,7 @@ struct NewChallengeCollection: Codable, Equatable {
     }
 }
 
-struct NewChallengeCollectionContent: Codable, Equatable {
+struct ChallengeCollectionContent: Codable, Equatable {
     var id: Int
     var name: String
     var description: String

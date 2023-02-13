@@ -13,7 +13,7 @@ class AccountCoordinator {
     let store: Store
     var onLogin: (() -> Void)?
     var onGoPremium: (() -> Void)?
-    private var popupController: PopupViewController?
+    var popupController: PopupViewController?
 
     init(store: Store) {
         self.store = store
@@ -21,14 +21,10 @@ class AccountCoordinator {
             self?.onLogin?()
         }, onOpenSettings: { [weak self] in
             let view = SettingsView(onNotificationsTap: {
-//                let view = NotificationsView()
-//                    .environmentObject(store)
-//                let controller = UIHostingController(rootView: view)
-//                self?.navigationController.pushViewController(controller, animated: true)
                 if let appSettings = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(appSettings) {
                     UIApplication.shared.open(appSettings)
                 }
-            }, onOpenUrl: { [weak self] url in
+            }, onOpenUrl: { url in
                 guard let urll = URL(string: url) else { return }
                 if UIApplication.shared.canOpenURL(urll) {
                     UIApplication.shared.open(urll)
@@ -40,10 +36,10 @@ class AccountCoordinator {
             let controller = UIHostingController(rootView: view)
             self?.navigationController.pushViewController(controller, animated: true)
         }, onOpenChallengeDetails: { [weak self] challenge in
-            self?.openCodeChallenge(challenge: challenge)
+            self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
         }, onOpenCompletedChallenges: { [weak self] in
             let controller = UIHostingController(rootView: CompletedChallengesView(onEnterDetails: { [weak self] challenge in
-                self?.openCodeChallenge(challenge: challenge)
+                self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
             }).environmentObject(store))
             self?.navigationController.pushViewController(controller, animated: true)
         })
@@ -73,53 +69,6 @@ class AccountCoordinator {
                 }
             }
     }
-
-    func openCodeChallenge(challenge: Challenge) {
-        let challengeView = CodeChallengeView(codeChallenge: challenge, group: nil) { [weak self] challengeDetail in
-            guard let challengeDetail = challengeDetail else { return }
-            self?.showSolution(challengeDetail: challengeDetail, challenge: challenge)
-        } onSuccess: { [weak self] challenge in
-            guard let challenge = challenge else { return }
-            self?.runSuccessPopup(challenge: challenge)
-        } onDismiss: { [weak self] in
-            self?.navigationController.popViewController(animated: true)
-        } onGoPremium: { [weak self] in
-            self?.navigationController.popViewController(animated: true)
-            self?.onGoPremium?()
-        }
-            .environmentObject(store)
-        let controller = UIHostingController(rootView: challengeView)
-        controller.hidesBottomBarWhenPushed = true
-        navigationController.pushViewController(controller, animated: true)
-    }
-
-    private func showSolution(challengeDetail: ChallengeDetail, challenge: Challenge) {
-        store.dispatch(TrackAnalyticsEvent(event: .solutionOpened(challenge, store.state.programmingLanguage)))
-        let view = SolutionView(solution: challengeDetail.solutionCode.code?.removingPercentEncoding ?? "")
-        view.onDismiss = { [weak self] in
-            self?.popupController?.hide()
-        }
-        popupController = PopupViewController(contentView: view)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        if let rootController = UIApplication.shared.windows.first?.rootViewController {
-            popupController?.present(from: rootController, bottomOffset: 0)
-        }
-    }
-
-    private func runSuccessPopup(challenge: ChallengeDetail) {
-        let view = CelebrationView(challenge: challenge, store: store)
-        view.onDismiss = { [weak self] in
-            self?.popupController?.hide()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                self?.navigationController.popViewController(animated: true)
-            }
-        }
-        popupController = PopupViewController(contentView: view)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [weak self] in
-            view.translatesAutoresizingMaskIntoConstraints = false
-            if let rootController = UIApplication.shared.windows.first?.rootViewController {
-                self?.popupController?.present(from: rootController, bottomOffset: 0)
-            }
-        }
-    }
 }
+
+extension AccountCoordinator: CodeChallengePresentable {}

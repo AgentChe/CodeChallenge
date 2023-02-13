@@ -15,17 +15,10 @@ extension CGFloat {
 
 extension UIDevice {
     static var hasDisplayNotch: Bool {
-        (UIWindow.main?.safeAreaInsets.top ?? 0) > 20
+        (UIApplication.shared.mainWindow?.safeAreaInsets.top ?? 0) > 20
     }
 
     static var hasSmallScreen: Bool {
-        return (UIWindow.main?.bounds.height ?? 0) <= 667
-    }
-}
-
-extension UIWindow {
-    static var main: UIWindow? {
-        let scene = UIApplication.shared.connectedScenes.first { $0 is UIWindowScene } as? UIWindowScene
-        return scene?.windows.first
+        return (UIApplication.shared.mainWindow?.bounds.height ?? 0) <= 667
     }
 }

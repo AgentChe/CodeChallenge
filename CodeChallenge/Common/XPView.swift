@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct XPView: View {
+struct DefaultXPView: View {
     let xpText: String
     let backgroundColor: UIColor
     let xpIconColor: String
@@ -61,7 +61,7 @@ struct AccountPremiumXPView: View {
     }
 }
 
-struct ChallengeXPView: View {
+struct ChallengeDefaultXPView: View {
     let xpText: String
 
     var body: some View {

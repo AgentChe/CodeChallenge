@@ -88,7 +88,7 @@ struct PremiumView: View, PremiumViewProps {
                     if let yearlyPayment = yearlyPayment {
                         store.dispatch(PurchasePayment(payment: yearlyPayment))
                     }
-                }).buttonStyle(GradientButton(status: buttonStatus))
+                }).buttonStyle(PremiumGradientButton(status: buttonStatus))
 
                 Button(action: {
                     store.dispatch(RestorePurchases(completionBlock: nil))

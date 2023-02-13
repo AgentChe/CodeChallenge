@@ -23,7 +23,6 @@ class PopupViewController: UIViewController {
         return view
     }()
     private let contentView: UIView?
-//    private var contentViewTopConstraint: NSLayoutConstraint?
     private var contentViewBottomConstraint: NSLayoutConstraint?
     private var cancellables = Set<AnyCancellable>()
 
@@ -31,11 +30,6 @@ class PopupViewController: UIViewController {
         self.contentView = contentView
         super.init(nibName: nil, bundle: nil)
         setupViews()
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//        setupKeyboardBinding()
     }
 
     required init?(coder: NSCoder) {
@@ -58,7 +52,6 @@ extension PopupViewController {
                 contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
                 contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
             ])
-//            contentViewTopConstraint = contentView.topAnchor.constraint(equalTo: view.topAnchor)
         }
 
         view.addSubview(opacityView)
@@ -78,46 +71,6 @@ extension PopupViewController {
     @objc func handleTap() {
         hide()
     }
-
-//    private func setupKeyboardBinding() {
-//        NotificationCenter.default
-//            .publisher(for: UIApplication.keyboardWillShowNotification)
-//            .sink(receiveValue: { [weak self] notification in
-//                self?.keyboardWillShow(notification)
-//            })
-//            .store(in: &cancellables)
-//
-//        NotificationCenter.default
-//            .publisher(for: UIApplication.keyboardWillHideNotification)
-//            .sink(receiveValue: { [weak self] _ in
-//                self?.keyboardWillHide()
-//            })
-//            .store(in: &cancellables)
-//    }
-//
-//    func keyboardWillShow(_ notification: Notification) {
-//        guard let contentView = contentView else { return }
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//            let keyboardRectangle = keyboardFrame.cgRectValue
-//            let keyboardHeight = keyboardRectangle.height
-//
-//            let topInset = UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0
-//            let contentViewTopMargin = -contentView.intrinsicContentSize.height - keyboardHeight
-//            contentViewTopConstraint?.constant = min(abs(contentViewTopMargin), UIScreen.main.bounds.height - topInset)
-//            contentViewBottomConstraint?.constant = keyboardHeight
-//            self.view.layoutIfNeeded()
-//        }
-//    }
-//
-//    func keyboardWillHide() {
-//        if let contentView = contentView {
-//            contentViewTopConstraint?.constant = contentView.intrinsicContentSize.height
-//        }
-//        contentViewBottomConstraint?.constant = 0
-//        UIView.animate(withDuration: 0.3) { [weak self] in
-//            self?.view.layoutIfNeeded()
-//        }
-//    }
 }
 
 extension PopupViewController {
@@ -134,8 +87,6 @@ extension PopupViewController {
         ])
 
         if let contentView = contentView {
-//            contentViewTopConstraint?.constant = contentView.intrinsicContentSize.height
-//            contentViewTopConstraint?.isActive = true
             contentViewBottomConstraint = contentView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 1000)
             contentViewBottomConstraint?.isActive = true
         }
@@ -145,12 +96,8 @@ extension PopupViewController {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            if let contentView = contentView {
-    //            contentViewTopConstraint?.constant = contentView.intrinsicContentSize.height
-    //            contentViewTopConstraint?.isActive = true
             self.contentViewBottomConstraint?.constant = 0
             self.contentViewBottomConstraint?.isActive = true
-//            }
             UIView.animate(withDuration: 0.3) { [weak self] in
                 self?.view.layoutIfNeeded()
                 self?.opacityView.alpha = 0.7
@@ -159,7 +106,6 @@ extension PopupViewController {
     }
 
     func hide() {
-//        contentViewTopConstraint?.constant = 0
         contentViewBottomConstraint?.constant = 1000
         UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.view.layoutIfNeeded()

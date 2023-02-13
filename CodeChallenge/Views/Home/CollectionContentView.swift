@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 
-struct NewCollectionContentView: View, NewCollectionContentViewProps {
+struct CollectionContentView: View, CollectionContentViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
     @EnvironmentObject var store: Store
-    let collection: NewChallengeCollection
-    let section: NewChallengeSection
+    let collection: ChallengeCollection
+    let section: ChallengeSection
     let onChallengeOpen: (Challenge) -> Void
-    @State private var displayContent: NewChallengeCollectionContent?
+    @State private var displayContent: ChallengeCollectionContent?
     @State private var displayChallenges: [Challenge] = []
 
     var body: some View {
@@ -47,7 +47,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                XPView(
+                DefaultXPView(
                     xpText: "\(xp)",
                     backgroundColor: .CodeChallenge.dark,
                     xpIconColor: "white",
@@ -57,7 +57,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
         }
     }
 
-    func content(displayContent: NewChallengeCollectionContent) -> some View {
+    func content(displayContent: ChallengeCollectionContent) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(displayContent.name)
                 .font(.h2)
@@ -83,7 +83,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
         .padding(.horizontal, 16)
     }
 
-    func progressBar(displayContent: NewChallengeCollectionContent) -> some View {
+    func progressBar(displayContent: ChallengeCollectionContent) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 1.5)
                 .fill(Color(UIColor.CodeChallenge.gray2))
@@ -149,7 +149,7 @@ struct NewCollectionContentView: View, NewCollectionContentViewProps {
                     } else if challenge.isNew {
                         NewLabelView()
                     } else {
-                        ChallengeXPView(xpText: "\(challenge.xp)")
+                        ChallengeDefaultXPView(xpText: "\(challenge.xp)")
                     }
                     Spacer()
                 }

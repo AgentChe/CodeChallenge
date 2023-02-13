@@ -113,7 +113,7 @@ class CelebrationView: UIView, PopupContentView {
         label.font = .h4
         label.text = "Your reward:"
 
-        let xpView = XPView(xpText: "+\(challenge.xp)", backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)
+        let xpView = DefaultXPView(xpText: "+\(challenge.xp)", backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)
         let xpViewController = UIHostingController(rootView: xpView)
         let xpUIView = xpViewController.view
         xpUIView?.backgroundColor = .clear

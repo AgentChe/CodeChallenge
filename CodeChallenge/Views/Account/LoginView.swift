@@ -20,6 +20,7 @@ struct LoginView: View, LoginViewProps {
     @State var signupPasswordText: String = ""
     @State var mode = Mode.login
     @State var showAlert = false
+    @State var displayErrorMessage: String?
     var screenMode: Mode
     let onChangeMode: (() -> Void)
 
@@ -54,14 +55,15 @@ struct LoginView: View, LoginViewProps {
                 store.dispatch(TrackAnalyticsEvent(event: .signUpSelected))
             }
         }
-        .onReceive(errorPublisher) { isError in
-            guard isError, !showAlert else { return }
+        .onReceive(errorPublisher) { errorMessage in
+            guard !showAlert else { return }
+            displayErrorMessage = errorMessage
             showAlert = true
         }
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text("Something went wrong"),
-                message: Text("Please try again!"),
+                message: Text(displayErrorMessage ?? "Please try again!"),
                 dismissButton: .default(Text("OK"), action: {
                     store.dispatch(Action.loadUser(.pending))
                 })
@@ -85,31 +87,6 @@ struct LoginView: View, LoginViewProps {
             }
         }
         .padding(.horizontal, 25)
-    }
-
-    private var loginOptionsView: some View {
-        Group {
-            HStack(spacing: 10) {
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(height: 0.5)
-                Text(mode == .login ? "Sign In with" : "Sign Up with")
-                    .foregroundColor(.CodeChallenge.white)
-                Rectangle()
-                    .fill(Color.white)
-                    .frame(height: 0.5)
-            }
-
-            HStack {
-                Spacer()
-                ForEach(Range(0...4)) { _ in
-                    Rectangle()
-                        .frame(width: 50, height: 50)
-                        .cornerRadius(25)
-                }
-                Spacer()
-            }
-        }
     }
 
     private var loginView: some View {

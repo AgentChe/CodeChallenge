@@ -232,7 +232,7 @@ final class RootCoordinator {
         let controller = UIHostingController(rootView: loginView)
         authNavigationController = UINavigationController(rootViewController: controller)
         if let authNavigationController = authNavigationController {
-            UIApplication.shared.windows.first?.rootViewController?.present(authNavigationController, animated: true)
+            UIApplication.shared.mainWindow?.rootViewController?.present(authNavigationController, animated: true)
         }
     }
 

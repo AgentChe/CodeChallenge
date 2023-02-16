@@ -35,11 +35,19 @@ extension LoginViewProps {
         return .disabled
     }
 
-    var errorPublisher: AnyPublisher<Bool, Never> {
+    var errorPublisher: AnyPublisher<String, Never> {
         store.$state
             .map { $0.user }
             .removeDuplicates()
-            .map { $0.error != nil }
+            .compactMap {
+                guard let networkError = $0.error as? NetworkError else { return $0.error?.localizedDescription }
+                switch networkError {
+                case .api(_, let data):
+                    let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+                    return jsonObject?["ERROR"] as? String
+                default: return $0.error?.localizedDescription
+                }
+            }
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

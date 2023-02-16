@@ -21,6 +21,7 @@ struct LoginView: View, LoginViewProps {
     @State var mode = Mode.login
     @State var showAlert = false
     @State var displayErrorMessage: String?
+    @State var showMergeAlert = false
     var screenMode: Mode
     let onChangeMode: (() -> Void)
 
@@ -42,6 +43,15 @@ struct LoginView: View, LoginViewProps {
                     .foregroundColor(.CodeChallenge.blue1)
                     Spacer()
                 }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Something went wrong"),
+                        message: Text(displayErrorMessage ?? "Please try again!"),
+                        dismissButton: .default(Text("OK"), action: {
+                            store.dispatch(Action.loadUser(.pending))
+                        })
+                    )
+                }
 
                 Spacer()
                     .frame(height: 10)
@@ -59,15 +69,6 @@ struct LoginView: View, LoginViewProps {
             guard !showAlert else { return }
             displayErrorMessage = errorMessage
             showAlert = true
-        }
-        .alert(isPresented: $showAlert) {
-            Alert(
-                title: Text("Something went wrong"),
-                message: Text(displayErrorMessage ?? "Please try again!"),
-                dismissButton: .default(Text("OK"), action: {
-                    store.dispatch(Action.loadUser(.pending))
-                })
-            )
         }
     }
 
@@ -96,9 +97,21 @@ struct LoginView: View, LoginViewProps {
             LabelledField(text: $passwordText, title: "Password", isSecure: true)
                 .autocapitalization(.none)
             Button("Login") {
-                store.dispatch(Login(username: userNameText, password: passwordText))
+                showMergeAlert = true
             }
             .buttonStyle(PrimaryButton(status: buttonStatus))
+            .alert(isPresented: $showMergeAlert) {
+                Alert(
+                    title: Text("Do you want to merge the progress?"),
+                    message: Text(displayErrorMessage ?? "You can not undo this action"),
+                    primaryButton: .destructive(Text("Yes"), action: {
+                        store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
+                    }),
+                    secondaryButton: .default(Text("No"), action: {
+                        store.dispatch(Login(username: userNameText, password: passwordText, merge: false))
+                    })
+                )
+            }
         }
     }
 

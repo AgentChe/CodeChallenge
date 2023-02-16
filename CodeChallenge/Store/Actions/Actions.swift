@@ -37,13 +37,13 @@ protocol ThunkAction: Dispatchable {
 struct Login: ThunkAction {
     let username: String
     let password: String
+    let merge: Bool
 
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
-        let id = UserDefaults.standard.integer(forKey: "cc_user_id")
         let previousAccount = dispatcher.state.account
         dispatcher.dispatch(Action.loadAccount(.loading))
-        dispatcher.services.authService.login(id: id, session: session, username: username, password: password)
+        dispatcher.services.authService.login(merge: merge, session: session, username: username, password: password)
             .asResolvable()
             .ephemeralSink { user in
                 if user.isSuccess {

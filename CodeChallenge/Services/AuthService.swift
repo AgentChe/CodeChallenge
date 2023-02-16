@@ -11,7 +11,7 @@ import UIKit
 
 protocol AuthServiceProtocol {
     func signUp(id: Int, session: String, username: String, email: String, password: String) -> AnyPublisher<User, Error>
-    func login(id: Int, session: String, username: String, password: String) -> AnyPublisher<User, Error>
+    func login(merge: Bool, session: String, username: String, password: String) -> AnyPublisher<User, Error>
     func guestAuth() -> AnyPublisher<User, Error>
     func logout(session: String) -> AnyPublisher<Void, Error>
     func deleteAccount(session: String, id: Int) -> AnyPublisher<Void, Error>
@@ -32,8 +32,8 @@ struct AuthService: AuthServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func login(id: Int, session: String, username: String, password: String) -> AnyPublisher<User, Error> {
-        let params: [String: Any] = ["username": username, "password": password, "merge": ["session": session, "merge": true]]
+    func login(merge: Bool, session: String, username: String, password: String) -> AnyPublisher<User, Error> {
+        let params: [String: Any] = ["username": username, "password": password, "merge": ["session": session, "merge": merge]]
         
         return URLRequest
             .create(url: "\(Configuration.host)/user/signin/", type: .post, params: params)

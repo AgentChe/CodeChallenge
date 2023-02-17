@@ -48,6 +48,7 @@
 		E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3828778EEF00995D3D /* AccountService.swift */; };
 		E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */; };
 		E06D28C728CE6EB800E211A0 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = E06D28C628CE6EB800E211A0 /* OneSignal */; };
+		E06D90C0299EFCC000AC09AB /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */; };
 		E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */; };
 		E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6A28A85C9A004B81DA /* SolutionView.swift */; };
 		E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */; };
@@ -217,6 +218,7 @@
 		E06AAE3828778EEF00995D3D /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		E06D28C228CD218E00E211A0 /* CodeChallenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodeChallenge.entitlements; sourceTree = "<group>"; };
 		E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAnalyticsService.swift; sourceTree = "<group>"; };
+		E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
 		E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTestCasesView.swift; sourceTree = "<group>"; };
 		E0750D6A28A85C9A004B81DA /* SolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionView.swift; sourceTree = "<group>"; };
 		E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingLanguage.swift; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */,
 				E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */,
 				E0228F6D2904B92100101A82 /* NoteView.swift */,
+				E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E096DF27287210AE008A2A98 /* LabelledField.swift in Sources */,
+				E06D90C0299EFCC000AC09AB /* SegmentedControlView.swift in Sources */,
 				E08B445A28B2E49B006BC50A /* BrowseViewProps.swift in Sources */,
 				E0359DD2299AFA9900E8AF4F /* ChallengeProgress.swift in Sources */,
 				E0359DDA299AFB3E00E8AF4F /* Maintenance.swift in Sources */,

@@ -21,56 +21,29 @@ struct InviteFriendsView: View {
     }
 
     var content: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            SegmentedControlView(
-                selection: $selection,
-                sections: ["Rewards Store", "Invite Friend"],
-                onValueChange: { selection in
-                self.selection = selection
-            })
-            .padding(.horizontal, 9)
-            .frame(height: 31)
-            Text("Invite Your friend. Study free for a year.")
-                .font(.semibold(size: 30))
-            Text("You will both get rewarded $10 when your friend places their first Instacart order. Terms apply")
-                .font(.regular(size: 14))
-            Text("Here's your invite link")
-                .padding(.top, 30)
-                .font(.semibold(size: 18))
-                .padding(.bottom, 6)
-            HStack(spacing: 10) {
+        ScrollView {
+            VStack(alignment: .leading, spacing: UIDevice.hasSmallScreen ? 20 : 60) {
+                Text("Bring your friends!")
+                    .font(.pageNameH1)
+                    .foregroundColor(.CodeChallenge.white)
+                    .padding(.horizontal, 27)
                 HStack {
-                    Text("random")
-                        .font(.regular(size: 14))
-                        .padding(16)
                     Spacer()
-                    Button("Copy") {
-                        UIPasteboard.general.string = "random"
-                    }
-                    .foregroundColor(.CodeChallenge.blue1)
-                    .padding(.trailing, 14)
-                    .font(.semibold(size: 18))
-                }.background{
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(UIColor.CodeChallenge.dustyBlue), lineWidth: 1)
+                    Image("invite_friends_steps")
+                    Spacer()
                 }
-                .frame(height: 46)
-
-                Button {
+                .padding(.horizontal, 25)
+                Button("Invite your friends") {
                     inviteFriendsToggled()
-                } label: {
-                  Text("Share")
-                        .padding(14)
-                        .background(.CodeChallenge.blue1)
-                        .font(.semibold(size: 18))
-                        .cornerRadius(8)
-                        .frame(height: 46)
                 }
+                .buttonStyle(PrimaryButton())
+                .padding(.horizontal, 25)
+                NoteView(text: "Did you know that more than a million people are currently on their coding journey? Join the Codehub Community and feel supported now!")
+                    .padding(.horizontal, 25)
+                Spacer()
             }
-            Spacer()
         }
         .foregroundColor(.white)
-        .padding(.horizontal, 16)
     }
 
     func inviteFriendsToggled() {

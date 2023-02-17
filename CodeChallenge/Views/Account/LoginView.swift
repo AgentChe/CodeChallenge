@@ -97,21 +97,21 @@ struct LoginView: View, LoginViewProps {
             LabelledField(text: $passwordText, title: "Password", isSecure: true)
                 .autocapitalization(.none)
             Button("Login") {
-                showMergeAlert = true
+                store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
             }
             .buttonStyle(PrimaryButton(status: buttonStatus))
-            .alert(isPresented: $showMergeAlert) {
-                Alert(
-                    title: Text("Do you want to merge the progress?"),
-                    message: Text(displayErrorMessage ?? "You can not undo this action"),
-                    primaryButton: .destructive(Text("Yes"), action: {
-                        store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
-                    }),
-                    secondaryButton: .default(Text("No"), action: {
-                        store.dispatch(Login(username: userNameText, password: passwordText, merge: false))
-                    })
-                )
-            }
+//            .alert(isPresented: $showMergeAlert) {
+//                Alert(
+//                    title: Text("Do you want to merge the progress?"),
+//                    message: Text(displayErrorMessage ?? "You can not undo this action"),
+//                    primaryButton: .destructive(Text("Yes"), action: {
+//                        store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
+//                    }),
+//                    secondaryButton: .default(Text("No"), action: {
+//                        store.dispatch(Login(username: userNameText, password: passwordText, merge: false))
+//                    })
+//                )
+//            }
         }
     }
 

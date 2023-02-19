@@ -48,6 +48,7 @@ struct LoginView: View, LoginViewProps {
                         title: Text("Something went wrong"),
                         message: Text(displayErrorMessage ?? "Please try again!"),
                         dismissButton: .default(Text("OK"), action: {
+                            displayErrorMessage = nil
                             store.dispatch(Action.loadUser(.pending))
                         })
                     )
@@ -97,21 +98,21 @@ struct LoginView: View, LoginViewProps {
             LabelledField(text: $passwordText, title: "Password", isSecure: true)
                 .autocapitalization(.none)
             Button("Login") {
-                store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
+                showMergeAlert = true
             }
             .buttonStyle(PrimaryButton(status: buttonStatus))
-//            .alert(isPresented: $showMergeAlert) {
-//                Alert(
-//                    title: Text("Do you want to merge the progress?"),
-//                    message: Text(displayErrorMessage ?? "You can not undo this action"),
-//                    primaryButton: .destructive(Text("Yes"), action: {
-//                        store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
-//                    }),
-//                    secondaryButton: .default(Text("No"), action: {
-//                        store.dispatch(Login(username: userNameText, password: passwordText, merge: false))
-//                    })
-//                )
-//            }
+            .alert(isPresented: $showMergeAlert) {
+                Alert(
+                    title: Text("Do you want to merge the progress?"),
+                    message: Text("You can not undo this action"),
+                    primaryButton: .destructive(Text("Yes"), action: {
+                        store.dispatch(Login(username: userNameText, password: passwordText, merge: true))
+                    }),
+                    secondaryButton: .default(Text("No"), action: {
+                        store.dispatch(Login(username: userNameText, password: passwordText, merge: false))
+                    })
+                )
+            }
         }
     }
 

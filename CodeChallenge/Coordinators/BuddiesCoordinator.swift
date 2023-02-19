@@ -15,7 +15,7 @@ class BuddiesCoordinator {
 
     init(store: Store) {
         self.store = store
-        let view = InviteFriendsView()
+        let view = BuddiesView()
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
         let tabBarItem = UITabBarItem(

@@ -9,6 +9,7 @@ import Foundation
 import OneSignal
 import Paywall
 import Mixpanel
+import Branch
 
 protocol IdentifyServiceProtocol {
     func identify(id: Int)
@@ -20,6 +21,8 @@ struct IdentifyService: IdentifyServiceProtocol {
         OneSignal.setExternalUserId("\(id)")
         Paywall.identify(userId: "\(id)")
         Mixpanel.mainInstance().identify(distinctId: "\(id)")
+        Branch.getInstance().setIdentity("\(id)")
+        print("TT_identity set_\(id)")
     }
 
     func removeIdentity() {

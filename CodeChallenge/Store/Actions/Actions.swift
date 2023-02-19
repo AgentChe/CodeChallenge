@@ -47,11 +47,11 @@ struct Login: ThunkAction {
             .asResolvable()
             .ephemeralSink { user in
                 if user.isSuccess {
-                    dispatcher.dispatch(AddStreakIfNeeded())
-                    dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
+                    dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
+                    dispatcher.dispatch(AddStreakIfNeeded())
                     dispatcher.dispatch(LoadHomeSections())
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
@@ -204,21 +204,6 @@ struct LoadAccount: ThunkAction {
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
                 dispatcher.services.identifyService.identify(id: user.id)
             }
-//        dispatchGroup.enter()
-//        dispatcher.services.accountService
-//            .getFollowersCount(userId: 4)
-//            .ephemeralSink { count in
-//                dispatchGroup.leave()
-//                account.followersCount = count
-//            }
-//
-//        dispatchGroup.enter()
-//        dispatcher.services.accountService
-//            .getFollowingCount(userId: 4)
-//            .ephemeralSink { count in
-//                dispatchGroup.leave()
-//                account.followingsCount = count
-//            }
     }
 }
 
@@ -340,7 +325,7 @@ struct UpdateChallengeProgress: ThunkAction {
                     if result.value?.isSuccesful == true, currentProgressType != "done" {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
-                                dispatcher.dispatch(LoadHomeSections()) // FIXME: 
+                                dispatcher.dispatch(LoadHomeSections()) // FIXME:
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())

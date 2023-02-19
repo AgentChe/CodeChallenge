@@ -24,17 +24,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("User accepted notification: \(accepted)")
         })
 
-        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { (params, error) in
-            print("BranchSDK", params, error)
+        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { [weak self]
+            (params, error) in
+            guard let params = params, (params["+is_first_session"] as? Int) == 0,
+                    let idString = params["referringUserID"] as? String else {
+                return
+            }
+            self?.sendReferralId(userId: idString)
         })
-
-        for family in UIFont.familyNames.sorted() {
-            let names = UIFont.fontNames(forFamilyName: family)
-            print("Family: \(family) Font names: \(names)")
-        }
-
-        Branch.getInstance().setIdentity(UIDevice.current.identifierForVendor?.uuidString ?? "")
-
         FirebaseApp.configure()
         return true
     }
@@ -59,5 +56,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     // pass the url to the handle deep link call
       Branch.getInstance().continue(userActivity)
      return true
+    }
+}
+
+extension AppDelegate {
+    private func sendReferralId(userId: String) {
+        print("TT_ sending referral \(userId)")
     }
 }

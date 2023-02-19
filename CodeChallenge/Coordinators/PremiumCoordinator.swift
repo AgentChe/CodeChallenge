@@ -48,7 +48,7 @@ class PremiumCoordinator {
         }
         popupController = PopupViewController(contentView: view)
         view.translatesAutoresizingMaskIntoConstraints = false
-        if let rootController = UIApplication.shared.windows.first?.rootViewController {
+        if let rootController = UIApplication.shared.mainWindow?.rootViewController {
             popupController?.present(from: rootController, bottomOffset: 0)
         }
     }

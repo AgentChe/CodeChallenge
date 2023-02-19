@@ -21,7 +21,7 @@
 		E01AECAB28A03FD800615B52 /* UIControlSubscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01AECAA28A03FD800615B52 /* UIControlSubscription.swift */; };
 		E01AECB028A1B1AD00615B52 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = E01AECAF28A1B1AD00615B52 /* Highlightr */; };
 		E0228F6A29043C7600101A82 /* HTMLAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6929043C7600101A82 /* HTMLAttributedString.swift */; };
-		E0228F6C2904B7A000101A82 /* InviteFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6B2904B7A000101A82 /* InviteFriendsView.swift */; };
+		E0228F6C2904B7A000101A82 /* BuddiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6B2904B7A000101A82 /* BuddiesView.swift */; };
 		E0228F6E2904B92100101A82 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6D2904B92100101A82 /* NoteView.swift */; };
 		E0228F71290547CC00101A82 /* Branch in Frameworks */ = {isa = PBXBuildFile; productRef = E0228F70290547CC00101A82 /* Branch */; };
 		E0228F732907346200101A82 /* BuddiesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F722907346200101A82 /* BuddiesCoordinator.swift */; };
@@ -49,6 +49,7 @@
 		E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */; };
 		E06D28C728CE6EB800E211A0 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = E06D28C628CE6EB800E211A0 /* OneSignal */; };
 		E06D90C0299EFCC000AC09AB /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */; };
+		E06D90C229A2E8F500AC09AB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90C129A2E8F500AC09AB /* ActivityView.swift */; };
 		E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */; };
 		E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6A28A85C9A004B81DA /* SolutionView.swift */; };
 		E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */; };
@@ -191,7 +192,7 @@
 		E01AECA8289FBD6C00615B52 /* FocusableSearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusableSearchField.swift; sourceTree = "<group>"; };
 		E01AECAA28A03FD800615B52 /* UIControlSubscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIControlSubscription.swift; sourceTree = "<group>"; };
 		E0228F6929043C7600101A82 /* HTMLAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTMLAttributedString.swift; sourceTree = "<group>"; };
-		E0228F6B2904B7A000101A82 /* InviteFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteFriendsView.swift; sourceTree = "<group>"; };
+		E0228F6B2904B7A000101A82 /* BuddiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesView.swift; sourceTree = "<group>"; };
 		E0228F6D2904B92100101A82 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		E0228F722907346200101A82 /* BuddiesCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddiesCoordinator.swift; sourceTree = "<group>"; };
 		E0228F762908869700101A82 /* CodeChallenge Staging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "CodeChallenge Staging.entitlements"; sourceTree = "<group>"; };
@@ -219,6 +220,7 @@
 		E06D28C228CD218E00E211A0 /* CodeChallenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodeChallenge.entitlements; sourceTree = "<group>"; };
 		E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAnalyticsService.swift; sourceTree = "<group>"; };
 		E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
+		E06D90C129A2E8F500AC09AB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTestCasesView.swift; sourceTree = "<group>"; };
 		E0750D6A28A85C9A004B81DA /* SolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionView.swift; sourceTree = "<group>"; };
 		E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingLanguage.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 				E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */,
 				E0228F6D2904B92100101A82 /* NoteView.swift */,
 				E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */,
+				E06D90C129A2E8F500AC09AB /* ActivityView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -717,7 +720,7 @@
 		E0FB612A29185BBA00DB1E9A /* Community */ = {
 			isa = PBXGroup;
 			children = (
-				E0228F6B2904B7A000101A82 /* InviteFriendsView.swift */,
+				E0228F6B2904B7A000101A82 /* BuddiesView.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -922,6 +925,7 @@
 				E0ECE5C428BC028700A1CB12 /* XPView.swift in Sources */,
 				E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */,
 				E08B446028B4366C006BC50A /* IAPManager.swift in Sources */,
+				E06D90C229A2E8F500AC09AB /* ActivityView.swift in Sources */,
 				E0DA79C228F20AB00038B0E1 /* Configuration.swift in Sources */,
 				E0BD3286285CF568000C37A9 /* NetworkService.swift in Sources */,
 				E0BD3246285A8B1F000C37A9 /* RootCoordinator.swift in Sources */,
@@ -1003,7 +1007,7 @@
 				E0BD329F285D022F000C37A9 /* AccountCoordinator.swift in Sources */,
 				E0BD329D285D01BF000C37A9 /* AccountView.swift in Sources */,
 				E01AEC96289B315400615B52 /* PremiumViewProps.swift in Sources */,
-				E0228F6C2904B7A000101A82 /* InviteFriendsView.swift in Sources */,
+				E0228F6C2904B7A000101A82 /* BuddiesView.swift in Sources */,
 				E0BD324D285A8DA3000C37A9 /* SceneDelegate.swift in Sources */,
 				E096DF212871BEA8008A2A98 /* DoodledView.swift in Sources */,
 				E052550E288C79FC00FD87C3 /* AutocompleteTermsHelper.swift in Sources */,
@@ -1215,7 +1219,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1249,7 +1253,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1346,7 +1350,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1457,7 +1461,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

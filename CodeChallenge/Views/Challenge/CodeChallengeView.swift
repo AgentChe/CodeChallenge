@@ -193,7 +193,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     }
 
     private var quickAccessCharBottomInset: CGFloat {
-        keyboardHeight != 0 ? 0 : 100 - quickAccessCharBottomToCover - (UIApplication.shared.windows.first?.safeAreaInsets.bottom ?? 0)
+        keyboardHeight != 0 ? 0 : 100 - quickAccessCharBottomToCover - (UIApplication.shared.mainWindow?.safeAreaInsets.bottom ?? 0)
     }
 
     var codeScreen: some View {

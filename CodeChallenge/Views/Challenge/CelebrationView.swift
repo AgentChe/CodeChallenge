@@ -11,6 +11,12 @@ import SwiftUI
 import Lottie
 
 class CelebrationView: UIView, PopupContentView {
+    struct Content {
+        let title: String
+        let description: String
+        let imageURL: String
+        let rewardText: String
+    }
     let store: Store
     var onDismiss: (() -> Void)?
 
@@ -62,10 +68,10 @@ class CelebrationView: UIView, PopupContentView {
         return button
     }()
 
-    init(challenge: ChallengeDetail, store: Store) {
+    init(content: Content, store: Store) {
         self.store = store
         super.init(frame: .zero)
-        setupViews(challenge: challenge)
+        setupViews(content: content)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             self?.runConfetti()
         }
@@ -75,16 +81,16 @@ class CelebrationView: UIView, PopupContentView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupViews(challenge: ChallengeDetail) {
+    private func setupViews(content: Content) {
         self.backgroundColor = .CodeChallenge.dark
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(stackView)
-        iconImageView.bind(to: .init(url: "\(Configuration.host)/challange/getImage/\(challenge.id)/", store: store))
+        iconImageView.bind(to: .init(url: content.imageURL, store: store))
         [iconImageView, titleLabel, describtionLabel, rewardBackgroundView, continueButton].forEach { stackView.addArrangedSubview($0) }
         continueButton.addTarget(self, action: #selector(handleContinueTap), for: .touchUpInside)
-        drawRewardView(challenge: challenge)
-        self.titleLabel.text = "\(challenge.name) is solved!"
-        self.describtionLabel.text = "The only time you should ever look back is to see how far you've come. Just continue practicing!"
+        drawRewardView(content: content)
+        self.titleLabel.text = content.title
+        self.describtionLabel.text = content.description
 
         layer.cornerRadius = 20
 
@@ -107,13 +113,13 @@ class CelebrationView: UIView, PopupContentView {
         onDismiss?()
     }
 
-    private func drawRewardView(challenge: ChallengeDetail) {
+    private func drawRewardView(content: Content) {
         let label = UILabel()
         label.textColor = .white
         label.font = .h4
         label.text = "Your reward:"
 
-        let xpView = DefaultXPView(xpText: "+\(challenge.xp)", backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)
+        let xpView = DefaultXPView(xpText: content.rewardText, backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)
         let xpViewController = UIHostingController(rootView: xpView)
         let xpUIView = xpViewController.view
         xpUIView?.backgroundColor = .clear

@@ -66,6 +66,10 @@ final class RootCoordinator {
             self?.showLogin()
         }
 
+        buddiesCoordinator.onLogin = { [weak self] action in
+            self?.showLogin(action: action)
+        }
+
         accountCoordinator.onGoPremium = { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self?.tabBarController.selectedIndex = 3
@@ -108,6 +112,7 @@ final class RootCoordinator {
         store.dispatch(LoadHomeSections())
         store.dispatch(LoadAppStorePayments())
         store.dispatch(LoadRecommendedChallenges())
+        store.dispatch(LoadRewards())
 
         DispatchQueue.global(qos: .userInitiated).async {
             // The first time you create an attributed string of HTML, iOS creates all sorts of extra threads needed to parse the string, among which JavascriptCore engine.
@@ -160,26 +165,39 @@ final class RootCoordinator {
             .sink(receiveValue: { [weak self] (isPremium, premiumEnabled) in
                 guard let self = self else { return }
                 if isPremium == true {
-                    let runTabBarTransformation = {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            var viewControllers = self.tabBarController.viewControllers
-                            let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-                            if let index = index {
+//                    let runTabBarTransformation = {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                            var viewControllers = self.tabBarController.viewControllers
+//                            let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+//                            if let index = index {
+//                                self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                                    viewControllers?.remove(at: index)
+//                                    self.tabBarController.viewControllers = viewControllers
+//                                }
+//                            }
+//                        }
+//                    }
+//                    if self.tabBarController.selectedIndex == 0 {
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                            self.homeCoordinator.navigationController.popToRootViewController(animated: true)
+//                            runTabBarTransformation()
+//                        }
+//                    } else {
+//                        runTabBarTransformation()
+//                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        var viewControllers = self.tabBarController.viewControllers
+                        let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+                        if let index = index {
+                            if index == self.tabBarController.selectedIndex {
                                 self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    viewControllers?.remove(at: index)
-                                    self.tabBarController.viewControllers = viewControllers
-                                }
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                viewControllers?.remove(at: index)
+                                self.tabBarController.viewControllers = viewControllers
                             }
                         }
-                    }
-                    if self.tabBarController.selectedIndex == 0 {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self.homeCoordinator.navigationController.popToRootViewController(animated: true)
-                            runTabBarTransformation()
-                        }
-                    } else {
-                        runTabBarTransformation()
                     }
                 } else {
                     guard premiumEnabled else { return }
@@ -198,7 +216,7 @@ final class RootCoordinator {
         window.rootViewController = controller
     }
 
-    private func showLogin() {
+    private func showLogin(action: ThunkAction? = nil) {
         authCancellable = self.store
             .statePublisher
             .map { $0.user.value?.isLoggedIn }
@@ -210,23 +228,14 @@ final class RootCoordinator {
                     self.store.dispatch(LoadInProgressChallenges())
                     self.store.dispatch(LoadCompletedChallenges())
                     self.authNavigationController?.dismiss(animated: true)
-//                    self.accountCoordinator.start()
+                    if let action = action {
+                        self.store.dispatch(action)
+                    }
                 }
             }
 
-//        logoutCancellable = self.store
-//            .statePublisher
-//            .map { $0.account.isPending }
-//            .removeDuplicates()
-//            .sink { [weak self] isLoggedOut in
-//                guard let self = self else { return }
-//                if isLoggedOut {
-//                    self.authNavigationController?.dismiss(animated: true)
-//                }
-//            }
-
-        let loginView = LoginView(screenMode: .login, onChangeMode: { [weak self] in
-            self?.showSignUpView()
+        let loginView = LoginView(continuesOperation: action != nil, screenMode: .login, onChangeMode: { [weak self] in
+            self?.showSignUpView(continuesOperation: action != nil)
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: loginView)
@@ -237,8 +246,8 @@ final class RootCoordinator {
     }
 
 
-    func showSignUpView() {
-        let loginView = LoginView(screenMode: .signup, onChangeMode: { [weak self] in
+    func showSignUpView(continuesOperation: Bool) {
+        let loginView = LoginView(continuesOperation: continuesOperation, screenMode: .signup, onChangeMode: { [weak self] in
             self?.authNavigationController?.popViewController(animated: true)
         })
             .environmentObject(store)

@@ -22,6 +22,7 @@ struct LoginView: View, LoginViewProps {
     @State var showAlert = false
     @State var displayErrorMessage: String?
     @State var showMergeAlert = false
+    var continuesOperation: Bool = false
     var screenMode: Mode
     let onChangeMode: (() -> Void)
 
@@ -77,7 +78,7 @@ struct LoginView: View, LoginViewProps {
         VStack(alignment: .leading, spacing: 20) {
             Spacer()
                 .frame(height: 15)
-            Text(mode == .login ? "Login" : "Sign up")
+            Text((mode == .login ? "Login" : "Sign up") + "\(continuesOperation ? " to continue" : "")")
                 .font(.pageNameH1)
                 .foregroundColor(.CodeChallenge.white)
             Spacer()

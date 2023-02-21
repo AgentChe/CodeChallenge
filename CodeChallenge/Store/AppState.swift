@@ -21,6 +21,8 @@ struct AppState {
     let inProgressChallenges: Resolvable<[Challenge]>
     let doneChallenges: Resolvable<[Challenge]>
     let payments: Resolvable<[AppStorePayment]>
+    let rewards: Resolvable<[Reward]>
+    let loadingReward: LoadingReward?
 
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
@@ -34,7 +36,9 @@ struct AppState {
          recommendedChallenges: Resolvable<[Challenge]> = .pending,
          inProgressChallenges: Resolvable<[Challenge]> = .pending,
          doneChallenges: Resolvable<[Challenge]> = .pending,
-         payments: Resolvable<[AppStorePayment]> = .pending) {
+         payments: Resolvable<[AppStorePayment]> = .pending,
+         rewards: Resolvable<[Reward]> = .pending,
+         loadingReward: LoadingReward? = nil) {
         self.user = user
         self.account = account
         self.programmingLanguage = programmingLanguage
@@ -48,5 +52,7 @@ struct AppState {
         self.inProgressChallenges = inProgressChallenges
         self.payments = payments
         self.doneChallenges = doneChallenges
+        self.rewards = rewards
+        self.loadingReward = loadingReward
     }
 }

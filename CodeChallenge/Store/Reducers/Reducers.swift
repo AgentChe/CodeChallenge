@@ -24,7 +24,9 @@ struct Reducers {
             recommendedChallenges: recommendedChallengesReducer(state.recommendedChallenges, action),
             inProgressChallenges: inProgressChallengesReducer(state.inProgressChallenges, action),
             doneChallenges: doneChallengesReducer(state.doneChallenges, action),
-            payments: paymentsReducer(state.payments, action)
+            payments: paymentsReducer(state.payments, action),
+            rewards: rewardsReducer(state.rewards, action),
+            loadingReward: loadingRewardReducer(state.loadingReward, action)
         )
     }
 }
@@ -185,6 +187,25 @@ extension Reducers {
         switch action {
         case .changeProgrammingLanguage(let language):
             return language
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let rewardsReducer: Reducer<Resolvable<[Reward]>> = { state, action in
+        switch action {
+        case .loadRewards(let result): return result
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let loadingRewardReducer: Reducer<LoadingReward?> = { state, action in
+        switch action {
+        case .updateLoadingReward(let result):
+            return result
         default: return state
         }
     }

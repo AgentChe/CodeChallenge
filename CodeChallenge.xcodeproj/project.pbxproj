@@ -52,6 +52,8 @@
 		E06D90C229A2E8F500AC09AB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90C129A2E8F500AC09AB /* ActivityView.swift */; };
 		E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */; };
 		E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6A28A85C9A004B81DA /* SolutionView.swift */; };
+		E0785AF929A40EB100E4661D /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0785AF829A40EB100E4661D /* Rewards.swift */; };
+		E0785AFB29A40F9800E4661D /* RewardsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0785AFA29A40F9800E4661D /* RewardsService.swift */; };
 		E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */; };
 		E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */; };
 		E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */; };
@@ -223,6 +225,8 @@
 		E06D90C129A2E8F500AC09AB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTestCasesView.swift; sourceTree = "<group>"; };
 		E0750D6A28A85C9A004B81DA /* SolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionView.swift; sourceTree = "<group>"; };
+		E0785AF829A40EB100E4661D /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
+		E0785AFA29A40F9800E4661D /* RewardsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsService.swift; sourceTree = "<group>"; };
 		E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingLanguage.swift; sourceTree = "<group>"; };
 		E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguagesView.swift; sourceTree = "<group>"; };
 		E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
@@ -637,6 +641,7 @@
 				E0DA79C128F20AB00038B0E1 /* Configuration.swift */,
 				E0ED53422986BFD2001DE6B1 /* PaywallService.swift */,
 				E0359DCA299AF6A400E8AF4F /* PurchasesService.swift */,
+				E0785AFA29A40F9800E4661D /* RewardsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -650,6 +655,7 @@
 				E0FB613429185C5500DB1E9A /* ChallengeSection.swift */,
 				E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */,
 				E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */,
+				E0785AF829A40EB100E4661D /* Rewards.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -975,6 +981,7 @@
 				E01AECA9289FBD6C00615B52 /* FocusableSearchField.swift in Sources */,
 				E0BD3293285CF81B000C37A9 /* Actions.swift in Sources */,
 				E0BD329B285D0001000C37A9 /* PublisherAdditions.swift in Sources */,
+				E0785AFB29A40F9800E4661D /* RewardsService.swift in Sources */,
 				E096DF1C2871BCAB008A2A98 /* Colors.swift in Sources */,
 				E0ECE5C228BBFF5C00A1CB12 /* CelebrationView.swift in Sources */,
 				E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */,
@@ -991,6 +998,7 @@
 				E0A69CCC292AE8B9009D5C0C /* CompletedChallengesViewProps.swift in Sources */,
 				E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */,
 				E0EBB7F0288B524B00DE7C53 /* CodeChallengeView.swift in Sources */,
+				E0785AF929A40EB100E4661D /* Rewards.swift in Sources */,
 				E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */,
 				E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */,
 				E0359DD8299AFAF500E8AF4F /* ChallengeCompiledResult.swift in Sources */,

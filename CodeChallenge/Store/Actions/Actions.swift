@@ -28,6 +28,8 @@ enum Action: Dispatchable {
     case loadHomeSections(String, Resolvable<[ChallengeSection]>)
     case loadHomeCollectionContent(Int, Resolvable<ChallengeCollectionContent>)
     case changeProgrammingLanguage(ProgrammingLanguage)
+    case loadRewards(Resolvable<[Reward]>)
+    case updateLoadingReward(LoadingReward?)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -541,5 +543,33 @@ struct LoadProgrammingLanguage: ThunkAction {
         let language = UserDefaults.standard.string(forKey: "programmingLanguage") ?? "python"
         guard let programmingLanguage = ProgrammingLanguage(rawValue: language) else { return }
         dispatcher.dispatch(Action.changeProgrammingLanguage(programmingLanguage))
+    }
+}
+
+struct LoadRewards: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.loadRewards(.pending))
+        dispatcher.services.rewardsService
+            .loadRewards()
+            .asResolvable()
+            .ephemeralSink { rewards in
+                dispatcher.dispatch(Action.loadRewards(rewards))
+            }
+    }
+}
+
+struct SelectReward: ThunkAction {
+    let reward: Reward
+
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.updateLoadingReward(.init(reward: reward, status: .loading)))
+        dispatcher.services.rewardsService
+            .select(reward: reward)
+            .asResolvable()
+            .ephemeralSink { result in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    dispatcher.dispatch(Action.updateLoadingReward(.init(reward: nil, status: result)))
+                }
+            }
     }
 }

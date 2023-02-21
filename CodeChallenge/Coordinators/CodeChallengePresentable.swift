@@ -55,7 +55,13 @@ extension CodeChallengePresentable {
     }
 
     private func runSuccessPopup(challenge: ChallengeDetail, from navigationController: UINavigationController?) {
-        let view = CelebrationView(challenge: challenge, store: store)
+        let content = CelebrationView.Content(
+            title: "\(challenge.name) is solved!",
+            description: "The only time you should ever look back is to see how far you've come. Just continue practicing!",
+            imageURL: "\(Configuration.host)/challange/getImage/\(challenge.id)/",
+            rewardText: "+\(challenge.xp)"
+        )
+        let view = CelebrationView(content: content, store: store)
         view.onDismiss = { [weak self] in
             self?.popupController?.hide()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {

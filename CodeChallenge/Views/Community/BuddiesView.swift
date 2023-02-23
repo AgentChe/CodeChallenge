@@ -22,12 +22,13 @@ struct BuddiesView: View {
         case error
     }
     let onShowAlert: (AlertInfo) -> Void
-    let onShowSuccess: () -> Void
+    let onShowSuccess: (Reward) -> Void
     @EnvironmentObject var store: Store
-    @State private var selection = 1
+    @State private var selection = 0
     @State private var shareText: ShareText? = nil
     @State private var branchURLString: String? = nil
     @State private var showShareSheet = false
+    @State private var selectedReward: Reward?
 
     var account: Account? {
         return store.state.account.value
@@ -75,7 +76,10 @@ struct BuddiesView: View {
                 }
                 .onChange(of: loadingRewardSuccess) { newValue in
                     guard newValue else { return }
-                    onShowSuccess()
+                    if let selectedReward = selectedReward {
+                        onShowSuccess(selectedReward)
+                    }
+                    selectedReward = nil
                 }
         }
     }
@@ -84,7 +88,7 @@ struct BuddiesView: View {
         VStack(alignment: .leading, spacing: 10) {
             SegmentedControlView(
                 selection: $selection,
-                sections: ["Rewards Store", "Invite Friend"],
+                sections: ["Invite Friend", "Rewards Store"],
                 onValueChange: { selection in
                 self.selection = selection
             })
@@ -93,9 +97,9 @@ struct BuddiesView: View {
 
             switch selection {
             case 0:
-                rewardsView
-            case 1:
                 inviteFriendsView
+            case 1:
+                rewardsView
             default: EmptyView()
             }
 
@@ -156,14 +160,60 @@ struct BuddiesView: View {
 
     @ViewBuilder
     private var rewardsView: some View {
-        ForEach(rewards, id: \.name) { reward in
-            if loadingReward?.name == reward.name {
-                Text("Loading")
-            } else {
-                Button(reward.name) {
-                    onShowAlert(.confirmReward(reward))
+        ScrollView(showsIndicators: false) {
+            LazyVGrid(
+                columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)],
+                alignment: .center,
+                spacing: 16,
+                pinnedViews: []) {
+                    ForEach(rewards, id: \.id) { reward in
+                        rewardView(reward)
+                    }
                 }
+                .padding(4)
+        }
+        .padding(.top, 40)
+    }
+
+    func rewardView(_ reward: Reward) -> some View {
+        HStack {
+            Spacer()
+            VStack(alignment: .center, spacing: 8) {
+                NetworkImage(
+                    viewModel: .init(url: reward.imageURL,
+                                     store: store,
+                                     placeholder: .init(named: "placeholder_image")),
+                    size: .init(width: 90, height: 90)
+                )
+                Text(reward.name)
+                    .font(.regular(size: 10))
+                    .foregroundColor(.white)
+
+                HStack {
+                    Spacer()
+                    Text("Redeem (\(reward.xp) XP)")
+                        .font(.regular(size: 10))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                    Spacer()
+                }
+                    .background {
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(Color(.CodeChallenge.blue1))
+                    }
+                    .padding(.top, 2)
             }
+            Spacer()
+        }
+        .padding(16)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            selectedReward = reward
+            onShowAlert(.confirmReward(reward))
+        }
+        .background {
+            RoundedRectangle(cornerRadius: 13)
+                .stroke(Color(.CodeChallenge.blue1), lineWidth: 2)
         }
     }
 }

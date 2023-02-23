@@ -18,8 +18,8 @@ struct RewardsService: RewardsServiceProtocol {
 
     func loadRewards() -> AnyPublisher<[Reward], Error> {
         return URLRequest
-            .create(url: "https://run.mocky.io/v3/c7f131dc-7a6c-4639-9662-d662ade19df9", type: .get)
-            .flatMap { networkService.load($0, decoding: [Reward].self, with: .snakeCase) }
+            .create(url: "https://run.mocky.io/v3/543d1443-fa59-4960-ac93-747a8f0ebf8c", type: .get)
+            .flatMap { networkService.load($0, decoding: [Reward].self, with: .init()) }
             .eraseToAnyPublisher()
     }
 

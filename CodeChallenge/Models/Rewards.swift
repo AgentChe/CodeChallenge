@@ -8,7 +8,10 @@
 import Foundation
 
 struct Reward: Codable {
+    let id: Int
     let name: String
+    let imageURL: String
+    let xp: Int
 }
 
 struct LoadingReward {

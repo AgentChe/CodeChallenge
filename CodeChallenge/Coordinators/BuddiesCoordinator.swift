@@ -19,8 +19,8 @@ class BuddiesCoordinator {
         self.store = store
         let view = BuddiesView(onShowAlert: { [weak self] alertInfo in
             self?.showAlert(with: alertInfo)
-        }, onShowSuccess: { [weak self] in
-            self?.runSuccessPopup()
+        }, onShowSuccess: { [weak self] reward in
+            self?.runSuccessPopup(for: reward)
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
@@ -54,12 +54,12 @@ class BuddiesCoordinator {
         }
     }
 
-    private func runSuccessPopup() {
+    private func runSuccessPopup(for reward: Reward) {
         let content = CelebrationView.Content(
             title: "You are special!",
             description: "We'll send you an email in 72 hours with ur gift card",
-            imageURL: "https://oyster.ignimgs.com/mediawiki/apis.ign.com/pokemon-blue-version/8/89/Pikachu.jpg",
-            rewardText: "Pikachu gift card"
+            imageURL: reward.imageURL,
+            rewardText: reward.name
         )
         let view = CelebrationView(content: content, store: store)
         view.onDismiss = { [weak self] in

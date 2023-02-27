@@ -87,21 +87,25 @@ struct BuddiesView: View {
 
     var content: some View {
         VStack(alignment: .leading, spacing: 10) {
-            SegmentedControlView(
-                selection: $selection,
-                sections: ["Invite Friend", "Rewards Store"],
-                onValueChange: { selection in
-                self.selection = selection
-            })
-            .padding(.horizontal, 9)
-            .frame(height: 31)
-
-            switch selection {
-            case 0:
+            if rewards.isEmpty {
                 inviteFriendsView
-            case 1:
-                rewardsView
-            default: EmptyView()
+            } else {
+                SegmentedControlView(
+                    selection: $selection,
+                    sections: ["Invite Friend", "Rewards Store"],
+                    onValueChange: { selection in
+                    self.selection = selection
+                })
+                .padding(.horizontal, 9)
+                .frame(height: 31)
+
+                switch selection {
+                case 0:
+                    inviteFriendsView
+                case 1:
+                    rewardsView
+                default: EmptyView()
+                }
             }
 
             Spacer()

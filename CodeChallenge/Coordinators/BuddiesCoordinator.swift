@@ -35,12 +35,16 @@ class BuddiesCoordinator {
 
     private func showAlert(with alertInfo: BuddiesView.AlertInfo) {
         switch alertInfo {
+        case .nonSufficientXP:
+            let alertController = UIAlertController(title: "You don't have enough XP", message: nil, preferredStyle: .alert)
+            alertController.addAction(.init(title: "OK", style: .default))
+            navigationController.present(alertController, animated: true)
         case .error:
             let alertController = UIAlertController(title: "We couldnt redeem ur xps for the gift card", message: nil, preferredStyle: .alert)
             alertController.addAction(.init(title: "OK", style: .default))
             navigationController.present(alertController, animated: true)
         case .confirmReward(let reward):
-            let alertController = UIAlertController(title: "Are you sure you want to redeem 20 xps for this reward?", message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Are you sure you want to redeem \(reward.xp) xps for this reward?", message: nil, preferredStyle: .alert)
             alertController.addAction(.init(title: "YES", style: .default, handler: { [weak self] _ in
                 let action = SelectReward(reward: reward)
                 if UserDefaults.standard.bool(forKey: "isLoggedIn") {
@@ -59,7 +63,7 @@ class BuddiesCoordinator {
             title: "You are special!",
             description: "We'll send you an email in 72 hours with ur gift card",
             imageURL: reward.imageURL,
-            rewardText: reward.name
+            rewardText: reward.description
         )
         let view = CelebrationView(content: content, store: store)
         view.onDismiss = { [weak self] in

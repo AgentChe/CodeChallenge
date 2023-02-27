@@ -61,6 +61,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 extension AppDelegate {
     private func sendReferralId(userId: String) {
-        print("TT_ sending referral \(userId)")
+        guard let url = URL(string: Configuration.host + "/invitation/accept/") else { return }
+        let requestData = ["from": userId]
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+        let httpBody = try? JSONSerialization.data(withJSONObject: requestData, options: [])
+        request.httpBody = httpBody
+
+        URLSession.shared.dataTask(with: request)  { (_, _, _) in }.resume()
     }
 }

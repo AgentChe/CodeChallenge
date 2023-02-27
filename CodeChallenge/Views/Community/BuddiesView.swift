@@ -18,6 +18,7 @@ fileprivate struct ShareText: Identifiable {
 
 struct BuddiesView: View {
     enum AlertInfo {
+        case nonSufficientXP
         case confirmReward(Reward)
         case error
     }
@@ -185,7 +186,7 @@ struct BuddiesView: View {
                                      placeholder: .init(named: "placeholder_image")),
                     size: .init(width: 90, height: 90)
                 )
-                Text(reward.name)
+                Text(reward.description)
                     .font(.regular(size: 10))
                     .foregroundColor(.white)
 
@@ -209,7 +210,11 @@ struct BuddiesView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             selectedReward = reward
-            onShowAlert(.confirmReward(reward))
+            if (account?.xp ?? 0) < reward.xp {
+                onShowAlert(.nonSufficientXP)
+            } else {
+                onShowAlert(.confirmReward(reward))
+            }
         }
         .background {
             RoundedRectangle(cornerRadius: 13)

@@ -562,9 +562,10 @@ struct SelectReward: ThunkAction {
     let reward: Reward
 
     func exec(dispatcher: Dispatcher) {
+        guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
         dispatcher.dispatch(Action.updateLoadingReward(.init(reward: reward, status: .loading)))
         dispatcher.services.rewardsService
-            .select(reward: reward)
+            .select(reward: reward, session: session)
             .asResolvable()
             .ephemeralSink { result in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {

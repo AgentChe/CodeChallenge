@@ -39,15 +39,15 @@ class BuddiesCoordinator {
     private func showAlert(with alertInfo: BuddiesView.AlertInfo) {
         switch alertInfo {
         case .nonSufficientXP:
-            let alertController = UIAlertController(title: "Sorry, you need more XP to claim this reward. Keep earning to get there!", message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Not enough XPs", message: "Sorry, you need more XP to claim this reward. Keep earning to get there!", preferredStyle: .alert)
             alertController.addAction(.init(title: "OK", style: .default))
             navigationController.present(alertController, animated: true)
         case .error:
-            let alertController = UIAlertController(title: "Oops, it looks like we ran into a problem redeeming your XPs for the reward. Please try again.", message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Something went wrong", message: "Oops, it looks like we ran into a problem redeeming your XPs for the reward. Please try again.", preferredStyle: .alert)
             alertController.addAction(.init(title: "OK", style: .default))
             navigationController.present(alertController, animated: true)
         case .confirmReward(let reward):
-            let alertController = UIAlertController(title: "By redeeming \(reward.xp) XP reward, \(reward.xp) XPs will be deducted from your account. Do you want to proceed?", message: nil, preferredStyle: .alert)
+            let alertController = UIAlertController(title: "Redeem \(reward.xp) XPs", message: "By redeeming \(reward.xp) XP reward, \(reward.xp) XPs will be deducted from your account. Do you want to proceed?", preferredStyle: .alert)
             alertController.addAction(.init(title: "YES", style: .default, handler: { [weak self] _ in
                 let action = SelectReward(reward: reward)
                 if UserDefaults.standard.bool(forKey: "isLoggedIn") {
@@ -63,10 +63,10 @@ class BuddiesCoordinator {
 
     private func runSuccessPopup(for reward: Reward) {
         let content = CelebrationView.Content(
-            title: "Success!",
+            title: reward.title,
             description: "Your reward has been redeemed and will be delivered to your email within 72 hours.",
             imageURL: reward.imageURL,
-            rewardText: reward.description
+            rewardText: nil
         )
         let view = CelebrationView(content: content, store: store)
         view.onDismiss = { [weak self] in

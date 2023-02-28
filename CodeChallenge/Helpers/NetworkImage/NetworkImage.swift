@@ -26,7 +26,7 @@ struct NetworkImage: View {
         ProgressView()
     }
 
-    var body: some View {
+    var content: some View {
         ZStack {
             if let image = viewModel.image {
                 contentView(image: Image(uiImage: image))
@@ -38,6 +38,19 @@ struct NetworkImage: View {
         }
         .frame(width: size.width, height: size.height, alignment: .center)
         .clipped()
+    }
+
+    var body: some View {
+        switch contentMode {
+        case .fill:
+            content
+                .frame(width: size.width, height: size.height, alignment: .center)
+                .clipped()
+        case .fit:
+            content
+                .frame(width: size.width, alignment: .center)
+                .clipped()
+        }
     }
 }
 

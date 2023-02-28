@@ -570,6 +570,7 @@ struct SelectReward: ThunkAction {
             .ephemeralSink { result in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     dispatcher.dispatch(Action.updateLoadingReward(.init(reward: nil, status: result)))
+                    dispatcher.dispatch(LoadAccount())
                 }
             }
     }

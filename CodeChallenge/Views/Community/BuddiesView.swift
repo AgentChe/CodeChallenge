@@ -191,36 +191,39 @@ struct BuddiesView: View {
                 viewModel: .init(url: reward.imageURL,
                                  store: store,
                                  placeholder: .init(named: "placeholder_image")),
-                size: .init(width: 90, height: 90)
+                size: .init(width: .screenWidth/4, height: .screenWidth/4),
+                contentMode: .fit
             )
             Text(reward.title)
-                .font(.regular(size: 12))
+                .font(.regular(size: 14))
                 .foregroundColor(.white)
-                .lineLimit(2)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 12)
             Text(reward.description)
                 .font(.regular(size: 10))
                 .foregroundColor(.white.withAlphaComponent(0.7))
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 12)
 
             HStack {
                 Spacer()
-                Text("Redeem (\(reward.xp) XP)")
-                    .font(.regular(size: 10))
-                    .foregroundColor(.white)
-                    .padding(.vertical, 4)
+                if loadingReward != nil {
+                    ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                } else {
+                    Text("Redeem (\(reward.xp) XP)")
+                        .font(.regular(size: 12))
+                        .foregroundColor(.white)
+                        .padding(.vertical, 4)
+                }
                 Spacer()
             }
+            .frame(height: 28)
             .background {
                 RoundedRectangle(cornerRadius: 3)
                     .fill(Color(.CodeChallenge.blue1))
             }
             .padding(.top, 2)
-            .padding(.horizontal, 16)
         }
-        .padding(.vertical, 16)
+        .padding(16)
             .contentShape(Rectangle())
             .onTapGesture {
                 selectedReward = reward

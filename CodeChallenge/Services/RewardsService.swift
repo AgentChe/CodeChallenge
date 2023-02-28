@@ -25,7 +25,7 @@ struct RewardsService: RewardsServiceProtocol {
 
     func select(reward: Reward, session: String) -> AnyPublisher<Void, Error> {
         return URLRequest
-            .create(url: Configuration.host + "/rewards/redeem/\(reward.id)/", type: .post)
+            .create(url: Configuration.host + "/rewards/redeem/\(reward.id)/", type: .post, params: ["session": session])
             .flatMap { networkService.send($0) }
             .eraseToAnyPublisher()
     }

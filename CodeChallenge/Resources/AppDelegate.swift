@@ -26,7 +26,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { [weak self]
             (params, error) in
-            guard let params = params, (params["+is_first_session"] as? Int) == 0,
+            guard let params = params, (params["+is_first_session"] as? Int) == 1,
                     let idString = params["referringUserID"] as? String else {
                 return
             }

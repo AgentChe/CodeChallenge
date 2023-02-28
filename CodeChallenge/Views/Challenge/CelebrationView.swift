@@ -15,7 +15,7 @@ class CelebrationView: UIView, PopupContentView {
         let title: String
         let description: String
         let imageURL: String
-        let rewardText: String
+        let rewardText: String?
     }
     let store: Store
     var onDismiss: (() -> Void)?
@@ -34,6 +34,8 @@ class CelebrationView: UIView, PopupContentView {
         let label = UILabel()
         label.textColor = .white
         label.font = .h2
+        label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
 
@@ -86,9 +88,8 @@ class CelebrationView: UIView, PopupContentView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(stackView)
         iconImageView.bind(to: .init(url: content.imageURL, store: store))
-        [iconImageView, titleLabel, describtionLabel, rewardBackgroundView, continueButton].forEach { stackView.addArrangedSubview($0) }
+        [iconImageView, titleLabel, describtionLabel, content.rewardText != nil ? rewardBackgroundView : nil, continueButton].compactMap { $0 }.forEach { stackView.addArrangedSubview($0) }
         continueButton.addTarget(self, action: #selector(handleContinueTap), for: .touchUpInside)
-        drawRewardView(content: content)
         self.titleLabel.text = content.title
         self.describtionLabel.text = content.description
 
@@ -101,12 +102,18 @@ class CelebrationView: UIView, PopupContentView {
             stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
             iconImageView.heightAnchor.constraint(equalToConstant: 120),
             iconImageView.widthAnchor.constraint(equalToConstant: 120),
-            rewardBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
-            rewardBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
             continueButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
             continueButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25)
         ])
         stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        if content.rewardText != nil {
+            drawRewardView(content: content)
+            NSLayoutConstraint.activate([
+                rewardBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
+                rewardBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25)
+            ])
+        }
     }
 
     @objc private func handleContinueTap() {
@@ -114,12 +121,13 @@ class CelebrationView: UIView, PopupContentView {
     }
 
     private func drawRewardView(content: Content) {
+        guard let rewardText = content.rewardText else { return }
         let label = UILabel()
         label.textColor = .white
         label.font = .h4
         label.text = "Your reward:"
 
-        let xpView = DefaultXPView(xpText: content.rewardText, backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)
+        let xpView = DefaultXPView(xpText: rewardText, backgroundColor: .CodeChallenge.background, xpIconColor: "blue", strokeColor: nil)
         let xpViewController = UIHostingController(rootView: xpView)
         let xpUIView = xpViewController.view
         xpUIView?.backgroundColor = .clear

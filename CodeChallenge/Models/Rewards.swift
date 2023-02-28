@@ -9,6 +9,7 @@ import Foundation
 
 struct Reward: Codable {
     let id: Int
+    let title: String
     let description: String
     let xp: Int
 }

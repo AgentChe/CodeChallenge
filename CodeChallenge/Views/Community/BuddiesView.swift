@@ -94,8 +94,8 @@ struct BuddiesView: View {
                     selection: $selection,
                     sections: ["Invite Friend", "Rewards Store"],
                     onValueChange: { selection in
-                    self.selection = selection
-                })
+                        self.selection = selection
+                    })
                 .padding(.horizontal, 9)
                 .frame(height: 31)
 
@@ -116,49 +116,54 @@ struct BuddiesView: View {
 
     @ViewBuilder
     private var inviteFriendsView: some View {
-        HStack {
-            Image("invite_friends")
-                .padding(.top, 30)
-                .padding(.leading, 9)
-            Spacer()
-        }
-        Text("Invite Your friend. Study free for a year.")
-            .font(.semibold(size: 30))
-            .padding(.top, 35)
-        Text("You will both get rewarded $10 when your friend places their first Instacart order. Terms apply")
-            .font(.regular(size: 14))
-        Text("Here's your invite link")
-            .padding(.top, 30)
-            .font(.semibold(size: 18))
-            .padding(.bottom, 6)
-        HStack(spacing: 10) {
-            HStack {
-                Text(branchURLString ?? "")
-                    .font(.regular(size: 14))
-                    .padding(16)
-                Spacer()
-                Button("Copy") {
-                    UIPasteboard.general.string = "random"
+        ScrollView {
+            VStack(alignment: .leading) {
+                HStack {
+                    Image("invite_friends")
+                        .padding(.top, 30)
+                        .padding(.leading, 9)
+                    Spacer()
                 }
-                .foregroundColor(.CodeChallenge.blue1)
-                .padding(.trailing, 14)
-                .font(.semibold(size: 18))
-            }.background{
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color(UIColor.CodeChallenge.dustyBlue), lineWidth: 1)
-            }
-            .frame(height: 46)
-
-            Button {
-                guard let branchURLString = branchURLString else { return }
-                shareText = ShareText(text: branchURLString)
-            } label: {
-              Text("Share")
-                    .padding(14)
-                    .background(.CodeChallenge.blue1)
+                Text("Invite Friends, Earn XPs, and Redeem Rewards.")
+                    .font(.semibold(size: 30))
+                    .padding(.top, 35)
+                Text("Invite your friends and earn 100 XPs for each successful referral. These XPs can be traded for hundreds of dollars worth of exciting rewards. Terms may apply.")
+                    .font(.regular(size: 14))
+                Text("Here's Your Invite Link")
+                    .padding(.top, 30)
                     .font(.semibold(size: 18))
-                    .cornerRadius(8)
+                    .padding(.bottom, 6)
+                HStack(spacing: 10) {
+                    HStack {
+                        Text(branchURLString ?? "")
+                            .font(.regular(size: 14))
+                            .padding(16)
+                        Spacer()
+                        Button("Copy") {
+                            UIPasteboard.general.string = "random"
+                        }
+                        .foregroundColor(.CodeChallenge.blue1)
+                        .padding(.trailing, 14)
+                        .font(.semibold(size: 18))
+                    }.background{
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color(UIColor.CodeChallenge.dustyBlue), lineWidth: 1)
+                    }
                     .frame(height: 46)
+
+                    Button {
+                        guard let branchURLString = branchURLString else { return }
+                        shareText = ShareText(text: branchURLString)
+                    } label: {
+                        Text("Share")
+                            .padding(14)
+                            .background(.CodeChallenge.blue1)
+                            .font(.semibold(size: 18))
+                            .cornerRadius(8)
+                            .frame(height: 46)
+                    }
+                }
+                Spacer()
             }
         }
     }
@@ -181,48 +186,53 @@ struct BuddiesView: View {
     }
 
     func rewardView(_ reward: Reward) -> some View {
-        HStack {
-            Spacer()
-            VStack(alignment: .center, spacing: 8) {
-                NetworkImage(
-                    viewModel: .init(url: reward.imageURL,
-                                     store: store,
-                                     placeholder: .init(named: "placeholder_image")),
-                    size: .init(width: 90, height: 90)
-                )
-                Text(reward.description)
+        VStack(alignment: .center, spacing: 8) {
+            NetworkImage(
+                viewModel: .init(url: reward.imageURL,
+                                 store: store,
+                                 placeholder: .init(named: "placeholder_image")),
+                size: .init(width: 90, height: 90)
+            )
+            Text(reward.title)
+                .font(.regular(size: 12))
+                .foregroundColor(.white)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 12)
+            Text(reward.description)
+                .font(.regular(size: 10))
+                .foregroundColor(.white.withAlphaComponent(0.7))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 12)
+
+            HStack {
+                Spacer()
+                Text("Redeem (\(reward.xp) XP)")
                     .font(.regular(size: 10))
                     .foregroundColor(.white)
-
-                HStack {
-                    Spacer()
-                    Text("Redeem (\(reward.xp) XP)")
-                        .font(.regular(size: 10))
-                        .foregroundColor(.white)
-                        .padding(.vertical, 4)
-                    Spacer()
+                    .padding(.vertical, 4)
+                Spacer()
+            }
+            .background {
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(Color(.CodeChallenge.blue1))
+            }
+            .padding(.top, 2)
+            .padding(.horizontal, 16)
+        }
+        .padding(.vertical, 16)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                selectedReward = reward
+                if (account?.xp ?? 0) < reward.xp {
+                    onShowAlert(.nonSufficientXP)
+                } else {
+                    onShowAlert(.confirmReward(reward))
                 }
-                    .background {
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(Color(.CodeChallenge.blue1))
-                    }
-                    .padding(.top, 2)
             }
-            Spacer()
-        }
-        .padding(16)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            selectedReward = reward
-            if (account?.xp ?? 0) < reward.xp {
-                onShowAlert(.nonSufficientXP)
-            } else {
-                onShowAlert(.confirmReward(reward))
+            .background {
+                RoundedRectangle(cornerRadius: 13)
+                    .stroke(Color(.CodeChallenge.dustyBlue), lineWidth: 2)
             }
-        }
-        .background {
-            RoundedRectangle(cornerRadius: 13)
-                .stroke(Color(.CodeChallenge.blue1), lineWidth: 2)
-        }
     }
 }

@@ -140,7 +140,7 @@ struct BuddiesView: View {
                             .padding(16)
                         Spacer()
                         Button("Copy") {
-                            UIPasteboard.general.string = "random"
+                            UIPasteboard.general.string = branchURLString ?? ""
                         }
                         .foregroundColor(.CodeChallenge.blue1)
                         .padding(.trailing, 14)

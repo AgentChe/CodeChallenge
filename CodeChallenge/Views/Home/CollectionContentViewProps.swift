@@ -33,4 +33,9 @@ extension CollectionContentViewProps {
         }
         return progress
     }
+
+    var showConceptReview: Bool {
+        guard let conceptReviewId = section.conceptReview?.id else { return false }
+        return store.state.conceptReviews[conceptReviewId]?.value?.body.isEmpty == false
+    }
 }

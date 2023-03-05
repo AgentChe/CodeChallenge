@@ -30,6 +30,7 @@ enum Action: Dispatchable {
     case changeProgrammingLanguage(ProgrammingLanguage)
     case loadRewards(Resolvable<[Reward]>)
     case updateLoadingReward(LoadingReward?)
+    case loadConceptReview(String, Resolvable<ConceptReview>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -572,6 +573,20 @@ struct SelectReward: ThunkAction {
                     dispatcher.dispatch(Action.updateLoadingReward(.init(reward: nil, status: result)))
                     dispatcher.dispatch(LoadAccount())
                 }
+            }
+    }
+}
+
+struct FetchConceptReview: ThunkAction {
+    let sectionConceptReview: SectionConceptReview
+
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.loadConceptReview(sectionConceptReview.id, .loading))
+        dispatcher.services.conceptReviewService
+            .fetchConceptReview(id: sectionConceptReview.id)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.loadConceptReview(sectionConceptReview.id, result))
             }
     }
 }

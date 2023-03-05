@@ -139,7 +139,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         .frame(height: 25)
                     Text(codeChallenge.name)
                         .font(.h3)
-                    HtmlAttributedLabel(htmlAttributedString: challengeDetails.body.toAttributedString())
+                    HtmlAttributedLabel(htmlAttributedString: challengeDetails.body.toAttributedString(), foregroundColor: .white)
                         .frame(width: .screenWidth - 40)
 
                     if let input = taskInput {

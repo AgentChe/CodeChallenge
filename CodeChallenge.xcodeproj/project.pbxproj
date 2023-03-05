@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E002972329AECBC400EE3D9B /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E002972229AECBC400EE3D9B /* LearnView.swift */; };
 		E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */; };
 		E00D5BAE2943FFB80086A2BB /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00D5BAD2943FFB80086A2BB /* Formatters.swift */; };
 		E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E01666E028F74C9B00693575 /* CompilationOutputView.swift */; };
@@ -59,6 +60,11 @@
 		E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */; };
 		E07BBDDB28C29DDB00A1805B /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = E07BBDDA28C29DDB00A1805B /* Mixpanel */; };
 		E07BBDDD28C29DEC00A1805B /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */; };
+		E085CFA929B39EF100BA1F16 /* SnapCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */; };
+		E085CFAB29B40E4F00BA1F16 /* ConceptReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */; };
+		E085CFAD29B40FD900BA1F16 /* ConceptReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFAC29B40FD900BA1F16 /* ConceptReviewService.swift */; };
+		E085CFAF29B4129F00BA1F16 /* LearnViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFAE29B4129F00BA1F16 /* LearnViewProps.swift */; };
+		E085CFB129B5569C00BA1F16 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFB029B5569C00BA1F16 /* PageControl.swift */; };
 		E08B445828B2E2A3006BC50A /* EnvironmentAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */; };
 		E08B445A28B2E49B006BC50A /* BrowseViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445928B2E49B006BC50A /* BrowseViewProps.swift */; };
 		E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */; };
@@ -181,6 +187,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E002972229AECBC400EE3D9B /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessCharsView.swift; sourceTree = "<group>"; };
 		E00D5BAD2943FFB80086A2BB /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		E01666E028F74C9B00693575 /* CompilationOutputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationOutputView.swift; sourceTree = "<group>"; };
@@ -231,6 +238,11 @@
 		E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguagesView.swift; sourceTree = "<group>"; };
 		E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarousel.swift; sourceTree = "<group>"; };
+		E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptReview.swift; sourceTree = "<group>"; };
+		E085CFAC29B40FD900BA1F16 /* ConceptReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptReviewService.swift; sourceTree = "<group>"; };
+		E085CFAE29B4129F00BA1F16 /* LearnViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnViewProps.swift; sourceTree = "<group>"; };
+		E085CFB029B5569C00BA1F16 /* PageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControl.swift; sourceTree = "<group>"; };
 		E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentAdditions.swift; sourceTree = "<group>"; };
 		E08B445928B2E49B006BC50A /* BrowseViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseViewProps.swift; sourceTree = "<group>"; };
 		E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsedChallengesView.swift; sourceTree = "<group>"; };
@@ -566,6 +578,8 @@
 				E08D6F7828C53826006991EB /* GetStartedView.swift */,
 				E0A619D229104D73004EDD41 /* MaintenanceView.swift */,
 				E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */,
+				E002972229AECBC400EE3D9B /* LearnView.swift */,
+				E085CFAE29B4129F00BA1F16 /* LearnViewProps.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -611,6 +625,8 @@
 				E00D5BAD2943FFB80086A2BB /* Formatters.swift */,
 				E0C9D74429981623000A7000 /* UIApplication+KeyWindow.swift */,
 				E0359DCC299AF8CF00E8AF4F /* String+RFC.swift */,
+				E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */,
+				E085CFB029B5569C00BA1F16 /* PageControl.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -642,6 +658,7 @@
 				E0ED53422986BFD2001DE6B1 /* PaywallService.swift */,
 				E0359DCA299AF6A400E8AF4F /* PurchasesService.swift */,
 				E0785AFA29A40F9800E4661D /* RewardsService.swift */,
+				E085CFAC29B40FD900BA1F16 /* ConceptReviewService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -656,6 +673,7 @@
 				E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */,
 				E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */,
 				E0785AF829A40EB100E4661D /* Rewards.swift */,
+				E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -944,10 +962,13 @@
 				E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */,
 				E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */,
 				E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */,
+				E085CFAD29B40FD900BA1F16 /* ConceptReviewService.swift in Sources */,
+				E085CFAF29B4129F00BA1F16 /* LearnViewProps.swift in Sources */,
 				E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */,
 				E06AAE3728778DDC00995D3D /* Account.swift in Sources */,
 				E08D823D299AF12700A11396 /* SearchState.swift in Sources */,
 				E052550D288C79FC00FD87C3 /* PlaygroundView.swift in Sources */,
+				E085CFB129B5569C00BA1F16 /* PageControl.swift in Sources */,
 				E06AAE2F287788C000995D3D /* BrowseView.swift in Sources */,
 				E0EBB7E6288B1B6A00DE7C53 /* ChallengesService.swift in Sources */,
 				E0359DD4299AFAA400E8AF4F /* TestCases.swift in Sources */,
@@ -975,6 +996,7 @@
 				E08B445828B2E2A3006BC50A /* EnvironmentAdditions.swift in Sources */,
 				E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */,
 				E0ED53432986BFD2001DE6B1 /* PaywallService.swift in Sources */,
+				E085CFAB29B40E4F00BA1F16 /* ConceptReview.swift in Sources */,
 				E0FB29AE2919A2CA00E75B8E /* CollectionContentView.swift in Sources */,
 				E0EBB7F2288B525500DE7C53 /* CodeChallengeViewProps.swift in Sources */,
 				E096DF232871BF1E008A2A98 /* LayoutUtilities.swift in Sources */,
@@ -992,6 +1014,7 @@
 				E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */,
 				E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */,
 				E0BD3235285A7181000C37A9 /* Persistence.swift in Sources */,
+				E002972329AECBC400EE3D9B /* LearnView.swift in Sources */,
 				E0EBB7EC288B204900DE7C53 /* NetworkImageViewModel.swift in Sources */,
 				E06AAE272877888C00995D3D /* BrowseCoordinator.swift in Sources */,
 				E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */,
@@ -1026,6 +1049,7 @@
 				E0A69CF8292BF6E8009D5C0C /* RecommendationsView.swift in Sources */,
 				E01AECA2289EE8F300615B52 /* KeywordsView.swift in Sources */,
 				E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */,
+				E085CFA929B39EF100BA1F16 /* SnapCarousel.swift in Sources */,
 				E0359DCB299AF6A400E8AF4F /* PurchasesService.swift in Sources */,
 				E01AECAB28A03FD800615B52 /* UIControlSubscription.swift in Sources */,
 				E0B53BAC29828538009A49CA /* LottieFile.swift in Sources */,
@@ -1227,7 +1251,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1261,7 +1285,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1358,7 +1382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1469,7 +1493,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

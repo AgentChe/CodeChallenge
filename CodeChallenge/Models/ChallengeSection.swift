@@ -10,6 +10,13 @@ import Foundation
 struct ChallengeSection: Codable, Equatable {
     var name: String
     var collections: [ChallengeCollection]
+    let conceptReview: SectionConceptReview?
+}
+
+struct SectionConceptReview: Codable, Equatable {
+    let id: String
+    let title: String
+    let photo: String
 }
 
 struct ChallengeCollection: Codable, Equatable {

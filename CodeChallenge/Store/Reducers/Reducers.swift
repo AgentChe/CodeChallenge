@@ -26,7 +26,8 @@ struct Reducers {
             doneChallenges: doneChallengesReducer(state.doneChallenges, action),
             payments: paymentsReducer(state.payments, action),
             rewards: rewardsReducer(state.rewards, action),
-            loadingReward: loadingRewardReducer(state.loadingReward, action)
+            loadingReward: loadingRewardReducer(state.loadingReward, action),
+            conceptReviews: conceptReviewReducer(state.conceptReviews, action)
         )
     }
 }
@@ -174,6 +175,18 @@ extension Reducers {
     static let collectionContentReducer: Reducer<[Int: Resolvable<ChallengeCollectionContent>]> = { state, action in
         switch action {
         case .loadHomeCollectionContent(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let conceptReviewReducer: Reducer<[String: Resolvable<ConceptReview>]> = { state, action in
+        switch action {
+        case .loadConceptReview(let identifier, let result):
             var copy = state
             copy[identifier] = result
             return copy

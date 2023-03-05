@@ -12,6 +12,7 @@ import SwiftUI
 class HomeCoordinator {
     let navigationController = UINavigationController()
     var onboardingNavigationController: UINavigationController?
+
     let store: Store
     var onGoPremium: (() -> Void)?
     var popupController: PopupViewController?
@@ -39,6 +40,8 @@ class HomeCoordinator {
     private func openCollectionDetail(collection: ChallengeCollection, section: ChallengeSection) {
         let view = CollectionContentView(collection: collection, section: section, onChallengeOpen: { [weak self] challenge in
             self?.openChallengeView(challenge: challenge, collection: collection, from: self?.navigationController)
+        }, onConceptReview: { [weak self] conceptReview in
+            self?.presentConceptReview(sectionConceptReview: conceptReview)
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
@@ -67,6 +70,14 @@ class HomeCoordinator {
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
         onboardingNavigationController?.pushViewController(controller, animated: true)
+    }
+
+    private func presentConceptReview(sectionConceptReview: SectionConceptReview) {
+        let view = LessonView(sectionConceptReview: sectionConceptReview)
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: view)
+        controller.modalPresentationStyle = .fullScreen
+        navigationController.present(controller, animated: true)
     }
 }
 

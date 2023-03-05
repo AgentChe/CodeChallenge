@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HtmlAttributedLabel: UIViewRepresentable {
     let htmlAttributedString: NSMutableAttributedString
+    let foregroundColor: UIColor?
 
     func makeUIView(context: UIViewRepresentableContext<Self>) -> ViewWithLabel {
         let view = ViewWithLabel(frame: .zero)
@@ -17,10 +18,12 @@ struct HtmlAttributedLabel: UIViewRepresentable {
     }
     func updateUIView(_ uiView: ViewWithLabel, context: Context) {
         htmlAttributedString.addAttributes(
-            [NSAttributedString.Key.font: UIFont.regular(size: 18),
-             NSAttributedString.Key.foregroundColor: UIColor.white],
+            [NSAttributedString.Key.font: UIFont.regular(size: 18)],
             range: NSRange(location: 0, length: htmlAttributedString.length)
         )
+        if let foregroundColor = foregroundColor {
+            htmlAttributedString.addAttributes([NSAttributedString.Key.foregroundColor: foregroundColor], range: NSRange(location: 0, length: htmlAttributedString.length))
+        }
         uiView.setString(htmlAttributedString)
     }
 }

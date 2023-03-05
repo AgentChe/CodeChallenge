@@ -17,6 +17,7 @@ protocol ServicesProtocol {
     var identifyService: IdentifyServiceProtocol { get }
     var purchasesService: PurchasesServiceProtocol { get }
     var rewardsService: RewardsServiceProtocol { get }
+    var conceptReviewService: ConceptReviewServiceProtocol { get }
 }
 
 struct Services: ServicesProtocol {
@@ -29,6 +30,7 @@ struct Services: ServicesProtocol {
     let identifyService: IdentifyServiceProtocol
     let purchasesService: PurchasesServiceProtocol
     let rewardsService: RewardsServiceProtocol
+    let conceptReviewService: ConceptReviewServiceProtocol
 
     init() {
         networkService = NetworkService()
@@ -40,5 +42,6 @@ struct Services: ServicesProtocol {
         self.identifyService = IdentifyService()
         self.purchasesService = PurchasesService(networkService: networkService)
         self.rewardsService = RewardsService(networkService: networkService)
+        self.conceptReviewService = ConceptReviewService(networkService: networkService)
     }
 }

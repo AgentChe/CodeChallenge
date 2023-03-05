@@ -14,8 +14,10 @@ struct CollectionContentView: View, CollectionContentViewProps {
     let collection: ChallengeCollection
     let section: ChallengeSection
     let onChallengeOpen: (Challenge) -> Void
+    let onConceptReview: (SectionConceptReview) -> Void
     @State private var displayContent: ChallengeCollectionContent?
     @State private var displayChallenges: [Challenge] = []
+    @State private var displayConceptReview: Bool = false
 
     var body: some View {
         DoodledView {
@@ -29,15 +31,21 @@ struct CollectionContentView: View, CollectionContentViewProps {
             if displayChallenges.isEmpty {
                 store.dispatch(LoadCollectionContent(collection: collection))
                 displayContent = content
-                guard let content = content else { return }
-                for index in 0..<content.challenges.count {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.05 * Double(index))) {
-                        withAnimation(.easeOut(duration: 0.3)) {
-                            let newItem = content.challenges[index]
-                            displayChallenges.append(newItem)
+                if let content = content {
+                    for index in 0..<content.challenges.count {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.05 * Double(index))) {
+                            withAnimation(.easeOut(duration: 0.3)) {
+                                let newItem = content.challenges[index]
+                                displayChallenges.append(newItem)
+                            }
                         }
                     }
                 }
+            }
+            if let conceptReview = section.conceptReview, !showConceptReview {
+                store.dispatch(FetchConceptReview(sectionConceptReview: conceptReview))
+            } else {
+                displayConceptReview = showConceptReview
             }
         }
         .onChange(of: content) { newValue in
@@ -55,6 +63,9 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 )
             }
         }
+        .onChange(of: showConceptReview) { newValue in
+            displayConceptReview = newValue
+        }
     }
 
     func content(displayContent: ChallengeCollectionContent) -> some View {
@@ -65,6 +76,15 @@ struct CollectionContentView: View, CollectionContentViewProps {
             Text(displayContent.description)
                 .font(.bodyText)
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
+            if displayConceptReview {
+                Button("Review the concept") {
+                    if let conceptReview = section.conceptReview {
+                        onConceptReview(conceptReview)
+                    }
+                }
+                .buttonStyle(ReviewTheConceptButton())
+                .clipShape(Capsule())
+            }
             progressBar(displayContent: displayContent)
                 .padding(.top, 16)
             ScrollView(showsIndicators: false) {

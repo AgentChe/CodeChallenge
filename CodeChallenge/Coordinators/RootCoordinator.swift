@@ -75,11 +75,6 @@ final class RootCoordinator {
                 self?.tabBarController.selectedIndex = 3
             }
         }
-        browseCoordinator.onGoPremium = { [weak self] in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self?.tabBarController.selectedIndex = 3
-            }
-        }
         homeCoordinator.onGoPremium = { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self?.tabBarController.selectedIndex = 3

@@ -17,10 +17,6 @@ extension HomeViewProps {
         store.state.homeSections[identifier]?.isLoading == true
     }
 
-    var sections: [ChallengeSection]? {
-        store.state.homeSections[identifier]?.value
-    }
-
     var identifier: String {
         "\(programmingLanguage.apiRequestParam)_\(humanLanguage)"
     }
@@ -32,69 +28,22 @@ extension HomeViewProps {
     var programmingLanguage: ProgrammingLanguage {
         store.state.programmingLanguage
     }
+}
 
-    func progressImageName(index: Int, sectionIndex: Int) -> String {
-        guard let collections = sections?[sectionIndex].collections else { return "" }
-        if index == 0 && collections.count == 1 {
-            return "home_progress_only_section"
-        } else if index == 0 {
-            return "home_progress_start"
-        } else if index == collections.count - 1 {
-            return "home_progress_end"
-        } else {
-            return "home_progress_middle"
-        }
+extension HomeViewProps {
+    var challengesToSuggest: [Challenge] {
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.value ?? []
     }
 
-    func progressTopInset(index: Int, sectionIndex: Int) -> CGFloat {
-        guard let collections = sections?[sectionIndex].collections else { return 0 }
-        if index == 0 && collections.count == 1 {
-            return 23
-        } else if index == 0 {
-            return 21
-        } else if index == collections.count - 1 {
-            return 2
-        } else {
-            return 2
-        }
+    var challengesAreLoading: Bool {
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.isLoading ?? false
     }
 
-    func progressBottomInset(index: Int, sectionIndex: Int) -> CGFloat {
-        guard let collections = sections?[sectionIndex].collections else { return 0 }
-        if index == 0 && collections.count == 1 {
-            return 26
-        } else if index == 0 {
-            return 2
-        } else if index == collections.count - 1 {
-            return 28
-        } else {
-            return 2
-        }
+    var hashtags: [String] {
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.hashtags.value ?? []
     }
 
-    func progressPreviousPeaceHeight(index: Int, sectionIndex: Int) -> CGFloat {
-        guard let collections = sections?[sectionIndex].collections else { return 0 }
-        if index == 0 && collections.count == 1 {
-            return 0
-        } else if index == 0 {
-            return 0
-        } else if index == collections.count - 1 {
-            return 24
-        } else {
-            return 20
-        }
-    }
-
-    func expectedHeight(index: Int, sectionIndex: Int) -> CGFloat {
-        guard let collections = sections?[sectionIndex].collections else { return 0 }
-        if index == 0 && collections.count == 1 {
-            return 108
-        } else if index == 0 {
-            return 134
-        } else if index == collections.count - 1 {
-            return 104
-        } else {
-            return 134
-        }
+    var hashtagsAreLoading: Bool {
+        store.state.searchByInstances[programmingLanguage.apiRequestParam]?.hashtags.isLoading ?? false
     }
 }

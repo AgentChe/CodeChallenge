@@ -26,8 +26,8 @@ class BuddiesCoordinator {
         let controller = UIHostingController(rootView: view)
         let tabBarItem = UITabBarItem(
             title: "Rewards",
-            image: UIImage(named: "communityTabIcon"),
-            selectedImage: UIImage(named: "communityTabIcon")
+            image: UIImage(named: "rewardsTabIcon"),
+            selectedImage: UIImage(named: "rewardsTabIcon")
         )
         controller.tabBarItem = tabBarItem
         tabBarItem.badgeValue = "●"

@@ -19,8 +19,17 @@ class HomeCoordinator {
 
     init(store: Store) {
         self.store = store
-        let homeView = HomeView(humanLanguage: "en") { [weak self] collection, section in
+        let homeView = HomeView(humanLanguage: "en") { [weak self] (collection, section) in
             self?.openCollectionDetail(collection: collection, section: section)
+        } onSearch: { [weak self] text in
+            let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
+                self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
+            })
+                .environmentObject(store)
+            let controller = UIHostingController(rootView: view)
+            self?.navigationController.pushViewController(controller, animated: true)
+        } onOpenChallenge: { [weak self] challenge in
+            self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)

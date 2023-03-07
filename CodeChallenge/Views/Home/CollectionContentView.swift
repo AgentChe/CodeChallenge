@@ -12,7 +12,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)]
     @EnvironmentObject var store: Store
     let collection: ChallengeCollection
-    let section: ChallengeSection
     let onChallengeOpen: (Challenge) -> Void
     let onConceptReview: (SectionConceptReview) -> Void
     @State private var displayContent: ChallengeCollectionContent?
@@ -42,7 +41,7 @@ struct CollectionContentView: View, CollectionContentViewProps {
                     }
                 }
             }
-            if let conceptReview = section.conceptReview, !showConceptReview {
+            if let conceptReview = collection.conceptReview, !showConceptReview {
                 store.dispatch(FetchConceptReview(sectionConceptReview: conceptReview))
             } else {
                 displayConceptReview = showConceptReview
@@ -79,7 +78,7 @@ struct CollectionContentView: View, CollectionContentViewProps {
             if displayConceptReview {
                 Button("Try the Cheatsheets") {
                     store.dispatch(TrackAnalyticsEvent(event: .conceptOpened(displayContent.name)))
-                    if let conceptReview = section.conceptReview {
+                    if let conceptReview = collection.conceptReview {
                         onConceptReview(conceptReview)
                     }
                 }

@@ -18,6 +18,7 @@ struct NoteView: View {
                 .foregroundColor(.white)
                 .font(.regular(size: 14))
                 .lineSpacing(10)
+            Spacer()
         }
         .padding(15)
         .background {

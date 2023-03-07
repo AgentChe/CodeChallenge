@@ -11,9 +11,10 @@ import SwiftUI
 struct HtmlAttributedLabel: UIViewRepresentable {
     let htmlAttributedString: NSMutableAttributedString
     let foregroundColor: UIColor?
+    var inset: Int = 40
 
     func makeUIView(context: UIViewRepresentableContext<Self>) -> ViewWithLabel {
-        let view = ViewWithLabel(frame: .zero)
+        let view = ViewWithLabel(frame: .zero, inset: inset)
         return view
     }
     func updateUIView(_ uiView: ViewWithLabel, context: Context) {
@@ -30,8 +31,10 @@ struct HtmlAttributedLabel: UIViewRepresentable {
 
 class ViewWithLabel : UIView {
     private var label = UILabel()
+    let inset: Int
 
-    override init(frame: CGRect) {
+    init(frame: CGRect, inset: Int) {
+        self.inset = inset
         super.init(frame:frame)
         self.addSubview(label)
         label.numberOfLines = 0
@@ -47,6 +50,6 @@ class ViewWithLabel : UIView {
     }
 
     override var intrinsicContentSize: CGSize {
-        label.sizeThatFits(CGSize(width: UIScreen.main.bounds.width - 40, height: 9999))
+        label.sizeThatFits(CGSize(width: Int(.screenWidth) - inset, height: 9999))
     }
 }

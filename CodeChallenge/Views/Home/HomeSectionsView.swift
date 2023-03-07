@@ -14,52 +14,50 @@ struct HomeSectionsView: View, HomeSectionsViewProps {
     @EnvironmentObject var store: Store
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     let humanLanguage: String
-    let onCollectionTap: ((ChallengeCollection, ChallengeSection) -> Void)?
+    let onCollectionTap: ((ChallengeCollection) -> Void)?
 
     var body: some View {
         sectionsView
     }
 
     private var sectionsView: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVGrid(
-                columns: gridItemLayout,
-                alignment: .leading,
-                spacing: 0,
-                pinnedViews: []) {
-                    ForEach(Array((sections ?? []).enumerated()), id: \.offset) { (sectionOffset, section) in
-                        Section(
-                            header:
-                                Text(section.name)
-                                .font(.h3)
+        LazyVGrid(
+            columns: gridItemLayout,
+            alignment: .leading,
+            spacing: 0,
+            pinnedViews: []) {
+                ForEach(Array((sections ?? []).enumerated()), id: \.offset) { (sectionOffset, section) in
+                    Section(
+                        header:
+                            Text(section.name)
+                            .font(.h3)
                             .bold()
                             .padding(.leading, 10.0)
                             .padding(.bottom, 16)
-                        ) {
-                            ForEach(Array(section.collections.enumerated()), id: \.element.id) { (offset, collection) in
-                                homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
-                                    .onTapGesture {
-                                        onCollectionTap?(collection, section)
-                                    }
-                            }
+                    ) {
+                        ForEach(Array(section.collections.enumerated()), id: \.element.id) { (offset, collection) in
+                            homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
+                                .onTapGesture {
+                                    onCollectionTap?(collection)
+                                }
                         }
                     }
                 }
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-        }
-        .padding(.top, 16)
+            }
+            .foregroundColor(.white)
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
     }
 
     private func homeViewElementView(offset: Int, sectionOffset: Int, section: ChallengeSection, collection: ChallengeCollection) -> some View {
         HomeViewElementView(model: collection,
-                               progressImageName: progressImageName(index: offset, sectionIndex: sectionOffset),
-                               progressTopInset: progressTopInset(index: offset, sectionIndex: sectionOffset),
-                               progressBottomInset: progressBottomInset(index: offset, sectionIndex: sectionOffset),
-                               progressPreviousPeaceHeight: progressPreviousPeaceHeight(index: offset, sectionIndex: sectionOffset),
-                               expectedHeight: expectedHeight(index: offset, sectionIndex: sectionOffset),
-                               previousModel: section.collections.element(at: offset - 1),
-                               nextModel: section.collections.element(at: offset + 1))
+                            progressImageName: progressImageName(index: offset, sectionIndex: sectionOffset),
+                            progressTopInset: progressTopInset(index: offset, sectionIndex: sectionOffset),
+                            progressBottomInset: progressBottomInset(index: offset, sectionIndex: sectionOffset),
+                            progressPreviousPeaceHeight: progressPreviousPeaceHeight(index: offset, sectionIndex: sectionOffset),
+                            expectedHeight: expectedHeight(index: offset, sectionIndex: sectionOffset),
+                            previousModel: section.collections.element(at: offset - 1),
+                            nextModel: section.collections.element(at: offset + 1))
     }
 }
 
@@ -103,7 +101,7 @@ struct HomeViewElementView: View {
                     RoundedRectangle(cornerRadius: 13)
                         .stroke(
                             Color(model.progress > 0 ? (model.progress == 100 ? .CodeChallenge.blue1 : .CodeChallenge.white) : .CodeChallenge.gray1),
-                                lineWidth: 1.5
+                            lineWidth: 1.5
                         )
                     HStack(spacing: 0) {
                         VStack(alignment: .leading) {

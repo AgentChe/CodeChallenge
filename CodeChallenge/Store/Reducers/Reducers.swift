@@ -185,7 +185,7 @@ extension Reducers {
 }
 
 extension Reducers {
-    static let conceptReviewReducer: Reducer<[String: Resolvable<ConceptReview>]> = { state, action in
+    static let conceptReviewReducer: Reducer<[Int: Resolvable<ConceptReview>]> = { state, action in
         switch action {
         case .loadConceptReview(let identifier, let result):
             var copy = state

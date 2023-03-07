@@ -19,8 +19,8 @@ class HomeCoordinator {
 
     init(store: Store) {
         self.store = store
-        let homeView = HomeView(humanLanguage: "en") { [weak self] (collection, section) in
-            self?.openCollectionDetail(collection: collection, section: section)
+        let homeView = HomeView(humanLanguage: "en") { [weak self] (collection) in
+            self?.openCollectionDetail(collection: collection)
         } onSearch: { [weak self] text in
             let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
                 self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
@@ -50,8 +50,8 @@ class HomeCoordinator {
         }
     }
 
-    private func openCollectionDetail(collection: ChallengeCollection, section: ChallengeSection) {
-        let view = CollectionContentView(collection: collection, section: section, onChallengeOpen: { [weak self] challenge in
+    private func openCollectionDetail(collection: ChallengeCollection) {
+        let view = CollectionContentView(collection: collection, onChallengeOpen: { [weak self] challenge in
             self?.openChallengeView(challenge: challenge, collection: collection, from: self?.navigationController)
         }, onConceptReview: { [weak self] conceptReview in
             self?.presentConceptReview(sectionConceptReview: conceptReview)

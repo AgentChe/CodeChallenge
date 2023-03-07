@@ -10,11 +10,10 @@ import Foundation
 struct ChallengeSection: Codable, Equatable {
     var name: String
     var collections: [ChallengeCollection]
-    let conceptReview: SectionConceptReview?
 }
 
 struct SectionConceptReview: Codable, Equatable {
-    let id: String
+    let id: Int
     let title: String
     let photo: String
 }
@@ -26,6 +25,7 @@ struct ChallengeCollection: Codable, Equatable {
     let icon: String
     let progress: CGFloat
     let isNew: Bool
+    let conceptReview: SectionConceptReview?
 
     enum CodingKeys: CodingKey {
         case id
@@ -34,6 +34,7 @@ struct ChallengeCollection: Codable, Equatable {
         case icon
         case progress
         case isNew
+        case conceptReview
     }
 
     init(from decoder: Decoder) throws {
@@ -44,15 +45,17 @@ struct ChallengeCollection: Codable, Equatable {
         self.icon = try container.decode(String.self, forKey: .icon)
         self.progress = try container.decode(CGFloat.self, forKey: .progress)
         self.isNew = try container.decode(Bool.self, forKey: .isNew)
+        self.conceptReview = try container.decodeIfPresent(SectionConceptReview.self, forKey: .conceptReview)
     }
 
-    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", progress: CGFloat = 0, isNew: Bool = false) {
+    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", progress: CGFloat = 0, isNew: Bool = false, conceptReview: SectionConceptReview? = nil) {
         self.id = id
         self.name = name
         self.description = description
         self.icon = icon
         self.progress = progress
         self.isNew = isNew
+        self.conceptReview = conceptReview
     }
 }
 

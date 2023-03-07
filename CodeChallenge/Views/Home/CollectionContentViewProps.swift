@@ -10,7 +10,6 @@ import Foundation
 protocol CollectionContentViewProps {
     var store: Store { get }
     var collection: ChallengeCollection { get }
-    var section: ChallengeSection { get }
 }
 
 extension CollectionContentViewProps {
@@ -35,7 +34,7 @@ extension CollectionContentViewProps {
     }
 
     var showConceptReview: Bool {
-        guard let conceptReviewId = section.conceptReview?.id else { return false }
+        guard let conceptReviewId = collection.conceptReview?.id else { return false }
         return store.state.conceptReviews[conceptReviewId]?.value?.body.isEmpty == false
     }
 }

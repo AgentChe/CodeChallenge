@@ -8,6 +8,7 @@
 import Foundation
 
 struct LeaderboardUser: Codable, Equatable, Identifiable {
+    let position: Int
     let id: Int
     let username: String?
     let photo: String

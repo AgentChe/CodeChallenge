@@ -14,7 +14,7 @@ struct HomeView: View, HomeViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     @EnvironmentObject var store: Store
     let humanLanguage: String
-    let onCollectionTap: ((ChallengeCollection, ChallengeSection) -> Void)?
+    let onCollectionTap: ((ChallengeCollection) -> Void)?
     @State private var showProgrammingLanguagePopup = false
 
     @ObservedObject var searchFieldVM = FocusableSearchField.ViewModel()
@@ -31,18 +31,20 @@ struct HomeView: View, HomeViewProps {
                         .foregroundColor(.white)
                         .padding(.bottom, 16)
                         .padding(.leading, 16)
-                    searchBar
-                        .padding(.vertical, 10)
-                    if searchFieldIsFocused {
-                        searchedResultView
-                            .onAppear {
-                                store.dispatch(TrackAnalyticsEvent(event: .browseOpened))
-                            }
-                            .padding(.top, 10)
-                    } else if isLoading {
-                        SkeletonView()
-                    } else {
-                        HomeSectionsView(humanLanguage: humanLanguage, onCollectionTap: onCollectionTap)
+                    ScrollView(showsIndicators: false) {
+                        searchBar
+                            .padding(.vertical, 10)
+                        if searchFieldIsFocused {
+                            searchedResultView
+                                .onAppear {
+                                    store.dispatch(TrackAnalyticsEvent(event: .browseOpened))
+                                }
+                                .padding(.top, 10)
+                        } else if isLoading {
+                            SkeletonView()
+                        } else {
+                            HomeSectionsView(humanLanguage: humanLanguage, onCollectionTap: onCollectionTap)
+                        }
                     }
                 }
 
@@ -103,7 +105,7 @@ struct HomeView: View, HomeViewProps {
                         onSearch?(searchFieldVM.text)
                     }
                 }
-                    .frame(height: 48)
+                .frame(height: 48)
 
                 if searchFieldVM.isSearchEnabled {
                     Button {
@@ -126,15 +128,15 @@ struct HomeView: View, HomeViewProps {
     @ViewBuilder
     private var searchedResultView: some View {
         if challengesToSuggest.isEmpty && !searchFieldVM.text.isEmpty && !challengesAreLoading {
-                VStack {
+            VStack {
+                Spacer()
+                HStack {
                     Spacer()
-                    HStack {
-                        Spacer()
-                        Image("challenges_not_found_icon")
-                        Spacer()
-                    }
+                    Image("challenges_not_found_icon")
                     Spacer()
                 }
+                Spacer()
+            }
         } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: 40) {
@@ -165,7 +167,7 @@ struct HomeView: View, HomeViewProps {
                                         store.dispatch(TrackAnalyticsEvent(event: .challengeSearched(keyword, "keyword")))
                                         onSearch?(keyword)
                                     })
-                                        .background(.clear)
+                                    .background(.clear)
                                 }
                                 RecommendationsView(onChallengeTap: onOpenChallenge)
                                     .padding(.top, 10)
@@ -178,46 +180,46 @@ struct HomeView: View, HomeViewProps {
     }
 
     private var changeLanguagePopup: some View {
-            VStack {
-                Spacer()
-                ZStack(alignment: .leading) {
-                    VStack(spacing: 16) {
-                        Spacer()
-                            .frame(height: 10)
-                        Text("Choose Language")
-                            .font(.h2)
-                            .padding(.horizontal, 4)
-                        ForEach(ProgrammingLanguage.allCases, id: \.rawValue) { language in
-                            languageView(language: language)
-                                .padding(.horizontal, 20)
-                                .onTapGesture {
-                                    store.dispatch(ChangeProgrammingLanguage(language: language))
-                                    store.dispatch(LoadRecommendedChallenges())
-                                    withAnimation {
-                                        showProgrammingLanguagePopup = false
-                                    }
+        VStack {
+            Spacer()
+            ZStack(alignment: .leading) {
+                VStack(spacing: 16) {
+                    Spacer()
+                        .frame(height: 10)
+                    Text("Choose Language")
+                        .font(.h2)
+                        .padding(.horizontal, 4)
+                    ForEach(ProgrammingLanguage.allCases, id: \.rawValue) { language in
+                        languageView(language: language)
+                            .padding(.horizontal, 20)
+                            .onTapGesture {
+                                store.dispatch(ChangeProgrammingLanguage(language: language))
+                                store.dispatch(LoadRecommendedChallenges())
+                                withAnimation {
+                                    showProgrammingLanguagePopup = false
                                 }
-                                .contentShape(Rectangle())
-                        }
-                        Button("Cancel") {
-                            withAnimation {
-                                showProgrammingLanguagePopup.toggle()
                             }
+                            .contentShape(Rectangle())
+                    }
+                    Button("Cancel") {
+                        withAnimation {
+                            showProgrammingLanguagePopup.toggle()
                         }
-                        .foregroundColor(.white.withAlphaComponent(0.6))
-                        .font(.smallText)
-                        .padding(.bottom, 20)
                     }
-                    .foregroundColor(.white)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.CodeChallenge.background))
-                    }
+                    .foregroundColor(.white.withAlphaComponent(0.6))
+                    .font(.smallText)
+                    .padding(.bottom, 20)
                 }
-                .padding(.horizontal, 16)
-                Spacer()
+                .foregroundColor(.white)
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(.CodeChallenge.background))
+                }
             }
-            .frame(width: .screenWidth)
+            .padding(.horizontal, 16)
+            Spacer()
+        }
+        .frame(width: .screenWidth)
     }
 
     private func languageView(language: ProgrammingLanguage) -> some View {
@@ -252,54 +254,51 @@ fileprivate struct SkeletonView: View {
     let model5 = ChallengeCollection(id: 5)
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVGrid(
-                columns: gridItemLayout,
-                alignment: .leading,
-                spacing: 0,
-                pinnedViews: []) {
-                    Section(
-                        header:
-                            Text("something")
-                            .font(.h3)
+        LazyVGrid(
+            columns: gridItemLayout,
+            alignment: .leading,
+            spacing: 0,
+            pinnedViews: []) {
+                Section(
+                    header:
+                        Text("something")
+                        .font(.h3)
                         .bold()
                         .padding(.leading, 10.0)
                         .padding(.bottom, 16)
-                    ) {
-                        HomeViewElementView(
-                            model: model1, progressImageName: "home_progress_start",
-                            progressTopInset: 21, progressBottomInset: 2,
-                            progressPreviousPeaceHeight: 0, expectedHeight: 134,
-                            previousModel: nil, nextModel: model2
-                        )
-                        HomeViewElementView(
-                            model: model2, progressImageName: "home_progress_end",
-                            progressTopInset: 2, progressBottomInset: 28,
-                            progressPreviousPeaceHeight: 24, expectedHeight: 104,
-                            previousModel: model1, nextModel: model3
-                        )
-                    }
-                    Section(
-                        header:
-                            Text("something 2")
-                            .font(.h3)
-                        .bold()
-                        .padding(.leading, 10.0)
-                        .padding(.bottom, 16)
-                    ) {
-                        HomeViewElementView(
-                            model: model4, progressImageName: "home_progress_only_section",
-                            progressTopInset: 23, progressBottomInset: 26,
-                            progressPreviousPeaceHeight: 0, expectedHeight: 108,
-                            previousModel: nil, nextModel: model5
-                        )
-                    }
+                ) {
+                    HomeViewElementView(
+                        model: model1, progressImageName: "home_progress_start",
+                        progressTopInset: 21, progressBottomInset: 2,
+                        progressPreviousPeaceHeight: 0, expectedHeight: 134,
+                        previousModel: nil, nextModel: model2
+                    )
+                    HomeViewElementView(
+                        model: model2, progressImageName: "home_progress_end",
+                        progressTopInset: 2, progressBottomInset: 28,
+                        progressPreviousPeaceHeight: 24, expectedHeight: 104,
+                        previousModel: model1, nextModel: model3
+                    )
                 }
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-        }
-        .padding(.top, 16)
-        .redacted(reason: .placeholder)
+                Section(
+                    header:
+                        Text("something 2")
+                        .font(.h3)
+                        .bold()
+                        .padding(.leading, 10.0)
+                        .padding(.bottom, 16)
+                ) {
+                    HomeViewElementView(
+                        model: model4, progressImageName: "home_progress_only_section",
+                        progressTopInset: 23, progressBottomInset: 26,
+                        progressPreviousPeaceHeight: 0, expectedHeight: 108,
+                        previousModel: nil, nextModel: model5
+                    )
+                }
+            }
+            .foregroundColor(.white)
+            .padding(.horizontal, 16)
+            .redacted(reason: .placeholder)
     }
 }
 

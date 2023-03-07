@@ -20,8 +20,8 @@ struct LeaderboardView: View, LeaderboardViewProps {
                         .foregroundColor(.white)
                         .padding(.bottom, 16)
                         .padding(.leading, 16)
-                    ForEach(Array(topUsers.enumerated()), id: \.offset) { (index, item) in
-                        itemView(item, position: index + 1, medalPossible: true)
+                    ForEach(topUsers, id: \.id) { item in
+                        itemView(item, medalPossible: true)
                             .padding(.horizontal, 16)
                     }
                     if !neightborUsers.isEmpty {
@@ -29,12 +29,12 @@ struct LeaderboardView: View, LeaderboardViewProps {
                             Spacer()
                             Text("•  •  •")
                                 .padding(.vertical, 20)
-                                .foregroundColor(.white)
+                                .foregroundColor(.CodeChallenge.white.withAlphaComponent(0.8))
                             Spacer()
                         }
                     }
                     ForEach(Array(neightborUsers.enumerated()), id: \.offset) { (index, item) in
-                        itemView(item, position: index + 1, medalPossible: false)
+                        itemView(item, medalPossible: false)
                             .padding(.horizontal, 16)
                     }
 
@@ -45,7 +45,7 @@ struct LeaderboardView: View, LeaderboardViewProps {
         }
     }
 
-    private func itemView(_ user: LeaderboardUser, position: Int, medalPossible: Bool) -> some View {
+    private func itemView(_ user: LeaderboardUser, medalPossible: Bool) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color(.CodeChallenge.gray2).opacity(0.4))
@@ -53,7 +53,11 @@ struct LeaderboardView: View, LeaderboardViewProps {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color(.CodeChallenge.blue1), lineWidth: 1.5)
             }
-            HStack(spacing: 10) {
+            HStack(spacing: 4) {
+                Text("\(user.position)")
+                    .font(.smallText)
+                    .padding(.leading, 8)
+                    .foregroundColor(.CodeChallenge.white.withAlphaComponent(0.8))
                 ZStack {
                     NetworkImage(
                         viewModel: .init(url: "\(Configuration.host)/user/getImage/\(user.id)/",
@@ -70,8 +74,8 @@ struct LeaderboardView: View, LeaderboardViewProps {
                             .resizable()
                             .frame(width: 57, height: 57)
                     }
-                    if medalPossible && position < 4 {
-                        Image("medal_\(position)")
+                    if medalPossible && user.position < 4 {
+                        Image("medal_\(user.position)")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 34)

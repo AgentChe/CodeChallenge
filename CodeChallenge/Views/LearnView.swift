@@ -69,7 +69,7 @@ struct LessonView: View, LearnViewProps {
 
     private func itemView(_ item: ConceptReviewPage) -> some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 16) {
                 Text(item.title)
                     .font(.h2)
                     .padding(.horizontal, 25)
@@ -89,8 +89,8 @@ struct LessonView: View, LearnViewProps {
                                 HStack {
                                     Spacer()
                                         .frame(width: 25)
-                                    HtmlAttributedLabel(htmlAttributedString: attributedString, foregroundColor: nil)
-                                        .frame(width: .screenWidth - (widthOfHiddenCards*2) - (spacing*2) - 50)
+                                    HtmlAttributedLabel(htmlAttributedString: attributedString, foregroundColor: nil, inset: codeBlockInsets)
+                                        .frame(width: .screenWidth - CGFloat(codeBlockInsets))
                                     Spacer()
                                         .frame(width: 25)
                                 }
@@ -114,6 +114,10 @@ struct LessonView: View, LearnViewProps {
             }
         }
         .frame(width: .screenWidth - (widthOfHiddenCards*2) - (spacing*2) , alignment: .center)
+    }
+
+    private var codeBlockInsets: Int {
+        Int((widthOfHiddenCards*2) + (spacing*2) + 50)
     }
 
     private func getCodeAttributedString(code: String) -> NSMutableAttributedString? {

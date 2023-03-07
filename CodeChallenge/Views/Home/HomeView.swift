@@ -32,11 +32,13 @@ struct HomeView: View, HomeViewProps {
                         .padding(.bottom, 16)
                         .padding(.leading, 16)
                     searchBar
+                        .padding(.vertical, 10)
                     if searchFieldIsFocused {
                         searchedResultView
                             .onAppear {
                                 store.dispatch(TrackAnalyticsEvent(event: .browseOpened))
                             }
+                            .padding(.top, 10)
                     } else if isLoading {
                         SkeletonView()
                     } else {

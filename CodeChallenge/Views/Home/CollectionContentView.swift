@@ -77,7 +77,8 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 .font(.bodyText)
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
             if displayConceptReview {
-                Button("Review the concept") {
+                Button("Try the Cheatsheets") {
+                    store.dispatch(TrackAnalyticsEvent(event: .conceptOpened(displayContent.name)))
                     if let conceptReview = section.conceptReview {
                         onConceptReview(conceptReview)
                     }

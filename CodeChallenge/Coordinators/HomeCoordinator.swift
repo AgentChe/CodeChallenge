@@ -44,6 +44,10 @@ class HomeCoordinator {
         DispatchQueue.main.async { [weak self] in
             self?.presentGetStartedIfNecessary()
         }
+
+        for language in ProgrammingLanguage.allCases {
+            store.dispatch(LoadHashtags(programmingLanguage: language))
+        }
     }
 
     private func openCollectionDetail(collection: ChallengeCollection, section: ChallengeSection) {

@@ -26,6 +26,7 @@ enum AnalyticsEvent {
     case premiumSucceeded(String)
     case viewAllPlansClicked
     case homepageLoaded(Double, Error?)
+    case conceptOpened(String)
 
     var value: String {
         switch self {
@@ -61,6 +62,8 @@ enum AnalyticsEvent {
             return "View All Plans Clicked"
         case .homepageLoaded:
             return "Homepage Loaded"
+        case .conceptOpened:
+            return "Concept Opened"
         }
     }
 
@@ -100,6 +103,8 @@ enum AnalyticsEvent {
             return ["miliseconds": seconds, "error": error?.localizedDescription ?? ""]
         case .premiumSucceeded(let type):
             return ["type": type]
+        case .conceptOpened(let source):
+            return ["source": source]
         default: return [:]
         }
     }

@@ -26,7 +26,7 @@ struct FocusableSearchField: UIViewRepresentable {
         field.autocapitalizationType = .none
         field.keyboardType = .webSearch
         field.textColor = .white
-        field.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.white.withAlphaComponent(0.6)])
+        field.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.foregroundColor: UIColor.white.withAlphaComponent(0.7)])
         field.accessibilityTraits = .searchField
         let leftImageView = UIImageView(image: .init(named: "search_field_icon"))
         leftImageView.contentMode = .center
@@ -37,7 +37,7 @@ struct FocusableSearchField: UIViewRepresentable {
         field.layer.cornerRadius = 20
         context.coordinator.bind(to: field, viewModel: .init())
         let buttonAppearance = UIButton.appearance(whenContainedInInstancesOf: [SearchTextField.self])
-        buttonAppearance.setImage(.init(named: "search_field_clear"), for: .normal)
+        buttonAppearance.setImage(.init(named: "search_field_clear_icon"), for: .normal)
         return field
     }
 

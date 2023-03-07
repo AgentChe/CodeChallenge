@@ -41,7 +41,7 @@ struct LessonView: View, LearnViewProps {
                     }
                     .foregroundColor(Color.black)
                     .transition(AnyTransition.slide)
-                    .animation(.spring(), value: UUID())
+                    .animation(.easeInOut(duration: 0.25), value: UUID())
                 }
             }
         }

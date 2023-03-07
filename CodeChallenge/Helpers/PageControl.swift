@@ -20,6 +20,7 @@ struct PageControl : UIViewRepresentable {
         pageControl.pageIndicatorTintColor = .CodeChallenge.dustyBlue
         pageControl.currentPageIndicatorTintColor = .CodeChallenge.blue1
         pageControl.numberOfPages = numberOfPages
+        pageControl.isUserInteractionEnabled = false
 
         return pageControl
     }

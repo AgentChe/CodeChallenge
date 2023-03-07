@@ -54,13 +54,6 @@ struct LeaderboardView: View, LeaderboardViewProps {
                     .stroke(Color(.CodeChallenge.blue1), lineWidth: 1.5)
             }
             HStack(spacing: 10) {
-                if medalPossible && position < 4 {
-                    Image("medal_\(position)")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 28)
-                }
-
                 ZStack {
                     NetworkImage(
                         viewModel: .init(url: "\(Configuration.host)/user/getImage/\(user.id)/",
@@ -77,18 +70,27 @@ struct LeaderboardView: View, LeaderboardViewProps {
                             .resizable()
                             .frame(width: 57, height: 57)
                     }
+                    if medalPossible && position < 4 {
+                        Image("medal_\(position)")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 34)
+                            .padding(.top, 32)
+                            .padding(.leading, 36)
+                    }
                 }
+                .frame(width: 70)
                 Text(user.username ?? "Guest user")
                     .lineLimit(1)
                     .font(.semibold(size: 16))
+                    .padding(.vertical, 30)
                 Spacer()
                 HStack {
                     Text("\(user.xp)")
                     Image("xpIcon_white")
                 }
             }
-            .padding(.vertical, 10)
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 10)
             .foregroundColor(.white)
             .frame(width: .screenWidth - 32)
         }

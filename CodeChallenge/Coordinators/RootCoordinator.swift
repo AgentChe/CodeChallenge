@@ -61,7 +61,6 @@ final class RootCoordinator {
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white, .font: UIFont.tabbar], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.CodeChallenge.blue1], for: .selected)
         window.rootViewController = tabBarController
-
         accountCoordinator.onLogin = { [weak self] in
             self?.showLogin()
         }

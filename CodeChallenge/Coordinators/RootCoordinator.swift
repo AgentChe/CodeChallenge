@@ -17,7 +17,7 @@ final class RootCoordinator {
     private var authNavigationController: UINavigationController?
     private let accountCoordinator: AccountCoordinator
     private let homeCoordinator: HomeCoordinator
-    private let browseCoordinator: BrowseCoordinator
+    private let browseCoordinator: LeaderboardCoordinator
     private let premiumCoordinator: PremiumCoordinator
     private let buddiesCoordinator: BuddiesCoordinator
 
@@ -33,7 +33,7 @@ final class RootCoordinator {
         self.window = window
         accountCoordinator = AccountCoordinator(store: store)
         homeCoordinator = HomeCoordinator(store: store)
-        browseCoordinator = BrowseCoordinator(store: store)
+        browseCoordinator = LeaderboardCoordinator(store: store)
         premiumCoordinator = PremiumCoordinator(store: store)
         buddiesCoordinator = BuddiesCoordinator(store: store)
         paywallService = PaywallService(store: store)

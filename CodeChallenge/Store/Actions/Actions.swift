@@ -31,6 +31,7 @@ enum Action: Dispatchable {
     case loadRewards(Resolvable<[Reward]>)
     case updateLoadingReward(LoadingReward?)
     case loadConceptReview(String, Resolvable<ConceptReview>)
+    case updateLeaderboardData(Resolvable<LeaderboardData>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -206,6 +207,7 @@ struct LoadAccount: ThunkAction {
                 account.isPremium = user.isPremium
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
                 dispatcher.services.identifyService.identify(id: user.id)
+                dispatcher.dispatch(LoadLeaderboardData())
             }
     }
 }
@@ -587,6 +589,21 @@ struct FetchConceptReview: ThunkAction {
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.loadConceptReview(sectionConceptReview.id, result))
+            }
+    }
+}
+
+struct LoadLeaderboardData: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        let id = UserDefaults.standard.integer(forKey: "cc_user_id")
+        dispatcher.dispatch(Action.updateLeaderboardData(.loading))
+
+        dispatcher.services
+            .leaderboardService
+            .getLeaderboardData(id: id)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateLeaderboardData(result))
             }
     }
 }

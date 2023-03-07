@@ -27,7 +27,8 @@ struct Reducers {
             payments: paymentsReducer(state.payments, action),
             rewards: rewardsReducer(state.rewards, action),
             loadingReward: loadingRewardReducer(state.loadingReward, action),
-            conceptReviews: conceptReviewReducer(state.conceptReviews, action)
+            conceptReviews: conceptReviewReducer(state.conceptReviews, action),
+            leaderboardData: leaderboardReducer(state.leaderboardData, action)
         )
     }
 }
@@ -209,6 +210,15 @@ extension Reducers {
     static let rewardsReducer: Reducer<Resolvable<[Reward]>> = { state, action in
         switch action {
         case .loadRewards(let result): return result
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let leaderboardReducer: Reducer<Resolvable<LeaderboardData>> = { state, action in
+        switch action {
+        case .updateLeaderboardData(let result): return result
         default: return state
         }
     }

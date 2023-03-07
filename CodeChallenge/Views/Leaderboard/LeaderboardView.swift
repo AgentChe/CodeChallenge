@@ -56,8 +56,8 @@ struct LeaderboardView: View, LeaderboardViewProps {
             HStack(spacing: 4) {
                 Text("\(user.position)")
                     .font(.smallText)
-                    .padding(.leading, 8)
                     .foregroundColor(.CodeChallenge.white.withAlphaComponent(0.8))
+                    .padding(.leading, 8)
                 ZStack {
                     NetworkImage(
                         viewModel: .init(url: "\(Configuration.host)/user/getImage/\(user.id)/",
@@ -93,6 +93,7 @@ struct LeaderboardView: View, LeaderboardViewProps {
                     Text("\(user.xp)")
                     Image("xpIcon_white")
                 }
+                .padding(.trailing, 8)
             }
             .padding(.horizontal, 10)
             .foregroundColor(.white)

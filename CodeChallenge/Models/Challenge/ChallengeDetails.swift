@@ -20,6 +20,7 @@ struct ChallengeDetail: Codable, Equatable {
     let name: String
     let body: Body
     let programmingLanguage: String
+    let aiGenerated: [AIGenerated]?
 }
 
 extension ChallengeDetail {
@@ -30,6 +31,11 @@ extension ChallengeDetail {
         default: return .python
         }
     }
+}
+
+struct AIGenerated: Codable, Equatable {
+    let comment: String
+    let code: [String]
 }
 
 // MARK: - BodyPython

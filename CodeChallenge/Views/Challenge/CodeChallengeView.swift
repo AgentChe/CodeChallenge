@@ -205,7 +205,8 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         code: $displayCode,
                         resettedTemplate: $resettedTemplate,
                         bottomInset: geometry.size.height - quickAccessCharViewHeight,
-                        programmingLanguage: programmingLanguage) { code in
+                        programmingLanguage: programmingLanguage,
+                        aiGenerated: details?.aiGenerated) { code in
                         DispatchQueue.main.async {
                             displayCode = removeTrailingNewLines(string: code)
                         }

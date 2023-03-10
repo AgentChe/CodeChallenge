@@ -41,3 +41,26 @@ struct AutocompleteDropdownView_Previews: PreviewProvider {
         AutocompleteDropdownView(options: [""], onSelect: { _ in })
     }
 }
+
+struct GenerateWithAIDropdownView: View {
+    let onSelect: (() -> Void)
+    @State private var isLoading: Bool = false
+
+    var body: some View {
+        Text(isLoading ? "Generating ..." : "Generate with AI")
+            .font(.bodyText)
+            .foregroundColor(.CodeChallenge.blue1)
+            .onTapGesture {
+                isLoading = true
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    onSelect()
+                }
+            }
+            .frame(height: 26)
+        .padding(.horizontal, 30)
+        .padding(.vertical, 8)
+        .background(.CodeChallenge.background)
+        .cornerRadius(10)
+    }
+}

@@ -14,6 +14,7 @@ struct CodePlaygroundView: UIViewRepresentable {
     @Binding var resettedTemplate: String?
     let bottomInset: CGFloat
     let programmingLanguage: ProgrammingLanguage
+    let aiGenerated: [AIGenerated]?
     let onCodeChange: (String) -> Void
 
     func makeUIView(context: Context) -> some UIView {
@@ -21,6 +22,7 @@ struct CodePlaygroundView: UIViewRepresentable {
         view.onCodeChange = onCodeChange
         view.language = programmingLanguage
         view.set(code: code ?? "")
+        view.aiGenerated = aiGenerated ?? []
         view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([

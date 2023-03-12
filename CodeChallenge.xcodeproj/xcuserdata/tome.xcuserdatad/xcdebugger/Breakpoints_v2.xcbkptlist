@@ -55,64 +55,145 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A197F82C-C14A-44E0-A64A-DA62BA3D9119"
+            uuid = "763A1AC9-2E52-4C42-AAF7-BADCEFE8B96F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "onSelect(specialCharacter:range:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D8A8FE6-9CF7-4877-8E5F-6AA7B852ED34"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "proceed(with:in:textViewText:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AC1B6E97-D805-4263-8DC0-F98B0E2B692D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/AutocompleteTermsHelper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "getMatches(string:language:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C8178D85-086E-4D63-9B24-FF1B8F3F7B33"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/AutocompleteTermsHelper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "getMatches(string:language:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6C31879E-9070-4EC4-86CA-545152704EEA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/AutocompleteTermsHelper.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "getMatches(string:language:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6C31879E-9070-4EC4-86CA-545152704EEA - 303bdc26acebe6c2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Codehub_Staging.AutocompleteTermsHelper.getMatches(string: Swift.String, language: Swift.String) -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/AutocompleteTermsHelper.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "276">
+               </Location>
+               <Location
+                  uuid = "6C31879E-9070-4EC4-86CA-545152704EEA - d7ff246542e9707d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; Swift.Bool in static Codehub_Staging.AutocompleteTermsHelper.getMatches(string: Swift.String, language: Swift.String) -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/AutocompleteTermsHelper.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "21"
+                  endingLineNumber = "21"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8FA1D427-7055-48FB-96FC-E68966C84E7C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CodeChallenge/Views/Playground/PlaygroundView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "308"
-            endingLineNumber = "308"
-            landmarkName = "textView(_:shouldChangeTextIn:replacementText:)"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "commonInit()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "A197F82C-C14A-44E0-A64A-DA62BA3D9119 - f0ce7fdea25f0809"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Codehub_Staging.PlaygroundView.textView(_: __C.UITextView, shouldChangeTextIn: __C._NSRange, replacementText: Swift.String) -&gt; Swift.Bool"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/PlaygroundView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "314"
-                  endingLineNumber = "314"
-                  offsetFromSymbolStart = "6824">
-               </Location>
-               <Location
-                  uuid = "A197F82C-C14A-44E0-A64A-DA62BA3D9119 - f0ce7fdea25f0809"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Codehub_Staging.PlaygroundView.textView(_: __C.UITextView, shouldChangeTextIn: __C._NSRange, replacementText: Swift.String) -&gt; Swift.Bool"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/PlaygroundView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "314"
-                  endingLineNumber = "314"
-                  offsetFromSymbolStart = "7052">
-               </Location>
-               <Location
-                  uuid = "A197F82C-C14A-44E0-A64A-DA62BA3D9119 - 1f21df2b92435d06"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #5 (Codehub_Staging.AIGenerated) -&gt; Swift.Bool in Codehub_Staging.PlaygroundView.textView(_: __C.UITextView, shouldChangeTextIn: __C._NSRange, replacementText: Swift.String) -&gt; Swift.Bool"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Playground/PlaygroundView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "314"
-                  endingLineNumber = "314"
-                  offsetFromSymbolStart = "68">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8C7A146C-C37B-4CD0-B680-CDEB706300D7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "autocomplete(with:range:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -18,11 +18,13 @@ struct CodePlaygroundView: UIViewRepresentable {
     let onCodeChange: (String) -> Void
 
     func makeUIView(context: Context) -> some UIView {
-        let view = PlaygroundView(frame: .zero)
-        view.onCodeChange = onCodeChange
-        view.language = programmingLanguage
-        view.set(code: code ?? "")
-        view.aiGenerated = aiGenerated ?? []
+        let vm = PlaygroundViewModel.init(language: programmingLanguage, aiGenerated: aiGenerated ?? [], onCodeChange: onCodeChange)
+        let view = PlaygroundView(vm: vm)
+        vm.set(code: code ?? "")
+//        view.onCodeChange = onCodeChange
+//        view.language = programmingLanguage
+//        view.set(code: code ?? "")
+//        view.aiGenerated = aiGenerated ?? []
         view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -36,7 +38,7 @@ struct CodePlaygroundView: UIViewRepresentable {
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
         if let specialCharacter = specialCharacter {
-            (uiView as? PlaygroundView)?.onSelect(specialChar: specialCharacter)
+            (uiView as? PlaygroundView)?.onSelect(specialCharacter: specialCharacter)
         }
 
         if let resettedTemplate = resettedTemplate {

@@ -12,7 +12,6 @@ import Highlightr
 
 class PlaygroundView: UIView {
     enum Constants {
-        static let autocompleteMaximumWordCharCount: CGFloat = 10
         static let autocompleteDropdownItemHeight: CGFloat = 26
         static let autocompleteDropdownItemWidth: CGFloat = 200
         static let lineNumberBoxWidth: CGFloat = 35
@@ -26,7 +25,10 @@ class PlaygroundView: UIView {
         let layoutManager = NSLayoutManager()
         textStorage.addLayoutManager(layoutManager)
 
-        let textContainer = NSTextContainer(size: .init(width: UIScreen.main.bounds.width - 10 - Constants.lineNumberBoxWidth, height: UIScreen.main.bounds.size.height - 260))
+        let textContainer = NSTextContainer(size: .init(
+            width: .screenWidth - Constants.lineNumberBoxWidth - 10,
+            height: .screenHeight - 260
+        ))
         layoutManager.addTextContainer(textContainer)
 
         let textView = UITextView(frame: .zero, textContainer: textContainer)
@@ -40,21 +42,12 @@ class PlaygroundView: UIView {
         return textView
     }()
 
-    private let autocompleteSymbols = ["(":")", "{":"}", "[":"]", "\"":"\"", "\'":"\'"]
-
     private var textViewHeightConstraint: NSLayoutConstraint?
     private var autocompleteDropdownHostingController: UIViewController?
-    private var codeToCompile: String = ""
     private var scrollViewBottomConstraint: NSLayoutConstraint?
     private var justAutocompleted: Bool = false
     private var fontHeight: CGFloat = UIFont(name: "CourierNewPSMT", size: Constants.fontSize)?.lineHeight ?? 0
-    var language: ProgrammingLanguage = .python {
-        didSet {
-            (textView.textStorage as? CodeAttributedString)?.language = language.rawValue
-        }
-    }
-    var aiGenerated: [AIGenerated] = []
-    var onCodeChange: ((String) -> Void)?
+    let vm: PlaygroundViewModel?
 
     private let lineNumerStackView: UIStackView = {
         let stackView = UIStackView()
@@ -71,31 +64,68 @@ class PlaygroundView: UIView {
         return scrollView
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(vm: PlaygroundViewModel) {
+        self.vm = vm
+        super.init(frame: .zero)
         commonInit()
     }
 
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        commonInit()
-    }
-
-    func set(code: String) {
-        self.codeToCompile = code.removingPercentEncoding ?? code
-        self.codeToCompile = codeToCompile.replacingOccurrences(of: "\t", with: "  ")
-        self.codeToCompile = codeToCompile.replacingOccurrences(of: "\n", with: " ")
-        textView.text = code.removingPercentEncoding ?? code
+        fatalError("init(coder:) has not been implemented")
     }
 
     func reset(newCode: String) {
-        set(code: newCode)
-        textViewDidChange(textView)
+        vm?.set(code: newCode)
+    }
+
+    func onSelect(specialCharacter: String) {
+        vm?.onSelect(specialCharacter: specialCharacter, range: textView.selectedRange)
     }
 
     func commonInit() {
+        (self.textView.textStorage as? CodeAttributedString)?.language = vm?.language.rawValue
+        vm?.onUpdate = { [weak self] updateType in
+            switch updateType {
+            case .codeChange(let code):
+                self?.textView.text = code
+            case .languageUpdate(let language):
+                (self?.textView.textStorage as? CodeAttributedString)?.language = language.rawValue
+            case .updateTextView:
+                if let textView = self?.textView {
+                    self?.textViewDidChange(textView)
+                }
+            case .updateCharactersInRange(let range, let text):
+                guard let textView = self?.textView else { return }
+                textView.textStorage.replaceCharacters(in: range, with: text)
+            case .updateTextViewCursor(let offset):
+                guard let textView = self?.textView else { return }
+                guard let endPosition: UITextPosition = textView.selectedTextRange?.end else { return }
+                if let newPosition = textView.position(from: endPosition, offset: offset) {
+                    textView.selectedTextRange = textView.textRange(from: newPosition, to: newPosition)
+                }
+            case .workMatchesRetrieved(let matches, let range):
+                guard let textView = self?.textView, let end = textView.selectedTextRange?.end else { return }
+                var rect = textView.caretRect(for: end)
+                rect = textView.convert(rect, to: self)
+
+                let customView = AutocompleteDropdownView(options: matches) { [weak self] item in
+                    guard let self = self else { return }
+                    self.autocompleteDropdownHostingController?.view.removeFromSuperview()
+                    self.autocompleteDropdownHostingController?.removeFromParent()
+                    self.vm?.autocomplete(with: item, range: range)
+                    self.justAutocompleted = true
+                }
+
+                self?.autocompleteDropdownHostingController = UIHostingController(rootView: customView)
+                self?.autocompleteDropdownHostingController?.view?.backgroundColor = .CodeChallenge.background
+                self?.autocompleteDropdownHostingController?.view?.layer.cornerRadius = 10
+                if let view = self?.autocompleteDropdownHostingController?.view {
+                    self?.bringSubviewToFront(view)
+                }
+                self?.setupDropdownViewConstraints(rect: rect, matchesCount: matches.count)
+            }
+        }
         setupViews()
-        codeToCompile = textView.text
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.textViewDidChange(self.textView)
@@ -140,7 +170,6 @@ class PlaygroundView: UIView {
         self.layoutIfNeeded()
     }
 }
-
 
 extension PlaygroundView {
     private func setupViews() {
@@ -235,25 +264,6 @@ extension PlaygroundView {
         let linesRoundedUp = Int(ceil(textSize.height/charSize))
         return linesRoundedUp
     }
-
-    func onSelect(specialChar: String, updateCodeToCompile: Bool = true) {
-        let range = textView.selectedRange
-        let endPosition: UITextPosition = textView.selectedTextRange!.end
-        self.textView.textStorage.replaceCharacters(in: range, with: specialChar)
-
-        if updateCodeToCompile {
-            self.codeToCompile = (self.codeToCompile as NSString).replacingCharacters(in: range, with: specialChar)
-        }
-        if let newPosition = self.textView.position(from: endPosition, offset: specialChar.count) {
-                self.textView.selectedTextRange = self.textView.textRange(from: newPosition, to: newPosition)
-        }
-        if let value = self.autocompleteSymbols[specialChar] {
-            let range = textView.selectedRange
-            codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: value)
-            self.textView.textStorage.replaceCharacters(in: range, with: value)
-        }
-        textViewDidChange(textView)
-    }
 }
 
 extension PlaygroundView: UITextViewDelegate {
@@ -261,146 +271,27 @@ extension PlaygroundView: UITextViewDelegate {
         textViewHeightConstraint?.constant = textView.contentSize.height
         setupLineNumbers(height: textView.contentSize.height)
 
-        guard let range = textView.selectedTextRange else {
-            return
+        if let range = textView.selectedTextRange {
+            let cursorRect = textView.caretRect(for: range.start)
+            let rectToMakeVisible = textView.convert(cursorRect, to: scrollView)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.scrollView.scrollRectToVisible(rectToMakeVisible, animated: false)
+            }
         }
-
-        onCodeChange?(textView.text)
-
-        let cursorRect = textView.caretRect(for: range.start)
-        let rectToMakeVisible = textView.convert(cursorRect, to: scrollView)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.scrollView.scrollRectToVisible(rectToMakeVisible, animated: false)
-        }
+        vm?.update(codeToCompile: textView.text)
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         autocompleteDropdownHostingController?.view.removeFromSuperview()
         autocompleteDropdownHostingController?.removeFromParent()
         autocompleteDropdownHostingController = nil
-        let (tabs, lastLineTabs) = newTabs(textView: textView, range: range)
-        if text == "\n" {
-            onSelect(specialChar: "\n\(tabs)", updateCodeToCompile: false)
-            let spacesForTabs = String(repeating: "  ", count: lastLineTabs.count + 1)
-            codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: " \(spacesForTabs)")
-            return false
-        } else if codeToCompile.count >= range.upperBound, text != "" {
-            codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: text)
-            let (word, range) = findWordBetweenSpaces(using: range, in: codeToCompile)
-            if !word.isEmpty && text != " " {
-                autocomplete(phrase: word, range: range)
-            }
 
-            if let value = self.autocompleteSymbols[text] {
-                let range = textView.selectedRange
-                codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: value)
-                self.textView.textStorage.replaceCharacters(in: range, with: value)
-            }
-        } else {
-            codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: text)
-        }
-        if let endPosition = textView.selectedTextRange?.end,
-            let textRange = textView.textRange(from: textView.beginningOfDocument, to: endPosition),
-           let text = textView.text(in: textRange),
-           text.suffix(2) == "__",
-           text.components(separatedBy: "\n ")[text.components(separatedBy: "\n ").count - 2].starts(with: " # ") {
-            let comment = text.components(separatedBy: "\n ")[text.components(separatedBy: "\n ").count - 2]
-            let code = aiGenerated.first { comment.contains($0.comment.removingPercentEncoding ?? "") }?.code.randomElement()
-            var newRange = NSRange(location: range.location - 1, length: 2)
-            generateByAI(textView: textView, range: newRange, code: "\(code?.removingPercentEncoding ?? "")")
-        }
-        return true
-    }
-
-    private func newTabs(textView: UITextView, range: NSRange) -> (tabs: String, lastLineTabs: String) {
-        var linesBefore: [String] = []
-        textView.text.prefix(range.location).enumerateLines(invoking: { line, stop in
-            linesBefore.append(line)
-        })
-        let lastLineTabs = linesBefore.last { $0.last == language.openingSymbol }?.prefix(while: { $0 == " " }) ?? ""
-        let evenNumberTabs = lastLineTabs.count % 2 == 0 ? lastLineTabs : lastLineTabs.prefix(lastLineTabs.count - 1)
-        let newTab = linesBefore.last { $0.last == language.openingSymbol } != nil ? "  " : ""
-        return (tabs: "\(evenNumberTabs)\(newTab)", lastLineTabs: String(lastLineTabs))
-    }
-
-    private func generateByAI(textView: UITextView, range: NSRange, code: String) {
-        guard let selectedRange = textView.selectedTextRange else { return }
-        let endPosition: UITextPosition = selectedRange.end
-        var rect = textView.caretRect(for: endPosition)
-        rect = textView.convert(rect, to: self)
-        let customView = GenerateWithAIDropdownView { [weak self] in
-            guard let self = self else { return }
-            let item = code
-            self.autocompleteDropdownHostingController?.view.removeFromSuperview()
-            self.autocompleteDropdownHostingController?.removeFromParent()
-
-            self.textView.textStorage.replaceCharacters(in: range, with: item)
-            self.codeToCompile = (self.codeToCompile as NSString).replacingCharacters(in: range, with: item)
-            if let newPosition = self.textView.position(from: endPosition, offset: (item.count - (range.upperBound - range.lowerBound) + 1)) {
-                self.textView.selectedTextRange = self.textView.textRange(from: newPosition, to: newPosition)
-                self.textViewDidChange(self.textView)
-            }
-            self.justAutocompleted = true
-        }
-
-        autocompleteDropdownHostingController = UIHostingController(rootView: customView)
-        autocompleteDropdownHostingController?.view?.backgroundColor = .CodeChallenge.background
-        autocompleteDropdownHostingController?.view?.layer.cornerRadius = 10
-        if let view = autocompleteDropdownHostingController?.view {
-            self.bringSubviewToFront(view)
-        }
-        setupDropdownViewConstraints(rect: rect, matchesCount: 1)
-    }
-
-    private func findWordBetweenSpaces(using range: NSRange, in text: String) -> (String, NSRange) {
-        let prefix = (text.prefix(range.lowerBound).lastIndex { $0 == " " })?.utf16Offset(in: text) ?? 0
-        let suffix: Int
-        if text.count - range.upperBound > 0 {
-            suffix = (text.suffix(text.count - range.upperBound).firstIndex { $0 == " " })?
-                .utf16Offset(in: text) ?? text.count
-        } else {
-            suffix = text.count
-        }
-        let range = String.Index(utf16Offset: min(prefix + 1, text.count), in: text)..<String.Index(utf16Offset: suffix, in: text)
-        return (String(text[range]), NSRange(range, in: text))
+        return vm?.proceed(with: text, in: range, textViewText: textView.text) == true
     }
 }
 
 // MARK: Autocomplete logic
 extension PlaygroundView {
-    private func autocomplete(phrase: String, range: NSRange) {
-        guard let selectedRange = textView.selectedTextRange else { return }
-        let endPosition: UITextPosition = selectedRange.end
-        let matches = AutocompleteTermsHelper.getMatches(string: phrase, language: language.rawValue)
-        let matchesWithoutPhrase = matches.filter { $0 != phrase }
-        if !matchesWithoutPhrase.isEmpty {
-            var rect = textView.caretRect(for: endPosition)
-            rect = textView.convert(rect, to: self)
-
-            let customView = AutocompleteDropdownView(options: matchesWithoutPhrase) { [weak self] item in
-                guard let self = self else { return }
-                self.autocompleteDropdownHostingController?.view.removeFromSuperview()
-                self.autocompleteDropdownHostingController?.removeFromParent()
-
-                self.textView.textStorage.replaceCharacters(in: range, with: item)
-                self.codeToCompile = (self.codeToCompile as NSString).replacingCharacters(in: range, with: item)
-                if let newPosition = self.textView.position(from: endPosition, offset: (item.count - (range.upperBound - range.lowerBound) + 1)) {
-                    self.textView.selectedTextRange = self.textView.textRange(from: newPosition, to: newPosition)
-                    self.textViewDidChange(self.textView)
-                }
-                self.justAutocompleted = true
-            }
-
-            autocompleteDropdownHostingController = UIHostingController(rootView: customView)
-            autocompleteDropdownHostingController?.view?.backgroundColor = .CodeChallenge.background
-            autocompleteDropdownHostingController?.view?.layer.cornerRadius = 10
-            if let view = autocompleteDropdownHostingController?.view {
-                self.bringSubviewToFront(view)
-            }
-            setupDropdownViewConstraints(rect: rect, matchesCount: matches.count)
-        }
-    }
-
     private func setupDropdownViewConstraints(rect: CGRect, matchesCount: Int) {
         guard let autocompleteDropdownHostingController = autocompleteDropdownHostingController,
               let view = autocompleteDropdownHostingController.view else { return }

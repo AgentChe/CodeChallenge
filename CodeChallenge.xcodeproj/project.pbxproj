@@ -34,6 +34,7 @@
 		E0359DD6299AFAAB00E8AF4F /* ChallengeDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DD5299AFAAB00E8AF4F /* ChallengeDetails.swift */; };
 		E0359DD8299AFAF500E8AF4F /* ChallengeCompiledResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DD7299AFAF500E8AF4F /* ChallengeCompiledResult.swift */; };
 		E0359DDA299AFB3E00E8AF4F /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */; };
+		E039199529BBA38800B43A99 /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */; };
 		E04D067B28BD5F30003DB450 /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = E04D067A28BD5F30003DB450 /* confetti.json */; };
 		E05254FE288C796000FD87C3 /* CodePlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05254FD288C796000FD87C3 /* CodePlaygroundView.swift */; };
 		E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */; };
@@ -217,6 +218,7 @@
 		E0359DD5299AFAAB00E8AF4F /* ChallengeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeDetails.swift; sourceTree = "<group>"; };
 		E0359DD7299AFAF500E8AF4F /* ChallengeCompiledResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCompiledResult.swift; sourceTree = "<group>"; };
 		E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
+		E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
 		E04D067A28BD5F30003DB450 /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		E05254FD288C796000FD87C3 /* CodePlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePlaygroundView.swift; sourceTree = "<group>"; };
 		E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteDropdownView.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */,
 				E052550B288C79FC00FD87C3 /* AutocompleteTermsHelper.swift */,
 				E052550A288C79FC00FD87C3 /* PlaygroundView.swift */,
+				E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */,
 				E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */,
 				E0750D6A28A85C9A004B81DA /* SolutionView.swift */,
 				E01666E028F74C9B00693575 /* CompilationOutputView.swift */,
@@ -1030,6 +1033,7 @@
 				E0785AFB29A40F9800E4661D /* RewardsService.swift in Sources */,
 				E096DF1C2871BCAB008A2A98 /* Colors.swift in Sources */,
 				E0ECE5C228BBFF5C00A1CB12 /* CelebrationView.swift in Sources */,
+				E039199529BBA38800B43A99 /* PlaygroundViewModel.swift in Sources */,
 				E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */,
 				E0BD324B285A8D6B000C37A9 /* AppDelegate.swift in Sources */,
 				E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */,

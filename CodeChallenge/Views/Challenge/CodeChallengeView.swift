@@ -165,8 +165,16 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                     }
                 }
                 .frame(width: .screenWidth - 40)
+                .padding(.horizontal, 20)
             }
             Spacer()
+            HStack {
+                Spacer()
+                AskAIView {
+
+                }
+                .padding(.bottom, 10)
+            }
             if details?.isPremium == true {
                 Button("Start solving", action: {
                     if shouldShowPremiumPopup {
@@ -178,18 +186,17 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                     }
                 })
                 .buttonStyle(PremiumGradientButton())
-                .padding(.bottom, 20)
+                .padding(20)
             } else {
                 Button("Start solving") {
                     selection = 1
                 }
                 .buttonStyle(PrimaryButton())
-                .padding(.bottom, 20)
+                .padding(20)
             }
 
         }
         .foregroundColor(.CodeChallenge.white)
-        .padding(.horizontal, 20)
     }
 
     private var quickAccessCharBottomInset: CGFloat {

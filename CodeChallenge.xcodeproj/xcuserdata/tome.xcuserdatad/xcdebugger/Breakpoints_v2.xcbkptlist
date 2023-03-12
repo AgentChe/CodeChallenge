@@ -62,8 +62,8 @@
             filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "onSelect(specialCharacter:range:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "proceed(with:in:textViewText:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -167,32 +167,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8FA1D427-7055-48FB-96FC-E68966C84E7C"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Views/Playground/PlaygroundView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "commonInit()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8C7A146C-C37B-4CD0-B680-CDEB706300D7"
-            shouldBeEnabled = "Yes"
+            uuid = "8FA32AE8-A6E4-48AF-AA44-EBDE3298B7E4"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "autocomplete(with:range:)"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "showGenerateByAI(for:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

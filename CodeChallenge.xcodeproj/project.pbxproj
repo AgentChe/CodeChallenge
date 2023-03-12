@@ -35,6 +35,7 @@
 		E0359DD8299AFAF500E8AF4F /* ChallengeCompiledResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DD7299AFAF500E8AF4F /* ChallengeCompiledResult.swift */; };
 		E0359DDA299AFB3E00E8AF4F /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */; };
 		E039199529BBA38800B43A99 /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */; };
+		E039199729BE8D2700B43A99 /* GenerateWithAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039199629BE8D2700B43A99 /* GenerateWithAIView.swift */; };
 		E04D067B28BD5F30003DB450 /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = E04D067A28BD5F30003DB450 /* confetti.json */; };
 		E05254FE288C796000FD87C3 /* CodePlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05254FD288C796000FD87C3 /* CodePlaygroundView.swift */; };
 		E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */; };
@@ -219,6 +220,7 @@
 		E0359DD7299AFAF500E8AF4F /* ChallengeCompiledResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeCompiledResult.swift; sourceTree = "<group>"; };
 		E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
 		E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
+		E039199629BE8D2700B43A99 /* GenerateWithAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateWithAIView.swift; sourceTree = "<group>"; };
 		E04D067A28BD5F30003DB450 /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		E05254FD288C796000FD87C3 /* CodePlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePlaygroundView.swift; sourceTree = "<group>"; };
 		E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteDropdownView.swift; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */,
 				E0750D6A28A85C9A004B81DA /* SolutionView.swift */,
 				E01666E028F74C9B00693575 /* CompilationOutputView.swift */,
+				E039199629BE8D2700B43A99 /* GenerateWithAIView.swift */,
 			);
 			path = Playground;
 			sourceTree = "<group>";
@@ -1039,6 +1042,7 @@
 				E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */,
 				E0BD3283285CF4A5000C37A9 /* Store.swift in Sources */,
 				E05254FE288C796000FD87C3 /* CodePlaygroundView.swift in Sources */,
+				E039199729BE8D2700B43A99 /* GenerateWithAIView.swift in Sources */,
 				E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */,
 				E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */,
 				E0BD3235285A7181000C37A9 /* Persistence.swift in Sources */,

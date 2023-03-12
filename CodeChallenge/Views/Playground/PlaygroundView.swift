@@ -86,6 +86,8 @@ class PlaygroundView: UIView {
         (self.textView.textStorage as? CodeAttributedString)?.language = vm?.language.rawValue
         vm?.onUpdate = { [weak self] updateType in
             switch updateType {
+            case let .highlight(range, color):
+                self?.textView.textStorage.addAttributes([.backgroundColor: color], range: range)
             case .codeChange(let code):
                 self?.textView.text = code
             case .languageUpdate(let language):
@@ -222,7 +224,6 @@ extension PlaygroundView {
             lines += ["a"]
         }
         let lineNumbers = getLineClusters(basedOn: endIndex, lines: lines)
-        print(lineNumbers)
         for i in lineNumbers {
             let label = UILabel()
             label.font = UIFont(name: "CourierNewPSMT", size: Constants.fontSize)
@@ -241,6 +242,41 @@ extension PlaygroundView {
                 hstack.heightAnchor.constraint(equalToConstant: fontHeight)
             ])
             lineNumerStackView.addArrangedSubview(hstack)
+        }
+    }
+
+    private func drawAIGeneratedIfNeeded(height: CGFloat) {
+        guard let stackView = (self.scrollView.subviews.first { ($0 as? UIStackView) != nil }) else { return }
+        stackView.subviews.filter { $0 != textView && $0 != lineNumerStackView }.forEach { $0.removeFromSuperview() }
+
+        let endIndex = Int(ceil(height/(fontHeight))) - 1
+        var lines: [String] = []
+        (textView.text as? NSString)?.enumerateLines({ line, stop in
+            lines.append(line)
+        })
+
+        // a weird workaround
+        if textView.text.last == "\n" {
+            lines += ["a"]
+        }
+
+        let lineNumbers = getLineClusters(basedOn: endIndex, lines: lines)
+        for (index, i) in lineNumbers.enumerated() {
+            if i != 0, vm?.showGenerateByAI(for: lines[i - 1]) == true {
+                let y = CGFloat(index) * fontHeight
+                let view = GenerateWithAIView {
+
+                }
+                let hostingController = UIHostingController(rootView: view)
+                hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                hostingController.view.backgroundColor = .clear
+
+                stackView.addSubview(hostingController.view)
+                NSLayoutConstraint.activate([
+                    hostingController.view.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
+                    hostingController.view.topAnchor.constraint(equalTo: stackView.topAnchor, constant: y)
+                ])
+            }
         }
     }
 
@@ -278,7 +314,11 @@ extension PlaygroundView: UITextViewDelegate {
                 self.scrollView.scrollRectToVisible(rectToMakeVisible, animated: false)
             }
         }
-        vm?.update(codeToCompile: textView.text)
+        DispatchQueue.main.async { [weak self] in
+            self?.vm?.update(codeToCompile: textView.text)
+            self?.vm?.applyHighlightingIfNeeded(string: textView.text as NSString)
+            self?.drawAIGeneratedIfNeeded(height: textView.contentSize.height)
+        }
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class PlaygroundViewModel {
     enum UpdateType {
@@ -15,6 +16,7 @@ class PlaygroundViewModel {
         case updateCharactersInRange(NSRange, String)
         case workMatchesRetrieved([String], NSRange)
         case updateTextViewCursor(offset: Int)
+        case highlight(NSRange, UIColor)
     }
 
     private let autocompleteSymbols = ["(":")", "{":"}", "[":"]", "\"":"\"", "\'":"\'"]
@@ -122,5 +124,27 @@ class PlaygroundViewModel {
         onUpdate?(.updateCharactersInRange(range, phrase))
         onUpdate?(.updateTextViewCursor(offset: phrase.count - (range.upperBound - range.lowerBound)))
         onUpdate?(.updateTextView)
+    }
+
+    func applyHighlightingIfNeeded(string: NSString) {
+        var lineRanges = [(String, NSRange)]()
+        string.enumerateSubstrings(
+            in: NSRange(location: 0, length: string.length)
+        ) { [weak self] (text, lineRange, _, _) in
+            if self?.showGenerateByAI(for: text ?? "") == true {
+                lineRanges.append((text ?? "", lineRange))
+            }
+        }
+
+        lineRanges
+            .forEach { (_, range) in
+                onUpdate?(.highlight(range, .CodeChallenge.darkBlue))
+            }
+    }
+
+    func showGenerateByAI(for line: String) -> Bool {
+        let value = line.replacingOccurrences(of: " ", with: "")
+        return (self.aiGenerated.compactMap { $0.comment.removingPercentEncoding?
+            .replacingOccurrences(of: " ", with: "") }.contains(value) == true)
     }
 }

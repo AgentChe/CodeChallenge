@@ -16,6 +16,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     let onSuccess: (ChallengeDetail?) -> Void
     let onDismiss: () -> Void
     let onGoPremium: () -> Void
+    let onOpenChat: () -> Void
     @State var selection: Int = 0
     @State var specialCharacter: String?
     @State private var displayCode: String?
@@ -171,7 +172,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
             HStack {
                 Spacer()
                 AskAIView {
-
+                    onOpenChat()
                 }
                 .padding(.bottom, 10)
             }

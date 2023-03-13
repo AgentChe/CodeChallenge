@@ -147,4 +147,24 @@ class PlaygroundViewModel {
         return (self.aiGenerated.compactMap { $0.comment.removingPercentEncoding?
             .replacingOccurrences(of: " ", with: "") }.contains(value) == true)
     }
+
+    func generateWithAI(for comment: String, lineNumber: Int, text: NSString?) {
+        guard let string = text else { return }
+        let value = comment.replacingOccurrences(of: " ", with: "")
+        let comment = aiGenerated.first { $0.comment.removingPercentEncoding?
+            .replacingOccurrences(of: " ", with: "") == value }?.code.randomElement()?.removingPercentEncoding ?? ""
+
+        var lineRanges = [(String, NSRange)]()
+        string.enumerateSubstrings(
+            in: NSRange(location: 0, length: string.length)
+        ) { (text, lineRange, _, _) in
+            lineRanges.append((text ?? "", lineRange))
+        }
+        let range = lineRanges[lineNumber].1
+        if lineRanges[lineNumber].0.replacingOccurrences(of: " ", with: "") == "__" {
+            onUpdate?(.updateCharactersInRange(range, comment))
+        } else {
+            
+        }
+    }
 }

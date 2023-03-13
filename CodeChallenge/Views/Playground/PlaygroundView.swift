@@ -264,8 +264,8 @@ extension PlaygroundView {
         for (index, i) in lineNumbers.enumerated() {
             if i != 0, vm?.showGenerateByAI(for: lines[i - 1]) == true {
                 let y = CGFloat(index) * fontHeight
-                let view = GenerateWithAIView {
-
+                let view = GenerateWithAIView { [weak self] in
+                    self?.vm?.generateWithAI(for: lines[i - 1], lineNumber: i, text: self?.textView.text as? NSString)
                 }
                 let hostingController = UIHostingController(rootView: view)
                 hostingController.view.translatesAutoresizingMaskIntoConstraints = false

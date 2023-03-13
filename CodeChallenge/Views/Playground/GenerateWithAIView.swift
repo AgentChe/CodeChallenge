@@ -26,6 +26,7 @@ struct GenerateWithAIView: View {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 isLoading = false
+                onSelect()
             }
         }
         .padding(.horizontal, 6)

@@ -36,6 +36,7 @@
 		E0359DDA299AFB3E00E8AF4F /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */; };
 		E039199529BBA38800B43A99 /* PlaygroundViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */; };
 		E039199729BE8D2700B43A99 /* GenerateWithAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039199629BE8D2700B43A99 /* GenerateWithAIView.swift */; };
+		E039199929BE9C7600B43A99 /* ChatAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E039199829BE9C7600B43A99 /* ChatAI.swift */; };
 		E04D067B28BD5F30003DB450 /* confetti.json in Resources */ = {isa = PBXBuildFile; fileRef = E04D067A28BD5F30003DB450 /* confetti.json */; };
 		E05254FE288C796000FD87C3 /* CodePlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E05254FD288C796000FD87C3 /* CodePlaygroundView.swift */; };
 		E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */; };
@@ -221,6 +222,7 @@
 		E0359DD9299AFB3E00E8AF4F /* Maintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
 		E039199429BBA38800B43A99 /* PlaygroundViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundViewModel.swift; sourceTree = "<group>"; };
 		E039199629BE8D2700B43A99 /* GenerateWithAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateWithAIView.swift; sourceTree = "<group>"; };
+		E039199829BE9C7600B43A99 /* ChatAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatAI.swift; sourceTree = "<group>"; };
 		E04D067A28BD5F30003DB450 /* confetti.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = confetti.json; sourceTree = "<group>"; };
 		E05254FD288C796000FD87C3 /* CodePlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodePlaygroundView.swift; sourceTree = "<group>"; };
 		E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteDropdownView.swift; sourceTree = "<group>"; };
@@ -419,6 +421,14 @@
 			path = Challenge;
 			sourceTree = "<group>";
 		};
+		E039199A29BE9C7D00B43A99 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				E039199829BE9C7600B43A99 /* ChatAI.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		E05254FF288C796800FD87C3 /* Playground */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,6 +599,7 @@
 		E0BD3247285A8D15000C37A9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E039199A29BE9C7D00B43A99 /* Chat */,
 				E085CFB829B6A78100BA1F16 /* Leaderboard */,
 				E0FB612B29185BFD00DB1E9A /* Home */,
 				E0FB612A29185BBA00DB1E9A /* Rewards */,
@@ -974,6 +985,7 @@
 				E0BD3295285CF886000C37A9 /* Services.swift in Sources */,
 				E085CFBA29B6A78F00BA1F16 /* LeaderboardViewProps.swift in Sources */,
 				E0ECE5C428BC028700A1CB12 /* XPView.swift in Sources */,
+				E039199929BE9C7600B43A99 /* ChatAI.swift in Sources */,
 				E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */,
 				E085CFB329B6A21E00BA1F16 /* HomeSectionsView.swift in Sources */,
 				E08B446028B4366C006BC50A /* IAPManager.swift in Sources */,

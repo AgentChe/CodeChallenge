@@ -28,7 +28,8 @@ struct Reducers {
             rewards: rewardsReducer(state.rewards, action),
             loadingReward: loadingRewardReducer(state.loadingReward, action),
             conceptReviews: conceptReviewReducer(state.conceptReviews, action),
-            leaderboardData: leaderboardReducer(state.leaderboardData, action)
+            leaderboardData: leaderboardReducer(state.leaderboardData, action),
+            chatMessages: chatMessagesReducer(state.chatMessages, action)
         )
     }
 }
@@ -229,6 +230,25 @@ extension Reducers {
         switch action {
         case .updateLoadingReward(let result):
             return result
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let chatMessagesReducer: Reducer<[Resolvable<ChatMessage>]> = { state, action in
+        switch action {
+        case let .updateChatMessages(index, new):
+            if let index = index {
+                var copy = state
+                copy.remove(at: index)
+                copy.insert(new, at: index)
+                return copy
+            } else {
+                var copy = state
+                copy.append(new)
+                return copy
+            }
         default: return state
         }
     }

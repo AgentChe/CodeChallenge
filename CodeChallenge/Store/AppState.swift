@@ -25,6 +25,7 @@ struct AppState {
     let loadingReward: LoadingReward?
     let conceptReviews: [Int: Resolvable<ConceptReview>]
     let leaderboardData: Resolvable<LeaderboardData>
+    let chatMessages: [Resolvable<ChatMessage>]
 
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
@@ -42,7 +43,8 @@ struct AppState {
          rewards: Resolvable<[Reward]> = .pending,
          loadingReward: LoadingReward? = nil,
          conceptReviews: [Int: Resolvable<ConceptReview>] = [:],
-         leaderboardData: Resolvable<LeaderboardData> = .pending) {
+         leaderboardData: Resolvable<LeaderboardData> = .pending,
+         chatMessages: [Resolvable<ChatMessage>] = []) {
         self.user = user
         self.account = account
         self.programmingLanguage = programmingLanguage
@@ -60,5 +62,6 @@ struct AppState {
         self.loadingReward = loadingReward
         self.conceptReviews = conceptReviews
         self.leaderboardData = leaderboardData
+        self.chatMessages = chatMessages
     }
 }

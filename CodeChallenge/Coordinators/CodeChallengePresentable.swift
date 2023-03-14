@@ -57,8 +57,10 @@ extension CodeChallengePresentable {
     }
 
     private func openChat(navigationController: UINavigationController) {
-        let view = ChatAI()
+        let view = ChatAIView()
+            .environmentObject(store)
         let controller = UIHostingController(rootView: view)
+        controller.modalPresentationStyle = .overFullScreen
         navigationController.present(controller, animated: true)
     }
 

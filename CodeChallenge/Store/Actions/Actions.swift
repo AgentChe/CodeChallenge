@@ -32,6 +32,7 @@ enum Action: Dispatchable {
     case updateLoadingReward(LoadingReward?)
     case loadConceptReview(Int, Resolvable<ConceptReview>)
     case updateLeaderboardData(Resolvable<LeaderboardData>)
+    case updateChatMessages(index: Int?, message: Resolvable<ChatMessage>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -604,6 +605,24 @@ struct LoadLeaderboardData: ThunkAction {
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.updateLeaderboardData(result))
+            }
+    }
+}
+
+struct SendMessageToAI: ThunkAction {
+    let message: String
+
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.dispatch(Action.updateChatMessages(index: nil, message: .success(.init(role: .user, content: message, timestamp: nil))))
+
+        dispatcher.dispatch(Action.updateChatMessages(index: nil, message: .loading))
+        let indexOfTheResponseMessage = dispatcher.state.chatMessages.count - 1
+
+        dispatcher.services.chatService
+            .sendMessageToAI(message)
+            .asResolvable()
+            .ephemeralSink { responseMessage in
+                dispatcher.dispatch(Action.updateChatMessages(index: indexOfTheResponseMessage, message: responseMessage))
             }
     }
 }

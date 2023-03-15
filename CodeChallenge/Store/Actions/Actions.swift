@@ -32,7 +32,7 @@ enum Action: Dispatchable {
     case updateLoadingReward(LoadingReward?)
     case loadConceptReview(Int, Resolvable<ConceptReview>)
     case updateLeaderboardData(Resolvable<LeaderboardData>)
-    case updateChatMessages(index: Int?, message: Resolvable<ChatMessage>)
+    case updateChatMessages(mode: ChatMessagesMode, id: Int, index: Int?, message: Resolvable<ChatMessage>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -611,18 +611,21 @@ struct LoadLeaderboardData: ThunkAction {
 
 struct SendMessageToAI: ThunkAction {
     let message: String
+    let mode: ChatMessagesMode
+    let id: Int
 
     func exec(dispatcher: Dispatcher) {
-        dispatcher.dispatch(Action.updateChatMessages(index: nil, message: .success(.init(role: .user, content: message, timestamp: nil))))
+        let history = dispatcher.state.chatMessages["\(mode.rawValue)_\(id)"]?.compactMap { $0.value } ?? []
+        dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: nil, message: .success(.init(role: .user, content: message, timestamp: nil))))
 
-        dispatcher.dispatch(Action.updateChatMessages(index: nil, message: .loading))
-        let indexOfTheResponseMessage = dispatcher.state.chatMessages.count - 1
+        dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: nil, message: .loading))
+        let indexOfTheResponseMessage = (dispatcher.state.chatMessages["\(mode.rawValue)_\(id)"] ?? []).count - 1
 
         dispatcher.services.chatService
-            .sendMessageToAI(message)
+            .sendMessageToAI(message, history: history)
             .asResolvable()
             .ephemeralSink { responseMessage in
-                dispatcher.dispatch(Action.updateChatMessages(index: indexOfTheResponseMessage, message: responseMessage))
+                dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: indexOfTheResponseMessage, message: responseMessage))
             }
     }
 }

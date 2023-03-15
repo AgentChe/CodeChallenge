@@ -7,17 +7,81 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "65A01BD4-0445-4157-849F-24B71BD4EC09"
+            uuid = "B0DBA59A-9342-46BF-AA0E-5F4B0048F684"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Views/Playground/PlaygroundViewModel.swift"
+            filePath = "CodeChallenge/Store/Reducers/Reducers.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
-            landmarkName = "PlaygroundViewModel"
-            landmarkType = "3">
+            startingLineNumber = "243"
+            endingLineNumber = "243"
+            landmarkName = "Reducers"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0BDDE385-F2AF-4BD9-A287-35B1C3171149"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Store/Reducers/Reducers.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "Reducers"
+            landmarkType = "21">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Chat/MessageView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C - 29bf99bdf9589134"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in Codehub_Staging.AssistantMessageView.body.getter : some"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Chat/MessageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "1364">
+               </Location>
+               <Location
+                  uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C - 2a595ea748530f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Swift.String) -&gt; (isCode: Swift.Bool, Codehub_Staging.ChatMessage) in closure #2 () -&gt; () in Codehub_Staging.AssistantMessageView.body.getter : some"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Chat/MessageView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123"
+                  offsetFromSymbolStart = "148">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

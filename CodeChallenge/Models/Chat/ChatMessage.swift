@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum ChatMessagesMode: String {
+    case explain
+    case provideSolution
+}
+
 struct ChatMessage: Codable {
     enum Role: String, Codable {
         case user
@@ -23,4 +28,10 @@ struct AIResponse: Codable {
     }
     let choices: [Choice]
     let created: Int
+}
+
+extension Array where Element == ChatMessage {
+    var keyValuePairs: [[String: String]] {
+        return self.map { ["role": $0.role.rawValue, "content": $0.content] }
+    }
 }

@@ -37,27 +37,3 @@ struct GenerateWithAIView: View {
         }
     }
 }
-
-struct AskAIView: View {
-    let onSelect: (() -> Void)
-
-    var body: some View {
-        HStack {
-            Image("ai")
-                .resizable()
-                .frame(width: 36, height: 36)
-            Text("Ask AI")
-                .padding(.vertical, 12)
-                .font(.h4)
-                .foregroundColor(.white)
-        }
-        .onTapGesture {
-            onSelect()
-        }
-        .padding(.horizontal, 12)
-        .background {
-            RoundedCornersShape(corners: [.topLeft, .bottomLeft], radius: 20)
-                .fill(Color(UIColor.CodeChallenge.blue1))
-        }
-    }
-}

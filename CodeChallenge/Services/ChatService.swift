@@ -9,22 +9,23 @@ import Foundation
 import Combine
 
 protocol ChatServiceProtocol {
-    func sendMessageToAI(_ content: String) -> AnyPublisher<ChatMessage, Error>
+    func sendMessageToAI(_ content: String, history: [ChatMessage]) -> AnyPublisher<ChatMessage, Error>
 }
 
 struct ChatService: ChatServiceProtocol {
     let networkService: NetworkServiceProtocol
 
-    private let apiKey = "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"
-
-    func sendMessageToAI(_ content: String) -> AnyPublisher<ChatMessage, Error> {
+    func sendMessageToAI(_ content: String, history: [ChatMessage]) -> AnyPublisher<ChatMessage, Error> {
+        var array = [["role": "system", "content": "You are a helpful assistant."]]
+        array.insert(contentsOf: history.keyValuePairs, at: 1)
+        array.append(["role": "user", "content": content])
         let params: [String: Any] = [
             "model": "gpt-3.5-turbo",
-            "messages": [["role": "user", "content": content]]
+            "messages": array,
+            "temperature": 1.0
           ]
-        let headers = ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"]
         return URLRequest
-            .create(url: "https://api.openai.com/v1/chat/completions", type: .post, params: params, headers: headers)
+            .create(url: "\(Configuration.host)/messages/send_message/", type: .post, params: params)
             .flatMap { networkService.load($0, decoding: AIResponse.self, with: .snakeCase) }
             .compactMap { $0.choices.randomElement()?.message }
             .eraseToAnyPublisher()

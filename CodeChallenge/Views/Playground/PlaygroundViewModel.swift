@@ -12,7 +12,7 @@ class PlaygroundViewModel {
     enum UpdateType {
         case codeChange(String)
         case languageUpdate(ProgrammingLanguage)
-        case updateTextView
+        case updateTextView(Bool)
         case updateCharactersInRange(NSRange, String)
         case workMatchesRetrieved([String], NSRange)
         case updateTextViewCursor(offset: Int)
@@ -41,7 +41,7 @@ class PlaygroundViewModel {
         codeToCompile = codeToCompile.replacingOccurrences(of: "\t", with: "  ")
         codeToCompile = codeToCompile.replacingOccurrences(of: "\n", with: " ")
         onUpdate?(.codeChange(code.removingPercentEncoding ?? code))
-        onUpdate?(.updateTextView)
+        onUpdate?(.updateTextView(true))
     }
 
     func onSelect(specialCharacter: String, range: NSRange) {
@@ -53,7 +53,7 @@ class PlaygroundViewModel {
             codeToCompile = (codeToCompile as NSString).replacingCharacters(in: newRange, with: value)
             onUpdate?(.updateCharactersInRange(newRange, value))
         }
-        self.onUpdate?(.updateTextView)
+        self.onUpdate?(.updateTextView(true))
     }
 
     func update(codeToCompile: String) {
@@ -65,7 +65,7 @@ class PlaygroundViewModel {
         if text == "\n" {
             self.onUpdate?(.updateCharactersInRange(range, "\n\(tabs)"))
             self.onUpdate?(.updateTextViewCursor(offset: "\n\(tabs)".count))
-            self.onUpdate?(.updateTextView)
+            self.onUpdate?(.updateTextView(true))
             let spacesForTabs = String(repeating: "  ", count: lastLineTabs.count + 1)
             codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: " \(spacesForTabs)")
             return false
@@ -123,7 +123,7 @@ class PlaygroundViewModel {
         self.codeToCompile = (self.codeToCompile as NSString).replacingCharacters(in: range, with: phrase)
         onUpdate?(.updateCharactersInRange(range, phrase))
         onUpdate?(.updateTextViewCursor(offset: phrase.count - (range.upperBound - range.lowerBound)))
-        onUpdate?(.updateTextView)
+        onUpdate?(.updateTextView(true))
     }
 
     func applyHighlightingIfNeeded(string: NSString) {
@@ -161,10 +161,7 @@ class PlaygroundViewModel {
             lineRanges.append((text ?? "", lineRange))
         }
         let range = lineRanges[lineNumber].1
-        if lineRanges[lineNumber].0.replacingOccurrences(of: " ", with: "") == "__" {
-            onUpdate?(.updateCharactersInRange(range, comment))
-        } else {
-            
-        }
+        onUpdate?(.updateCharactersInRange(range, comment))
+        onUpdate?(.updateTextView(false))
     }
 }

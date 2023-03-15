@@ -47,6 +47,7 @@ class PlaygroundView: UIView {
     private var scrollViewBottomConstraint: NSLayoutConstraint?
     private var justAutocompleted: Bool = false
     private var fontHeight: CGFloat = UIFont(name: "CourierNewPSMT", size: Constants.fontSize)?.lineHeight ?? 0
+    private var changeCursorPositionOnTextViewUpdate = true
     let vm: PlaygroundViewModel?
 
     private let lineNumerStackView: UIStackView = {
@@ -92,7 +93,8 @@ class PlaygroundView: UIView {
                 self?.textView.text = code
             case .languageUpdate(let language):
                 (self?.textView.textStorage as? CodeAttributedString)?.language = language.rawValue
-            case .updateTextView:
+            case .updateTextView(let changeCursorPosition):
+                self?.changeCursorPositionOnTextViewUpdate = changeCursorPosition
                 if let textView = self?.textView {
                     self?.textViewDidChange(textView)
                 }
@@ -307,13 +309,14 @@ extension PlaygroundView: UITextViewDelegate {
         textViewHeightConstraint?.constant = textView.contentSize.height
         setupLineNumbers(height: textView.contentSize.height)
 
-        if let range = textView.selectedTextRange {
+        if let range = textView.selectedTextRange, changeCursorPositionOnTextViewUpdate {
             let cursorRect = textView.caretRect(for: range.start)
             let rectToMakeVisible = textView.convert(cursorRect, to: scrollView)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 self.scrollView.scrollRectToVisible(rectToMakeVisible, animated: false)
             }
         }
+        changeCursorPositionOnTextViewUpdate = true
         DispatchQueue.main.async { [weak self] in
             self?.vm?.update(codeToCompile: textView.text)
             self?.vm?.applyHighlightingIfNeeded(string: textView.text as NSString)

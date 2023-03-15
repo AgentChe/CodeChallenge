@@ -16,7 +16,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     let onSuccess: (ChallengeDetail?) -> Void
     let onDismiss: () -> Void
     let onGoPremium: () -> Void
-    let onOpenChat: () -> Void
+    let onOpenChat: (ChallengeDetail?, ChatMessagesMode) -> Void
     @State var selection: Int = 0
     @State var specialCharacter: String?
     @State private var displayCode: String?
@@ -39,8 +39,8 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         selection: $selection,
                         sections: ["Task", "Code", "Result"],
                         onValueChange: { selection in
-                        self.selection = selection
-                    })
+                            self.selection = selection
+                        })
                     .padding(.horizontal, 25)
                     .frame(height: 31)
                 }
@@ -169,30 +169,46 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 .padding(.horizontal, 20)
             }
             Spacer()
-            HStack {
-                Spacer()
-                AskAIView {
-                    onOpenChat()
-                }
-                .padding(.bottom, 10)
-            }
             if details?.isPremium == true {
-                Button("Start solving", action: {
-                    if shouldShowPremiumPopup {
-                        withAnimation {
-                            showPremiumPopup = true
+                HStack(spacing: 10) {
+                    Button("Start solving", action: {
+                        if shouldShowPremiumPopup {
+                            withAnimation {
+                                showPremiumPopup = true
+                            }
+                        } else {
+                            selection = 1
                         }
-                    } else {
-                        selection = 1
-                    }
-                })
-                .buttonStyle(PremiumGradientButton())
+                    })
+                    .buttonStyle(PremiumGradientButton())
+                    aiButton
+                        .modifier(PremiumGradientModifier())
+                        .onTapGesture {
+                            if shouldShowPremiumPopup {
+                                withAnimation {
+                                    showPremiumPopup = true
+                                }
+                            } else {
+                                onOpenChat(details, .provideSolution)
+                            }
+                        }
+                }
                 .padding(20)
             } else {
-                Button("Start solving") {
-                    selection = 1
+                HStack(spacing: 10) {
+                    Button("Start solving") {
+                        selection = 1
+                    }
+                    .buttonStyle(PrimaryButton())
+                    aiButton
+                        .onTapGesture {
+                            onOpenChat(details, .provideSolution)
+                        }
+                        .background {
+                            RoundedRectangle(cornerRadius: 28)
+                                .fill(Color(UIColor.CodeChallenge.blue1))
+                        }
                 }
-                .buttonStyle(PrimaryButton())
                 .padding(20)
             }
 
@@ -202,6 +218,21 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
 
     private var quickAccessCharBottomInset: CGFloat {
         keyboardHeight != 0 ? 0 : 100 - quickAccessCharBottomToCover - (UIApplication.shared.mainWindow?.safeAreaInsets.bottom ?? 0)
+    }
+
+    private var aiButton: some View {
+        HStack {
+            Spacer()
+            Image("ai")
+                .resizable()
+                .frame(width: 36, height: 36)
+            Text("Ask AI")
+                .font(.button)
+                .foregroundColor(.white)
+                .frame(height: 56)
+            Spacer()
+        }
+        .frame(width: .screenWidth/2 - 23)
     }
 
     var codeScreen: some View {
@@ -215,10 +246,10 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         bottomInset: geometry.size.height - quickAccessCharViewHeight,
                         programmingLanguage: programmingLanguage,
                         aiGenerated: details?.aiGenerated) { code in
-                        DispatchQueue.main.async {
-                            displayCode = removeTrailingNewLines(string: code)
+                            DispatchQueue.main.async {
+                                displayCode = removeTrailingNewLines(string: code)
+                            }
                         }
-                    }
                     QuickAccessCharsView(challengeId: codeChallenge.id, onRun: {
                         showsError = true
                         store.dispatch(UpdateChallengeProgress(challenge: codeChallenge, solution: displayCode ?? "", compile: true, programmingLanguage: programmingLanguage, language: "en"))
@@ -231,45 +262,58 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                 }
             }
             .padding(.bottom, quickAccessCharBottomInset)
-                BottomSheetView(
-                    isOpen: self.$bottomSheetShown,
-                    maxHeight: 300
-                ) {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Spacer()
-                            Text(gotCompileError != nil ?
-                                 (gotCompileError == true ? "Compilation Error!" : "Compiled Successfully!") :
-                                    "Output")
-                                .foregroundColor(gotCompileError != nil ?
-                                                 (gotCompileError == true ? .red : .green) :
-                                        .CodeChallenge.blue1)
-                                .font(.h3)
-                            Spacer()
-                        }
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color(UIColor.CodeChallenge.dark))
-                            ScrollView {
-                                HStack {
-                                    Text(output)
-                                         .foregroundColor(.white)
-                                         .padding(.vertical, 10)
-                                         .multilineTextAlignment(.leading)
-                                         .padding(.horizontal, 12)
-                                         .font(UIFont.monospacedSystemFont(ofSize: 14, weight: .regular))
-                                    Spacer()
-                                }
+            BottomSheetView(
+                isOpen: self.$bottomSheetShown,
+                maxHeight: 300
+            ) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(gotCompileError != nil ?
+                             (gotCompileError == true ? "Error!" : "Compiled Successfully!") :
+                                "Output")
+                        .foregroundColor(gotCompileError != nil ?
+                                         (gotCompileError == true ? .red : .green) :
+                                .CodeChallenge.blue1)
+                        .font(.h3)
+                        Spacer()
+                        //                            if gotCompileError == true {
+                        Text("Ask AI why?")
+                            .font(.button)
+                            .foregroundColor(.CodeChallenge.white)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 16)
+                            .onTapGesture {
+                                onOpenChat(details, .explain)
                             }
-                            .frame(height: 180)
-                        }
-                        .frame(height: 200)
+                            .background {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(UIColor.CodeChallenge.blue1))
+                            }
+                        //                            }
                     }
-                    .padding(.horizontal, UIDevice.hasSmallScreen ? 10 : 24)
-                    .background(.CodeChallenge.background)
-                }.edgesIgnoringSafeArea(.all)
-            }
-//        }
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(UIColor.CodeChallenge.dark))
+                        ScrollView {
+                            HStack {
+                                Text(output)
+                                    .foregroundColor(.white)
+                                    .padding(.vertical, 10)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(.horizontal, 12)
+                                    .font(UIFont.monospacedSystemFont(ofSize: 14, weight: .regular))
+                                Spacer()
+                            }
+                        }
+                        .frame(height: 180)
+                    }
+                    .frame(height: 200)
+                }
+                .padding(.horizontal, UIDevice.hasSmallScreen ? 10 : 24)
+                .background(.CodeChallenge.background)
+            }.edgesIgnoringSafeArea(.all)
+        }
+        //        }
         .onReceive(keyboardPublisher) { value in
             keyboardHeight = value
             if value > 0 {
@@ -316,41 +360,41 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
     }
 
     private var premiumPopup: some View {
-            VStack {
-                Spacer()
-                ZStack(alignment: .leading) {
-                    VStack(spacing: 12) {
+        VStack {
+            Spacer()
+            ZStack(alignment: .leading) {
+                VStack(spacing: 12) {
+                    Spacer()
+                        .frame(height: 18)
+                    Text("Challenge Locked")
+                        .font(.h2)
+                        .padding(.horizontal, 4)
+                    Text("Go Premium to unlock the challenge")
+                        .font(.smallText)
+                        .padding(.horizontal, 4)
+                        .padding(.bottom, 15)
+                    HStack {
                         Spacer()
-                            .frame(height: 18)
-                        Text("Challenge Locked")
-                            .font(.h2)
-                            .padding(.horizontal, 4)
-                        Text("Go Premium to unlock the challenge")
-                            .font(.smallText)
-                            .padding(.horizontal, 4)
-                            .padding(.bottom, 15)
-                        HStack {
-                            Spacer()
-                            Text("Start 14-day Free Trial")
-                                .font(.button)
-                            Spacer()
-                        }
-                        .padding(.vertical, 12)
-                        .modifier(PremiumGradientModifier(cornerRadius: 10, corners: [.bottomLeft, .bottomRight]))
-                        .onTapGesture {
-                            onGoPremium()
-                        }
+                        Text("Start 14-day Free Trial")
+                            .font(.button)
+                        Spacer()
                     }
-                    .foregroundColor(.white)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color(.CodeChallenge.background))
+                    .padding(.vertical, 12)
+                    .modifier(PremiumGradientModifier(cornerRadius: 10, corners: [.bottomLeft, .bottomRight]))
+                    .onTapGesture {
+                        onGoPremium()
                     }
                 }
-                .padding(.horizontal, 16)
-                Spacer()
+                .foregroundColor(.white)
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(.CodeChallenge.background))
+                }
             }
-            .frame(width: .screenWidth)
+            .padding(.horizontal, 16)
+            Spacer()
+        }
+        .frame(width: .screenWidth)
     }
 }
 

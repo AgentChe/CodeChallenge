@@ -29,7 +29,8 @@ struct Reducers {
             loadingReward: loadingRewardReducer(state.loadingReward, action),
             conceptReviews: conceptReviewReducer(state.conceptReviews, action),
             leaderboardData: leaderboardReducer(state.leaderboardData, action),
-            chatMessages: chatMessagesReducer(state.chatMessages, action)
+            chatMessages: chatMessagesReducer(state.chatMessages, action),
+            maintenance: maintenanceReducer(state.maintenance, action)
         )
     }
 }
@@ -229,6 +230,16 @@ extension Reducers {
     static let loadingRewardReducer: Reducer<LoadingReward?> = { state, action in
         switch action {
         case .updateLoadingReward(let result):
+            return result
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let maintenanceReducer: Reducer<Maintenance?> = { state, action in
+        switch action {
+        case .updateMaintenanceInfo(let result):
             return result
         default: return state
         }

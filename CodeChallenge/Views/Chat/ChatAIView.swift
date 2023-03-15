@@ -15,6 +15,7 @@ struct ChatAIView: View, ChatAIViewProps {
     let challengeDetail: ChallengeDetail
     let mode: ChatMessagesMode
     @State private var showPromptViewIfSatisfied = false
+    @State private var chatMessagesExisted = false
 
     var body: some View {
         DoodledView {
@@ -34,23 +35,17 @@ struct ChatAIView: View, ChatAIViewProps {
                 .padding(.vertical, 12)
                 ScrollViewReader { value in
                     ScrollView(.vertical) {
-                        VStack() {
+                        VStack(spacing: 26) {
                             ForEach(Array(chatMessages.enumerated()), id: \.offset) { (offset, message) in
                                 if let value = message.value {
                                     if value.role == .user {
-                                        HStack {
-                                            Spacer()
-                                            MessageView(currentMessage: value)
-                                        }
+                                        MessageView(currentMessage: value)
                                         .id(offset)
                                     } else {
-                                        VStack {
-                                            HStack {
-                                                AssistantMessageView(currentMessage: value, showPromptView: {
-                                                    showPromptViewIfSatisfied = true
-                                                })
-                                                Spacer()
-                                            }
+                                        VStack(spacing: 20) {
+                                            AssistantMessageView(currentMessage: value, animateChatMessages: !chatMessagesExisted, showPromptView: {
+                                                showPromptViewIfSatisfied = true
+                                            })
                                             if chatMessages.count % 2 == 0 && offset == chatMessages.count - 1, showPromptViewIfSatisfied {
                                                 promptView
                                             }
@@ -61,8 +56,16 @@ struct ChatAIView: View, ChatAIViewProps {
                                     EmptyView()
                                 }
                             }
+
+                            if assistantMessageIsLoading {
+                                LoadingAssistantMessage()
+                            }
                         }
                         .onAppear {
+                            chatMessagesExisted = !chatMessages.isEmpty
+                            if chatMessages.count % 2 == 0 && !chatMessages.isEmpty {
+                                showPromptViewIfSatisfied = true
+                            }
                             withAnimation {
                                 value.scrollTo(chatMessages.count - 1)
                             }

@@ -15,6 +15,7 @@ protocol AuthServiceProtocol {
     func guestAuth() -> AnyPublisher<User, Error>
     func logout(session: String) -> AnyPublisher<Void, Error>
     func deleteAccount(session: String, id: Int) -> AnyPublisher<Void, Error>
+    func fetchMaintenance() -> AnyPublisher<Maintenance, Error>
 }
 
 struct AuthService: AuthServiceProtocol {
@@ -67,6 +68,18 @@ struct AuthService: AuthServiceProtocol {
         return URLRequest
             .create(url: "\(Configuration.host)/user/deleteAccount/", type: .post, params: params)
             .flatMap { networkService.send($0) }
+            .eraseToAnyPublisher()
+    }
+
+    func fetchMaintenance() -> AnyPublisher<Maintenance, Error> {
+        return
+            URLRequest.create(url: "https://maintenance.yervandgaloyan.workers.dev/")
+            .map {
+                var copy = $0
+                copy.cachePolicy = .reloadIgnoringCacheData
+                return copy
+            }
+            .flatMap { networkService.load($0, decoding: Maintenance.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 }

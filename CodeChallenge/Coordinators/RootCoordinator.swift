@@ -107,6 +107,7 @@ final class RootCoordinator {
         store.dispatch(LoadAppStorePayments())
         store.dispatch(LoadRecommendedChallenges())
         store.dispatch(LoadRewards())
+        store.dispatch(FetchMaintenanceInfo())
 
         DispatchQueue.global(qos: .userInitiated).async {
             // The first time you create an attributed string of HTML, iOS creates all sorts of extra threads needed to parse the string, among which JavascriptCore engine.
@@ -339,7 +340,7 @@ extension RootCoordinator {
                 copy.cachePolicy = .reloadIgnoringCacheData
                 return copy
             }
-            .map { networkService.load($0, decoding: Maintenance.self, with: .init()) }
+            .map { networkService.load($0, decoding: Maintenance.self, with: .snakeCase) }
             .switchToLatest()
             .asResolvable()
             .compactMap(\.value)

@@ -15,10 +15,11 @@ struct CodePlaygroundView: UIViewRepresentable {
     let bottomInset: CGFloat
     let programmingLanguage: ProgrammingLanguage
     let aiGenerated: [AIGenerated]?
+    let aiEnabled: Bool
     let onCodeChange: (String) -> Void
 
     func makeUIView(context: Context) -> some UIView {
-        let vm = PlaygroundViewModel.init(language: programmingLanguage, aiGenerated: aiGenerated ?? [], onCodeChange: onCodeChange)
+        let vm = PlaygroundViewModel.init(language: programmingLanguage, aiGenerated: aiGenerated ?? [], onCodeChange: onCodeChange, aiEnabled: aiEnabled)
         let view = PlaygroundView(vm: vm)
         vm.set(code: code ?? "")
 //        view.onCodeChange = onCodeChange

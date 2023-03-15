@@ -14,10 +14,10 @@
             filePath = "CodeChallenge/Store/Reducers/Reducers.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "Reducers"
-            landmarkType = "21">
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "chatMessagesReducer"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -30,10 +30,10 @@
             filePath = "CodeChallenge/Store/Reducers/Reducers.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "Reducers"
-            landmarkType = "21">
+            startingLineNumber = "262"
+            endingLineNumber = "262"
+            landmarkName = "chatMessagesReducer"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -46,13 +46,13 @@
             filePath = "CodeChallenge/Views/Chat/MessageView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C - 29bf99bdf9589134"
+                  uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C - 29bf99bdf958976a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -62,12 +62,12 @@
                   urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Chat/MessageView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
-                  offsetFromSymbolStart = "1364">
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "1388">
                </Location>
                <Location
-                  uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C - 2a595ea748530f"
+                  uuid = "C0F0F94D-069E-4FC1-950E-77B14060C91C - 2a595ea7485551"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -77,8 +77,8 @@
                   urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Chat/MessageView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
                   offsetFromSymbolStart = "148">
                </Location>
             </Locations>

@@ -150,6 +150,7 @@
 		E0D0AE0C29BFAE43001CE57D /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D0AE0B29BFAE43001CE57D /* ChatMessage.swift */; };
 		E0D0AE0E29BFDC2A001CE57D /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D0AE0D29BFDC2A001CE57D /* ChatService.swift */; };
 		E0D0AE1029BFDE3F001CE57D /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D0AE0F29BFDE3F001CE57D /* MessageView.swift */; };
+		E0D0AE1229C162A8001CE57D /* PlaceholderAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0D0AE1129C162A7001CE57D /* PlaceholderAnimation.swift */; };
 		E0DA79C228F20AB00038B0E1 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0DA79C128F20AB00038B0E1 /* Configuration.swift */; };
 		E0EBB7E4288B1AED00DE7C53 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E3288B1AED00DE7C53 /* Challenge.swift */; };
 		E0EBB7E6288B1B6A00DE7C53 /* ChallengesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EBB7E5288B1B6A00DE7C53 /* ChallengesService.swift */; };
@@ -339,6 +340,7 @@
 		E0D0AE0B29BFAE43001CE57D /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		E0D0AE0D29BFDC2A001CE57D /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		E0D0AE0F29BFDE3F001CE57D /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
+		E0D0AE1129C162A7001CE57D /* PlaceholderAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderAnimation.swift; sourceTree = "<group>"; };
 		E0DA79C128F20AB00038B0E1 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		E0EBB7E3288B1AED00DE7C53 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		E0EBB7E5288B1B6A00DE7C53 /* ChallengesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengesService.swift; sourceTree = "<group>"; };
@@ -492,6 +494,7 @@
 				E0228F6D2904B92100101A82 /* NoteView.swift */,
 				E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */,
 				E06D90C129A2E8F500AC09AB /* ActivityView.swift */,
+				E0D0AE1129C162A7001CE57D /* PlaceholderAnimation.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1044,6 +1047,7 @@
 				E0BD328A285CF700000C37A9 /* Resolvable.swift in Sources */,
 				E01AECA4289EF5A500615B52 /* KeywordsCollectionCell.swift in Sources */,
 				E08D6F7928C53826006991EB /* GetStartedView.swift in Sources */,
+				E0D0AE1229C162A8001CE57D /* PlaceholderAnimation.swift in Sources */,
 				E096DF1E2871BE61008A2A98 /* ViewAdditions.swift in Sources */,
 				E02542FA292053EB002D2F19 /* ArrayAdditions.swift in Sources */,
 				E0BD3290285CF782000C37A9 /* Reducers.swift in Sources */,

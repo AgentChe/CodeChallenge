@@ -33,6 +33,7 @@ enum Action: Dispatchable {
     case loadConceptReview(Int, Resolvable<ConceptReview>)
     case updateLeaderboardData(Resolvable<LeaderboardData>)
     case updateChatMessages(mode: ChatMessagesMode, id: Int, index: Int?, message: Resolvable<ChatMessage>)
+    case updateMaintenanceInfo(Maintenance?)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -626,6 +627,18 @@ struct SendMessageToAI: ThunkAction {
             .asResolvable()
             .ephemeralSink { responseMessage in
                 dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: indexOfTheResponseMessage, message: responseMessage))
+            }
+    }
+}
+
+struct FetchMaintenanceInfo: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.services
+            .authService
+            .fetchMaintenance()
+            .asResolvable()
+            .ephemeralSink { maintenance in
+                dispatcher.dispatch(Action.updateMaintenanceInfo(maintenance.value))
             }
     }
 }

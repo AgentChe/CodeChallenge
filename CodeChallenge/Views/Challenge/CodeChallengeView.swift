@@ -181,17 +181,19 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         }
                     })
                     .buttonStyle(PremiumGradientButton())
-                    aiButton
-                        .modifier(PremiumGradientModifier())
-                        .onTapGesture {
-                            if shouldShowPremiumPopup {
-                                withAnimation {
-                                    showPremiumPopup = true
+                    if store.state.maintenance?.aiEnabled == true {
+                        aiButton
+                            .modifier(PremiumGradientModifier())
+                            .onTapGesture {
+                                if shouldShowPremiumPopup {
+                                    withAnimation {
+                                        showPremiumPopup = true
+                                    }
+                                } else {
+                                    onOpenChat(details, .provideSolution)
                                 }
-                            } else {
-                                onOpenChat(details, .provideSolution)
                             }
-                        }
+                    }
                 }
                 .padding(20)
             } else {
@@ -200,14 +202,16 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         selection = 1
                     }
                     .buttonStyle(PrimaryButton())
-                    aiButton
-                        .onTapGesture {
-                            onOpenChat(details, .provideSolution)
-                        }
-                        .background {
-                            RoundedRectangle(cornerRadius: 28)
-                                .fill(Color(UIColor.CodeChallenge.blue1))
-                        }
+                    if store.state.maintenance?.aiEnabled == true {
+                        aiButton
+                            .onTapGesture {
+                                onOpenChat(details, .provideSolution)
+                            }
+                            .background {
+                                RoundedRectangle(cornerRadius: 28)
+                                    .fill(Color(UIColor.CodeChallenge.blue1))
+                            }
+                    }
                 }
                 .padding(20)
             }
@@ -245,7 +249,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         resettedTemplate: $resettedTemplate,
                         bottomInset: geometry.size.height - quickAccessCharViewHeight,
                         programmingLanguage: programmingLanguage,
-                        aiGenerated: details?.aiGenerated) { code in
+                        aiGenerated: details?.aiGenerated, aiEnabled: store.state.maintenance?.aiEnabled == true) { code in
                             DispatchQueue.main.async {
                                 displayCode = removeTrailingNewLines(string: code)
                             }
@@ -276,20 +280,20 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                                 .CodeChallenge.blue1)
                         .font(.h3)
                         Spacer()
-                        //                            if gotCompileError == true {
-                        Text("Ask AI why?")
-                            .font(.button)
-                            .foregroundColor(.CodeChallenge.white)
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 16)
-                            .onTapGesture {
-                                onOpenChat(details, .explain)
-                            }
-                            .background {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color(UIColor.CodeChallenge.blue1))
-                            }
-                        //                            }
+                        if gotCompileError == true, store.state.maintenance?.aiEnabled == true {
+                            Text("Ask AI why?")
+                                .font(.button)
+                                .foregroundColor(.CodeChallenge.white)
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 16)
+                                .onTapGesture {
+                                    onOpenChat(details, .explain)
+                                }
+                                .background {
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .fill(Color(UIColor.CodeChallenge.blue1))
+                                }
+                        }
                     }
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)

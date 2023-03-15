@@ -29,11 +29,13 @@ class PlaygroundViewModel {
     var aiGenerated: [AIGenerated] = []
     var onCodeChange: ((String) -> Void)?
     var onUpdate: ((UpdateType) -> Void)?
+    var aiEnabled: Bool = true
 
-    init(language: ProgrammingLanguage, aiGenerated: [AIGenerated], onCodeChange: ((String) -> Void)?) {
+    init(language: ProgrammingLanguage, aiGenerated: [AIGenerated], onCodeChange: ((String) -> Void)?, aiEnabled: Bool) {
         self.language = language
         self.aiGenerated = aiGenerated
         self.onCodeChange = onCodeChange
+        self.aiEnabled = aiEnabled
     }
 
     func set(code: String) {
@@ -127,6 +129,7 @@ class PlaygroundViewModel {
     }
 
     func applyHighlightingIfNeeded(string: NSString) {
+        guard aiEnabled else { return }
         var lineRanges = [(String, NSRange)]()
         string.enumerateSubstrings(
             in: NSRange(location: 0, length: string.length)
@@ -143,13 +146,14 @@ class PlaygroundViewModel {
     }
 
     func showGenerateByAI(for line: String) -> Bool {
+        guard aiEnabled else { return false }
         let value = line.replacingOccurrences(of: " ", with: "")
         return (self.aiGenerated.compactMap { $0.comment.removingPercentEncoding?
             .replacingOccurrences(of: " ", with: "") }.contains(value) == true)
     }
 
     func generateWithAI(for comment: String, lineNumber: Int, text: NSString?) {
-        guard let string = text else { return }
+        guard let string = text, aiEnabled else { return }
         let value = comment.replacingOccurrences(of: " ", with: "")
         let comment = aiGenerated.first { $0.comment.removingPercentEncoding?
             .replacingOccurrences(of: " ", with: "") == value }?.code.randomElement()?.removingPercentEncoding ?? ""

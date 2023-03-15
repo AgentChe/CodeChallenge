@@ -33,6 +33,10 @@ extension ChatAIViewProps {
         store.state.challengeProgresses[challengeDetail.id]?.value?.solution?.python.removingPercentEncoding ?? ""
     }
 
+    var assistantMessageIsLoading: Bool {
+        store.state.chatMessages[identifier]?.filter { $0.isLoading }.isEmpty == false
+    }
+
     var startMessage: String {
         let challengeDescription = challengeDetail.body.toAttributedString().string
         switch mode {

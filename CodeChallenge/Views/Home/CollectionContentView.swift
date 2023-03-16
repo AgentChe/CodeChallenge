@@ -97,6 +97,7 @@ struct CollectionContentView: View, CollectionContentViewProps {
                             challengeView(for: challenge)
                         }
                     }
+                    .padding(2)
             }
             .padding(.top, 3)
         }

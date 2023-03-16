@@ -40,8 +40,6 @@ class PlaygroundViewModel {
 
     func set(code: String) {
         codeToCompile = code.removingPercentEncoding ?? code
-        codeToCompile = codeToCompile.replacingOccurrences(of: "\t", with: "  ")
-        codeToCompile = codeToCompile.replacingOccurrences(of: "\n", with: " ")
         onUpdate?(.codeChange(code.removingPercentEncoding ?? code))
         onUpdate?(.updateTextView(true))
     }
@@ -63,17 +61,16 @@ class PlaygroundViewModel {
     }
 
     func proceed(with text: String, in range: NSRange, textViewText: String) -> Bool {
-        let (tabs, lastLineTabs) = newTabs(text: textViewText, range: range)
         if text == "\n" {
+            let tabs = newTabs(text: textViewText, range: range)
             self.onUpdate?(.updateCharactersInRange(range, "\n\(tabs)"))
             self.onUpdate?(.updateTextViewCursor(offset: "\n\(tabs)".count))
             self.onUpdate?(.updateTextView(true))
-            let spacesForTabs = String(repeating: "  ", count: lastLineTabs.count + 1)
-            codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: " \(spacesForTabs)")
+            codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: "\n\(tabs)")
             return false
         } else if codeToCompile.count >= range.upperBound, text != "" {
             codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: text)
-            let (word, range) = findWordBetweenSpaces(using: range, in: codeToCompile)
+            let (word, range) = findWordBetweenSpaces(using: range, in: codeToCompile.replacingOccurrences(of: "\t", with: " ").replacingOccurrences(of: "\n", with: " "))
             if !word.isEmpty && text != " " {
                 autocomplete(phrase: word, range: range)
             }
@@ -88,7 +85,7 @@ class PlaygroundViewModel {
         return true
     }
 
-    private func newTabs(text: String, range: NSRange) -> (tabs: String, lastLineTabs: String) {
+    private func newTabs(text: String, range: NSRange) -> String {
         var linesBefore: [String] = []
         text.prefix(range.location).enumerateLines(invoking: { line, stop in
             linesBefore.append(line)
@@ -96,7 +93,7 @@ class PlaygroundViewModel {
         let lastLineTabs = linesBefore.last { $0.last == language.openingSymbol }?.prefix(while: { $0 == " " }) ?? ""
         let evenNumberTabs = lastLineTabs.count % 2 == 0 ? lastLineTabs : lastLineTabs.prefix(lastLineTabs.count - 1)
         let newTab = linesBefore.last { $0.last == language.openingSymbol } != nil ? "  " : ""
-        return (tabs: "\(evenNumberTabs)\(newTab)", lastLineTabs: String(lastLineTabs))
+        return "\(evenNumberTabs)\(newTab)"
     }
 
     private func findWordBetweenSpaces(using range: NSRange, in text: String) -> (String, NSRange) {

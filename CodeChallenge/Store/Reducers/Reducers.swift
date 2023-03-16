@@ -268,6 +268,13 @@ extension Reducers {
                 newState[identifier] = copy
                 return newState
             }
+        case let .deleteFailedMessages(mode, id):
+            let identifier = "\(mode.rawValue)_\(id)"
+            var copy = state[identifier]
+            copy?.removeAll(where: { $0.error != nil })
+            var newState = state
+            newState[identifier] = copy
+            return newState
         default: return state
         }
     }

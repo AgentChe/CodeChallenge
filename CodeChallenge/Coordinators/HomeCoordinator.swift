@@ -30,6 +30,8 @@ class HomeCoordinator {
             self?.navigationController.pushViewController(controller, animated: true)
         } onOpenChallenge: { [weak self] challenge in
             self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
+        } onOpenTryAIScreen: { [weak self] in
+            self?.openTryAIView()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)
@@ -48,6 +50,20 @@ class HomeCoordinator {
         for language in ProgrammingLanguage.allCases {
             store.dispatch(LoadHashtags(programmingLanguage: language))
         }
+    }
+
+    private func openTryAIView() {
+        let view = TryAIView { [weak self] challenge in
+            self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
+        } goProductHunt: { string in
+            if let appSettings = URL(string: string), UIApplication.shared.canOpenURL(appSettings) {
+                UIApplication.shared.open(appSettings)
+            }
+        }
+            .environmentObject(store)
+
+        let controller = UIHostingController(rootView: view)
+        navigationController.present(controller, animated: true)
     }
 
     private func openCollectionDetail(collection: ChallengeCollection) {
@@ -79,6 +95,11 @@ class HomeCoordinator {
     private func presentProgrammingLanguagesView() {
         let view = OnboardingLanguagesView { [weak self] in
             self?.onboardingNavigationController?.dismiss(animated: true)
+            if self?.store.state.maintenance?.aiEnabled == true {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self?.openTryAIView()
+                }
+            }
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)

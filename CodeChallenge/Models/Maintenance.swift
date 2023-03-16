@@ -11,5 +11,5 @@ struct Maintenance: Codable {
     let maintenance: Bool
     let premium: Bool
     let aiEnabled: Bool?
-    let productHunt: Bool?
+    let prdoductHunt: String?
 }

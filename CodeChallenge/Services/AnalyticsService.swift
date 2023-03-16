@@ -27,6 +27,8 @@ enum AnalyticsEvent {
     case viewAllPlansClicked
     case homepageLoaded(Double, Error?)
     case conceptOpened(String)
+    case askAICLicked(Int, String)
+    case explainMistakeClicked(Int, String)
 
     var value: String {
         switch self {
@@ -64,6 +66,10 @@ enum AnalyticsEvent {
             return "Homepage Loaded"
         case .conceptOpened:
             return "Concept Opened"
+        case .askAICLicked:
+            return "Ask AI Clicked"
+        case .explainMistakeClicked:
+            return "Explain Mistake"
         }
     }
 
@@ -105,6 +111,10 @@ enum AnalyticsEvent {
             return ["type": type]
         case .conceptOpened(let source):
             return ["source": source]
+        case .askAICLicked(let id, let buttonName):
+            return ["challengeid": "\(id)", buttonName: buttonName]
+        case .explainMistakeClicked(let id, let buttonName):
+            return ["challengeid": "\(id)", buttonName: buttonName]
         default: return [:]
         }
     }

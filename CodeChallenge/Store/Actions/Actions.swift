@@ -34,6 +34,7 @@ enum Action: Dispatchable {
     case updateLeaderboardData(Resolvable<LeaderboardData>)
     case updateChatMessages(mode: ChatMessagesMode, id: Int, index: Int?, message: Resolvable<ChatMessage>)
     case updateMaintenanceInfo(Maintenance?)
+    case deleteFailedMessages(mode: ChatMessagesMode, id: Int)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -616,6 +617,7 @@ struct SendMessageToAI: ThunkAction {
     let id: Int
 
     func exec(dispatcher: Dispatcher) {
+        guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
         let history = dispatcher.state.chatMessages["\(mode.rawValue)_\(id)"]?.compactMap { $0.value } ?? []
         dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: nil, message: .success(.init(role: .user, content: message, timestamp: nil))))
 
@@ -623,7 +625,7 @@ struct SendMessageToAI: ThunkAction {
         let indexOfTheResponseMessage = (dispatcher.state.chatMessages["\(mode.rawValue)_\(id)"] ?? []).count - 1
 
         dispatcher.services.chatService
-            .sendMessageToAI(message, history: history)
+            .sendMessageToAI(message, history: history, session: session)
             .asResolvable()
             .ephemeralSink { responseMessage in
                 dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: indexOfTheResponseMessage, message: responseMessage))

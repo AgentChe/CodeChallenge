@@ -165,7 +165,32 @@ struct LoadingAssistantMessage: View {
                 .frame(width: .screenWidth - 100)
             }
             .redacted(reason: .placeholder)
-//            .animatePlaceholder()
+        }
+        .padding(.horizontal, 10)
+    }
+}
+
+struct AssistantMessageError: View {
+    let error: ChatAIViewError
+
+    var body: some View {
+        HStack(alignment: .bottom, spacing: 10) {
+            VStack {
+                Image("logo")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .aspectRatio(contentMode: .fill)
+                Spacer()
+            }
+            VStack(alignment: .leading) {
+                Text(error.description)
+                    .padding(10)
+                    .foregroundColor(Color.white)
+                    .background(.CodeChallenge.darkBlue)
+                    .cornerRadius(10)
+                .transition(.move(edge: .bottom))
+                .frame(width: .screenWidth - 100)
+            }
         }
         .padding(.horizontal, 10)
     }

@@ -21,6 +21,7 @@ struct HomeView: View, HomeViewProps {
     @State private var searchFieldIsFocused = false
     let onSearch: ((String) -> Void)?
     let onOpenChallenge: (Challenge) -> Void
+    let onOpenTryAIScreen: () -> Void
 
     var body: some View {
         DoodledView {
@@ -67,6 +68,27 @@ struct HomeView: View, HomeViewProps {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack(spacing: 10) {
+                    if store.state.maintenance?.aiEnabled == true {
+                        HStack(spacing: 4) {
+                            Text("Try AI")
+                                .foregroundColor(.CodeChallenge.white)
+                                .font(.h5)
+                            Image("ai")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 7)
+                        .frame(height: 32)
+                            .background(
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(.CodeChallenge.blue1))
+                                .background(RoundedRectangle(cornerRadius: 16).fill(Color(.CodeChallenge.dark)))
+                            )
+                            .onTapGesture {
+                                onOpenTryAIScreen()
+                            }
+                    }
                     LanguagePickerIconView()
                         .onTapGesture {
                             withAnimation {

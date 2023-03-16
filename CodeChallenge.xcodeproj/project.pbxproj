@@ -42,6 +42,7 @@
 		E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */; };
 		E052550D288C79FC00FD87C3 /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E052550A288C79FC00FD87C3 /* PlaygroundView.swift */; };
 		E052550E288C79FC00FD87C3 /* AutocompleteTermsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E052550B288C79FC00FD87C3 /* AutocompleteTermsHelper.swift */; };
+		E064949029C26A0400AE3B6B /* TryAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E064948F29C26A0400AE3B6B /* TryAIView.swift */; };
 		E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE242877888300995D3D /* HomeCoordinator.swift */; };
 		E06AAE272877888C00995D3D /* LeaderboardCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */; };
 		E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */; };
@@ -233,6 +234,7 @@
 		E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteDropdownView.swift; sourceTree = "<group>"; };
 		E052550A288C79FC00FD87C3 /* PlaygroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
 		E052550B288C79FC00FD87C3 /* AutocompleteTermsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTermsHelper.swift; sourceTree = "<group>"; };
+		E064948F29C26A0400AE3B6B /* TryAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryAIView.swift; sourceTree = "<group>"; };
 		E06AAE242877888300995D3D /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardCoordinator.swift; sourceTree = "<group>"; };
 		E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumCoordinator.swift; sourceTree = "<group>"; };
@@ -627,6 +629,7 @@
 				E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */,
 				E002972229AECBC400EE3D9B /* LearnView.swift */,
 				E085CFAE29B4129F00BA1F16 /* LearnViewProps.swift */,
+				E064948F29C26A0400AE3B6B /* TryAIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1031,6 +1034,7 @@
 				E085CFAF29B4129F00BA1F16 /* LearnViewProps.swift in Sources */,
 				E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */,
 				E06AAE3728778DDC00995D3D /* Account.swift in Sources */,
+				E064949029C26A0400AE3B6B /* TryAIView.swift in Sources */,
 				E08D823D299AF12700A11396 /* SearchState.swift in Sources */,
 				E052550D288C79FC00FD87C3 /* PlaygroundView.swift in Sources */,
 				E085CFB129B5569C00BA1F16 /* PageControl.swift in Sources */,
@@ -1312,7 +1316,7 @@
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Codehub;
+				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1346,7 +1350,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Codehub;
+				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1443,7 +1447,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Codehub;
+				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1554,7 +1558,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Codehub;
+				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

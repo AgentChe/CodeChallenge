@@ -281,7 +281,7 @@ struct CodeChallengeView: View, CodeChallengeViewProps {
                         .font(.h3)
                         Spacer()
                         if gotCompileError == true, store.state.maintenance?.aiEnabled == true {
-                            Text("Ask AI why?")
+                            Text("Explain Mistake")
                                 .font(.button)
                                 .foregroundColor(.CodeChallenge.white)
                                 .padding(.vertical, 4)

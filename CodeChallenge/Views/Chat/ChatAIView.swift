@@ -28,7 +28,7 @@ struct ChatAIView: View, ChatAIViewProps {
                     } label: {
                         Image("back")
                     }
-                    Text("Let's chat ...")
+                    Text(mode == .explain ? "Explain Mistake" : "Help Solve")
                         .font(.h2)
                     Spacer()
                 }
@@ -37,7 +37,9 @@ struct ChatAIView: View, ChatAIViewProps {
                     ScrollView(.vertical) {
                         VStack(spacing: 26) {
                             ForEach(Array(chatMessages.enumerated()), id: \.offset) { (offset, message) in
-                                if let value = message.value {
+                                if offset == 0 {
+                                    EmptyView()
+                                } else if let value = message.value {
                                     if value.role == .user {
                                         MessageView(currentMessage: value)
                                         .id(offset)
@@ -56,8 +58,9 @@ struct ChatAIView: View, ChatAIViewProps {
                                     EmptyView()
                                 }
                             }
-
-                            if assistantMessageIsLoading {
+                            if let error = assistantMessageError {
+                                AssistantMessageError(error: error)
+                            } else if assistantMessageIsLoading {
                                 LoadingAssistantMessage()
                             }
                         }
@@ -79,7 +82,7 @@ struct ChatAIView: View, ChatAIViewProps {
                 }
             }
             .onAppear {
-                if chatMessages.isEmpty {
+                if chatMessages.isEmpty || (mode == .explain && !chatMessages.contains { $0.value?.content == startMessage }) {
                     store.dispatch(SendMessageToAI(message: startMessage, mode: mode, id: challengeDetail.id))
                 }
             }
@@ -92,6 +95,12 @@ struct ChatAIView: View, ChatAIViewProps {
             VStack(spacing: 10) {
                 ForEach(prompts, id: \.self) { prompt in
                     Button(action: {
+                        switch mode {
+                        case .explain:
+                            store.dispatch(TrackAnalyticsEvent(event: .explainMistakeClicked(challengeDetail.id, prompt)))
+                        case .provideSolution:
+                            store.dispatch(TrackAnalyticsEvent(event: .askAICLicked(challengeDetail.id, prompt)))
+                        }
                         if dismissView(on: prompt) { presentationMode.wrappedValue.dismiss() } else {
                             showPromptViewIfSatisfied = false
                             store.dispatch(SendMessageToAI(message: prompt, mode: mode, id: challengeDetail.id))

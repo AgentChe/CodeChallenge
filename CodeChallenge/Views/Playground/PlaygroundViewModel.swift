@@ -70,9 +70,9 @@ class PlaygroundViewModel {
             return false
         } else if codeToCompile.count >= range.upperBound, text != "" {
             codeToCompile = (codeToCompile as NSString).replacingCharacters(in: range, with: text)
-            let (word, range) = findWordBetweenSpaces(using: range, in: codeToCompile.replacingOccurrences(of: "\t", with: " ").replacingOccurrences(of: "\n", with: " "))
+            let (word, wordRange) = findWordBetweenSpaces(using: range, in: codeToCompile.replacingOccurrences(of: "\t", with: " ").replacingOccurrences(of: "\n", with: " "))
             if !word.isEmpty && text != " " {
-                autocomplete(phrase: word, range: range)
+                autocomplete(phrase: word, range: wordRange)
             }
 
             if let value = self.autocompleteSymbols[text] {

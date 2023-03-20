@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct CodeChallengeTestCasesView: View {
-    let testCases: [TestCase]
-    let showsSolution: Bool
+    @EnvironmentObject var store: Store
+    
+    let details: ChallengeDetail
     let onSeeSolution: () -> Void
     let onTryAgain: () -> Void
     let onContinue: () -> Void
+    let onCelebrate: () -> Void
     @State private var expandedTestCases: [TestCase] = []
 
     var body: some View {
@@ -56,6 +58,16 @@ struct CodeChallengeTestCasesView: View {
         .background(.CodeChallenge.dark)
         .padding(.horizontal, 25)
         .padding(.vertical, 30)
+        .onChange(of: compilerTestCases) { newValue in
+            if (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
+                if !celebratedChallenges.contains(details.id) {
+                    set(celebratedChallenge: details)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        onCelebrate()
+                    }
+                }
+            }
+        }
     }
 
     private func testCaseView(index: Int, testCase: TestCase) -> some View {
@@ -143,5 +155,46 @@ struct CodeChallengeTestCasesView: View {
             }
             .foregroundColor(.white)
         }
+    }
+}
+
+extension CodeChallengeTestCasesView {
+    var compilerTestCases: [ChallengeCompiledResult.UnitTest]? {
+        return store.state.challengeResults[details.id]?.value?.unitTests
+    }
+
+    var testCasesInputs: [Output] {
+        return details.unitTests.output
+    }
+
+    var testCases: [TestCase] {
+        var result: [TestCase] = []
+        for testCase in testCasesInputs {
+            if let compilerResult = (compilerTestCases?.first { Int($0.id) == testCase.testId }) {
+                let testCase = TestCase(id: testCase.testId,
+                                        input: testCase.input,
+                                        output: "\(compilerResult.output ?? "")",
+                                        expectedOutput: testCase.expectedOutput,
+                                        isFailed: compilerResult.outcome == .failed,
+                                        isLocked: false)
+                result.append(testCase)
+            }
+        }
+        return result
+    }
+
+    var showsSolution: Bool {
+        details.solutionCode.code != nil
+    }
+
+    var celebratedChallenges: [Int] {
+        guard let array = UserDefaults.standard.array(forKey: "celebratedChallenges") as? [Int] else { return []}
+        return array
+    }
+
+    func set(celebratedChallenge: ChallengeDetail) {
+        var challenges = celebratedChallenges
+        challenges.append(celebratedChallenge.id)
+        UserDefaults.standard.set(challenges, forKey: "celebratedChallenges")
     }
 }

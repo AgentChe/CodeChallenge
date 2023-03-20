@@ -30,7 +30,8 @@ struct Reducers {
             conceptReviews: conceptReviewReducer(state.conceptReviews, action),
             leaderboardData: leaderboardReducer(state.leaderboardData, action),
             chatMessages: chatMessagesReducer(state.chatMessages, action),
-            maintenance: maintenanceReducer(state.maintenance, action)
+            maintenance: maintenanceReducer(state.maintenance, action),
+            ongoingChallengeFriendData: ongoingChallengeFriendDataReducer(state.ongoingChallengeFriendData, action)
         )
     }
 }
@@ -240,6 +241,16 @@ extension Reducers {
     static let maintenanceReducer: Reducer<Maintenance?> = { state, action in
         switch action {
         case .updateMaintenanceInfo(let result):
+            return result
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let ongoingChallengeFriendDataReducer: Reducer<Resolvable<ChallengeFriendData>> = { state, action in
+        switch action {
+        case .updateOngoingChallengeFriendData(let result):
             return result
         default: return state
         }

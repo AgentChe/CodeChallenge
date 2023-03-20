@@ -116,5 +116,69 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A5CC4099-228F-48F7-B534-24A0F6B288D6"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Challenge/Screens/CodeChallengePlaygroundView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "unknown"
+            landmarkType = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3FEDBFFA-E9D3-4DDB-B2DA-C90F4BDECE00"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Challenge/Screens/CodeChallengeContentsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "views(details:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3FEDBFFA-E9D3-4DDB-B2DA-C90F4BDECE00 - 5e33a6c062115fec"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Codehub_Staging.CodeChallengeContentsView.views(details: Codehub_Staging.ChallengeDetail) -&gt; some"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Challenge/Screens/CodeChallengeContentsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "121"
+                  endingLineNumber = "121"
+                  offsetFromSymbolStart = "3504">
+               </Location>
+               <Location
+                  uuid = "3FEDBFFA-E9D3-4DDB-B2DA-C90F4BDECE00 - 38b96c0e48fb8e3e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #3 (Swift.String, Swift.Bool) -&gt; () in Codehub_Staging.CodeChallengeContentsView.views(details: Codehub_Staging.ChallengeDetail) -&gt; some"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Challenge/Screens/CodeChallengeContentsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "122"
+                  endingLineNumber = "122"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

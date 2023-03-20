@@ -10,37 +10,55 @@ import SwiftUI
 
 struct LeaderboardView: View, LeaderboardViewProps {
     @EnvironmentObject var store: Store
+    @State private var selection = 0
+    let onShareAndStart: () -> Void
 
     var body: some View {
         DoodledView {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading) {
-                    Text("Leaderboard")
-                        .font(.pageNameH1)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 16)
-                        .padding(.leading, 16)
-                    ForEach(topUsers, id: \.id) { item in
-                        itemView(item, medalPossible: true)
-                            .padding(.horizontal, 16)
-                    }
-                    if !neightborUsers.isEmpty {
-                        HStack {
-                            Spacer()
-                            Text("•  •  •")
-                                .padding(.vertical, 20)
-                                .foregroundColor(.CodeChallenge.white.withAlphaComponent(0.8))
-                            Spacer()
-                        }
-                    }
-                    ForEach(Array(neightborUsers.enumerated()), id: \.offset) { (index, item) in
-                        itemView(item, medalPossible: false)
-                            .padding(.horizontal, 16)
-                    }
+            SegmentedControlView(
+                selection: $selection,
+                sections: ["Leaderboard", "Challenge Friends"],
+                onValueChange: { selection in
+                    self.selection = selection
+                })
+            .padding(.horizontal, 9)
+            .frame(height: 31)
 
-                    Spacer()
-                        .frame(height: 20)
+            switch selection {
+            case 1:
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        Text("Leaderboard")
+                            .font(.pageNameH1)
+                            .foregroundColor(.white)
+                            .padding(.bottom, 16)
+                            .padding(.leading, 16)
+                        ForEach(topUsers, id: \.id) { item in
+                            itemView(item, medalPossible: true)
+                                .padding(.horizontal, 16)
+                        }
+                        if !neightborUsers.isEmpty {
+                            HStack {
+                                Spacer()
+                                Text("•  •  •")
+                                    .padding(.vertical, 20)
+                                    .foregroundColor(.CodeChallenge.white.withAlphaComponent(0.8))
+                                Spacer()
+                            }
+                        }
+                        ForEach(Array(neightborUsers.enumerated()), id: \.offset) { (index, item) in
+                            itemView(item, medalPossible: false)
+                                .padding(.horizontal, 16)
+                        }
+
+                        Spacer()
+                            .frame(height: 20)
+                    }
                 }
+                .padding(.top, 10)
+            case 0:
+                ChallengeFriendView(onShareAndStart: onShareAndStart)
+            default: EmptyView()
             }
         }
     }

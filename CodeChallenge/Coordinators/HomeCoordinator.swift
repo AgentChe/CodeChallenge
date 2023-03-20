@@ -12,6 +12,7 @@ import SwiftUI
 class HomeCoordinator {
     let navigationController = UINavigationController()
     var onboardingNavigationController: UINavigationController?
+    var challengeFriendNavigationController: UINavigationController?
 
     let store: Store
     var onGoPremium: (() -> Void)?
@@ -50,6 +51,14 @@ class HomeCoordinator {
         for language in ProgrammingLanguage.allCases {
             store.dispatch(LoadHashtags(programmingLanguage: language))
         }
+
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+//            let data: ChallengeFriendData = .init(id: 1, difficulty: "Easy", programmingLanguage: "python", challenges: [1, 4, 19], scores: ChallengeFriendData.Scores.init(fromUser: -1, toUser: -1), winner: -1, expired: false)
+//            self.startChallengeFriend(with: data, from: self.navigationController) { [weak self] in
+//                guard let navController = self?.challengeFriendNavigationController else { return }
+//                self?.openChallengeView(challenge: .init(id: 4, name: "name", tags: [], difficulty: "easy", isPremium: false, xp: 100, progress: "na", isNew: false), collection: nil, ongoingChallengeFriendData: data, from: navController)
+//            }
+//        }
     }
 
     private func openTryAIView() {
@@ -116,3 +125,4 @@ class HomeCoordinator {
 }
 
 extension HomeCoordinator: CodeChallengePresentable {}
+extension HomeCoordinator: ChallengeFriendPresentable {}

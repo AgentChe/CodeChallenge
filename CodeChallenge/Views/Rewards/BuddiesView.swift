@@ -11,11 +11,6 @@ import UIKit
 import Branch
 import Combine
 
-fileprivate struct ShareText: Identifiable {
-    let id = UUID()
-    let text: String
-}
-
 struct BuddiesView: View {
     enum AlertInfo {
         case nonSufficientXP

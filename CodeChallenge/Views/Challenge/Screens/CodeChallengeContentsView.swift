@@ -1,0 +1,203 @@
+//
+//  CodeChallengeContentsView.swift
+//  CodeChallenge
+//
+//  Created by Tatevik Tovmasyan on 20/03/2023.
+//
+
+import Foundation
+import SwiftUI
+
+struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
+    @EnvironmentObject var store: Store
+
+    let codeChallenge: Challenge
+    let onSeeSolution: (ChallengeDetail?) -> Void
+    let onSuccess: (ChallengeDetail?) -> Void
+    let onDismiss: () -> Void
+    let onGoPremium: () -> Void
+    let onOpenChat: (ChallengeDetail?, ChatMessagesMode) -> Void
+
+    @State private var displayCode: String?
+    @State private var selection: Int = 0
+    @State private var showsResetProgressPopup: Bool = false
+    @State private var showPremiumPopup: Bool = false
+
+    var body: some View {
+        ZStack {
+            VStack(spacing: 0) {
+                if !shouldShowPremiumPopup {
+                    Spacer()
+                        .frame(height: 10)
+                    SegmentedControlView(
+                        selection: $selection,
+                        sections: ["Task", "Code", "Result"],
+                        onValueChange: { selection in
+                            self.selection = selection
+                        })
+                    .padding(.horizontal, 25)
+                    .frame(height: 31)
+                }
+
+                if !isLoading, let details = details {
+                    views(details: details)
+                } else {
+                    SkeletonCodeChallengeView()
+                }
+            }
+            if showPremiumPopup {
+                Rectangle()
+                    .fill(Color.black)
+                    .opacity(0.85)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation {
+                            showPremiumPopup = false
+                        }
+                    }
+                premiumPopup
+                    .transition(.move(edge: .bottom).animation(.easeInOut(duration: 0.3)))
+                    .zIndex(3)
+            }
+        }
+        .onAppear(perform: {
+            store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
+            store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id))
+        })
+        .onChange(of: selection, perform: { newValue in
+            if newValue == 1 {
+                store.dispatch(TrackAnalyticsEvent(event: .startedSolving(codeChallenge, programmingLanguage)))
+            }
+        })
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Text(codeChallenge.name)
+                        .foregroundColor(.white)
+                        .font(.h3)
+                    Spacer()
+
+                    if selection == 1 && template != displayCode {
+                        Image("reset")
+                            .onTapGesture {
+                                showsResetProgressPopup = true
+                            }
+                    } else {
+                        EmptyView()
+                    }
+                }
+            }
+        }
+        .background(Color.dark.edgesIgnoringSafeArea(.all))
+        .onAppear(perform: {
+            displayCode = code
+        })
+        .onChange(of: code, perform: { newValue in
+            let decodedCode = newValue.removingPercentEncoding ?? newValue
+            displayCode = decodedCode
+        })
+    }
+
+    @ViewBuilder
+    func views(details: ChallengeDetail) -> some View {
+        switch selection {
+        case 0:
+            CodeChallengeTaskView(
+                details: details,
+                onStartSolving: {
+                selection = 1
+            },
+                onPremiumPopupShow: {
+                    withAnimation {
+                        showPremiumPopup = true
+                    }
+            },
+                onGoPremium: onGoPremium, onOpenChat: onOpenChat)
+        case 1:
+            CodeChallengePlaygroundView(
+                details: details,
+                displayCode: $displayCode,
+                showsResetProgressPopup: $showsResetProgressPopup,
+                onOpenChat: onOpenChat, onRun: { (code, compile) in
+                store.dispatch(UpdateChallengeProgress(
+                    challenge: codeChallenge,
+                    solution: code,
+                    compile: compile,
+                    programmingLanguage: programmingLanguage,
+                    language: "en"
+                ))
+            }, onSuccessfulRun: {
+                selection = 2
+            })
+        case 2:
+            CodeChallengeTestCasesView(details: details, onSeeSolution: {
+                onSeeSolution(details)
+            }) {
+                selection = 1
+            } onContinue: {
+                onDismiss()
+            } onCelebrate: {
+                onSuccess(details)
+            }
+        default: EmptyView()
+        }
+    }
+
+    private var premiumPopup: some View {
+        VStack {
+            Spacer()
+            ZStack(alignment: .leading) {
+                VStack(spacing: 12) {
+                    Spacer()
+                        .frame(height: 18)
+                    Text("Challenge Locked")
+                        .font(.h2)
+                        .padding(.horizontal, 4)
+                    Text("Go Premium to unlock the challenge")
+                        .font(.smallText)
+                        .padding(.horizontal, 4)
+                        .padding(.bottom, 15)
+                    HStack {
+                        Spacer()
+                        Text("Start 14-day Free Trial")
+                            .font(.button)
+                        Spacer()
+                    }
+                    .padding(.vertical, 12)
+                    .modifier(PremiumGradientModifier(cornerRadius: 10, corners: [.bottomLeft, .bottomRight]))
+                    .onTapGesture {
+                        onGoPremium()
+                    }
+                }
+                .foregroundColor(.white)
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(.CodeChallenge.background))
+                }
+            }
+            .padding(.horizontal, 16)
+            Spacer()
+        }
+        .frame(width: .screenWidth)
+    }
+}
+
+struct SkeletonCodeChallengeView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Spacer()
+                .frame(height: 25)
+            Text("random title")
+                .font(.systemFont(ofSize: 24, weight: .semibold))
+            Text("a random description")
+                .font(.systemFont(ofSize: 18, weight: .semibold))
+                .foregroundColor(.CodeChallenge.blue1)
+            Text("this text is a lot of details and its supposed to look big redacted. So I am just gonna continue this poem and think that im a poet")
+                .font(.systemFont(ofSize: 18, weight: .semibold))
+            Spacer()
+        }
+        .foregroundColor(.CodeChallenge.white)
+        .padding(.horizontal, 20)
+        .redacted(reason: .placeholder)
+    }
+}

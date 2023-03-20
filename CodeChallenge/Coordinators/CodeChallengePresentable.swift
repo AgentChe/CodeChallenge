@@ -20,7 +20,7 @@ extension CodeChallengePresentable {
         collection: ChallengeCollection?,
         from navigationController: UINavigationController?) {
             guard let navigationController = navigationController else { return }
-        let challengeView = CodeChallengeView(codeChallenge: challenge) { [weak self] challengeDetail in
+        let challengeView = CodeChallengeContentsView(codeChallenge: challenge) { [weak self] challengeDetail in
             guard let challengeDetail = challengeDetail else { return }
             self?.showSolution(challengeDetail: challengeDetail, challenge: challenge)
         } onSuccess: { [weak self] challenge in

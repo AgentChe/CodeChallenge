@@ -35,6 +35,7 @@ enum Action: Dispatchable {
     case updateChatMessages(mode: ChatMessagesMode, id: Int, index: Int?, message: Resolvable<ChatMessage>)
     case updateMaintenanceInfo(Maintenance?)
     case deleteFailedMessages(mode: ChatMessagesMode, id: Int)
+    case updateOngoingChallengeFriendData(Resolvable<ChallengeFriendData>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -641,6 +642,23 @@ struct FetchMaintenanceInfo: ThunkAction {
             .asResolvable()
             .ephemeralSink { maintenance in
                 dispatcher.dispatch(Action.updateMaintenanceInfo(maintenance.value))
+            }
+    }
+}
+
+struct CreateChallengeWithFriend: ThunkAction {
+    let programmingLanguage: ProgrammingLanguage
+    let difficulty: String
+
+    func exec(dispatcher: Dispatcher) {
+        guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
+
+        dispatcher.dispatch(Action.updateOngoingChallengeFriendData(.loading))
+        dispatcher.services.challengeFriendService
+            .createChallenge(session: session, difficulty: difficulty, language: programmingLanguage)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateOngoingChallengeFriendData(result))
             }
     }
 }

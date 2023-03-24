@@ -17,7 +17,7 @@ enum AnalyticsEvent {
     case loginSuccessful
     case challengeSelected(Challenge, String, ProgrammingLanguage)
     case startedSolving(Challenge, ProgrammingLanguage)
-    case challengeCompleted(Challenge, Bool)
+    case challengeCompleted(Int, Bool)
     case browseOpened
     case challengeSearched(String, String)
     case solutionOpened(Challenge, ProgrammingLanguage)
@@ -91,9 +91,7 @@ enum AnalyticsEvent {
         case .challengeCompleted(let challenge, let completed):
             return [
                 "completedStatus": completed,
-                "challengeTags": challenge.tagsDescription,
-                "challengeId": challenge.id,
-                "challengeLevel": challenge.progress
+                "challengeId": challenge
             ]
         case .challengeSearched(let searchTerm, let type):
             return ["searchTerm": searchTerm, "type": type]

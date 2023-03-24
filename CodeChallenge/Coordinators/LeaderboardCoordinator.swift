@@ -14,6 +14,7 @@ import Branch
 class LeaderboardCoordinator {
     let navigationController = UINavigationController()
     let store: Store
+    var challengeFriendNavigationController: UINavigationController?
     private var ongoingChallengeFriendDataCancellable: AnyCancellable?
 
     init(store: Store) {
@@ -57,15 +58,11 @@ class LeaderboardCoordinator {
         let activityController = UIActivityViewController(activityItems: [urlString], applicationActivities: nil)
         activityController.popoverPresentationController?.sourceView = navigationController.view
         activityController.completionWithItemsHandler = { [weak self] _, success, _, _ in
-            guard success else { return }
-//            self?.startCompetition(data)
+            guard success, let navigationController = self?.navigationController else { return }
+            self?.startChallengeFriend(with: data, from: navigationController)
         }
         navigationController.present(activityController, animated: true)
     }
-
-//    private func startCompetition(_ data: ChallengeFriendData) {
-//        let controller = UIHostingController(rootView: ChallengeFriendContentsView(data: data))
-//        controller.modalPresentationStyle = .overFullScreen
-//        navigationController.present(controller, animated: true)
-//    }
 }
+
+extension LeaderboardCoordinator: ChallengeFriendPresentable {}

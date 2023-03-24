@@ -39,10 +39,8 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
                     .frame(height: 31)
                 }
 
-                if !isLoading, let details = details {
+                if let details = details {
                     views(details: details)
-                } else {
-                    SkeletonCodeChallengeView()
                 }
             }
             if showPremiumPopup {
@@ -62,7 +60,7 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
         }
         .onAppear(perform: {
             store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
-            store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id))
+            store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id, onComplete: nil))
         })
         .onChange(of: selection, perform: { newValue in
             if newValue == 1 {
@@ -96,23 +94,38 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
             let decodedCode = newValue.removingPercentEncoding ?? newValue
             displayCode = decodedCode
         })
+        .onChange(of: compilerTestCases) { newValue in
+            if (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
+                selection = 2
+                if !celebratedChallenges.contains(details?.id ?? 0), let details = details {
+                    set(celebratedChallenge: details)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        onSuccess(details)
+                    }
+                }
+            }
+        }
     }
 
     @ViewBuilder
     func views(details: ChallengeDetail) -> some View {
         switch selection {
         case 0:
-            CodeChallengeTaskView(
-                details: details,
-                onStartSolving: {
-                selection = 1
-            },
-                onPremiumPopupShow: {
-                    withAnimation {
-                        showPremiumPopup = true
-                    }
-            },
-                onGoPremium: onGoPremium, onOpenChat: onOpenChat)
+            if !isLoading {
+                CodeChallengeTaskView(
+                    details: details,
+                    onStartSolving: {
+                    selection = 1
+                },
+                    onPremiumPopupShow: {
+                        withAnimation {
+                            showPremiumPopup = true
+                        }
+                },
+                    onGoPremium: onGoPremium, onOpenChat: onOpenChat)
+            } else {
+                SkeletonCodeChallengeView()
+            }
         case 1:
             CodeChallengePlaygroundView(
                 details: details,
@@ -120,7 +133,7 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
                 showsResetProgressPopup: $showsResetProgressPopup,
                 onOpenChat: onOpenChat, onRun: { (code, compile) in
                 store.dispatch(UpdateChallengeProgress(
-                    challenge: codeChallenge,
+                    challengeId: codeChallenge.id,
                     solution: code,
                     compile: compile,
                     programmingLanguage: programmingLanguage,
@@ -136,8 +149,6 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
                 selection = 1
             } onContinue: {
                 onDismiss()
-            } onCelebrate: {
-                onSuccess(details)
             }
         default: EmptyView()
         }

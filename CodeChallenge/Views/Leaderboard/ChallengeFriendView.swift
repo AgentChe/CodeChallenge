@@ -16,16 +16,25 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
 
     var body: some View {
         VStack(spacing: 16) {
-            Text("Challenge Friends!")
-                .font(.pageNameH1)
+//            Text("Challenge Friends!")
+//                .font(.pageNameH1)
+//                .foregroundColor(.white)
+            HStack {
+                Image("challenge_friend")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: .screenWidth - 100)
+                Spacer()
+            }
+            Text("Let's start by selecting the language and difficulty level you want to challenge friends with. Complete the challenges yourself and earn rewards upon winning!")
+                .multilineTextAlignment(.leading)
                 .foregroundColor(.white)
-            Text("Select the language and difficulty level you want to challenge friends with. Complete the challenges yourself and earn rewards upon winning!")
-                .foregroundColor(.white)
-                .font(.h3)
+                .font(.bodyText)
 
             HStack {
-                Text("Select language")
-                    .font(.h4)
+                Text("Language")
+                    .font(.h5)
+                Spacer()
                 Picker("Select language", selection: $programmingLanguage) {
                     ForEach(ProgrammingLanguage.allCases, id: \.rawValue) { language in
                         Text(language.rawValue.capitalized)
@@ -35,9 +44,16 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                     }
                 }
             }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color(UIColor.CodeChallenge.blue1))
+            }
             HStack {
-                Text("Select difficulty level")
-                    .font(.h4)
+                Text("Difficulty level")
+                    .font(.h5)
+                Spacer()
                 Picker("Select difficulty level", selection: $difficultyLevel) {
                     ForEach(["Easy", "Medium", "Hard"], id: \.self) { level in
                         Text(level)
@@ -46,6 +62,12 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                             }
                     }
                 }
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color(UIColor.CodeChallenge.blue1))
             }
             Spacer()
 

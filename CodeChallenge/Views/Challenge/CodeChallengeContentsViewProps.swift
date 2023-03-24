@@ -47,4 +47,39 @@ extension CodeChallengeContentsViewProps {
     var shouldShowPremiumPopup: Bool {
         details?.isPremium == true && account?.isPremium == false
     }
+
+    var compilerTestCases: [ChallengeCompiledResult.UnitTest]? {
+        return store.state.challengeResults[details?.id ?? 0]?.value?.unitTests
+    }
+
+    var testCasesInputs: [Output] {
+        return details?.unitTests.output ?? []
+    }
+
+    var testCases: [TestCase] {
+        var result: [TestCase] = []
+        for testCase in testCasesInputs {
+            if let compilerResult = (compilerTestCases?.first { Int($0.id) == testCase.testId }) {
+                let testCase = TestCase(id: testCase.testId,
+                                        input: testCase.input,
+                                        output: "\(compilerResult.output ?? "")",
+                                        expectedOutput: testCase.expectedOutput,
+                                        isFailed: compilerResult.outcome == .failed,
+                                        isLocked: false)
+                result.append(testCase)
+            }
+        }
+        return result
+    }
+
+    var celebratedChallenges: [Int] {
+        guard let array = UserDefaults.standard.array(forKey: "celebratedChallenges") as? [Int] else { return []}
+        return array
+    }
+
+    func set(celebratedChallenge: ChallengeDetail) {
+        var challenges = celebratedChallenges
+        challenges.append(celebratedChallenge.id)
+        UserDefaults.standard.set(challenges, forKey: "celebratedChallenges")
+    }
 }

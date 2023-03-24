@@ -12,9 +12,9 @@ struct CodeChallengeTaskView: View {
     @EnvironmentObject var store: Store
     let details: ChallengeDetail
     let onStartSolving: () -> Void
-    let onPremiumPopupShow: () -> Void
-    let onGoPremium: () -> Void
-    let onOpenChat: (ChallengeDetail?, ChatMessagesMode) -> Void
+    let onPremiumPopupShow: (() -> Void)?
+    let onGoPremium: (() -> Void)?
+    let onOpenChat: ((ChallengeDetail?, ChatMessagesMode) -> Void)?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -56,14 +56,15 @@ struct CodeChallengeTaskView: View {
             if details.isPremium {
                 HStack(spacing: 10) {
                     Button("Start solving", action: {
-                        if shouldShowPremiumPopup {
+                        if shouldShowPremiumPopup, let onPremiumPopupShow = onPremiumPopupShow {
                             onPremiumPopupShow()
                         } else {
                             onStartSolving()
                         }
                     })
                     .buttonStyle(PremiumGradientButton())
-                    if store.state.maintenance?.aiEnabled == true {
+                    if store.state.maintenance?.aiEnabled == true, let onPremiumPopupShow = onPremiumPopupShow,
+                        let onOpenChat = onOpenChat {
                         aiButton
                             .modifier(PremiumGradientModifier())
                             .onTapGesture {
@@ -82,7 +83,7 @@ struct CodeChallengeTaskView: View {
                         onStartSolving()
                     }
                     .buttonStyle(PrimaryButton())
-                    if store.state.maintenance?.aiEnabled == true {
+                    if store.state.maintenance?.aiEnabled == true, let onOpenChat = onOpenChat {
                         aiButton
                             .onTapGesture {
                                 onOpenChat(details, .provideSolution)

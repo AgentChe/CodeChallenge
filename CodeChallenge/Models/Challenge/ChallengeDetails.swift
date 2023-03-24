@@ -9,7 +9,6 @@ import Foundation
 
 struct ChallengeDetail: Codable, Equatable {
     let id: Int
-    let dateCreated, dateModified: Double
     let icon, difficulty: String
     let time: Int
     let isPremium: Bool

@@ -19,4 +19,5 @@ struct ChallengeFriendData: Codable {
     let scores: Scores
     let winner: Int
     let expired: Bool
+    let fromUser: Int
 }

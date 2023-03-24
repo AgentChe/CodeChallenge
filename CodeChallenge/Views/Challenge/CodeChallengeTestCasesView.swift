@@ -11,10 +11,9 @@ struct CodeChallengeTestCasesView: View {
     @EnvironmentObject var store: Store
     
     let details: ChallengeDetail
-    let onSeeSolution: () -> Void
+    let onSeeSolution: (() -> Void)?
     let onTryAgain: () -> Void
     let onContinue: () -> Void
-    let onCelebrate: () -> Void
     @State private var expandedTestCases: [TestCase] = []
 
     var body: some View {
@@ -58,16 +57,6 @@ struct CodeChallengeTestCasesView: View {
         .background(.CodeChallenge.dark)
         .padding(.horizontal, 25)
         .padding(.vertical, 30)
-        .onChange(of: compilerTestCases) { newValue in
-            if (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {
-                if !celebratedChallenges.contains(details.id) {
-                    set(celebratedChallenge: details)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        onCelebrate()
-                    }
-                }
-            }
-        }
     }
 
     private func testCaseView(index: Int, testCase: TestCase) -> some View {
@@ -150,7 +139,7 @@ struct CodeChallengeTestCasesView: View {
                     }
                 }
                 .onTapGesture {
-                    onSeeSolution()
+                    onSeeSolution?()
                 }
             }
             .foregroundColor(.white)
@@ -184,7 +173,7 @@ extension CodeChallengeTestCasesView {
     }
 
     var showsSolution: Bool {
-        details.solutionCode.code != nil
+        details.solutionCode.code != nil && onSeeSolution != nil
     }
 
     var celebratedChallenges: [Int] {

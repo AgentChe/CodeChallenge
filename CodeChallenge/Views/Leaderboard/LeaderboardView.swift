@@ -17,22 +17,24 @@ struct LeaderboardView: View, LeaderboardViewProps {
         DoodledView {
             SegmentedControlView(
                 selection: $selection,
-                sections: ["Leaderboard", "Challenge Friends"],
+                sections: ["Challenge Friends", "Leaderboard"],
                 onValueChange: { selection in
                     self.selection = selection
                 })
-            .padding(.horizontal, 9)
+            .padding(.horizontal, 25)
             .frame(height: 31)
 
             switch selection {
             case 1:
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
-                        Text("Leaderboard")
-                            .font(.pageNameH1)
-                            .foregroundColor(.white)
-                            .padding(.bottom, 16)
-                            .padding(.leading, 16)
+//                        Text("Leaderboard")
+//                            .font(.pageNameH1)
+//                            .foregroundColor(.white)
+//                            .padding(.bottom, 16)
+//                            .padding(.leading, 16)
+                        Spacer()
+                            .frame(height: 20)
                         ForEach(topUsers, id: \.id) { item in
                             itemView(item, medalPossible: true)
                                 .padding(.horizontal, 16)

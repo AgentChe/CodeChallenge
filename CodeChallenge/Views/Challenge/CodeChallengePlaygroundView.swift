@@ -13,7 +13,7 @@ struct CodeChallengePlaygroundView: View {
     let details: ChallengeDetail
     @Binding var displayCode: String?
     @Binding var showsResetProgressPopup: Bool
-    let onOpenChat: (ChallengeDetail?, ChatMessagesMode) -> Void
+    let onOpenChat: ((ChallengeDetail?, ChatMessagesMode) -> Void)?
     let onRun: (String, Bool) -> Void
     let onSuccessfulRun: () -> Void
 
@@ -68,7 +68,8 @@ struct CodeChallengePlaygroundView: View {
                                 .CodeChallenge.blue1)
                         .font(.h3)
                         Spacer()
-                        if gotCompileError == true, store.state.maintenance?.aiEnabled == true {
+                        if gotCompileError == true, store.state.maintenance?.aiEnabled == true,
+                            let onOpenChat = onOpenChat {
                             Text("Explain Mistake")
                                 .font(.button)
                                 .foregroundColor(.CodeChallenge.white)

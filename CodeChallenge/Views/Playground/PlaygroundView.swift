@@ -77,6 +77,10 @@ class PlaygroundView: UIView {
 
     func reset(newCode: String) {
         vm?.set(code: newCode)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) { [weak self] in
+            guard let self = self else { return }
+            self.textViewDidChange(self.textView)
+        }
     }
 
     func onSelect(specialCharacter: String) {

@@ -288,8 +288,35 @@ struct LoadChallengeDetails: ThunkAction {
     }
 }
 
+struct LoadChallengeDetailsAndResetProgress: ThunkAction {
+    let id: Int
+
+    func exec(dispatcher: Dispatcher) {
+        if dispatcher.state.challengeDetails[id] == nil {
+            dispatcher.dispatch(Action.loadChallengeDetails((id, .loading)))
+        }
+
+        dispatcher.services.challengesService
+            .fetchChallenge(id: id)
+            .asResolvable()
+            .ephemeralSink { detail in
+                dispatcher.dispatch(Action.loadChallengeDetails((id, detail)))
+                if let value = detail.value {
+                    dispatcher.dispatch(LoadChallengeProgress(challengeId: id, onComplete: {
+                        dispatcher.dispatch(UpdateChallengeProgress(challengeId: id,
+                                                                    solution: value.body.template,
+                                                                    compile: false,
+                                                                    programmingLanguage: dispatcher.state.programmingLanguage,
+                                                                    language: "en"))
+                    }))
+                }
+            }
+    }
+}
+
 struct LoadChallengeProgress: ThunkAction {
     let challengeId: Int
+    let onComplete: (() -> Void)?
 
     func exec(dispatcher: Dispatcher) {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
@@ -300,12 +327,13 @@ struct LoadChallengeProgress: ThunkAction {
             .asResolvable()
             .ephemeralSink { progress in
                 dispatcher.dispatch(Action.loadChallengeProgress((challengeId, progress)))
+                onComplete?()
             }
     }
 }
 
 struct UpdateChallengeProgress: ThunkAction {
-    let challenge: Challenge
+    let challengeId: Int
     let solution: String
     let compile: Bool
     let programmingLanguage: ProgrammingLanguage
@@ -314,10 +342,9 @@ struct UpdateChallengeProgress: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session") ?? ""
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        let challengeId = challenge.id
         let programmingLanguage = dispatcher.state.programmingLanguage
 
-        let currentProgressType = dispatcher.state.challengeProgresses[challenge.id]?.value?.type
+        let currentProgressType = dispatcher.state.challengeProgresses[challengeId]?.value?.type
 
         let compileIfNeeded = {
             guard compile else { return }
@@ -326,7 +353,7 @@ struct UpdateChallengeProgress: ThunkAction {
                 .challengesService.compile(id: userId, challengeId: challengeId, session: session, programmingLanguage: programmingLanguage)
                 .asResolvable()
                 .ephemeralSink { result in
-                    dispatcher.dispatch(TrackAnalyticsEvent(event: .challengeCompleted(challenge, result.value?.isSuccesful == true)))
+                    dispatcher.dispatch(TrackAnalyticsEvent(event: .challengeCompleted(challengeId, result.value?.isSuccesful == true)))
                     dispatcher.dispatch(Action.loadChallengeCompiledResult((challengeId, result)))
 
                     let progress = dispatcher.state.challengeProgresses[challengeId]?.value
@@ -338,7 +365,7 @@ struct UpdateChallengeProgress: ThunkAction {
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())
-                                dispatcher.dispatch(LoadChallengeProgress(challengeId: challengeId))
+                                dispatcher.dispatch(LoadChallengeProgress(challengeId: challengeId, onComplete: nil))
                             }
                     }
                 }
@@ -660,5 +687,19 @@ struct CreateChallengeWithFriend: ThunkAction {
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.updateOngoingChallengeFriendData(result))
             }
+    }
+}
+
+struct SendChallengeFriendScore: ThunkAction {
+    let score: Int
+
+    func exec(dispatcher: Dispatcher) {
+        guard let session = UserDefaults.standard.string(forKey: "cc_user_session"),
+              let id = dispatcher.state.ongoingChallengeFriendData.value?.id else { return }
+
+        dispatcher.services.challengeFriendService
+            .sendScore(id: id, session: session, score: score)
+            .asResolvable()
+            .ephemeralSink { _ in }
     }
 }

@@ -11,6 +11,7 @@ import OneSignal
 import FirebaseCore
 import Branch
 import Paywall
+import Mixpanel
 
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -26,13 +27,19 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { [weak self]
             (params, error) in
-            guard let params = params, (params["+is_first_session"] as? Int) == 1,
-                    let idString = params["referringUserID"] as? String else {
+            if let params = params, (params["+is_first_session"] as? Int) == 1,
+                    let idString = params["referringUserID"] as? String {
+                self?.sendReferralId(userId: idString)
                 return
             }
-            self?.sendReferralId(userId: idString)
+
+            if let id = params?["challengeFriendId"] as? Int {
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.process(acceptedChallengeId: id)
+            }
         })
+
         FirebaseApp.configure()
+        Mixpanel.initialize(token: "4e8b61d12afcdad81dca5a29ef81425d")
         return true
     }
 

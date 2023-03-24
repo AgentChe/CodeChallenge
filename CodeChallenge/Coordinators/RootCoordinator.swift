@@ -13,7 +13,7 @@ import Paywall
 
 final class RootCoordinator {
     private let window: UIWindow
-    private let store = Store()
+    internal let store = Store()
     private var authNavigationController: UINavigationController?
     private let accountCoordinator: AccountCoordinator
     private let homeCoordinator: HomeCoordinator
@@ -26,6 +26,9 @@ final class RootCoordinator {
 //    private var logoutCancellable: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
     private var homePageCancellable: AnyCancellable?
+    private var accountCancellable: AnyCancellable?
+    private var challengeFriendCancellable: AnyCancellable?
+    var challengeFriendNavigationController: UINavigationController?
 
     private let paywallService: PaywallService
 
@@ -80,11 +83,11 @@ final class RootCoordinator {
             }
         }
 
-        if UserDefaults.standard.string(forKey: "cc_user_session") != nil {
-            store.dispatch(LoadAccount())
-            store.dispatch(LoadInProgressChallenges())
-            store.dispatch(LoadCompletedChallenges())
-        }
+//        if UserDefaults.standard.string(forKey: "cc_user_session") != nil {
+//            store.dispatch(LoadAccount())
+//            store.dispatch(LoadInProgressChallenges())
+//            store.dispatch(LoadCompletedChallenges())
+//        }
 
         store.dispatch(AddStreakIfNeeded())
 
@@ -371,3 +374,34 @@ extension RootCoordinator {
             .eraseToAnyPublisher()
     }
 }
+
+extension RootCoordinator {
+    func process(challengeFriendId: Int) {
+        accountCancellable =
+        store.statePublisher
+            .filter { $0.account.value != nil && $0.homeSections != [:] }
+            .sink(receiveValue: { [weak self] _ in
+                self?.accountCancellable?.cancel()
+                self?.accountCancellable = nil
+
+                self?.store.dispatch(AcceptFriendChallenge(id: challengeFriendId))
+
+                self?.challengeFriendCancellable =
+                self?.store.statePublisher
+                    .compactMap { $0.ongoingChallengeFriendData.value }
+                    .sink(receiveValue: { [weak self] challengeFriendData in
+                        guard let self = self else { return }
+                        self.challengeFriendCancellable?.cancel()
+                        self.challengeFriendCancellable = nil
+
+                        guard !challengeFriendData.expired else { return }
+
+                        DispatchQueue.main.async {
+                            self.startChallengeFriend(with: challengeFriendData, from: self.homeCoordinator.navigationController)
+                        }
+                    })
+            })
+    }
+}
+
+extension RootCoordinator: ChallengeFriendPresentable {}

@@ -703,3 +703,19 @@ struct SendChallengeFriendScore: ThunkAction {
             .ephemeralSink { _ in }
     }
 }
+
+struct AcceptFriendChallenge: ThunkAction {
+    let id: Int
+
+    func exec(dispatcher: Dispatcher) {
+        guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
+
+        dispatcher.dispatch(Action.updateOngoingChallengeFriendData(.loading))
+        dispatcher.services.challengeFriendService
+            .acceptChallenge(id: id, session: session)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateOngoingChallengeFriendData(result))
+            }
+    }
+}

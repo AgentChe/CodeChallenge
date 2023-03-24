@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import Mixpanel
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -26,12 +25,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.overrideUserInterfaceStyle = .dark
         window?.backgroundColor = .CodeChallenge.dark
         window?.makeKeyAndVisible()
+    }
+}
 
-//        let statusBar = UIView()
-//        statusBar.frame = window?.windowScene?.statusBarManager?.statusBarFrame ?? .zero
-//        statusBar.backgroundColor = .white
-//        window?.addSubview(statusBar)
-
-        Mixpanel.initialize(token: "4e8b61d12afcdad81dca5a29ef81425d")
+extension SceneDelegate {
+    func process(acceptedChallengeId: Int) {
+        rootCoordinator?.process(challengeFriendId: acceptedChallengeId)
     }
 }

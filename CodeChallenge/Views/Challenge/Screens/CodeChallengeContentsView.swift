@@ -88,11 +88,10 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
         }
         .background(Color.dark.edgesIgnoringSafeArea(.all))
         .onAppear(perform: {
-            displayCode = code
+            displayCode = code.removingPercentEncoding ?? code
         })
         .onChange(of: code, perform: { newValue in
-            let decodedCode = newValue.removingPercentEncoding ?? newValue
-            displayCode = decodedCode
+            displayCode = newValue.removingPercentEncoding ?? newValue
         })
         .onChange(of: compilerTestCases) { newValue in
             if (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {

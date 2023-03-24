@@ -84,8 +84,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
             displayCode = code.removingPercentEncoding ?? code
         })
         .onChange(of: code, perform: { newValue in
-            let decodedCode = newValue.removingPercentEncoding ?? newValue
-            displayCode = decodedCode
+            displayCode = newValue.removingPercentEncoding ?? newValue
         })
         .navigationBarBackButtonHidden(true)
         .onChange(of: compilerTestCases) { newValue in

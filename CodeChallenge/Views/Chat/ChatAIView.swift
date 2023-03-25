@@ -12,7 +12,6 @@ struct ChatAIView: View, ChatAIViewProps {
     @EnvironmentObject var store: Store
     @State private var message: String = ""
     @Environment(\.presentationMode) var presentationMode
-    let challengeDetail: ChallengeDetail
     let mode: ChatMessagesMode
     @State private var showPromptViewIfSatisfied = false
     @State private var chatMessagesExisted = false
@@ -28,42 +27,14 @@ struct ChatAIView: View, ChatAIViewProps {
                     } label: {
                         Image("back")
                     }
-                    Text(mode == .explain ? "Explain Mistake" : "Help Solve")
+                    Text(mode.title)
                         .font(.h2)
                     Spacer()
                 }
                 .padding(.vertical, 12)
                 ScrollViewReader { value in
                     ScrollView(.vertical) {
-                        VStack(spacing: 26) {
-                            ForEach(Array(chatMessages.enumerated()), id: \.offset) { (offset, message) in
-                                if offset == 0 {
-                                    EmptyView()
-                                } else if let value = message.value {
-                                    if value.role == .user {
-                                        MessageView(currentMessage: value)
-                                        .id(offset)
-                                    } else {
-                                        VStack(spacing: 20) {
-                                            AssistantMessageView(currentMessage: value, animateChatMessages: !chatMessagesExisted, showPromptView: {
-                                                showPromptViewIfSatisfied = true
-                                            })
-                                            if chatMessages.count % 2 == 0 && offset == chatMessages.count - 1, showPromptViewIfSatisfied {
-                                                promptView
-                                            }
-                                        }
-                                        .id(offset)
-                                    }
-                                } else {
-                                    EmptyView()
-                                }
-                            }
-                            if let error = assistantMessageError {
-                                AssistantMessageError(error: error)
-                            } else if assistantMessageIsLoading {
-                                LoadingAssistantMessage()
-                            }
-                        }
+                        chatMessagesView
                         .onAppear {
                             chatMessagesExisted = !chatMessages.isEmpty
                             if chatMessages.count % 2 == 0 && !chatMessages.isEmpty {
@@ -78,14 +49,77 @@ struct ChatAIView: View, ChatAIViewProps {
                                 value.scrollTo(chatMessages.count - 1)
                             }
                         }
+                        .onReceive(keyboardPublisher) { _ in
+                            withAnimation {
+                                value.scrollTo(chatMessages.count - 1)
+                            }
+                        }
                     }
+                }
+                if mode.showInput {
+                    inputView
                 }
             }
             .onAppear {
-                if chatMessages.isEmpty || (mode == .explain && !chatMessages.contains { $0.value?.content == startMessage }) {
-                    store.dispatch(SendMessageToAI(message: startMessage, mode: mode, id: challengeDetail.id))
+                if chatMessages.isEmpty {
+                    store.dispatch(SendMessageToAI(message: mode.startMessage, mode: mode))
+                } else {
+                    switch mode {
+                    case .explain where !chatMessages.contains { $0.value?.content == mode.startMessage }:
+                        store.dispatch(SendMessageToAI(message: mode.startMessage, mode: mode))
+                    default: return
+                    }
                 }
             }
+        }
+    }
+
+    private var chatMessagesView: some View {
+        VStack(spacing: 26) {
+            ForEach(Array(chatMessages.enumerated()), id: \.offset) { (offset, message) in
+                if offset == 0 {
+                    EmptyView()
+                } else if let value = message.value {
+                    if value.role == .user {
+                        MessageView(currentMessage: value)
+                        .id(offset)
+                    } else {
+                        VStack(spacing: 20) {
+                            AssistantMessageView(currentMessage: value, animateChatMessages: !chatMessagesExisted, showPromptView: {
+                                showPromptViewIfSatisfied = true
+                            })
+                            if !mode.answerPrompts.isEmpty, chatMessages.count % 2 == 0 && offset == chatMessages.count - 1, showPromptViewIfSatisfied {
+                                promptView
+                            }
+                        }
+                        .id(offset)
+                    }
+                } else {
+                    EmptyView()
+                }
+            }
+            if let error = assistantMessageError {
+                AssistantMessageError(error: error)
+            } else if assistantMessageIsLoading {
+                LoadingAssistantMessage()
+            }
+        }
+    }
+
+    var inputView: some View {
+        HStack {
+            TextField("type ...", text: $message)
+                .foregroundColor(.white)
+                .clipShape(Rectangle())
+            Button("Send") {
+                store.dispatch(SendMessageToAI(message: message, mode: mode))
+            }
+            .foregroundColor(.CodeChallenge.blue1)
+        }
+        .padding(20)
+        .background {
+            Rectangle()
+                .fill(Color(UIColor.CodeChallenge.darkBlue))
         }
     }
 
@@ -93,17 +127,14 @@ struct ChatAIView: View, ChatAIViewProps {
         HStack {
             Spacer()
             VStack(spacing: 10) {
-                ForEach(prompts, id: \.self) { prompt in
+                ForEach(mode.answerPrompts, id: \.self) { prompt in
                     Button(action: {
-                        switch mode {
-                        case .explain:
-                            store.dispatch(TrackAnalyticsEvent(event: .explainMistakeClicked(challengeDetail.id, prompt)))
-                        case .provideSolution:
-                            store.dispatch(TrackAnalyticsEvent(event: .askAICLicked(challengeDetail.id, prompt)))
+                        if let analyticsEvent = mode.getAnalyticsEvent(string: prompt) {
+                            store.dispatch(TrackAnalyticsEvent(event: analyticsEvent))
                         }
                         if dismissView(on: prompt) { presentationMode.wrappedValue.dismiss() } else {
                             showPromptViewIfSatisfied = false
-                            store.dispatch(SendMessageToAI(message: prompt, mode: mode, id: challengeDetail.id))
+                            store.dispatch(SendMessageToAI(message: prompt, mode: mode))
                         }
                     }, label: {
                         Text(prompt)

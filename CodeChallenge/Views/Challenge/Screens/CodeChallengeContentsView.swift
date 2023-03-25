@@ -16,7 +16,7 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
     let onSuccess: (ChallengeDetail?) -> Void
     let onDismiss: () -> Void
     let onGoPremium: () -> Void
-    let onOpenChat: (ChallengeDetail?, ChatMessagesMode) -> Void
+    let onOpenChat: (ChatMessagesMode) -> Void
 
     @State private var displayCode: String?
     @State private var selection: Int = 0

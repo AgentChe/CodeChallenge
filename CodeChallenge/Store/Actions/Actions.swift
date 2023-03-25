@@ -32,9 +32,9 @@ enum Action: Dispatchable {
     case updateLoadingReward(LoadingReward?)
     case loadConceptReview(Int, Resolvable<ConceptReview>)
     case updateLeaderboardData(Resolvable<LeaderboardData>)
-    case updateChatMessages(mode: ChatMessagesMode, id: Int, index: Int?, message: Resolvable<ChatMessage>)
+    case updateChatMessages(mode: ChatMessagesMode, index: Int?, message: Resolvable<ChatMessage>)
     case updateMaintenanceInfo(Maintenance?)
-    case deleteFailedMessages(mode: ChatMessagesMode, id: Int)
+    case deleteFailedMessages(mode: ChatMessagesMode)
     case updateOngoingChallengeFriendData(Resolvable<ChallengeFriendData>)
 }
 
@@ -642,21 +642,20 @@ struct LoadLeaderboardData: ThunkAction {
 struct SendMessageToAI: ThunkAction {
     let message: String
     let mode: ChatMessagesMode
-    let id: Int
 
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
-        let history = dispatcher.state.chatMessages["\(mode.rawValue)_\(id)"]?.compactMap { $0.value } ?? []
-        dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: nil, message: .success(.init(role: .user, content: message, timestamp: nil))))
+        let history = dispatcher.state.chatMessages[mode.identifier]?.compactMap { $0.value } ?? []
+        dispatcher.dispatch(Action.updateChatMessages(mode: mode, index: nil, message: .success(.init(role: .user, content: message, timestamp: nil))))
 
-        dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: nil, message: .loading))
-        let indexOfTheResponseMessage = (dispatcher.state.chatMessages["\(mode.rawValue)_\(id)"] ?? []).count - 1
+        dispatcher.dispatch(Action.updateChatMessages(mode: mode, index: nil, message: .loading))
+        let indexOfTheResponseMessage = (dispatcher.state.chatMessages[mode.identifier] ?? []).count - 1
 
         dispatcher.services.chatService
             .sendMessageToAI(message, history: history, session: session)
             .asResolvable()
             .ephemeralSink { responseMessage in
-                dispatcher.dispatch(Action.updateChatMessages(mode: mode, id: id, index: indexOfTheResponseMessage, message: responseMessage))
+                dispatcher.dispatch(Action.updateChatMessages(mode: mode, index: indexOfTheResponseMessage, message: responseMessage))
             }
     }
 }

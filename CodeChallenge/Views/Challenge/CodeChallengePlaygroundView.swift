@@ -13,7 +13,7 @@ struct CodeChallengePlaygroundView: View {
     let details: ChallengeDetail
     @Binding var displayCode: String?
     @Binding var showsResetProgressPopup: Bool
-    let onOpenChat: ((ChallengeDetail?, ChatMessagesMode) -> Void)?
+    let onOpenChat: ((ChatMessagesMode) -> Void)?
     let onRun: (String, Bool) -> Void
     let onSuccessfulRun: () -> Void
 
@@ -76,7 +76,7 @@ struct CodeChallengePlaygroundView: View {
                                 .padding(.vertical, 4)
                                 .padding(.horizontal, 16)
                                 .onTapGesture {
-                                    onOpenChat(details, .explain)
+                                    onOpenChat(.explain(latestCompiledCode ?? "", details))
                                 }
                                 .background {
                                     RoundedRectangle(cornerRadius: 16)
@@ -174,6 +174,10 @@ extension CodeChallengePlaygroundView {
     var gotCompileError: Bool? {
         guard let statusCode = store.state.challengeResults[details.id]?.value?.code.statusCode else { return nil }
         return statusCode == 1
+    }
+
+    var latestCompiledCode: String? {
+        store.state.challengeProgresses[details.id]?.value?.solution?.python.removingPercentEncoding ?? ""
     }
 }
 

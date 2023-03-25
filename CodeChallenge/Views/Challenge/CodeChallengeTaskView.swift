@@ -14,7 +14,7 @@ struct CodeChallengeTaskView: View {
     let onStartSolving: () -> Void
     let onPremiumPopupShow: (() -> Void)?
     let onGoPremium: (() -> Void)?
-    let onOpenChat: ((ChallengeDetail?, ChatMessagesMode) -> Void)?
+    let onOpenChat: ((ChatMessagesMode) -> Void)?
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -71,7 +71,7 @@ struct CodeChallengeTaskView: View {
                                 if shouldShowPremiumPopup {
                                     onPremiumPopupShow()
                                 } else {
-                                    onOpenChat(details, .provideSolution)
+                                    onOpenChat(.provideSolution(details))
                                 }
                             }
                     }
@@ -86,7 +86,7 @@ struct CodeChallengeTaskView: View {
                     if store.state.maintenance?.aiEnabled == true, let onOpenChat = onOpenChat {
                         aiButton
                             .onTapGesture {
-                                onOpenChat(details, .provideSolution)
+                                onOpenChat(.provideSolution(details))
                             }
                             .background {
                                 RoundedRectangle(cornerRadius: 28)

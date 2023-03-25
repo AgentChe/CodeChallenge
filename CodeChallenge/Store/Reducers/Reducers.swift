@@ -260,27 +260,26 @@ extension Reducers {
 extension Reducers {
     static let chatMessagesReducer: Reducer<[String: [Resolvable<ChatMessage>]]> = { state, action in
         switch action {
-        case let .updateChatMessages(mode, id, index, new):
-            let identifier = "\(mode.rawValue)_\(id)"
+        case let .updateChatMessages(mode, index, new):
             if let index = index {
-                var copy = state[identifier]
+                var copy = state[mode.identifier]
                 copy?.remove(at: index)
                 copy?.insert(new, at: index)
                 var newState = state
-                newState[identifier] = copy
+                newState[mode.identifier] = copy
                 return newState
             } else {
-                var copy = state[identifier]
+                var copy = state[mode.identifier]
                 if copy == nil {
                     copy = []
                 }
                 copy?.append(new)
                 var newState = state
-                newState[identifier] = copy
+                newState[mode.identifier] = copy
                 return newState
             }
-        case let .deleteFailedMessages(mode, id):
-            let identifier = "\(mode.rawValue)_\(id)"
+        case let .deleteFailedMessages(mode):
+            let identifier = mode.identifier
             var copy = state[identifier]
             copy?.removeAll(where: { $0.error != nil })
             var newState = state

@@ -72,6 +72,9 @@ class HomeCoordinator {
             self?.openChallengeView(challenge: challenge, collection: collection, from: self?.navigationController)
         }, onConceptReview: { [weak self] conceptReview in
             self?.presentConceptReview(sectionConceptReview: conceptReview)
+        }, onLessonOpen: { [weak self] collectionContent in
+            guard let self = self else { return }
+            self.openChat(mode: .explainTopic(collectionContent, self.store.state.programmingLanguage), navigationController: self.navigationController)
         })
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)

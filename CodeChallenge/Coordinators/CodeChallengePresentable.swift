@@ -34,9 +34,8 @@ extension CodeChallengePresentable {
         } onGoPremium: { [weak self] in
             navigationController.popViewController(animated: true)
             self?.onGoPremium?()
-        } onOpenChat: { [weak self] (challengeDetail, mode) in
-            guard let challengeDetail = challengeDetail else { return }
-            self?.openChat(challengeDetail: challengeDetail, mode: mode, navigationController: navigationController)
+        } onOpenChat: { [weak self] mode in
+            self?.openChat(mode: mode, navigationController: navigationController)
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: challengeView)
@@ -57,8 +56,8 @@ extension CodeChallengePresentable {
         }
     }
 
-    private func openChat(challengeDetail: ChallengeDetail, mode: ChatMessagesMode, navigationController: UINavigationController) {
-        let view = ChatAIView(challengeDetail: challengeDetail, mode: mode)
+    func openChat(mode: ChatMessagesMode, navigationController: UINavigationController) {
+        let view = ChatAIView(mode: mode)
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
         navigationController.present(controller, animated: true)

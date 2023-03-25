@@ -14,6 +14,7 @@ struct CollectionContentView: View, CollectionContentViewProps {
     let collection: ChallengeCollection
     let onChallengeOpen: (Challenge) -> Void
     let onConceptReview: (SectionConceptReview) -> Void
+    let onLessonOpen: (ChallengeCollectionContent) -> Void
     @State private var displayContent: ChallengeCollectionContent?
     @State private var displayChallenges: [Challenge] = []
     @State private var displayConceptReview: Bool = false
@@ -75,12 +76,19 @@ struct CollectionContentView: View, CollectionContentViewProps {
             Text(displayContent.description)
                 .font(.bodyText)
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
-            if displayConceptReview {
-                Button("Try the Cheatsheets") {
-                    store.dispatch(TrackAnalyticsEvent(event: .conceptOpened(displayContent.name)))
-                    if let conceptReview = collection.conceptReview {
-                        onConceptReview(conceptReview)
+            HStack {
+                if displayConceptReview {
+                    Button("Try the Cheatsheets") {
+                        store.dispatch(TrackAnalyticsEvent(event: .conceptOpened(displayContent.name)))
+                        if let conceptReview = collection.conceptReview {
+                            onConceptReview(conceptReview)
+                        }
                     }
+                    .buttonStyle(ReviewTheConceptButton())
+                    .clipShape(Capsule())
+                }
+                Button("Learn") {
+                    onLessonOpen(displayContent)
                 }
                 .buttonStyle(ReviewTheConceptButton())
                 .clipShape(Capsule())

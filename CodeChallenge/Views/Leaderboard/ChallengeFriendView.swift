@@ -23,10 +23,10 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                 Image("challenge_friend")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: .screenWidth - 100)
+                    .frame(width: .screenWidth - 160)
                 Spacer()
             }
-            Text("Let's start by selecting the language and difficulty level you want to challenge friends with. Complete the challenges yourself and earn rewards upon winning!")
+            Text("Let's start by selecting the language and difficulty level you want to challenge friends with. Complete the challenges yourself and earn xps upon winning!")
                 .multilineTextAlignment(.leading)
                 .foregroundColor(.white)
                 .font(.bodyText)
@@ -39,7 +39,7 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                     ForEach(ProgrammingLanguage.allCases, id: \.rawValue) { language in
                         Text(language.rawValue.capitalized)
                             .onTapGesture {
-                                programmingLanguage = language.rawValue.capitalized
+                                programmingLanguage = language.rawValue.lowercased()
                             }
                     }
                 }
@@ -71,7 +71,7 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
             }
             Spacer()
 
-            Button("Send the link & Start") {
+            Button("Share & Start") {
                 store.dispatch(CreateChallengeWithFriend(
                     programmingLanguage: .init(rawValue: programmingLanguage.lowercased()) ?? .python,
                     difficulty: difficultyLevel)

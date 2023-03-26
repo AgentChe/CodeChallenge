@@ -74,27 +74,25 @@ struct AssistantMessageView: View {
             VStack(alignment: .leading, spacing: 10) {
                 ForEach(Array(displayMessages.enumerated()), id: \.offset) { (_, element) in
                     if element.0 {
-                        HStack {
-                            Text(element.1.content)
-                                .frame(width: .screenWidth - 100)
-                                .multilineTextAlignment(.leading)
-                            Spacer()
-                        }
+                        Text(element.1.content)
+                            .multilineTextAlignment(.leading)
                         .padding(10)
                         .foregroundColor(Color.white)
                         .background(Color(.CodeChallenge.darkBlue))
                         .cornerRadius(10)
-                        .transition(.move(edge: .bottom))
+
                     } else {
                         Text(element.1.content)
                             .padding(10)
                             .foregroundColor(Color.black)
                             .background(Color(UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1.0)))
                             .cornerRadius(10)
-                        .transition(.move(edge: .bottom))
                     }
                 }
+                .transition(.move(edge: .bottom))
             }
+
+            Spacer()
         }
         .padding(.horizontal, 10)
         .onAppear {
@@ -111,8 +109,12 @@ struct AssistantMessageView: View {
                 if animateChatMessages {
                     for index in 0..<messages.count {
                         DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5 * Double(index))) {
-                            withAnimation(.spring()) {
+                            if index == 0 {
                                 self.displayMessages.append(messages[index])
+                            } else {
+                                withAnimation(.spring()) {
+                                    self.displayMessages.append(messages[index])
+                                }
                             }
                         }
                     }
@@ -162,7 +164,7 @@ struct LoadingAssistantMessage: View {
                     .background(.CodeChallenge.darkBlue)
                     .cornerRadius(10)
                 .transition(.move(edge: .bottom))
-                .frame(width: .screenWidth - 100)
+//                .frame(width: .screenWidth - 60)
             }
             .redacted(reason: .placeholder)
         }

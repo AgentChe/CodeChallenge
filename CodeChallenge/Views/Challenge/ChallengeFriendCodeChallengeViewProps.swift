@@ -44,10 +44,6 @@ extension ChallengeFriendCodeChallengeViewProps {
         store.state.account.value
     }
 
-    var shouldShowPremiumPopup: Bool {
-        details?.isPremium == true && account?.isPremium == false
-    }
-
     var compilerTestCases: [ChallengeCompiledResult.UnitTest]? {
         return store.state.challengeResults[details?.id ?? 0]?.value?.unitTests
     }

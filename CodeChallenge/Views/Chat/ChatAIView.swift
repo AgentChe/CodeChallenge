@@ -112,7 +112,10 @@ struct ChatAIView: View, ChatAIViewProps {
                 .foregroundColor(.white)
                 .clipShape(Rectangle())
             Button("Send") {
-                store.dispatch(SendMessageToAI(message: message, mode: mode))
+                if !message.isEmpty {
+                    store.dispatch(SendMessageToAI(message: message, mode: mode))
+                }
+                message = ""
             }
             .foregroundColor(.CodeChallenge.blue1)
         }

@@ -27,13 +27,18 @@ struct ChallengeFriendResultView: View {
                 competingUsersView
                     .frame(height: 150)
 
+                Text(description)
+                    .font(.h4)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                    .opacity(isAnimating ? 1 : 0)
+
                 Spacer()
 
-                Button("Continue") {
+                Button("Okay") {
                     onContinue()
                 }
                 .buttonStyle(PrimaryButton())
-                .animation(.none, value: UUID())
             }
             .padding(20)
         }
@@ -83,7 +88,7 @@ struct ChallengeFriendResultView: View {
                     .frame(width: 100, height: 100)
                 .cornerRadius(50)
                 Text("My Friend")
-                Text(oponentScore != nil ? "\(oponentScore ?? 0)" : "Waiting ...")
+                Text(oponentScore != -1 ? "\(oponentScore ?? 0)" : "-")
             }
             .opacity(isAnimating ? 1 : 0)
         }
@@ -125,5 +130,25 @@ extension ChallengeFriendResultView {
     var title: String {
         if oponentScore == nil || oponentScore == -1 { return "Waiting for opponent"}
         return won == true ? "You won" : (draw == true ? "It's a draw" : "You lost")
+    }
+
+    var description: String {
+        if won == true {
+            return "You've won, and we have special surprise for you - 100 xps ⚡️"
+        }
+
+        if draw == true {
+            return "Its a draw! Let's practice more to beat everyone up 🥊"
+        }
+
+        if lost == true {
+            return "You've lost! But you know what? This is the reason we keep on developing the app - to give you more and help you more!"
+        }
+
+        if oponentScore == -1 {
+            return "You're done! Let's wait for the friend to complete. We will notify you upon having the result."
+        }
+
+        return ""
     }
 }

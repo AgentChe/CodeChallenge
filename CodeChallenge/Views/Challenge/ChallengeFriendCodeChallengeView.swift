@@ -52,9 +52,11 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
         }
         .onReceive(timer, perform: { _ in
             if countdown == 0 {
-                timer.upstream.connect().cancel()
-                withAnimation {
-                    popupText = "failed"
+                if popupText == nil {
+                    timer.upstream.connect().cancel()
+                    withAnimation {
+                        popupText = "failed"
+                    }
                 }
             } else {
                 countdown = countdown - 1

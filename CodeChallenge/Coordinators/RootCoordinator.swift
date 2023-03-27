@@ -118,11 +118,6 @@ final class RootCoordinator {
         }
 
         DispatchQueue.main.async { [weak self] in
-            let view = HomeLoadingView()
-            let controller = UIHostingController(rootView: view)
-            controller.modalPresentationStyle = .fullScreen
-            self?.window.rootViewController?.present(controller, animated: false)
-
             let startDate = Date()
 
             self?.homePageCancellable = self?.store
@@ -138,7 +133,7 @@ final class RootCoordinator {
                             self?.store.dispatch(LoadHomeSections())
                         }
                         alertController.addAction(action)
-                        controller.present(alertController, animated: true)
+                        self?.homeCoordinator.navigationController.present(alertController, animated: true)
                     } else if let value = result.value {
                         let miliseconds = Date().timeIntervalSince(startDate) * 1000
                         self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, nil)))
@@ -147,7 +142,6 @@ final class RootCoordinator {
                             if !value.isEmpty {
                                 self.homePageCancellable?.cancel()
                                 self.homePageCancellable = nil
-                                controller.dismiss(animated: false)
                             }
                         }
                     }

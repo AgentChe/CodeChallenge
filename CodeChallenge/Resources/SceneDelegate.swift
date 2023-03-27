@@ -22,10 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainWindow = UIWindow(windowScene: windowScene)
         window = mainWindow
         rootCoordinator = RootCoordinator(window: mainWindow)
-        rootCoordinator?.start()
         window?.overrideUserInterfaceStyle = .dark
         window?.backgroundColor = .CodeChallenge.dark
         window?.makeKeyAndVisible()
+        rootCoordinator?.start()
 
         if let userActivity = connectionOptions.userActivities.first {
             BranchScene.shared().scene(scene, continue: userActivity)

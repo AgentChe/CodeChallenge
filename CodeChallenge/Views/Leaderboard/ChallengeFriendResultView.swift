@@ -112,7 +112,7 @@ extension ChallengeFriendResultView {
 
     var draw: Bool? {
         guard let fromUser = challengeFriendData?.scores.fromUser, fromUser != -1 else { return nil }
-        return userScore == fromUser
+        return userScore == fromUser && challengeFriendData?.scores.toUser != -1
     }
 
     var lost: Bool? {

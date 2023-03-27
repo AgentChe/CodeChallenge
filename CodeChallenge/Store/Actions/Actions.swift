@@ -701,6 +701,7 @@ struct SendChallengeFriendScore: ThunkAction {
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.updateOngoingChallengeFriendData(result))
+                dispatcher.dispatch(LoadAccount())
             }
     }
 }

@@ -55,8 +55,6 @@ class LeaderboardCoordinator {
 
         let urlString = branchUniversalObject.getShortUrl(with: properties) ?? ""
 
-        print("TT_URL", urlString)
-
         let activityController = UIActivityViewController(activityItems: [urlString], applicationActivities: nil)
         activityController.popoverPresentationController?.sourceView = navigationController.view
         activityController.completionWithItemsHandler = { [weak self] _, success, _, _ in

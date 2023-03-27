@@ -15,7 +15,6 @@ struct CodeChallengePlaygroundView: View {
     @Binding var showsResetProgressPopup: Bool
     let onOpenChat: ((ChatMessagesMode) -> Void)?
     let onRun: (String, Bool) -> Void
-    let onSuccessfulRun: () -> Void
 
     @State var specialCharacter: String?
     @State private var showsError: Bool = false
@@ -138,8 +137,6 @@ struct CodeChallengePlaygroundView: View {
                 withAnimation {
                     bottomSheetShown = true
                 }
-            } else {
-                onSuccessfulRun()
             }
         }
     }

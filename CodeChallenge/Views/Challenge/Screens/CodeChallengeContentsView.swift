@@ -75,7 +75,7 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
                         .font(.h3)
                     Spacer()
 
-                    if selection == 1 && template != displayCode {
+                    if selection == 1 && template.removingPercentEncoding != displayCode {
                         Image("reset")
                             .onTapGesture {
                                 showsResetProgressPopup = true
@@ -138,8 +138,6 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
                     programmingLanguage: programmingLanguage,
                     language: "en"
                 ))
-            }, onSuccessfulRun: {
-                selection = 2
             })
         case 2:
             CodeChallengeTestCasesView(details: details, onSeeSolution: {

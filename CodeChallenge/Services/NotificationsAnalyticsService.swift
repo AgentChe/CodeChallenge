@@ -22,7 +22,6 @@ struct IdentifyService: IdentifyServiceProtocol {
         Paywall.identify(userId: "\(id)")
         Mixpanel.mainInstance().identify(distinctId: "\(id)")
         Branch.getInstance().setIdentity("\(id)")
-        print("TT_identity set_\(id)")
     }
 
     func removeIdentity() {

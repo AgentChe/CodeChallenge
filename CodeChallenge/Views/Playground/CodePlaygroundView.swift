@@ -22,10 +22,6 @@ struct CodePlaygroundView: UIViewRepresentable {
         let vm = PlaygroundViewModel.init(language: programmingLanguage, aiGenerated: aiGenerated ?? [], onCodeChange: onCodeChange, aiEnabled: aiEnabled)
         let view = PlaygroundView(vm: vm)
         vm.set(code: code ?? "")
-//        view.onCodeChange = onCodeChange
-//        view.language = programmingLanguage
-//        view.set(code: code ?? "")
-//        view.aiGenerated = aiGenerated ?? []
         view.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([

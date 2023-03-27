@@ -41,7 +41,9 @@ class PlaygroundViewModel {
     func set(code: String) {
         codeToCompile = code.removingPercentEncoding ?? code
         onUpdate?(.codeChange(code.removingPercentEncoding ?? code))
-        onUpdate?(.updateTextView(true))
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) { [weak self] in
+            self?.onUpdate?(.updateTextView(true))
+        }
     }
 
     func onSelect(specialCharacter: String, range: NSRange) {

@@ -18,7 +18,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
     @State private var selection: Int = 0
     @State private var showsResetProgressPopup: Bool = false
     @State private var timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
-    @State private var countdown = 10
+    @State private var countdown = 20
     @State private var popupText: String? = nil
 
     var body: some View {
@@ -55,7 +55,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
                 if popupText == nil {
                     timer.upstream.connect().cancel()
                     withAnimation {
-                        popupText = "failed"
+                        popupText = "You've lost this one"
                     }
                 }
             } else {
@@ -95,7 +95,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                     timer.upstream.connect().cancel()
                     withAnimation {
-                        popupText = "Success"
+                        popupText = "Nailed it!"
                     }
                 }
             }
@@ -157,7 +157,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
                     Text(popupText ?? "")
                         .font(.h2)
                         .padding(.horizontal, 4)
-                    Text("some random description")
+                    Text(popupText == "Nailed it!" ? "You're on 🔥. +1 for you!" : "Its okay, practice will help!")
                         .font(.smallText)
                         .padding(.horizontal, 4)
                         .padding(.bottom, 15)
@@ -171,7 +171,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
                         .fill(Color(UIColor.CodeChallenge.blue1))
                     }
                     .onTapGesture {
-                        onContinue(popupText == "Success")
+                        onContinue(popupText == "Nailed it!")
                     }
                 }
                 .foregroundColor(.white)

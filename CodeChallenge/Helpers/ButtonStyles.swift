@@ -36,24 +36,6 @@ struct PrimaryButton: ButtonStyle {
     }
 }
 
-struct ReviewTheConceptButton: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
-        HStack {
-            Spacer()
-            configuration.label
-                .padding(.vertical, 15)
-            Spacer()
-        }
-        .frame(height: 40)
-        .foregroundColor(.CodeChallenge.blue1)
-        .font(.button)
-        .background {
-            Capsule()
-                .stroke(Color(UIColor.CodeChallenge.blue1), lineWidth: 1.5)
-        }
-    }
-}
-
 struct PremiumGradientButton: ButtonStyle {
     enum Status: String, Equatable {
         case enabled, loading, disabled

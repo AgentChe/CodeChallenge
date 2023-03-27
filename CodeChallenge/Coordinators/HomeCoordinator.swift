@@ -16,6 +16,7 @@ class HomeCoordinator {
 
     let store: Store
     var onGoPremium: (() -> Void)?
+    var onEndingOnboarding: (() -> Void)?
     var popupController: PopupViewController?
 
     init(store: Store) {
@@ -83,7 +84,6 @@ class HomeCoordinator {
 
     private func presentGetStartedIfNecessary() {
         guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
-        UserDefaults.standard.set(true, forKey: "getStartedPresented")
         let view = GetStartedView { [weak self] in
             self?.presentProgrammingLanguagesView()
         }
@@ -99,11 +99,8 @@ class HomeCoordinator {
     private func presentProgrammingLanguagesView() {
         let view = OnboardingLanguagesView { [weak self] in
             self?.onboardingNavigationController?.dismiss(animated: true)
-            if self?.store.state.maintenance?.aiEnabled == true {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self?.openTryAIView()
-                }
-            }
+            UserDefaults.standard.set(true, forKey: "getStartedPresented")
+            self?.onEndingOnboarding?()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)

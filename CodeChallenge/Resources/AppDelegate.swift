@@ -27,14 +27,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { [weak self]
             (params, error) in
-            if let params = params, (params["+is_first_session"] as? Int) == 1,
+            if let params = params, (params["+is_first_session"] as? String) == "1",
                     let idString = params["referringUserID"] as? String {
                 self?.sendReferralId(userId: idString)
                 return
             }
 
-            if let id = params?["challengeFriendId"] as? Int {
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.process(acceptedChallengeId: id)
+            if let id = params?["challengeFriendId"] as? String, let intId = Int(id) {
+                guard UserDefaults.standard.bool(forKey: "getStartedPresented") else {
+                    UserDefaults.standard.set(intId, forKey: "challenge_friend_key")
+                    return
+                }
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.process(acceptedChallengeId: intId)
             }
         })
 

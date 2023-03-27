@@ -30,7 +30,7 @@ struct ChallengeFriendContentsView: View {
     var body: some View {
         DoodledView {
             VStack(spacing: 32) {
-                Text("Competition 🎖️")
+                Text("Competition 🏆")
                     .font(.pageNameH1)
                     .foregroundColor(.white)
                 .padding(.top, UIDevice.hasDisplayNotch ? 40 : 20)
@@ -138,7 +138,7 @@ struct ChallengeFriendContentsView: View {
                     .resizable()
                     .frame(width: 100, height: 100)
                 .cornerRadius(50)
-                Text("My Friend")
+                Text("Friend")
             }
             .opacity(isAnimating ? 1 : 0)
         }

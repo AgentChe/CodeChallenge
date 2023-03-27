@@ -36,6 +36,7 @@ struct ChallengeFriendResultView: View {
                 Spacer()
 
                 Button("Okay") {
+                    store.dispatch(Action.updateOngoingChallengeFriendData(.pending))
                     onContinue()
                 }
                 .buttonStyle(PrimaryButton())
@@ -87,7 +88,7 @@ struct ChallengeFriendResultView: View {
                     .resizable()
                     .frame(width: 100, height: 100)
                 .cornerRadius(50)
-                Text("My Friend")
+                Text("Friend")
                 Text(oponentScore != -1 ? "\(oponentScore ?? 0)" : "-")
             }
             .opacity(isAnimating ? 1 : 0)
@@ -134,7 +135,7 @@ extension ChallengeFriendResultView {
 
     var description: String {
         if won == true {
-            return "You've won, and we have special surprise for you - 100 xps ⚡️"
+            return "You've won, and we have special surprise for you - 50 xps ⚡️"
         }
 
         if draw == true {

@@ -78,6 +78,19 @@ struct BuddiesView: View {
                     selectedReward = nil
                 }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 10) {
+                    Spacer()
+                    DefaultXPView(
+                        xpText: "\(account?.xp ?? 0)",
+                        backgroundColor: .CodeChallenge.dark,
+                        xpIconColor: "white",
+                        strokeColor: .CodeChallenge.blue1
+                    )
+                }
+            }
+        }
     }
 
     var content: some View {
@@ -93,6 +106,7 @@ struct BuddiesView: View {
                     })
                 .padding(.horizontal, 9)
                 .frame(height: 31)
+                .padding(.top, 8)
 
                 switch selection {
                 case 0:

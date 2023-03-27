@@ -31,4 +31,8 @@ extension LeaderboardViewProps {
     var isLoading: Bool {
         store.state.leaderboardData.isLoading
     }
+
+    var xp: Int {
+        store.state.account.value?.xp ?? 0
+    }
 }

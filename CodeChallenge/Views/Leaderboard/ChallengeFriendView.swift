@@ -23,18 +23,19 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                 Image("challenge_friend")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: .screenWidth - 160)
+                    .frame(width: .screenWidth)
                 Spacer()
             }
-            Text("Let's start by selecting the language and difficulty level you want to challenge friends with. Complete the challenges yourself and earn xps upon winning!")
+
+            description
                 .multilineTextAlignment(.leading)
                 .foregroundColor(.white)
-                .font(.bodyText)
+                .padding(.leading, 20)
+                .padding(.trailing, 60)
+                .padding(.top, -60)
+                .lineSpacing(1.2)
 
-            HStack {
-                Text("Language")
-                    .font(.h5)
-                Spacer()
+            HStack(spacing: 20) {
                 Picker("Select language", selection: $programmingLanguage) {
                     ForEach(ProgrammingLanguage.allCases, id: \.rawValue) { language in
                         Text(language.rawValue.capitalized)
@@ -43,17 +44,12 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                             }
                     }
                 }
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background {
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color(UIColor.CodeChallenge.blue1))
-            }
-            HStack {
-                Text("Difficulty level")
-                    .font(.h5)
-                Spacer()
+                .tint(.white)
+                .background {
+                    Capsule()
+                        .stroke(Color(UIColor.CodeChallenge.blue1))
+                }
+
                 Picker("Select difficulty level", selection: $difficultyLevel) {
                     ForEach(["Easy", "Medium", "Hard"], id: \.self) { level in
                         Text(level)
@@ -62,14 +58,15 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                             }
                     }
                 }
+                .tint(.white)
+                .background {
+                    Capsule()
+                        .stroke(Color(UIColor.CodeChallenge.blue1))
+                }
+
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background {
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color(UIColor.CodeChallenge.blue1))
-            }
-            Spacer()
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
 
             Button("Share & Start") {
                 store.dispatch(CreateChallengeWithFriend(
@@ -79,7 +76,31 @@ struct ChallengeFriendView: View, ChallengeFriendViewProps {
                 onShareAndStart()
             }
             .buttonStyle(PrimaryButton())
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+
+            Spacer()
         }
-        .padding(20)
+        .padding(.vertical, 20)
+    }
+
+    private var description: some View {
+        Text("Let's start by selecting ")
+            .font(.bodyText)
+        +
+        Text("the language ")
+            .font(.bold(size: 14))
+        +
+        Text("and ")
+            .font(.bodyText)
+        +
+        Text("difficulty level ")
+            .font(.bold(size: 14))
+        +
+        Text("you want to challenge friends with. Complete the challenges yourself and ")
+            .font(.bodyText)
+        +
+        Text("earn xps upon winning!")
+            .font(.bold(size: 14))
     }
 }

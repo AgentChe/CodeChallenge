@@ -41,6 +41,11 @@ final class RootCoordinator {
         buddiesCoordinator = BuddiesCoordinator(store: store)
         paywallService = PaywallService(store: store)
         setupAppAppearance()
+        homeCoordinator.onEndingOnboarding = { [weak self] in
+            let challengeFriendId = UserDefaults.standard.integer(forKey: "challenge_friend_key")
+            guard challengeFriendId != 0 else { return }
+            self?.process(challengeFriendId: challengeFriendId)
+        }
     }
 
     func start() {
@@ -82,12 +87,6 @@ final class RootCoordinator {
                 self?.tabBarController.selectedIndex = 3
             }
         }
-
-//        if UserDefaults.standard.string(forKey: "cc_user_session") != nil {
-//            store.dispatch(LoadAccount())
-//            store.dispatch(LoadInProgressChallenges())
-//            store.dispatch(LoadCompletedChallenges())
-//        }
 
         store.dispatch(AddStreakIfNeeded())
 
@@ -163,27 +162,6 @@ final class RootCoordinator {
             .sink(receiveValue: { [weak self] (isPremium, premiumEnabled) in
                 guard let self = self else { return }
                 if isPremium == true {
-//                    let runTabBarTransformation = {
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                            var viewControllers = self.tabBarController.viewControllers
-//                            let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-//                            if let index = index {
-//                                self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
-//                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                                    viewControllers?.remove(at: index)
-//                                    self.tabBarController.viewControllers = viewControllers
-//                                }
-//                            }
-//                        }
-//                    }
-//                    if self.tabBarController.selectedIndex == 0 {
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                            self.homeCoordinator.navigationController.popToRootViewController(animated: true)
-//                            runTabBarTransformation()
-//                        }
-//                    } else {
-//                        runTabBarTransformation()
-//                    }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         var viewControllers = self.tabBarController.viewControllers
                         let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
@@ -377,30 +355,47 @@ extension RootCoordinator {
 
 extension RootCoordinator {
     func process(challengeFriendId: Int) {
+        guard store.state.ongoingChallengeFriendData.isPending else { return }
         accountCancellable =
         store.statePublisher
             .filter { $0.account.value != nil && $0.homeSections != [:] }
             .sink(receiveValue: { [weak self] _ in
-                self?.accountCancellable?.cancel()
-                self?.accountCancellable = nil
-
+                guard self?.store.state.ongoingChallengeFriendData.isPending == true else { return }
                 self?.store.dispatch(AcceptFriendChallenge(id: challengeFriendId))
 
                 self?.challengeFriendCancellable =
                 self?.store.statePublisher
-                    .compactMap { $0.ongoingChallengeFriendData.value }
-                    .sink(receiveValue: { [weak self] challengeFriendData in
+                    .map { $0.ongoingChallengeFriendData }
+                    .sink(receiveValue: { [weak self] result in
                         guard let self = self else { return }
-                        self.challengeFriendCancellable?.cancel()
-                        self.challengeFriendCancellable = nil
+                        switch result {
+                        case .failure:
+                            self.store.dispatch(Action.updateOngoingChallengeFriendData(.pending))
+                            self.presentFailure(navigationController: self.homeCoordinator.navigationController)
+                            self.challengeFriendCancellable?.cancel()
+                            self.challengeFriendCancellable = nil
+                            self.accountCancellable?.cancel()
+                            self.accountCancellable = nil
+                        case .success(let challengeFriendData):
+                            guard !challengeFriendData.expired else { return }
 
-                        guard !challengeFriendData.expired else { return }
-
-                        DispatchQueue.main.async {
-                            self.startChallengeFriend(with: challengeFriendData, from: self.homeCoordinator.navigationController)
+                            DispatchQueue.main.async {
+                                self.startChallengeFriend(with: challengeFriendData, from: self.homeCoordinator.navigationController)
+                                self.challengeFriendCancellable?.cancel()
+                                self.challengeFriendCancellable = nil
+                                self.accountCancellable?.cancel()
+                                self.accountCancellable = nil
+                            }
+                        default: break
                         }
                     })
             })
+    }
+
+    private func presentFailure(navigationController: UINavigationController) {
+        let alertController = UIAlertController(title: "Could not load the challenge", message: "The challenge you're trying to solve does not exist or is expired", preferredStyle: .alert)
+        alertController.addAction(.init(title: "Ok", style: .default))
+        navigationController.present(alertController, animated: true)
     }
 }
 

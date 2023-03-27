@@ -23,16 +23,12 @@ struct LeaderboardView: View, LeaderboardViewProps {
                 })
             .padding(.horizontal, 25)
             .frame(height: 31)
+            .padding(.top, 8)
 
             switch selection {
             case 1:
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
-//                        Text("Leaderboard")
-//                            .font(.pageNameH1)
-//                            .foregroundColor(.white)
-//                            .padding(.bottom, 16)
-//                            .padding(.leading, 16)
                         Spacer()
                             .frame(height: 20)
                         ForEach(topUsers, id: \.id) { item in
@@ -61,6 +57,19 @@ struct LeaderboardView: View, LeaderboardViewProps {
             case 0:
                 ChallengeFriendView(onShareAndStart: onShareAndStart)
             default: EmptyView()
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 10) {
+                    Spacer()
+                    DefaultXPView(
+                        xpText: "\(xp)",
+                        backgroundColor: .CodeChallenge.dark,
+                        xpIconColor: "white",
+                        strokeColor: .CodeChallenge.blue1
+                    )
+                }
             }
         }
     }

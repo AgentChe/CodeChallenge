@@ -78,19 +78,39 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 .foregroundColor(UIColor.white.withAlphaComponent(0.6))
             HStack {
                 if displayConceptReview {
-                    Button("Try the Cheatsheets") {
+                    Button {
                         store.dispatch(TrackAnalyticsEvent(event: .conceptOpened(displayContent.name)))
                         if let conceptReview = collection.conceptReview {
                             onConceptReview(conceptReview)
                         }
+                    } label: {
+                      Text("Try the Cheatsheets")
+                            .padding()
+                        .foregroundColor(.white)
+                        .font(.button)
                     }
-                    .buttonStyle(ReviewTheConceptButton())
+                    .frame(height: 36)
+                    .background {
+                        Capsule()
+                            .fill(Color(UIColor.CodeChallenge.blue1))
+                    }
                     .clipShape(Capsule())
+
+                    Spacer()
                 }
-                Button("Learn") {
+                Button {
                     onLessonOpen(displayContent)
+                } label: {
+                  Text("Learn")
+                        .padding()
+                    .foregroundColor(.white)
+                    .font(.button)
                 }
-                .buttonStyle(ReviewTheConceptButton())
+                .frame(height: 36)
+                .background {
+                    Capsule()
+                        .stroke(Color(UIColor.CodeChallenge.blue1), lineWidth: 1.5)
+                }
                 .clipShape(Capsule())
             }
             progressBar(displayContent: displayContent)

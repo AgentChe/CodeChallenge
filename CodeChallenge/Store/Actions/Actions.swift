@@ -699,7 +699,9 @@ struct SendChallengeFriendScore: ThunkAction {
         dispatcher.services.challengeFriendService
             .sendScore(id: id, session: session, score: score)
             .asResolvable()
-            .ephemeralSink { _ in }
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateOngoingChallengeFriendData(result))
+            }
     }
 }
 

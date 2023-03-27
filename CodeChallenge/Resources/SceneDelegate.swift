@@ -28,19 +28,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
 
         if let userActivity = connectionOptions.userActivities.first {
-                BranchScene.shared().scene(scene, continue: userActivity)
-              } else if !connectionOptions.urlContexts.isEmpty {
-                BranchScene.shared().scene(scene, openURLContexts: connectionOptions.urlContexts)
-              }
+            BranchScene.shared().scene(scene, continue: userActivity)
+        } else if !connectionOptions.urlContexts.isEmpty {
+            BranchScene.shared().scene(scene, openURLContexts: connectionOptions.urlContexts)
+        }
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-            BranchScene.shared().scene(scene, continue: userActivity)
-      }
+        BranchScene.shared().scene(scene, continue: userActivity)
+    }
 
-      func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-            BranchScene.shared().scene(scene, openURLContexts: URLContexts)
-      }
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        BranchScene.shared().scene(scene, openURLContexts: URLContexts)
+    }
 }
 
 extension SceneDelegate {

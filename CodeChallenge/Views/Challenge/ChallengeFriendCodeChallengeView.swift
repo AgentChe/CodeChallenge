@@ -18,7 +18,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
     @State private var selection: Int = 0
     @State private var showsResetProgressPopup: Bool = false
     @State private var timer = Timer.publish(every: 1, on: .main, in: .default).autoconnect()
-    @State private var countdown = 300
+    @State private var countdown = 15
     @State private var popupText: String? = nil
 
     var body: some View {

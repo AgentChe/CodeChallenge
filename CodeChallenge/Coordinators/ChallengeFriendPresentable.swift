@@ -21,6 +21,8 @@ extension ChallengeFriendPresentable {
             self?.flowThroughChallenges(challenges: data.challenges, result: result, completion: { [weak self] result in
                 self?.showCompletionScreen(with: data, result: result)
             })
+        }, onSkip: { [weak self] in
+            self?.challengeFriendNavigationController?.dismiss(animated: true)
         }).environmentObject(store))
         hostingController.view.backgroundColor = .CodeChallenge.dark
         challengeFriendNavigationController = UINavigationController(rootViewController: hostingController)

@@ -290,6 +290,7 @@ struct LoadChallengeDetails: ThunkAction {
 
 struct LoadChallengeDetailsAndResetProgress: ThunkAction {
     let id: Int
+    let programmingLanguage: ProgrammingLanguage
 
     func exec(dispatcher: Dispatcher) {
         if dispatcher.state.challengeDetails[id] == nil {
@@ -306,7 +307,7 @@ struct LoadChallengeDetailsAndResetProgress: ThunkAction {
                         dispatcher.dispatch(UpdateChallengeProgress(challengeId: id,
                                                                     solution: value.body.template,
                                                                     compile: false,
-                                                                    programmingLanguage: dispatcher.state.programmingLanguage,
+                                                                    programmingLanguage: programmingLanguage,
                                                                     language: "en"))
                     }))
                 }
@@ -342,7 +343,6 @@ struct UpdateChallengeProgress: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session") ?? ""
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        let programmingLanguage = dispatcher.state.programmingLanguage
 
         let currentProgressType = dispatcher.state.challengeProgresses[challengeId]?.value?.type
 

@@ -88,6 +88,7 @@ struct ChallengeFriendCodeChallengeView: View, ChallengeFriendCodeChallengeViewP
         .onChange(of: code, perform: { newValue in
             displayCode = newValue.removingPercentEncoding ?? newValue
         })
+        .navigationBarHidden(false)
         .navigationBarBackButtonHidden(true)
         .onChange(of: compilerTestCases) { newValue in
             if (testCases.filter { !$0.isFailed }.count == testCases.count), !testCases.isEmpty {

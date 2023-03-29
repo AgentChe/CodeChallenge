@@ -105,49 +105,63 @@ extension ChallengeFriendResultView {
         store.state.ongoingChallengeFriendData.value
     }
 
-    var won: Bool? {
-        guard let fromUser = challengeFriendData?.scores.fromUser, fromUser != -1 else { return nil }
-        return userScore > fromUser
-    }
-
-    var draw: Bool? {
-        guard let fromUser = challengeFriendData?.scores.fromUser, fromUser != -1 else { return nil }
-        return userScore == fromUser && challengeFriendData?.scores.toUser != -1
-    }
-
-    var lost: Bool? {
-        guard let fromUser = challengeFriendData?.scores.fromUser, fromUser != -1 else { return nil }
-        return userScore < fromUser
-    }
-
     var userScore: Int {
         result.filter { $0.1 }.count
     }
 
     var oponentScore: Int? {
-        return (challengeFriendData?.fromUser == account?.id) ? challengeFriendData?.scores.toUser : challengeFriendData?.scores.fromUser
+        return challengeFriendData?.fromUser == account?.id ? challengeFriendData?.scores.toUser : challengeFriendData?.scores.fromUser
+    }
+
+    var won: Bool? {
+        guard let oponentScore = oponentScore, oponentScore != -1 else { return nil }
+        return userScore > oponentScore
+    }
+
+    var draw: Bool? {
+        guard let oponentScore = oponentScore, oponentScore != -1 else { return nil }
+        return userScore == oponentScore
+    }
+
+    var lost: Bool? {
+        guard let oponentScore = oponentScore, oponentScore != -1 else { return nil }
+        return userScore < oponentScore
     }
 
     var title: String {
-        if oponentScore == nil || oponentScore == -1 { return "Waiting for opponent"}
-        return won == true ? "You won" : (draw == true ? "It's a draw" : "You lost")
+        guard let oponentScore = oponentScore, oponentScore != -1 else {
+            return "Waiting for opponent"
+        }
+        if userScore > oponentScore {
+            return "You won"
+        }
+
+        if userScore == oponentScore {
+            return "Its a draw"
+        }
+
+        if userScore < oponentScore {
+            return "You lost"
+        }
+
+        return ""
     }
 
     var description: String {
-        if won == true {
+        guard let oponentScore = oponentScore, oponentScore != -1 else {
+            return "You're done! Let's wait for the friend to complete. We will notify you upon having the result."
+        }
+
+        if userScore > oponentScore {
             return "You've won, and we have special surprise for you - 50 xps ⚡️"
         }
 
-        if draw == true {
+        if userScore == oponentScore {
             return "Its a draw! Let's practice more to beat everyone up 🥊"
         }
 
-        if lost == true {
+        if userScore < oponentScore {
             return "You've lost! But you know what? This is the reason we keep on developing the app - to give you more and help you more!"
-        }
-
-        if oponentScore == -1 {
-            return "You're done! Let's wait for the friend to complete. We will notify you upon having the result."
         }
 
         return ""

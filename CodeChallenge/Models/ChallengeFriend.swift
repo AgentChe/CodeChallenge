@@ -21,3 +21,13 @@ struct ChallengeFriendData: Codable {
     let expired: Bool
     let fromUser: Int
 }
+
+extension ChallengeFriendData {
+    var codehubProgrammingLanguage: ProgrammingLanguage {
+        switch programmingLanguage {
+        case "jv": return .java
+        case "sw": return .swift
+        default: return .python
+        }
+    }
+}

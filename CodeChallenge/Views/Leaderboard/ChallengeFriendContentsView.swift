@@ -16,6 +16,7 @@ struct ChallengeFriendContentsView: View {
     @State private var countdown = 11
     let data: ChallengeFriendData
     let onStart: () -> Void
+    let onSkip: () -> Void
 
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
@@ -30,9 +31,19 @@ struct ChallengeFriendContentsView: View {
     var body: some View {
         DoodledView {
             VStack(spacing: 32) {
-                Text("Competition 🏆")
-                    .font(.pageNameH1)
-                    .foregroundColor(.white)
+                ZStack {
+                    Text("Competition 🏆")
+                        .font(.pageNameH1)
+                        .foregroundColor(.white)
+                    HStack {
+                        Spacer()
+                        Button("Skip") {
+                            store.dispatch(Action.updateOngoingChallengeFriendData(.pending))
+                            onSkip()
+                        }
+                        .foregroundColor(.white)
+                    }
+                }
                 .padding(.top, UIDevice.hasDisplayNotch ? 40 : 20)
                 Spacer()
                     .frame(height: 20)
@@ -63,9 +74,10 @@ struct ChallengeFriendContentsView: View {
             }
             .padding(20)
         }
+        .navigationBarHidden(true)
         .onAppear {
             data.challenges.forEach { id in
-                store.dispatch(LoadChallengeDetailsAndResetProgress(id: id))
+                store.dispatch(LoadChallengeDetailsAndResetProgress(id: id, programmingLanguage: data.codehubProgrammingLanguage))
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation {

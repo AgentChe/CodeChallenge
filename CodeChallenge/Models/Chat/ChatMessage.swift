@@ -67,7 +67,7 @@ extension ChatMessagesMode {
         case .provideSolution:
             return "Help Solve"
         case .explainTopic:
-            return "Lessons"
+            return "Explained by AI"
         }
     }
 

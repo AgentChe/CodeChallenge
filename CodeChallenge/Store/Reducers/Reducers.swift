@@ -31,7 +31,9 @@ struct Reducers {
             leaderboardData: leaderboardReducer(state.leaderboardData, action),
             chatMessages: chatMessagesReducer(state.chatMessages, action),
             maintenance: maintenanceReducer(state.maintenance, action),
-            ongoingChallengeFriendData: ongoingChallengeFriendDataReducer(state.ongoingChallengeFriendData, action)
+            ongoingChallengeFriendData: ongoingChallengeFriendDataReducer(state.ongoingChallengeFriendData, action),
+            learnSections: learnSectionsReducer(state.learnSections, action),
+            lessons: lessonsReducer(state.lessons, action)
         )
     }
 }
@@ -167,6 +169,30 @@ extension Reducers {
     static let homeSectionsReducer: Reducer<[String: Resolvable<[ChallengeSection]>]> = { state, action in
         switch action {
         case .loadHomeSections(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let learnSectionsReducer: Reducer<[ProgrammingLanguage: Resolvable<LearnSections>]> = { state, action in
+        switch action {
+        case .updateLearnSections(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let lessonsReducer: Reducer<[HomeElement: Resolvable<LessonCollection>]> = { state, action in
+        switch action {
+        case .updateLessonCollection(let identifier, let result):
             var copy = state
             copy[identifier] = result
             return copy

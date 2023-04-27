@@ -18,6 +18,7 @@ class HomeCoordinator {
     var onGoPremium: (() -> Void)?
     var onEndingOnboarding: (() -> Void)?
     var popupController: PopupViewController?
+    var premiumPopupController: PopupViewController?
 
     init(store: Store) {
         self.store = store
@@ -32,13 +33,15 @@ class HomeCoordinator {
             self?.navigationController.pushViewController(controller, animated: true)
         } onOpenChallenge: { [weak self] challenge in
             self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
-        } onOpenTryAIScreen: { [weak self] in
-            self?.openTryAIView()
+        } onOpenPremium: { [weak self] in
+            guard let self = self else { return }
+            self.presentPremiumScreen(from: self.navigationController)
+//            self?.openTryAIView()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)
         let tabBarItem = UITabBarItem(
-            title: "Home",
+            title: "Practice",
             image: UIImage(named: "homeTabIcon"),
             selectedImage: UIImage(named: "homeTabIcon")
         )
@@ -54,19 +57,19 @@ class HomeCoordinator {
         }
     }
 
-    private func openTryAIView() {
-        let view = TryAIView { [weak self] challenge in
-            self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
-        } goProductHunt: { string in
-            if let appSettings = URL(string: string), UIApplication.shared.canOpenURL(appSettings) {
-                UIApplication.shared.open(appSettings)
-            }
-        }
-            .environmentObject(store)
-
-        let controller = UIHostingController(rootView: view)
-        navigationController.present(controller, animated: true)
-    }
+//    private func openTryAIView() {
+//        let view = TryAIView { [weak self] challenge in
+//            self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
+//        } goProductHunt: { string in
+//            if let appSettings = URL(string: string), UIApplication.shared.canOpenURL(appSettings) {
+//                UIApplication.shared.open(appSettings)
+//            }
+//        }
+//            .environmentObject(store)
+//
+//        let controller = UIHostingController(rootView: view)
+//        navigationController.present(controller, animated: true)
+//    }
 
     private func openCollectionDetail(collection: ChallengeCollection) {
         let view = CollectionContentView(collection: collection, onChallengeOpen: { [weak self] challenge in
@@ -108,7 +111,7 @@ class HomeCoordinator {
     }
 
     private func presentConceptReview(sectionConceptReview: SectionConceptReview) {
-        let view = LessonView(sectionConceptReview: sectionConceptReview)
+        let view = LearnView(sectionConceptReview: sectionConceptReview)
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
         controller.modalPresentationStyle = .fullScreen
@@ -117,3 +120,4 @@ class HomeCoordinator {
 }
 
 extension HomeCoordinator: CodeChallengePresentable {}
+extension HomeCoordinator: PremiumPresentable {}

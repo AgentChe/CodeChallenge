@@ -20,6 +20,8 @@ protocol ChallengesServiceProtocol {
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error>
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<ChallengeCollectionContent, Error>
     func getRecommendedChallenges(userId: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[Challenge], Error>
+    func getLearnSections(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<LearnSections, Error>
+    func getLessonCollection(homeElement: HomeElement, session: String) -> AnyPublisher<LessonCollection, Error>
 }
 
 struct ChallengesService: ChallengesServiceProtocol {
@@ -97,6 +99,20 @@ struct ChallengesService: ChallengesServiceProtocol {
         return URLRequest
             .create(url: "\(Configuration.host)/v1/challange/recomendations/\(userId)/en/\(programmingLanguage.apiRequestParam)", type: .get)
             .flatMap { networkService.load($0, decoding: [Challenge].self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+
+    func getLearnSections(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<LearnSections, Error> {
+        return URLRequest
+            .create(url: "https://run.mocky.io/v3/59aa1d47-cac7-47e2-9b1d-c5e029914894", type: .get)
+            .flatMap { networkService.load($0, decoding: LearnSections.self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+
+    func getLessonCollection(homeElement: HomeElement, session: String) -> AnyPublisher<LessonCollection, Error> {
+        return URLRequest
+            .create(url: "https://run.mocky.io/v3/f1e693fd-9061-4d3d-83a0-c5cbf51ec965", type: .get)
+            .flatMap { networkService.load($0, decoding: LessonCollection.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 }

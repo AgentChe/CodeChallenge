@@ -60,6 +60,7 @@ struct PremiumView: View, PremiumViewProps {
                 Text("How your free trial works")
                     .foregroundColor(.white)
                     .font(.pageNameH1)
+                    .padding(.top, 20)
                 HStack {
                     VStack {
                         Image("premium_progress")

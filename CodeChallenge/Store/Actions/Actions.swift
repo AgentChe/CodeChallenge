@@ -36,6 +36,8 @@ enum Action: Dispatchable {
     case updateMaintenanceInfo(Maintenance?)
     case deleteFailedMessages(mode: ChatMessagesMode)
     case updateOngoingChallengeFriendData(Resolvable<ChallengeFriendData>)
+    case updateLearnSections(ProgrammingLanguage, Resolvable<LearnSections>)
+    case updateLessonCollection(HomeElement, Resolvable<LessonCollection>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -718,6 +720,38 @@ struct AcceptFriendChallenge: ThunkAction {
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.updateOngoingChallengeFriendData(result))
+            }
+    }
+}
+
+struct GetHomeSections: ThunkAction {
+    let programmingLanguage: ProgrammingLanguage
+
+    func exec(dispatcher: Dispatcher) {
+//        guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
+
+        dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
+        dispatcher.services.challengesService
+            .getLearnSections(programmingLanguage: programmingLanguage)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, result))
+            }
+    }
+}
+
+struct GetLessonCollection: ThunkAction {
+    let element: HomeElement
+
+    func exec(dispatcher: Dispatcher) {
+        guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
+
+        dispatcher.dispatch(Action.updateLessonCollection(element, .loading))
+        dispatcher.services.challengesService
+            .getLessonCollection(homeElement: element, session: session)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateLessonCollection(element, result))
             }
     }
 }

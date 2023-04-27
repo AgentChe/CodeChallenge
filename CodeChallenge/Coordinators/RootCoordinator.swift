@@ -17,8 +17,9 @@ final class RootCoordinator {
     private var authNavigationController: UINavigationController?
     private let accountCoordinator: AccountCoordinator
     private let homeCoordinator: HomeCoordinator
+    private let learnCoordinator: LearnCoordinator
     private let browseCoordinator: LeaderboardCoordinator
-    private let premiumCoordinator: PremiumCoordinator
+//    private let premiumCoordinator: PremiumCoordinator
     private let buddiesCoordinator: BuddiesCoordinator
 
     private let tabBarController = UITabBarController()
@@ -37,8 +38,9 @@ final class RootCoordinator {
         accountCoordinator = AccountCoordinator(store: store)
         homeCoordinator = HomeCoordinator(store: store)
         browseCoordinator = LeaderboardCoordinator(store: store)
-        premiumCoordinator = PremiumCoordinator(store: store)
+//        premiumCoordinator = PremiumCoordinator(store: store)
         buddiesCoordinator = BuddiesCoordinator(store: store)
+        learnCoordinator = LearnCoordinator(store: store)
         paywallService = PaywallService(store: store)
         setupAppAppearance()
         homeCoordinator.onEndingOnboarding = { [weak self] in
@@ -58,6 +60,7 @@ final class RootCoordinator {
         }
         let tabs = [
             homeCoordinator.navigationController,
+            learnCoordinator.navigationController,
             browseCoordinator.navigationController,
             buddiesCoordinator.navigationController,
             accountCoordinator.navigationController
@@ -148,37 +151,37 @@ final class RootCoordinator {
                 }
         }
 
-        self.store
-            .statePublisher
-            .compactMap { $0.account.value?.isPremium }
-            .removeDuplicates()
-            .combineLatest(isPremiumEnabled(store.services.networkService))
-            .sink(receiveValue: { [weak self] (isPremium, premiumEnabled) in
-                guard let self = self else { return }
-                if isPremium == true {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        var viewControllers = self.tabBarController.viewControllers
-                        let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-                        if let index = index {
-                            if index == self.tabBarController.selectedIndex {
-                                self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                viewControllers?.remove(at: index)
-                                self.tabBarController.viewControllers = viewControllers
-                            }
-                        }
-                    }
-                } else {
-                    guard premiumEnabled else { return }
-                    let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-                    guard index == nil else { return }
-                    var viewControllers = self.tabBarController.viewControllers
-                    viewControllers?.insert(self.premiumCoordinator.navigationController, at: 3)
-                    self.tabBarController.viewControllers = viewControllers
-                }
-            })
-            .store(in: &cancellables)
+//        self.store
+//            .statePublisher
+//            .compactMap { $0.account.value?.isPremium }
+//            .removeDuplicates()
+//            .combineLatest(isPremiumEnabled(store.services.networkService))
+//            .sink(receiveValue: { [weak self] (isPremium, premiumEnabled) in
+//                guard let self = self else { return }
+//                if isPremium == true {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                        var viewControllers = self.tabBarController.viewControllers
+//                        let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+//                        if let index = index {
+//                            if index == self.tabBarController.selectedIndex {
+//                                self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
+//                            }
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                                viewControllers?.remove(at: index)
+//                                self.tabBarController.viewControllers = viewControllers
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    guard premiumEnabled else { return }
+//                    let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
+//                    guard index == nil else { return }
+//                    var viewControllers = self.tabBarController.viewControllers
+//                    viewControllers?.insert(self.premiumCoordinator.navigationController, at: 3)
+//                    self.tabBarController.viewControllers = viewControllers
+//                }
+//            })
+//            .store(in: &cancellables)
     }
 
     private func showMaintenanceScreen() {

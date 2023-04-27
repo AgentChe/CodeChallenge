@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import Highlightr
 
-struct LessonView: View, LearnViewProps {
+struct LearnView: View, LearnViewProps {
     @EnvironmentObject var store: Store
     @Environment(\.presentationMode) var presentationMode
     let sectionConceptReview: SectionConceptReview

@@ -21,7 +21,7 @@ struct HomeView: View, HomeViewProps {
     @State private var searchFieldIsFocused = false
     let onSearch: ((String) -> Void)?
     let onOpenChallenge: (Challenge) -> Void
-    let onOpenTryAIScreen: () -> Void
+    let onOpenPremium: () -> Void
 
     var body: some View {
         DoodledView {
@@ -70,10 +70,10 @@ struct HomeView: View, HomeViewProps {
                 HStack(spacing: 10) {
                     if store.state.maintenance?.aiEnabled == true {
                         HStack(spacing: 4) {
-                            Text("Try AI")
+                            Text("Go Premium")
                                 .foregroundColor(.CodeChallenge.white)
                                 .font(.h5)
-                            Image("ai")
+                            Image("challenge_premium_icon")
                                 .resizable()
                                 .frame(width: 20, height: 20)
                         }
@@ -86,7 +86,7 @@ struct HomeView: View, HomeViewProps {
                                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(.CodeChallenge.dark)))
                             )
                             .onTapGesture {
-                                onOpenTryAIScreen()
+                                onOpenPremium()
                             }
                     }
                     LanguagePickerIconView()

@@ -57,6 +57,15 @@
 		E06494AB29CA483F00AE3B6B /* ChallengeFriendCodeChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06494AA29CA483F00AE3B6B /* ChallengeFriendCodeChallengeView.swift */; };
 		E06494AD29CA484E00AE3B6B /* ChallengeFriendCodeChallengeViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06494AC29CA484E00AE3B6B /* ChallengeFriendCodeChallengeViewProps.swift */; };
 		E06494AF29CA7A1600AE3B6B /* ChallengeFriendResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06494AE29CA7A1600AE3B6B /* ChallengeFriendResultView.swift */; };
+		E0667ADB29DA146500C9CAF1 /* LessonCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667ADA29DA146500C9CAF1 /* LessonCollectionView.swift */; };
+		E0667ADD29DA147000C9CAF1 /* LessonCollectionViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667ADC29DA147000C9CAF1 /* LessonCollectionViewProps.swift */; };
+		E0667AE029DA148E00C9CAF1 /* LessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667ADF29DA148E00C9CAF1 /* LessonView.swift */; };
+		E0667AE429DA14A800C9CAF1 /* LessonTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667AE329DA14A800C9CAF1 /* LessonTextView.swift */; };
+		E0667AE629DA14AF00C9CAF1 /* LessonCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667AE529DA14AF00C9CAF1 /* LessonCodeView.swift */; };
+		E0667AE829DA15A500C9CAF1 /* QuizSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667AE729DA15A500C9CAF1 /* QuizSelectionView.swift */; };
+		E0667AEA29DA15F600C9CAF1 /* QuizComposeCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667AE929DA15F600C9CAF1 /* QuizComposeCodeView.swift */; };
+		E0667AEC29DA2CD900C9CAF1 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0667AEB29DA2CD900C9CAF1 /* Lesson.swift */; };
+		E068A99E29F895E700EAD210 /* home_stars.json in Resources */ = {isa = PBXBuildFile; fileRef = E068A99D29F895E700EAD210 /* home_stars.json */; };
 		E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE242877888300995D3D /* HomeCoordinator.swift */; };
 		E06AAE272877888C00995D3D /* LeaderboardCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */; };
 		E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */; };
@@ -77,6 +86,7 @@
 		E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */; };
 		E07BBDDB28C29DDB00A1805B /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = E07BBDDA28C29DDB00A1805B /* Mixpanel */; };
 		E07BBDDD28C29DEC00A1805B /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */; };
+		E083D95529E9FB64005829F4 /* QuizChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E083D95429E9FB64005829F4 /* QuizChallengeView.swift */; };
 		E085CFA929B39EF100BA1F16 /* SnapCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */; };
 		E085CFAB29B40E4F00BA1F16 /* ConceptReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */; };
 		E085CFAD29B40FD900BA1F16 /* ConceptReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFAC29B40FD900BA1F16 /* ConceptReviewService.swift */; };
@@ -88,6 +98,7 @@
 		E085CFBA29B6A78F00BA1F16 /* LeaderboardViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFB929B6A78F00BA1F16 /* LeaderboardViewProps.swift */; };
 		E085CFBC29B6A7EA00BA1F16 /* LeaderboardUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFBB29B6A7EA00BA1F16 /* LeaderboardUser.swift */; };
 		E085CFBE29B6A8AC00BA1F16 /* LeaderboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFBD29B6A8AC00BA1F16 /* LeaderboardService.swift */; };
+		E0882E0B29E5EBB500E5F2C1 /* HomeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0882E0A29E5EBB500E5F2C1 /* HomeElement.swift */; };
 		E08B445828B2E2A3006BC50A /* EnvironmentAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */; };
 		E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */; };
 		E08B445E28B2E988006BC50A /* BrowsedChallengesViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */; };
@@ -107,6 +118,8 @@
 		E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FA68028C37F1100D3349D /* SettingsViewProps.swift */; };
 		E0A0D7D9286E575F00113316 /* CodeChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A0D7D8286E575F00113316 /* CodeChallengeTests.swift */; };
 		E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A619D229104D73004EDD41 /* MaintenanceView.swift */; };
+		E0A64D1629DC6FB500A71575 /* LearnTabSectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A64D1529DC6FB500A71575 /* LearnTabSectionsView.swift */; };
+		E0A64D1829DC6FC000A71575 /* LearnTabSectionsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A64D1729DC6FC000A71575 /* LearnTabSectionsViewProps.swift */; };
 		E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */; };
 		E0A69CCC292AE8B9009D5C0C /* CompletedChallengesViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */; };
 		E0A69CCE292AF74F009D5C0C /* NewLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */; };
@@ -131,6 +144,11 @@
 		E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF5292BD624009D5C0C /* UIFont.swift */; };
 		E0A69CF8292BF6E8009D5C0C /* RecommendationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */; };
 		E0A69CFA292BF762009D5C0C /* RecommendationsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */; };
+		E0AB515C29EB514C000DD0DD /* SimpleCodePlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AB515B29EB514C000DD0DD /* SimpleCodePlaygroundView.swift */; };
+		E0AB515E29EC822A000DD0DD /* LearnCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AB515D29EC822A000DD0DD /* LearnCoordinator.swift */; };
+		E0AB516029EC8275000DD0DD /* LearnTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AB515F29EC8275000DD0DD /* LearnTabView.swift */; };
+		E0AB516229EC8662000DD0DD /* LearnTabViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AB516129EC8662000DD0DD /* LearnTabViewProps.swift */; };
+		E0AB516429ECA2DB000DD0DD /* PremiumPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AB516329ECA2DB000DD0DD /* PremiumPresentable.swift */; };
 		E0B53BAA29817591009A49CA /* account_premium_stars.json in Resources */ = {isa = PBXBuildFile; fileRef = E0B53BA929817591009A49CA /* account_premium_stars.json */; };
 		E0B53BAC29828538009A49CA /* LottieFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B53BAB29828538009A49CA /* LottieFile.swift */; };
 		E0B9582128B29E4300247DE9 /* UniversalCodeChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */; };
@@ -261,6 +279,15 @@
 		E06494AA29CA483F00AE3B6B /* ChallengeFriendCodeChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendCodeChallengeView.swift; sourceTree = "<group>"; };
 		E06494AC29CA484E00AE3B6B /* ChallengeFriendCodeChallengeViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendCodeChallengeViewProps.swift; sourceTree = "<group>"; };
 		E06494AE29CA7A1600AE3B6B /* ChallengeFriendResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendResultView.swift; sourceTree = "<group>"; };
+		E0667ADA29DA146500C9CAF1 /* LessonCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCollectionView.swift; sourceTree = "<group>"; };
+		E0667ADC29DA147000C9CAF1 /* LessonCollectionViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCollectionViewProps.swift; sourceTree = "<group>"; };
+		E0667ADF29DA148E00C9CAF1 /* LessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonView.swift; sourceTree = "<group>"; };
+		E0667AE329DA14A800C9CAF1 /* LessonTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonTextView.swift; sourceTree = "<group>"; };
+		E0667AE529DA14AF00C9CAF1 /* LessonCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCodeView.swift; sourceTree = "<group>"; };
+		E0667AE729DA15A500C9CAF1 /* QuizSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSelectionView.swift; sourceTree = "<group>"; };
+		E0667AE929DA15F600C9CAF1 /* QuizComposeCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizComposeCodeView.swift; sourceTree = "<group>"; };
+		E0667AEB29DA2CD900C9CAF1 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
+		E068A99D29F895E700EAD210 /* home_stars.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = home_stars.json; sourceTree = "<group>"; };
 		E06AAE242877888300995D3D /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardCoordinator.swift; sourceTree = "<group>"; };
 		E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumCoordinator.swift; sourceTree = "<group>"; };
@@ -280,6 +307,7 @@
 		E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguagesView.swift; sourceTree = "<group>"; };
 		E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		E083D95429E9FB64005829F4 /* QuizChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizChallengeView.swift; sourceTree = "<group>"; };
 		E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarousel.swift; sourceTree = "<group>"; };
 		E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptReview.swift; sourceTree = "<group>"; };
 		E085CFAC29B40FD900BA1F16 /* ConceptReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptReviewService.swift; sourceTree = "<group>"; };
@@ -291,6 +319,7 @@
 		E085CFB929B6A78F00BA1F16 /* LeaderboardViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewProps.swift; sourceTree = "<group>"; };
 		E085CFBB29B6A7EA00BA1F16 /* LeaderboardUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardUser.swift; sourceTree = "<group>"; };
 		E085CFBD29B6A8AC00BA1F16 /* LeaderboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardService.swift; sourceTree = "<group>"; };
+		E0882E0A29E5EBB500E5F2C1 /* HomeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeElement.swift; sourceTree = "<group>"; };
 		E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentAdditions.swift; sourceTree = "<group>"; };
 		E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsedChallengesView.swift; sourceTree = "<group>"; };
 		E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsedChallengesViewProps.swift; sourceTree = "<group>"; };
@@ -308,6 +337,8 @@
 		E0A0D7D6286E575F00113316 /* CodeChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A0D7D8286E575F00113316 /* CodeChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTests.swift; sourceTree = "<group>"; };
 		E0A619D229104D73004EDD41 /* MaintenanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceView.swift; sourceTree = "<group>"; };
+		E0A64D1529DC6FB500A71575 /* LearnTabSectionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnTabSectionsView.swift; sourceTree = "<group>"; };
+		E0A64D1729DC6FC000A71575 /* LearnTabSectionsViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnTabSectionsViewProps.swift; sourceTree = "<group>"; };
 		E0A69CC9292AE896009D5C0C /* CompletedChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengesView.swift; sourceTree = "<group>"; };
 		E0A69CCB292AE8B9009D5C0C /* CompletedChallengesViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedChallengesViewProps.swift; sourceTree = "<group>"; };
 		E0A69CCD292AF74F009D5C0C /* NewLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewLabelView.swift; sourceTree = "<group>"; };
@@ -332,6 +363,11 @@
 		E0A69CF5292BD624009D5C0C /* UIFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFont.swift; sourceTree = "<group>"; };
 		E0A69CF7292BF6E8009D5C0C /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
 		E0A69CF9292BF762009D5C0C /* RecommendationsViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewProps.swift; sourceTree = "<group>"; };
+		E0AB515B29EB514C000DD0DD /* SimpleCodePlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleCodePlaygroundView.swift; sourceTree = "<group>"; };
+		E0AB515D29EC822A000DD0DD /* LearnCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnCoordinator.swift; sourceTree = "<group>"; };
+		E0AB515F29EC8275000DD0DD /* LearnTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnTabView.swift; sourceTree = "<group>"; };
+		E0AB516129EC8662000DD0DD /* LearnTabViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnTabViewProps.swift; sourceTree = "<group>"; };
+		E0AB516329ECA2DB000DD0DD /* PremiumPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumPresentable.swift; sourceTree = "<group>"; };
 		E0B53BA929817591009A49CA /* account_premium_stars.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = account_premium_stars.json; sourceTree = "<group>"; };
 		E0B53BAB29828538009A49CA /* LottieFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieFile.swift; sourceTree = "<group>"; };
 		E0B9582028B29E4300247DE9 /* UniversalCodeChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalCodeChallengeView.swift; sourceTree = "<group>"; };
@@ -491,6 +527,34 @@
 			path = Plists;
 			sourceTree = "<group>";
 		};
+		E0667AD929DA13C600C9CAF1 /* Learn */ = {
+			isa = PBXGroup;
+			children = (
+				E0667ADE29DA148800C9CAF1 /* Elements */,
+				E0667ADA29DA146500C9CAF1 /* LessonCollectionView.swift */,
+				E0667ADC29DA147000C9CAF1 /* LessonCollectionViewProps.swift */,
+				E0667ADF29DA148E00C9CAF1 /* LessonView.swift */,
+				E0AB515F29EC8275000DD0DD /* LearnTabView.swift */,
+				E0AB516129EC8662000DD0DD /* LearnTabViewProps.swift */,
+				E0A64D1529DC6FB500A71575 /* LearnTabSectionsView.swift */,
+				E0A64D1729DC6FC000A71575 /* LearnTabSectionsViewProps.swift */,
+			);
+			path = Learn;
+			sourceTree = "<group>";
+		};
+		E0667ADE29DA148800C9CAF1 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				E0667AE329DA14A800C9CAF1 /* LessonTextView.swift */,
+				E0667AE529DA14AF00C9CAF1 /* LessonCodeView.swift */,
+				E0667AE729DA15A500C9CAF1 /* QuizSelectionView.swift */,
+				E0667AE929DA15F600C9CAF1 /* QuizComposeCodeView.swift */,
+				E083D95429E9FB64005829F4 /* QuizChallengeView.swift */,
+				E0AB515B29EB514C000DD0DD /* SimpleCodePlaygroundView.swift */,
+			);
+			path = Elements;
+			sourceTree = "<group>";
+		};
 		E085CFB829B6A78100BA1F16 /* Leaderboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,6 +701,8 @@
 				E0228F722907346200101A82 /* BuddiesCoordinator.swift */,
 				E0C9D7422996BDCD000A7000 /* CodeChallengePresentable.swift */,
 				E064949D29C78BAA00AE3B6B /* ChallengeFriendPresentable.swift */,
+				E0AB515D29EC822A000DD0DD /* LearnCoordinator.swift */,
+				E0AB516329ECA2DB000DD0DD /* PremiumPresentable.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -644,6 +710,7 @@
 		E0BD3247285A8D15000C37A9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E0667AD929DA13C600C9CAF1 /* Learn */,
 				E039199A29BE9C7D00B43A99 /* Chat */,
 				E085CFB829B6A78100BA1F16 /* Leaderboard */,
 				E0FB612B29185BFD00DB1E9A /* Home */,
@@ -670,6 +737,7 @@
 				E0525500288C79CE00FD87C3 /* Plists */,
 				E0BD3234285A7181000C37A9 /* Persistence.swift */,
 				E0BD322F285A7181000C37A9 /* Assets.xcassets */,
+				E068A99D29F895E700EAD210 /* home_stars.json */,
 				E0B53BA929817591009A49CA /* account_premium_stars.json */,
 				E04D067A28BD5F30003DB450 /* confetti.json */,
 				E0BD3236285A7181000C37A9 /* CodeChallenge.xcdatamodeld */,
@@ -760,6 +828,8 @@
 				E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */,
 				E085CFBB29B6A7EA00BA1F16 /* LeaderboardUser.swift */,
 				E064949329C64DC600AE3B6B /* ChallengeFriend.swift */,
+				E0667AEB29DA2CD900C9CAF1 /* Lesson.swift */,
+				E0882E0A29E5EBB500E5F2C1 /* HomeElement.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -992,6 +1062,7 @@
 				E0EF278F28E21EAD00597160 /* GoogleService-Info.plist in Resources */,
 				E0A69CEA292BD3FF009D5C0C /* SF-Pro-Text-Ultralight.otf in Resources */,
 				E0A69CEE292BD3FF009D5C0C /* SF-Pro-Text-BoldItalic.otf in Resources */,
+				E068A99E29F895E700EAD210 /* home_stars.json in Resources */,
 				E0A69CE9292BD3FF009D5C0C /* SF-Pro-Text-Regular.otf in Resources */,
 				E0A69CEC292BD3FF009D5C0C /* SF-Pro-Text-Thin.otf in Resources */,
 				E0A69CE6292BD3FF009D5C0C /* SF-Pro-Text-Light.otf in Resources */,
@@ -1047,6 +1118,7 @@
 				E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */,
 				E0BD3295285CF886000C37A9 /* Services.swift in Sources */,
 				E085CFBA29B6A78F00BA1F16 /* LeaderboardViewProps.swift in Sources */,
+				E0667AE629DA14AF00C9CAF1 /* LessonCodeView.swift in Sources */,
 				E06494AB29CA483F00AE3B6B /* ChallengeFriendCodeChallengeView.swift in Sources */,
 				E06494A029C8FC7800AE3B6B /* CodeChallengeContentsView.swift in Sources */,
 				E0D0AE0929BFABF4001CE57D /* ChatAIViewProps.swift in Sources */,
@@ -1073,6 +1145,7 @@
 				E085CFAF29B4129F00BA1F16 /* LearnViewProps.swift in Sources */,
 				E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */,
 				E06AAE3728778DDC00995D3D /* Account.swift in Sources */,
+				E0AB516429ECA2DB000DD0DD /* PremiumPresentable.swift in Sources */,
 				E064949029C26A0400AE3B6B /* TryAIView.swift in Sources */,
 				E08D823D299AF12700A11396 /* SearchState.swift in Sources */,
 				E052550D288C79FC00FD87C3 /* PlaygroundView.swift in Sources */,
@@ -1089,14 +1162,18 @@
 				E0BD3241285A87A6000C37A9 /* ButtonStyles.swift in Sources */,
 				E0BD328A285CF700000C37A9 /* Resolvable.swift in Sources */,
 				E01AECA4289EF5A500615B52 /* KeywordsCollectionCell.swift in Sources */,
+				E0667ADB29DA146500C9CAF1 /* LessonCollectionView.swift in Sources */,
+				E0667AE429DA14A800C9CAF1 /* LessonTextView.swift in Sources */,
 				E08D6F7928C53826006991EB /* GetStartedView.swift in Sources */,
 				E0D0AE1229C162A8001CE57D /* PlaceholderAnimation.swift in Sources */,
 				E096DF1E2871BE61008A2A98 /* ViewAdditions.swift in Sources */,
 				E06494A229C8FCC000AE3B6B /* CodeChallengeContentsViewProps.swift in Sources */,
 				E02542FA292053EB002D2F19 /* ArrayAdditions.swift in Sources */,
+				E0667ADD29DA147000C9CAF1 /* LessonCollectionViewProps.swift in Sources */,
 				E0BD3290285CF782000C37A9 /* Reducers.swift in Sources */,
 				E0228F732907346200101A82 /* BuddiesCoordinator.swift in Sources */,
 				E0FB29B02919A2E500E75B8E /* CollectionContentViewProps.swift in Sources */,
+				E0A64D1829DC6FC000A71575 /* LearnTabSectionsViewProps.swift in Sources */,
 				E06494A729C9025100AE3B6B /* CodeChallengePlaygroundView.swift in Sources */,
 				E085CFB729B6A77300BA1F16 /* LeaderboardView.swift in Sources */,
 				E0BD328C285CF731000C37A9 /* User.swift in Sources */,
@@ -1115,6 +1192,7 @@
 				E01AECA9289FBD6C00615B52 /* FocusableSearchField.swift in Sources */,
 				E06494A529C9024000AE3B6B /* CodeChallengeTaskView.swift in Sources */,
 				E0BD3293285CF81B000C37A9 /* Actions.swift in Sources */,
+				E0A64D1629DC6FB500A71575 /* LearnTabSectionsView.swift in Sources */,
 				E0BD329B285D0001000C37A9 /* PublisherAdditions.swift in Sources */,
 				E0785AFB29A40F9800E4661D /* RewardsService.swift in Sources */,
 				E096DF1C2871BCAB008A2A98 /* Colors.swift in Sources */,
@@ -1132,6 +1210,7 @@
 				E064949A29C6636400AE3B6B /* ChallengeFriendContentsView.swift in Sources */,
 				E0BD3235285A7181000C37A9 /* Persistence.swift in Sources */,
 				E002972329AECBC400EE3D9B /* LearnView.swift in Sources */,
+				E0AB516029EC8275000DD0DD /* LearnTabView.swift in Sources */,
 				E0EBB7EC288B204900DE7C53 /* NetworkImageViewModel.swift in Sources */,
 				E06AAE272877888C00995D3D /* LeaderboardCoordinator.swift in Sources */,
 				E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */,
@@ -1140,9 +1219,11 @@
 				E0785AF929A40EB100E4661D /* Rewards.swift in Sources */,
 				E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */,
 				E06494AD29CA484E00AE3B6B /* ChallengeFriendCodeChallengeViewProps.swift in Sources */,
+				E0667AEC29DA2CD900C9CAF1 /* Lesson.swift in Sources */,
 				E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */,
 				E0359DD8299AFAF500E8AF4F /* ChallengeCompiledResult.swift in Sources */,
 				E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */,
+				E0667AE029DA148E00C9CAF1 /* LessonView.swift in Sources */,
 				E06494AF29CA7A1600AE3B6B /* ChallengeFriendResultView.swift in Sources */,
 				E0BD3299285CFA79000C37A9 /* RequestAdditions.swift in Sources */,
 				E0FB612F29185C1500DB1E9A /* HomeViewProps.swift in Sources */,
@@ -1150,6 +1231,7 @@
 				E0359DD6299AFAAB00E8AF4F /* ChallengeDetails.swift in Sources */,
 				E0EBB7EE288B207700DE7C53 /* ImageService.swift in Sources */,
 				E064949629C6634C00AE3B6B /* ChallengeFriendView.swift in Sources */,
+				E0882E0B29E5EBB500E5F2C1 /* HomeElement.swift in Sources */,
 				E0A69CCE292AF74F009D5C0C /* NewLabelView.swift in Sources */,
 				E08D6F7B28C67EAB006991EB /* ImagePicker.swift in Sources */,
 				E0359DCD299AF8CF00E8AF4F /* String+RFC.swift in Sources */,
@@ -1159,10 +1241,12 @@
 				E064949E29C78BAA00AE3B6B /* ChallengeFriendPresentable.swift in Sources */,
 				E01AEC96289B315400615B52 /* PremiumViewProps.swift in Sources */,
 				E064949C29C66D7100AE3B6B /* ShareText.swift in Sources */,
+				E0667AE829DA15A500C9CAF1 /* QuizSelectionView.swift in Sources */,
 				E0228F6C2904B7A000101A82 /* BuddiesView.swift in Sources */,
 				E0BD324D285A8DA3000C37A9 /* SceneDelegate.swift in Sources */,
 				E096DF212871BEA8008A2A98 /* DoodledView.swift in Sources */,
 				E052550E288C79FC00FD87C3 /* AutocompleteTermsHelper.swift in Sources */,
+				E0AB516229EC8662000DD0DD /* LearnTabViewProps.swift in Sources */,
 				E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */,
 				E01AECA7289F0D5800615B52 /* KeywordsSwiftUIView.swift in Sources */,
 				E0BD3280285CF48A000C37A9 /* LoginViewProps.swift in Sources */,
@@ -1175,9 +1259,13 @@
 				E0359DCB299AF6A400E8AF4F /* PurchasesService.swift in Sources */,
 				E064949229C649EB00AE3B6B /* ChallengeFriendService.swift in Sources */,
 				E01AECAB28A03FD800615B52 /* UIControlSubscription.swift in Sources */,
+				E0AB515E29EC822A000DD0DD /* LearnCoordinator.swift in Sources */,
+				E083D95529E9FB64005829F4 /* QuizChallengeView.swift in Sources */,
 				E064949829C6635700AE3B6B /* ChallengeFriendViewProps.swift in Sources */,
 				E0B53BAC29828538009A49CA /* LottieFile.swift in Sources */,
 				E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */,
+				E0667AEA29DA15F600C9CAF1 /* QuizComposeCodeView.swift in Sources */,
+				E0AB515C29EB514C000DD0DD /* SimpleCodePlaygroundView.swift in Sources */,
 				E0A69CFA292BF762009D5C0C /* RecommendationsViewProps.swift in Sources */,
 				E01AEC9A289B3B5500615B52 /* PremiumAllPlansView.swift in Sources */,
 			);
@@ -1375,7 +1463,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1409,7 +1497,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1506,7 +1594,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1617,7 +1705,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

@@ -95,6 +95,18 @@ extension UIColor.CodeChallenge {
     static var xpGrayishBackground: UIColor {
         UIColor.init(red: 37/255, green: 38/255, blue: 43/255, alpha: 1.0)
     }
+
+    static var lessonQuizBlue: UIColor {
+        UIColor.init(red: 28/255, green: 55/255, blue: 108/255, alpha: 1.0)
+    }
+
+    static var lessonQuizGreen: UIColor {
+        UIColor.init(red: 40/255, green: 225/255, blue: 157/255, alpha: 1.0)
+    }
+
+    static var lessonQuizRed: UIColor {
+        UIColor.init(red: 231/255, green: 127/255, blue: 91/255, alpha: 1.0)
+    }
 }
 
 extension Color {

@@ -36,15 +36,13 @@ struct QuizChallengeView: View {
             }
         }
         .onAppear {
-            store.dispatch(LoadChallengeDetails(id: id))
             displayCode = details?.body.template.removingPercentEncoding
+            onCodeChange(displayCode ?? "")
         }
         .onChange(of: code, perform: { newValue in
             displayCode = newValue
-        })
-        .onChange(of: displayCode) { newValue in
             onCodeChange(newValue ?? "")
-        }
+        })
     }
 
     func detailsContent(_ details: ChallengeDetail) -> some View {

@@ -15,8 +15,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
     @State private var selection = 1
 
     var pages: [Lesson] {
-        //        return lessonCollection?.pages.filter { $0.id <= (lessonCollection?.currentProgress ?? 0) } ?? []
-        return lessonCollection?.pages ?? []
+        lessonCollection?.enabledPages ?? []
     }
 
     var body: some View {
@@ -50,7 +49,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                 if let collection = lessonCollection {
                     TabView(selection: $selection, content: {
                         ForEach(Array(pages.enumerated()), id: \.offset) { (index, lesson) in
-                            LessonView(lesson: lesson, onContinue: {
+                            LessonView(lesson: lesson, lessonCollection: lessonCollection, onContinue: {
                                 if selection < pages.count {
                                     withAnimation {
                                         selection += 1
@@ -70,7 +69,28 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
         }
         .background(.CodeChallenge.dark)
         .onAppear {
-            store.dispatch(GetLessonCollection(element: homeElement))
+            store.dispatch(GetLessonCollection(id: homeElement.id))
+            if !pages.isEmpty {
+                selection = pages.count
+                loadChallengeDetails()
+            }
+        }
+        .onChange(of: pages, perform: { value in
+            selection = pages.count
+            loadChallengeDetails()
+        })
+    }
+
+    private func loadChallengeDetails() {
+        let contents = pages.reduce([LessonContent]()) { partialResult, lesson in
+            return partialResult + lesson.content
+        }
+        for content in contents {
+            switch content {
+            case .challenge(let id):
+                store.dispatch(LoadChallengeDetails(id: id))
+            default: break
+            }
         }
     }
 }

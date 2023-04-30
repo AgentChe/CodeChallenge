@@ -190,7 +190,7 @@ extension Reducers {
 }
 
 extension Reducers {
-    static let lessonsReducer: Reducer<[HomeElement: Resolvable<LessonCollection>]> = { state, action in
+    static let lessonsReducer: Reducer<[Int: Resolvable<LessonCollection>]> = { state, action in
         switch action {
         case .updateLessonCollection(let identifier, let result):
             var copy = state

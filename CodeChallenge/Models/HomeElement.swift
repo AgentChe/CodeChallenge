@@ -8,25 +8,17 @@
 import Foundation
 
 struct LearnSections: Codable {
-    let pl: String
+    let currentProgress: Int
     let contents: [HomeSection]
 }
 
 struct HomeSection: Codable {
     let title: String
-    let id: Int
     let contents: [HomeElement]
 }
 
 struct HomeElement: Codable, Hashable {
-    enum State: String, Codable {
-        case done
-        case blocked
-        case jumped
-        case todo
-    }
     let id: Int
     let title: String
-    let icon: String
-    let state: State
+    let icon: String?
 }

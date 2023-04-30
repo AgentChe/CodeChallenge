@@ -11,6 +11,7 @@ import SwiftUI
 struct LessonView: View {
     @EnvironmentObject var store: Store
     let lesson: Lesson
+    let lessonCollection: LessonCollection?
     let onContinue: () -> Void
     @State private var resultDict: [(LessonContent, [String])] = []
     @State private var presentContinuePopup = false
@@ -20,6 +21,13 @@ struct LessonView: View {
     var buttonStatus: PrimaryButton.Status {
         if resultDict.isEmpty { return .enabled }
         return resultDict.map { $0.1.isEmpty }.contains(true) ? PrimaryButton.Status.disabled : PrimaryButton.Status.enabled
+        return .enabled
+    }
+
+    var hasPassedThisLesson: Bool {
+        guard let enabledPages = lessonCollection?.enabledPages,
+            let index = (enabledPages.firstIndex { $0.id == lesson.id }) else { return false }
+        return index < enabledPages.count - 1
     }
 
     var body: some View {
@@ -33,11 +41,11 @@ struct LessonView: View {
                         case .code(let code, let pl):
                             LessonCodeView(code: code, pl: pl)
                         case .composeCodeQuiz(let text, let options, let winning):
-                            QuizComposeCodeView(text: text, options: options, winning: winning) { options in
+                            QuizComposeCodeView(text: text, options: options, winning: winning, passed: hasPassedThisLesson) { options in
                                 modifyResultDict(lessonContent: lessonContent, result: options)
                             }
                         case .chooseAnswerQuiz(let text, let options, let winning):
-                            QuizSelectionView(text: text, options: options, winning: winning) { options in
+                            QuizSelectionView(text: text, options: options, winning: winning, passed: hasPassedThisLesson) { options in
                                 modifyResultDict(lessonContent: lessonContent, result: options)
                             }
                         case .image(let image):
@@ -83,6 +91,7 @@ struct LessonView: View {
                                                                   ))
                         }
                         if presentResultStatus, resultStatus() == "success" {
+                            store.dispatch(UpdateClassProgress(progress: lesson.id, classId: lessonCollection?.id ?? 0))
                             onContinue()
                         } else if !resultDict.isEmpty {
                             withAnimation {
@@ -93,6 +102,7 @@ struct LessonView: View {
                             onContinue()
                         }
                     }
+                    .disabled(buttonStatus == .disabled)
                     .buttonStyle(PrimaryButton(status: buttonStatus))
                     .padding(.horizontal, 20)
                     Spacer()

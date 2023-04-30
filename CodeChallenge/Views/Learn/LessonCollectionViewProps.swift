@@ -14,6 +14,6 @@ protocol LessonCollectionViewProps {
 
 extension LessonCollectionViewProps {
     var lessonCollection: LessonCollection? {
-        store.state.lessons[homeElement]?.value
+        store.state.lessons[homeElement.id]?.value
     }
 }

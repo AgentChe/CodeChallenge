@@ -20,8 +20,10 @@ protocol ChallengesServiceProtocol {
     func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error>
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<ChallengeCollectionContent, Error>
     func getRecommendedChallenges(userId: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[Challenge], Error>
-    func getLearnSections(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<LearnSections, Error>
-    func getLessonCollection(homeElement: HomeElement, session: String) -> AnyPublisher<LessonCollection, Error>
+    func getLearnSections(programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<LearnSections, Error>
+    func getLessonCollection(id: Int, session: String) -> AnyPublisher<LessonCollection, Error>
+    func updateClassProgress(session: String, classId: Int, progress: Int) -> AnyPublisher<Void, Error>
+    func updatePathProgress(session: String, progress: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<Void, Error>
 }
 
 struct ChallengesService: ChallengesServiceProtocol {
@@ -102,17 +104,31 @@ struct ChallengesService: ChallengesServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func getLearnSections(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<LearnSections, Error> {
+    func getLearnSections(programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<LearnSections, Error> {
         return URLRequest
-            .create(url: "https://run.mocky.io/v3/59aa1d47-cac7-47e2-9b1d-c5e029914894", type: .get)
+            .create(url: "\(Configuration.host)/learning/learningPath/", type: .post, params: ["session": session, "pl": programmingLanguage.apiRequestParam])
             .flatMap { networkService.load($0, decoding: LearnSections.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 
-    func getLessonCollection(homeElement: HomeElement, session: String) -> AnyPublisher<LessonCollection, Error> {
+    func getLessonCollection(id: Int, session: String) -> AnyPublisher<LessonCollection, Error> {
         return URLRequest
-            .create(url: "https://run.mocky.io/v3/f1e693fd-9061-4d3d-83a0-c5cbf51ec965", type: .get)
+            .create(url: "\(Configuration.host)/learning/learningClass/", type: .post, params: ["session": session, "classId": id])
             .flatMap { networkService.load($0, decoding: LessonCollection.self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+
+    func updateClassProgress(session: String, classId: Int, progress: Int) -> AnyPublisher<Void, Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/learning/updateClassProgress/", type: .post, params: ["session": session, "classId": classId, "progress": progress])
+            .flatMap { networkService.send($0) }
+            .eraseToAnyPublisher()
+    }
+
+    func updatePathProgress(session: String, progress: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<Void, Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/learning/updatePathProgress/", type: .post, params: ["session": session, "pl": programmingLanguage.apiRequestParam, "progress": progress])
+            .flatMap { networkService.send($0) }
             .eraseToAnyPublisher()
     }
 }

@@ -23,4 +23,8 @@ extension LearnTabSectionsViewProps {
     var sections: [HomeSection] {
         store.state.learnSections[programmingLanguage]?.value?.contents ?? []
     }
+
+    var currentProgressId: Int {
+        store.state.learnSections[programmingLanguage]?.value?.currentProgress ?? 0
+    }
 }

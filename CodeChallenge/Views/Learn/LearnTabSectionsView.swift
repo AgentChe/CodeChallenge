@@ -28,7 +28,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
         LazyVGrid(
             columns: gridItemLayout,
             alignment: .leading,
-            spacing: 27,
+            spacing: 19,
             pinnedViews: []) {
                 Text("Learning \(programmingLanguage.rawValue.capitalized)")
                     .font(.pageNameH1)
@@ -41,18 +41,13 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                                 Text(section.title)
                                     .font(.h3)
                                     .bold()
-//                                    .padding(.leading, 10.0)
-                                //                                Rectangle()
-                                //                                    .fill(Color(UIColor.CodeChallenge.white.withAlphaComponent(0.1)))
-                                //                                    .frame(width: .screenWidth, height: 1)
-                                //                                    .padding(.bottom, 6)
+                                    .padding(.bottom, 6)
                                 HStack {
                                     Text("a little bit of description that is long a lit bit")
                                         .font(.regular(size: 18))
                                         .foregroundColor(.CodeChallenge.white)
                                     Spacer()
                                 }
-//                                .padding(.leading, 10.0)
                             }
                             .padding(.vertical, 20)
                             .padding(.horizontal, 16)
@@ -60,10 +55,6 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     ) {
 
                         ForEach(Array(section.contents.enumerated()), id: \.element.id) { (offset, element) in
-                            //                            homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
-                            //                                .onTapGesture {
-                            //                                    onCollectionTap?(collection)
-                            //                                }
                             elementView(element, offset, section.contents.count, fromLeft: sectionOffset % 2 == 0)
                         }
                     }
@@ -81,7 +72,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
                     .frame(width: 120, height: 120)
                 Circle()
-                    .trim(from: 0.25, to: 0.6)
+                    .trim(from: 0.25, to: 4)
                     .stroke(Color(UIColor.CodeChallenge.blue1), lineWidth: 8)
                     .frame(width: 120, height: 120)
                 Image(programmingLanguage.rawValue)
@@ -112,29 +103,9 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
             Spacer()
                 .frame(width: offset(position, count, fromLeft: fromLeft))
             VStack {
-                //                NetworkImage(
-                //                    viewModel: .init(url: "",
-                //                                     store: store,
-                //                                     placeholder: .init(named: "placeholder_image"),
-                //                                     showsPlaceholderInitially: true,
-                //                                     cacheEnabled: false),
-                //                    animated: false,
-                //                    size: .init(width: 60, height: 60)
-                //                )
-                ZStack {
-                    Ellipse()
-                        .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
-                        .frame(width: 95, height: 86)
-                    Ellipse()
-                        .trim(from: 0.75, to: 1)
-                        .stroke(Color(UIColor.CodeChallenge.lessonQuizGreen), lineWidth: 8)
-                        .frame(width: 95, height: 86)
-                    Image("home_test_icon")
-                        .resizable()
-                        .frame(width: 70, height: 65)
-                        .padding(12)
-                }
+                image(element: element, position: position)
                 Text(element.title)
+                    .font(.bodyText)
                     .multilineTextAlignment(.center)
             }
             .frame(width: .screenWidth/2)
@@ -166,5 +137,54 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                 }
             }
         }
+    }
+
+    @ViewBuilder
+    private func image(element: HomeElement, position: Int) -> some View {
+        if element.id == currentProgressId {
+            ZStack {
+                Ellipse()
+                    .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
+                    .frame(width: 95, height: 86)
+                Ellipse()
+                    .trim(from: 0.75, to: 1)
+                    .stroke(Color(UIColor.CodeChallenge.lessonQuizGreen), lineWidth: 8)
+                    .frame(width: 95, height: 86)
+                Image("learn_star")
+                    .resizable()
+                    .frame(width: 70, height: 65)
+                    .padding(12)
+            }
+        } else {
+            if ids.split(separator: currentProgressId).count == 2,
+                (ids.split(separator: currentProgressId).first?.contains(where: { id in
+                id == element.id
+            }) == true) {
+                Image("learn_star")
+                    .resizable()
+                    .frame(width: 70, height: 65)
+                    .padding(12)
+            } else {
+                if position == 0 {
+                    Image("learn_jump")
+                        .resizable()
+                        .frame(width: 70, height: 65)
+                        .padding(12)
+                } else {
+                    Image("learn_disabled")
+                        .resizable()
+                        .frame(width: 70, height: 65)
+                        .padding(12)
+                }
+            }
+        }
+    }
+
+    private var ids: [Int] {
+        return sections.reduce([Int](), { result, partialResult in
+            result + partialResult.contents.map({ item in
+                item.id
+            })
+        }) as [Int]
     }
 }

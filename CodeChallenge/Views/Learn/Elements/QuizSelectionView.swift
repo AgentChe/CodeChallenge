@@ -12,6 +12,7 @@ struct QuizSelectionView: View {
     let text: String
     let options: [String]
     let winning: [String]
+    let passed: Bool
     let onSelect: ([String]) -> Void
     @State private var selectedOptions: [String] = []
 
@@ -32,7 +33,7 @@ struct QuizSelectionView: View {
                 .padding(.horizontal, 14)
                 .padding(.vertical, 10)
                 .background {
-                    if selectedOptions.contains(option) {
+                    if selectedOptions.contains(option) || (passed && winning.contains(option)) {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color(UIColor.CodeChallenge.lessonQuizBlue))
@@ -55,5 +56,11 @@ struct QuizSelectionView: View {
             }
         }
         .padding(.horizontal, 22)
+        .disabled(passed)
+        .onAppear {
+            if passed {
+                onSelect(winning)
+            }
+        }
     }
 }

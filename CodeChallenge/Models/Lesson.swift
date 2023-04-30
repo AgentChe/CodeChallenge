@@ -13,9 +13,21 @@ struct LessonCollection: Decodable {
     let pages: [Lesson]
 }
 
-struct Lesson: Decodable {
+struct Lesson: Decodable, Equatable {
     let id: Int
     let content: [LessonContent]
+}
+
+extension LessonCollection {
+    var enabledPages: [Lesson] {
+        guard let index = pages.firstIndex(where: { lesson in
+            lesson.id == currentProgress
+        }) else { return [] }
+        if index == pages.count - 1 {
+            return pages
+        }
+        return pages[0..<(index + 2)].map { $0 }
+    }
 }
 
 enum LessonContent: Decodable, Equatable {

@@ -12,6 +12,7 @@ struct QuizComposeCodeView: View {
     let text: String
     let options: [String]
     let winning: [String]
+    let passed: Bool
     let onSelect: ([String]) -> Void
     @State private var selectedOptions: [String] = []
 
@@ -22,19 +23,25 @@ struct QuizComposeCodeView: View {
                 .font(.regular(size: 18))
                 .multilineTextAlignment(.leading)
 
-            OptionsView(options: selectedOptions, onHeightChange: { _ in }, onOptionTap: { keyword in
+            OptionsView(options: passed ? winning : selectedOptions, onHeightChange: { _ in }, onOptionTap: { keyword in
                 selectedOptions = selectedOptions.filter { $0 != keyword }
                 onSelect(selectedOptions)
             })
             .background(.clear)
             .frame(height: .screenHeight/4)
 
-            OptionsView(options: options.filter { !selectedOptions.contains($0) }, onHeightChange: { _ in }, onOptionTap: { keyword in
+            OptionsView(options: options.filter { !(passed ? winning : selectedOptions).contains($0) }, onHeightChange: { _ in }, onOptionTap: { keyword in
                 selectedOptions = selectedOptions + [keyword]
                 onSelect(selectedOptions)
             })
             .background(.clear)
             .frame(height: .screenHeight/4)
+        }
+        .disabled(passed)
+        .onAppear {
+            if passed {
+                onSelect(winning)
+            }
         }
     }
 }

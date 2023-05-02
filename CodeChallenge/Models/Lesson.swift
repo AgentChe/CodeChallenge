@@ -20,9 +20,10 @@ struct Lesson: Decodable, Equatable {
 
 extension LessonCollection {
     var enabledPages: [Lesson] {
-        guard let index = pages.firstIndex(where: { lesson in
+        let index = pages.firstIndex(where: { lesson in
             lesson.id == currentProgress
-        }) else { return [] }
+        })
+        guard let index = index else { return [pages.first].compactMap { $0 } }
         if index == pages.count - 1 {
             return pages
         }

@@ -13,9 +13,18 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
     @Environment(\.presentationMode) var presentationMode
     let homeElement: HomeElement
     @State private var selection = 1
+    @State private var challengesLoaded = false
+
+    var currentProgress: Int {
+        lessonCollection?.currentProgress ?? 1
+    }
+
+    var enabledPages: [Lesson] {
+        lessonCollection?.enabledPages ?? []
+    }
 
     var pages: [Lesson] {
-        lessonCollection?.enabledPages ?? []
+        lessonCollection?.pages ?? []
     }
 
     var body: some View {
@@ -48,19 +57,17 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
             Group {
                 if let collection = lessonCollection {
                     TabView(selection: $selection, content: {
-                        ForEach(Array(pages.enumerated()), id: \.offset) { (index, lesson) in
+                        ForEach(Array(enabledPages.enumerated()), id: \.offset) { (index, lesson) in
                             LessonView(lesson: lesson, lessonCollection: lessonCollection, onContinue: {
                                 if selection < pages.count {
-                                    withAnimation {
-                                        selection += 1
-                                    }
+//                                    withAnimation {
+//                                        selection += 1
+//                                    }
                                 } else {
                                     presentationMode.wrappedValue.dismiss()
                                 }
                             })
                             .tag(lesson.id)
-//                            .contentShape(Rectangle())
-//                            .gesture(nil)
                         }
                     })
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -72,22 +79,34 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
         .background(.CodeChallenge.dark)
         .onAppear {
             store.dispatch(GetLessonCollection(id: homeElement.id))
-            if !pages.isEmpty {
-                selection = pages.count
+            if !enabledPages.isEmpty {
+                if let index = (enabledPages.firstIndex { $0.id == currentProgress }) {
+                    selection = index + 2
+                } else {
+                    selection = 1
+                }
                 loadChallengeDetails()
             }
         }
-        .onChange(of: pages, perform: { value in
-            selection = pages.count
+        .onChange(of: enabledPages, perform: { _ in
+            withAnimation {
+                if let index = (enabledPages.firstIndex { $0.id == currentProgress }) {
+                    selection = index + 2
+                } else {
+                    selection = 1
+                }
+            }
             loadChallengeDetails()
         })
     }
 
     private func loadChallengeDetails() {
-        let contents = pages.reduce([LessonContent]()) { partialResult, lesson in
+        guard !challengesLoaded else { return }
+        let contents = enabledPages.reduce([LessonContent]()) { partialResult, lesson in
             return partialResult + lesson.content
         }
         for content in contents {
+            challengesLoaded = true
             switch content {
             case .challenge(let id):
                 store.dispatch(LoadChallengeDetails(id: id))

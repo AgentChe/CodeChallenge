@@ -19,6 +19,10 @@ struct QuizChallengeView: View {
         store.state.challengeDetails[id]?.value
     }
 
+    var isLoading: Bool {
+        store.state.challengeProgresses[details?.id ?? 0]?.isLoading == true
+    }
+
     var code: String? {
         if let progress = store.state.challengeProgresses[details?.id ?? 0]?.value {
             return progress.solution?.python.removingPercentEncoding ?? details?.body.template.removingPercentEncoding
@@ -54,6 +58,7 @@ struct QuizChallengeView: View {
                 onCodeChange(newValue ?? "")
             })
                 .frame(height: 200)
+                .disabled(isLoading)
                 .padding(.horizontal, 20)
             Spacer()
         }

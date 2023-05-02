@@ -14,6 +14,16 @@ struct LessonView: View {
     let lessonCollection: LessonCollection?
     let onContinue: () -> Void
 
+    var challengeIds: [Int] {
+        lesson.content.reduce([Int](), { partialResult, result in
+            switch result {
+            case .challenge(let id):
+                return partialResult + [id]
+            default: return partialResult
+            }
+        })
+    }
+
     @State private var quizAnswers: [(LessonContent, [String])] = []
     @State private var challengeAnswers: [Int: String] = [:]
 
@@ -92,20 +102,23 @@ struct LessonView: View {
                 VStack {
                     Spacer()
                     Button("Continue") {
-                        for challengeId in challengeAnswers.keys {
-                            store.dispatch(UpdateChallengeProgress(challengeId: challengeId,
-                                                                   solution: challengeAnswers[challengeId] ?? "",
-                                                                   compile: true,
-                                                                   programmingLanguage: .python, language: "en"
-                                                                  ))
-                        }
-
-                        if !lessonHasSolvableContent || (presentResult && (presentQuizResultPopup || presentCodeCompiledPopup)) {
+                        if !lessonHasSolvableContent || (presentResult && (presentQuizResultPopup || (presentCodeCompiledPopup && codeCompileResult == "success"))) {
                             if !hasPassedThisLesson {
                                 store.dispatch(UpdateClassProgress(progress: lesson.id, classId: lessonCollection?.id ?? 0))
+                                if lessonCollection?.pages.last?.id == lesson.id {
+                                    store.dispatch(UpdateLearningPathProgress(progress: 2))
+                                }
                             }
                             onContinue()
                         } else {
+                            for challengeId in challengeAnswers.keys {
+                                store.dispatch(UpdateChallengeProgress(challengeId: challengeId,
+                                                                       solution: challengeAnswers[challengeId] ?? "",
+                                                                       compile: true,
+                                                                       programmingLanguage: .python, language: "en"
+                                                                      ))
+                            }
+
                             withAnimation {
                                 if !quizAnswers.isEmpty {
                                     presentQuizResultPopup = true
@@ -202,7 +215,7 @@ extension LessonView {
     }
 
     private var codeCompileResult: String {
-        for id in [4] {
+        for id in challengeIds {
             if challengeResults[id]?.isLoading == true {
                 return "loading"
             } else {

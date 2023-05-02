@@ -85,65 +85,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D3F633A2-04AF-45D8-9EF3-BE8B2AE2BC74"
+            uuid = "9705C198-BAC3-4DAA-B5C3-BF97F9DE10EB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Views/Learn/Elements/QuizChallengeView.swift"
+            filePath = "CodeChallenge/Views/Learn/LessonView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "body"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E0ECB49E-BC67-4910-89A7-021509DC20D4"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Views/Learn/Elements/QuizChallengeView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "body"
-            landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "E0ECB49E-BC67-4910-89A7-021509DC20D4 - a832432d2c635471"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in Codehub_Staging.QuizChallengeView.body.getter : some"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Learn/Elements/QuizChallengeView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "88">
-               </Location>
-               <Location
-                  uuid = "E0ECB49E-BC67-4910-89A7-021509DC20D4 - a832432d2c635471"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #3 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in Codehub_Staging.QuizChallengeView.body.getter : some"
-                  moduleName = "Codehub Staging"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Learn/Elements/QuizChallengeView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "60">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

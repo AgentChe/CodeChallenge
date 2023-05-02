@@ -91,6 +91,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
             switch content {
             case .challenge(let id):
                 store.dispatch(LoadChallengeDetails(id: id))
+                store.dispatch(LoadChallengeProgress(challengeId: id, onComplete: nil))
             default: break
             }
         }

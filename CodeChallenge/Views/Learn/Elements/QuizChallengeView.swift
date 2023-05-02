@@ -36,7 +36,7 @@ struct QuizChallengeView: View {
             }
         }
         .onAppear {
-            displayCode = details?.body.template.removingPercentEncoding
+            displayCode = code
             onCodeChange(displayCode ?? "")
         }
         .onChange(of: code, perform: { newValue in
@@ -50,7 +50,7 @@ struct QuizChallengeView: View {
             HtmlAttributedLabel(htmlAttributedString: details.body.toAttributedString(), foregroundColor: .white)
                 .frame(width: .screenWidth - 40)
 
-            SimpleCodePlaygroundView(code: displayCode, onCodeUpdate: { newValue in
+            SimpleCodePlaygroundView(code: $displayCode, onCodeUpdate: { newValue in
                 onCodeChange(newValue ?? "")
             })
                 .frame(height: 200)

@@ -11,7 +11,7 @@ import SwiftUI
 import Highlightr
 
 struct SimpleCodePlaygroundView: UIViewRepresentable {
-    let code: String?
+    @Binding var code: String?
     let onCodeUpdate: ((String) -> Void)?
 
     func makeUIView(context: Context) -> some UIView {

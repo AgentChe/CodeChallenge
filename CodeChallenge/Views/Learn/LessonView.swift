@@ -13,21 +13,28 @@ struct LessonView: View {
     let lesson: Lesson
     let lessonCollection: LessonCollection?
     let onContinue: () -> Void
-    @State private var resultDict: [(LessonContent, [String])] = []
-    @State private var presentContinuePopup = false
-    @State private var presentResultStatus = false
-    @State private var presentCodeChallengeOutputView = false
+
+    @State private var quizAnswers: [(LessonContent, [String])] = []
+    @State private var challengeAnswers: [Int: String] = [:]
+
+    @State private var presentResult = false
+    @State private var presentQuizResultPopup = false
+    @State private var presentCodeCompiledPopup = false
 
     var buttonStatus: PrimaryButton.Status {
-        if resultDict.isEmpty { return .enabled }
-        return resultDict.map { $0.1.isEmpty }.contains(true) ? PrimaryButton.Status.disabled : PrimaryButton.Status.enabled
+        if quizAnswers.isEmpty { return .enabled }
+        return quizAnswers.map { $0.1.isEmpty }.contains(true) ? PrimaryButton.Status.disabled : PrimaryButton.Status.enabled
         return .enabled
     }
 
     var hasPassedThisLesson: Bool {
         guard let enabledPages = lessonCollection?.enabledPages,
-            let index = (enabledPages.firstIndex { $0.id == lesson.id }) else { return false }
+              let index = (enabledPages.firstIndex { $0.id == lesson.id }) else { return false }
         return index < enabledPages.count - 1
+    }
+
+    var challengeResults: [Int: Resolvable<ChallengeCompiledResult>] {
+        store.state.challengeResults
     }
 
     var body: some View {
@@ -42,11 +49,11 @@ struct LessonView: View {
                             LessonCodeView(code: code, pl: pl)
                         case .composeCodeQuiz(let text, let options, let winning):
                             QuizComposeCodeView(text: text, options: options, winning: winning, passed: hasPassedThisLesson) { options in
-                                modifyResultDict(lessonContent: lessonContent, result: options)
+                                modifyQuizAnswersDict(lessonContent: lessonContent, result: options)
                             }
                         case .chooseAnswerQuiz(let text, let options, let winning):
                             QuizSelectionView(text: text, options: options, winning: winning, passed: hasPassedThisLesson) { options in
-                                modifyResultDict(lessonContent: lessonContent, result: options)
+                                modifyQuizAnswersDict(lessonContent: lessonContent, result: options)
                             }
                         case .image(let image):
                             NetworkImage(viewModel:
@@ -63,7 +70,7 @@ struct LessonView: View {
                                 .padding(.horizontal, 20)
                         case .challenge(let id):
                             QuizChallengeView(id: id, onCodeChange: { code in
-                                modifyResultDict(lessonContent: lessonContent, result: [code])
+                                challengeAnswers[id] = code
                             })
                         default: EmptyView()
                         }
@@ -73,33 +80,38 @@ struct LessonView: View {
             }
             Spacer()
             ZStack {
-                if presentCodeChallengeOutputView {
-                    codeChallengeOutputView()
-                }
-                if presentContinuePopup, !presentCodeChallengeOutputView {
-                    continuePopup()
-                        .transition(.move(edge: .bottom))
+                if presentResult {
+                    if presentQuizResultPopup {
+                        continuePopup()
+                            .transition(.move(edge: .bottom))
+                    } else if presentCodeCompiledPopup {
+                        codeChallengeOutputView()
+                            .transition(.move(edge: .bottom))
+                    }
                 }
                 VStack {
                     Spacer()
                     Button("Continue") {
-                        if let challengeInformation = challengeInformation() {
-                            store.dispatch(UpdateChallengeProgress(challengeId: challengeInformation.0,
-                                                                   solution: challengeInformation.1,
+                        for challengeId in challengeAnswers.keys {
+                            store.dispatch(UpdateChallengeProgress(challengeId: challengeId,
+                                                                   solution: challengeAnswers[challengeId] ?? "",
                                                                    compile: true,
                                                                    programmingLanguage: .python, language: "en"
                                                                   ))
                         }
-                        if presentResultStatus, resultStatus() == "success" {
-                            store.dispatch(UpdateClassProgress(progress: lesson.id, classId: lessonCollection?.id ?? 0))
-                            onContinue()
-                        } else if !resultDict.isEmpty {
-                            withAnimation {
-                                presentResultStatus = true
-                                presentContinuePopup = true
+
+                        if !lessonHasSolvableContent || (presentResult && (presentQuizResultPopup || presentCodeCompiledPopup)) {
+                            if !hasPassedThisLesson {
+                                store.dispatch(UpdateClassProgress(progress: lesson.id, classId: lessonCollection?.id ?? 0))
                             }
-                        } else {
                             onContinue()
+                        } else {
+                            withAnimation {
+                                if !quizAnswers.isEmpty {
+                                    presentQuizResultPopup = true
+                                }
+                                presentResult = true
+                            }
                         }
                     }
                     .disabled(buttonStatus == .disabled)
@@ -112,46 +124,41 @@ struct LessonView: View {
             }
         }
         .onAppear {
-            setupResultDict()
+            setupQuizAnswersDict()
         }
         .padding(.top, 20)
-        .onChange(of: store.state.challengeResults) { newValue in
-            for item in resultDict {
-                switch item.0 {
-                case .challenge(let id):
-                    let testCases = newValue[id]?.value?.unitTests ?? []
-                    if (testCases.filter { $0.outcome == .passed }.count == testCases.count), !testCases.isEmpty {
-                        presentCodeChallengeOutputView = true
-                    }
-                default: break
+        .onChange(of: challengeResults) { newValue in
+            if !presentCodeCompiledPopup {
+                withAnimation {
+                    presentCodeCompiledPopup = true
                 }
             }
         }
     }
+}
 
-    private func setupResultDict() {
+extension LessonView {
+    private func setupQuizAnswersDict() {
         for lesson in lesson.content {
             switch lesson {
-            case .composeCodeQuiz, .chooseAnswerQuiz, .challenge:
-                resultDict.append((lesson, []))
+            case .composeCodeQuiz, .chooseAnswerQuiz:
+                quizAnswers.append((lesson, []))
             default: break
             }
         }
     }
 
-    private func modifyResultDict(lessonContent: LessonContent, result items: [String]) {
-        presentResultStatus = false
-        resultDict.removeAll(where: { $0.0 == lessonContent })
-        resultDict.append((lessonContent, items))
+    private func modifyQuizAnswersDict(lessonContent: LessonContent, result items: [String]) {
+        presentResult = false
+        quizAnswers.removeAll(where: { $0.0 == lessonContent })
+        quizAnswers.append((lessonContent, items))
     }
 
     private func continuePopup() -> some View {
         VStack {
-            if presentResultStatus {
-                Rectangle()
-                    .fill(Color(resultStatus() == "success" ? UIColor.CodeChallenge.lessonQuizGreen : UIColor.CodeChallenge.lessonQuizRed))
-                    .frame(height: 4)
-            }
+            Rectangle()
+                .fill(Color(quizesPassed ? UIColor.CodeChallenge.lessonQuizGreen : UIColor.CodeChallenge.lessonQuizRed))
+                .frame(height: 4)
             Spacer()
         }
         .frame(width: .screenWidth, height: 120)
@@ -161,9 +168,30 @@ struct LessonView: View {
         }
     }
 
+    private var quizesPassed: Bool {
+        var result = true
+        for item in quizAnswers {
+            switch item.0 {
+            case .chooseAnswerQuiz(_, _, let winning):
+                if winning.sorted() != item.1.sorted() {
+                    result = false
+                }
+            case .composeCodeQuiz(_, _, let winning):
+                if winning.sorted() != item.1.sorted() {
+                    result = false
+                }
+            default: continue
+            }
+        }
+        return result
+    }
+}
+
+
+extension LessonView {
     private func codeChallengeOutputView() -> some View {
         VStack {
-            Text("Successfully completed")
+            Text(codeCompileResult)
             Spacer()
         }
         .frame(width: .screenWidth, height: 120)
@@ -173,29 +201,32 @@ struct LessonView: View {
         }
     }
 
-    private func resultStatus() -> String {
-        for item in resultDict {
-            switch item.0 {
-            case .chooseAnswerQuiz(_, _, let winning):
-                return winning.sorted() == item.1.sorted() ? "success" : "fail"
-            case .composeCodeQuiz(_, _, let winning):
-                return winning.sorted() == item.1.sorted()  ? "success" : "fail"
-            case .challenge(let id):
-                return "running..."
-            default: continue
+    private var codeCompileResult: String {
+        for id in [4] {
+            if challengeResults[id]?.isLoading == true {
+                return "loading"
+            } else {
+                let testCases = challengeResults[id]?.value?.unitTests ?? []
+                if (testCases.filter { $0.outcome == .passed }.count == testCases.count), !testCases.isEmpty {
+                    return "success"
+                } else {
+                    return "fail"
+                }
             }
         }
         return "success"
     }
+}
 
-    private func challengeInformation() -> (Int, String)? {
-        for item in resultDict {
-            switch item.0 {
-            case .challenge(let id):
-                return (id, item.1.first ?? "")
+extension LessonView {
+    var lessonHasSolvableContent: Bool {
+        for item in lesson.content {
+            switch item {
+            case .challenge, .composeCodeQuiz, .chooseAnswerQuiz:
+                return true
             default: continue
             }
         }
-        return nil
+        return false
     }
 }

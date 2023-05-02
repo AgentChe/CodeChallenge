@@ -54,6 +54,8 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                                     withAnimation {
                                         selection += 1
                                     }
+                                } else {
+                                    presentationMode.wrappedValue.dismiss()
                                 }
                             })
                             .tag(lesson.id)

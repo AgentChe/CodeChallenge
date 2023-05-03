@@ -19,6 +19,7 @@ class LearnCoordinator {
 
     init(store: Store) {
         self.store = store
+        store.dispatch(GetHomeSections(programmingLanguage: .python))
         let learnView = LearnTabView { [weak self] element in
             self?.openLessonView(element: element)
         } onOpenPremium: { [weak self] in

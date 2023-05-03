@@ -59,8 +59,8 @@ final class RootCoordinator {
             store.dispatch(LoadCompletedChallenges())
         }
         let tabs = [
-            homeCoordinator.navigationController,
             learnCoordinator.navigationController,
+            homeCoordinator.navigationController,
             browseCoordinator.navigationController,
             buddiesCoordinator.navigationController,
             accountCoordinator.navigationController

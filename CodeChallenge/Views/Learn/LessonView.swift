@@ -47,6 +47,20 @@ struct LessonView: View {
         store.state.challengeResults
     }
 
+    var lessonCollections: [HomeElement] {
+        let sections = store.state.learnSections[.python]?.value?.contents ?? []
+        return sections
+            .reduce([HomeElement](), { partialResult, result in
+            partialResult + result.contents
+        })
+    }
+
+    var nextLessonCollectionId: Int? {
+        guard let currentIndex = (lessonCollections.firstIndex(where: { $0.id == lessonCollection?.id })) else { return nil }
+        let index = lessonCollections.index(after: currentIndex)
+        return lessonCollections[index].id
+    }
+
     var body: some View {
         VStack {
             ScrollView {
@@ -102,11 +116,11 @@ struct LessonView: View {
                 VStack {
                     Spacer()
                     Button("Continue") {
-                        if !lessonHasSolvableContent || (presentResult && (presentQuizResultPopup || (presentCodeCompiledPopup && codeCompileResult == "success"))) {
+                        if !lessonHasSolvableContent || (presentResult && ((presentQuizResultPopup && quizesPassed) || (presentCodeCompiledPopup && codeCompileResult == "success"))) {
                             if !hasPassedThisLesson {
                                 store.dispatch(UpdateClassProgress(progress: lesson.id, classId: lessonCollection?.id ?? 0))
-                                if lessonCollection?.pages.last?.id == lesson.id {
-                                    store.dispatch(UpdateLearningPathProgress(progress: 2))
+                                if lessonCollection?.pages.last?.id == lesson.id, let id = nextLessonCollectionId {
+                                    store.dispatch(UpdateLearningPathProgress(progress: id))
                                 }
                             }
                             onContinue()

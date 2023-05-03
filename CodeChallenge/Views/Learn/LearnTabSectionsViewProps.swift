@@ -16,15 +16,19 @@ extension LearnTabSectionsViewProps {
         store.state.programmingLanguage
     }
 
+    var learnSections: LearnSections? {
+        store.state.learnSections[programmingLanguage]?.value
+    }
+
     var isLoading: Bool {
         store.state.learnSections[programmingLanguage]?.isLoading == true
     }
 
     var sections: [HomeSection] {
-        store.state.learnSections[programmingLanguage]?.value?.contents ?? []
+        learnSections?.contents ?? []
     }
 
     var currentProgressId: Int {
-        store.state.learnSections[programmingLanguage]?.value?.currentProgress ?? 0
+        learnSections?.currentProgress ?? 0
     }
 }

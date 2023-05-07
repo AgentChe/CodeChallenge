@@ -19,7 +19,7 @@ class LearnCoordinator {
 
     init(store: Store) {
         self.store = store
-        store.dispatch(GetHomeSections(programmingLanguage: .python))
+        store.dispatch(GetLearnSections(programmingLanguage: .python))
         let learnView = LearnTabView { [weak self] element in
             self?.openLessonView(element: element)
         } onJumpSection: { [weak self] section in
@@ -40,13 +40,13 @@ class LearnCoordinator {
         navigationController.setViewControllers([controller], animated: false)
     }
 
-    private func openLessonView(element: HomeElement) {
-        let controller = UIHostingController(rootView: LessonCollectionView(homeElement: element).environmentObject(store))
+    private func openLessonView(element: LearnElement) {
+        let controller = UIHostingController(rootView: LessonCollectionView(learnElement: element).environmentObject(store))
         controller.modalPresentationStyle = .fullScreen
         navigationController.present(controller, animated: true)
     }
 
-    private func openChallengesView(for section: HomeSection) {
+    private func openChallengesView(for section: LearnSection) {
         let controller = UIHostingController(rootView: JumpHereContentsView(lessonCollection: section.lessonCollection).environmentObject(store))
         controller.modalPresentationStyle = .fullScreen
         navigationController.present(controller, animated: true)

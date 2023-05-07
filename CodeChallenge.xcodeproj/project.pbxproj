@@ -98,7 +98,7 @@
 		E085CFBA29B6A78F00BA1F16 /* LeaderboardViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFB929B6A78F00BA1F16 /* LeaderboardViewProps.swift */; };
 		E085CFBC29B6A7EA00BA1F16 /* LeaderboardUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFBB29B6A7EA00BA1F16 /* LeaderboardUser.swift */; };
 		E085CFBE29B6A8AC00BA1F16 /* LeaderboardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFBD29B6A8AC00BA1F16 /* LeaderboardService.swift */; };
-		E0882E0B29E5EBB500E5F2C1 /* HomeElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0882E0A29E5EBB500E5F2C1 /* HomeElement.swift */; };
+		E0882E0B29E5EBB500E5F2C1 /* LearnElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0882E0A29E5EBB500E5F2C1 /* LearnElement.swift */; };
 		E08B445828B2E2A3006BC50A /* EnvironmentAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */; };
 		E08B445C28B2E963006BC50A /* BrowsedChallengesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */; };
 		E08B445E28B2E988006BC50A /* BrowsedChallengesViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */; };
@@ -320,7 +320,7 @@
 		E085CFB929B6A78F00BA1F16 /* LeaderboardViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewProps.swift; sourceTree = "<group>"; };
 		E085CFBB29B6A7EA00BA1F16 /* LeaderboardUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardUser.swift; sourceTree = "<group>"; };
 		E085CFBD29B6A8AC00BA1F16 /* LeaderboardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardService.swift; sourceTree = "<group>"; };
-		E0882E0A29E5EBB500E5F2C1 /* HomeElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeElement.swift; sourceTree = "<group>"; };
+		E0882E0A29E5EBB500E5F2C1 /* LearnElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnElement.swift; sourceTree = "<group>"; };
 		E08B445728B2E2A3006BC50A /* EnvironmentAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentAdditions.swift; sourceTree = "<group>"; };
 		E08B445B28B2E963006BC50A /* BrowsedChallengesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsedChallengesView.swift; sourceTree = "<group>"; };
 		E08B445D28B2E988006BC50A /* BrowsedChallengesViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowsedChallengesViewProps.swift; sourceTree = "<group>"; };
@@ -832,7 +832,7 @@
 				E085CFBB29B6A7EA00BA1F16 /* LeaderboardUser.swift */,
 				E064949329C64DC600AE3B6B /* ChallengeFriend.swift */,
 				E0667AEB29DA2CD900C9CAF1 /* Lesson.swift */,
-				E0882E0A29E5EBB500E5F2C1 /* HomeElement.swift */,
+				E0882E0A29E5EBB500E5F2C1 /* LearnElement.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1235,7 +1235,7 @@
 				E0359DD6299AFAAB00E8AF4F /* ChallengeDetails.swift in Sources */,
 				E0EBB7EE288B207700DE7C53 /* ImageService.swift in Sources */,
 				E064949629C6634C00AE3B6B /* ChallengeFriendView.swift in Sources */,
-				E0882E0B29E5EBB500E5F2C1 /* HomeElement.swift in Sources */,
+				E0882E0B29E5EBB500E5F2C1 /* LearnElement.swift in Sources */,
 				E0A69CCE292AF74F009D5C0C /* NewLabelView.swift in Sources */,
 				E08D6F7B28C67EAB006991EB /* ImagePicker.swift in Sources */,
 				E0359DCD299AF8CF00E8AF4F /* String+RFC.swift in Sources */,

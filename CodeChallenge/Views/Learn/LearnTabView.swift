@@ -10,8 +10,8 @@ import SwiftUI
 
 struct LearnTabView: View, LearnTabViewProps {
     @EnvironmentObject var store: Store
-    let onElementTap: (HomeElement) -> Void
-    let onJumpSection: (HomeSection) -> Void
+    let onElementTap: (LearnElement) -> Void
+    let onJumpSection: (LearnSection) -> Void
     @State private var showProgrammingLanguagePopup = false
     let onOpenPremium: () -> Void
 
@@ -81,6 +81,7 @@ struct LearnTabView: View, LearnTabViewProps {
         }
         .onChange(of: programmingLanguage) { newValue in
             store.dispatch(LoadHomeSections(language: newValue))
+            store.dispatch(GetLearnSections(programmingLanguage: newValue))
         }
     }
 

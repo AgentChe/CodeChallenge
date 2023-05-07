@@ -24,10 +24,10 @@ struct JumpHereContentsView: View {
         lessonCollection?.pages ?? []
     }
 
-    var lessonCollections: [HomeElement] {
-        let sections = store.state.learnSections[.python]?.value?.contents ?? []
+    var lessonCollections: [LearnElement] {
+        let sections = store.state.learnSections[store.state.programmingLanguage]?.value?.contents ?? []
         return sections
-            .reduce([HomeElement](), { partialResult, result in
+            .reduce([LearnElement](), { partialResult, result in
             partialResult + result.contents
         })
     }

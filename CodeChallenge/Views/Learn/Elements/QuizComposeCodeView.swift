@@ -19,16 +19,32 @@ struct QuizComposeCodeView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(text)
-                .padding(.horizontal, 20)
+                .padding([.horizontal, .bottom], 20)
                 .font(.regular(size: 18))
                 .multilineTextAlignment(.leading)
 
-            OptionsView(options: selectedOptions, onHeightChange: { _ in }, onOptionTap: { keyword in
-                selectedOptions = selectedOptions.filter { $0 != keyword }
-                onSelect(selectedOptions)
-            })
-            .background(.clear)
-            .frame(height: .screenHeight/4)
+            ZStack {
+                VStack {
+                    ForEach(0..<3) { _ in
+                        VStack {
+                            Spacer()
+                                .frame(height: 36)
+                            Rectangle()
+                                .fill(Color(UIColor.darkGray))
+                                .frame(height: 1)
+                        }
+                        .padding(.horizontal, 20)
+                    }
+
+                    Spacer()
+                }
+                OptionsView(options: selectedOptions, onHeightChange: { _ in }, onOptionTap: { keyword in
+                    selectedOptions = selectedOptions.filter { $0 != keyword }
+                    onSelect(selectedOptions)
+                })
+                .background(.clear)
+                .frame(height: .screenHeight/4)
+            }
 
             OptionsView(options: options.filter { !selectedOptions.contains($0) }, onHeightChange: { _ in }, onOptionTap: { keyword in
                 selectedOptions = selectedOptions + [keyword]
@@ -52,7 +68,7 @@ fileprivate struct OptionsView: UIViewRepresentable {
     let onOptionTap: (String) -> Void
 
     func makeUIView(context: Context) -> some UIView {
-        let view = KeywordsView(keywords: options)
+        let view = KeywordsView(keywords: options, cellIdentifier: "lessonCell")
         view.onHeightChange = onHeightChange
         view.onKeywordTap = onOptionTap
         view.backgroundColor = .clear

@@ -34,15 +34,17 @@ class KeywordsView: UIView {
     private let collectionView: UICollectionView
     private let collectionViewHeightConstraint: NSLayoutConstraint
     private var keywords: [String] = []
+    let cellIdentifier: String
     var onHeightChange: ((Double) -> Void)?
     var onKeywordTap: ((String) -> Void)?
 
-    init(keywords: [String]) {
+    init(keywords: [String], cellIdentifier: String) {
         self.keywords = keywords
         self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         self.collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionViewHeightConstraint = collectionView.heightAnchor.constraint(equalToConstant: 100)
         collectionViewHeightConstraint.isActive = true
+        self.cellIdentifier = cellIdentifier
         super.init(frame: .zero)
         self.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -52,6 +54,7 @@ class KeywordsView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
         collectionView.register(KeywordsCollectionCell.self, forCellWithReuseIdentifier: "default")
+        collectionView.register(LessonQuizWordView.self, forCellWithReuseIdentifier: "lessonCell")
         collectionView.dataSource = self
         collectionView.delegate = self
         backgroundColor = .clear
@@ -80,10 +83,19 @@ extension KeywordsView: UICollectionViewDataSource, UICollectionViewDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "default", for: indexPath) as? KeywordsCollectionCell
-        cell?.label.text = keywords[indexPath.item]
-        return cell!
+        switch cellIdentifier {
+        case "default":
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: cellIdentifier, for: indexPath) as? KeywordsCollectionCell
+            cell?.label.text = keywords[indexPath.item]
+            return cell!
+        default:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: cellIdentifier, for: indexPath) as? LessonQuizWordView
+            cell?.label.text = keywords[indexPath.item]
+            return cell!
+        }
+
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

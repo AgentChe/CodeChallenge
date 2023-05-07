@@ -24,7 +24,7 @@ extension LearnTabSectionsViewProps {
         store.state.learnSections[programmingLanguage]?.isLoading == true
     }
 
-    var sections: [HomeSection] {
+    var sections: [LearnSection] {
         learnSections?.contents ?? []
     }
 

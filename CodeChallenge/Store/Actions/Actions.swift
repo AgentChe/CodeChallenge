@@ -63,6 +63,7 @@ struct Login: ThunkAction {
                     dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     dispatcher.dispatch(AddStreakIfNeeded())
                     dispatcher.dispatch(LoadHomeSections())
+                    dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
                     dispatcher.dispatch(Action.loadUser(user))
@@ -160,6 +161,8 @@ struct GuestAuth: ThunkAction {
                     dispatcher.dispatch(LoadCompletedChallenges())
                     if reloadHome {
                         dispatcher.dispatch(LoadHomeSections())
+                        dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
+
                     }
                 }
             }
@@ -724,13 +727,15 @@ struct AcceptFriendChallenge: ThunkAction {
     }
 }
 
-struct GetHomeSections: ThunkAction {
+struct GetLearnSections: ThunkAction {
     let programmingLanguage: ProgrammingLanguage
 
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
 
-        dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
+        if dispatcher.state.learnSections[programmingLanguage]?.isSuccess == false {
+            dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
+        }
         dispatcher.services.challengesService
             .getLearnSections(programmingLanguage: programmingLanguage, session: session)
             .asResolvable()
@@ -746,13 +751,11 @@ struct UpdateLearningPathProgress: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
 
-//        dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
         dispatcher.services.challengesService
             .updatePathProgress(session: session, progress: progress, programmingLanguage: dispatcher.state.programmingLanguage)
             .asResolvable()
             .ephemeralSink { result in
-                dispatcher.dispatch(GetHomeSections(programmingLanguage: dispatcher.state.programmingLanguage))
-//                dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, result))
+                dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
             }
     }
 }
@@ -764,13 +767,11 @@ struct UpdateClassProgress: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
 
-//        dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
         dispatcher.services.challengesService
             .updateClassProgress(session: session, classId: classId, progress: progress)
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(GetLessonCollection(id: classId))
-//                dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, result))
             }
     }
 }
@@ -781,7 +782,10 @@ struct GetLessonCollection: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
 
-//        dispatcher.dispatch(Action.updateLessonCollection(id, .loading))
+        if dispatcher.state.lessons[id]?.isSuccess == false {
+            dispatcher.dispatch(Action.updateLessonCollection(id, .loading))
+        }
+
         dispatcher.services.challengesService
             .getLessonCollection(id: id, session: session)
             .asResolvable()

@@ -18,6 +18,18 @@ struct Lesson: Decodable, Equatable {
     let content: [LessonContent]
 }
 
+extension Lesson {
+    var challengeIds: [Int] {
+        content.reduce([Int](), { partialResult, result in
+            switch result {
+            case .challenge(let id):
+                return partialResult + [id]
+            default: return partialResult
+            }
+        })
+    }
+}
+
 extension LessonCollection {
     var enabledPages: [Lesson] {
         getEnabledPages(basedOn: currentProgress)

@@ -11,15 +11,15 @@ import SwiftUI
 struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     @EnvironmentObject var store: Store
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
-    let onElementTap: (HomeElement) -> Void
-    let onJumpSection: (HomeSection) -> Void
-
-    var programmingLanguage: ProgrammingLanguage {
-        store.state.programmingLanguage
-    }
+    let onElementTap: (LearnElement) -> Void
+    let onJumpSection: (LearnSection) -> Void
 
     var body: some View {
-        content
+        if isLoading {
+            SkeletonView()
+        } else {
+            content
+        }
     }
 
     private var content: some View {
@@ -110,7 +110,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
         .padding(.horizontal, 25)
     }
 
-    private func elementView(_ element: HomeElement, _ position: Int, _ count: Int, fromLeft: Bool, sectionOffset: Int) -> some View {
+    private func elementView(_ element: LearnElement, _ position: Int, _ count: Int, fromLeft: Bool, sectionOffset: Int) -> some View {
         return HStack {
             Spacer()
                 .frame(width: offset(position, count, fromLeft: fromLeft))
@@ -155,7 +155,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     }
 
     @ViewBuilder
-    private func image(element: HomeElement, position: Int, onTapGesture: @escaping () -> Void) -> some View {
+    private func image(element: LearnElement, position: Int, onTapGesture: @escaping () -> Void) -> some View {
         if element.id == currentProgressId {
             ZStack {
                 Ellipse()
@@ -191,6 +191,90 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                         .resizable()
                         .frame(width: 70, height: 65)
                         .padding(12)
+                }
+            }
+        }
+    }
+}
+
+fileprivate struct SkeletonView: View {
+    let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
+
+    var body: some View {
+        LazyVGrid(
+            columns: gridItemLayout,
+            alignment: .leading,
+            spacing: 19,
+            pinnedViews: []) {
+                Text("Learning Python")
+                    .font(.pageNameH1)
+                    .foregroundColor(.white)
+                    .padding(.leading, 16)
+                Section(
+                    header:
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("section.title")
+                                .font(.h3)
+                                .bold()
+                                .padding(.bottom, 6)
+                            HStack {
+                                Text("section.description longer")
+                                    .font(.regular(size: 18))
+                                    .foregroundColor(.CodeChallenge.white)
+                                Spacer()
+                            }
+                        }
+                        .padding(.vertical, 20)
+                        .padding(.horizontal, 16)
+                        .background(.CodeChallenge.darkBlue)
+                ) {
+
+                    ForEach(0..<5) { element in
+                        elementView(element, 5, fromLeft: true)
+                    }
+                }
+            }
+            .foregroundColor(.white)
+            .padding(.top, 16)
+            .redacted(reason: .placeholder)
+    }
+
+    private func elementView(_ position: Int, _ count: Int, fromLeft: Bool) -> some View {
+        return HStack {
+            Spacer()
+                .frame(width: offset(position, count, fromLeft: fromLeft))
+            VStack {
+                Image("learn_disabled")
+                    .resizable()
+                    .frame(width: 70, height: 65)
+                    .padding(12)
+                Text("element.title")
+                    .font(.bodyText)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(width: .screenWidth/2)
+            Spacer()
+        }
+        .padding(.vertical, 10)
+    }
+
+    private func offset(_ position: Int, _ count: Int, fromLeft: Bool) -> CGFloat {
+        let middle = .screenWidth/4
+        let delta = .screenWidth/CGFloat(count * 2)
+        if position == 0 {
+            return middle
+        } else {
+            if !fromLeft {
+                if CGFloat(position - 1) < ceil(CGFloat((count - 1)/2)) {
+                    return middle - CGFloat(position) * delta
+                } else {
+                    return middle - CGFloat((count - position)) * delta
+                }
+            } else {
+                if CGFloat(position - 1) < ceil(CGFloat((count - 1)/2)) {
+                    return middle + CGFloat(position) * delta
+                } else {
+                    return middle + CGFloat((count - position)) * delta
                 }
             }
         }

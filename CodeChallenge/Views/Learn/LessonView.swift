@@ -14,16 +14,6 @@ struct LessonView: View {
     let lessonCollection: LessonCollection?
     let onContinue: (_ updateProgresses: Bool) -> Void
 
-    var challengeIds: [Int] {
-        lesson.content.reduce([Int](), { partialResult, result in
-            switch result {
-            case .challenge(let id):
-                return partialResult + [id]
-            default: return partialResult
-            }
-        })
-    }
-
     @State private var quizAnswers: [(LessonContent, [String])] = []
     @State private var challengeAnswers: [Int: String] = [:]
 
@@ -102,14 +92,14 @@ struct LessonView: View {
                 VStack {
                     Spacer()
                     Button("Continue") {
-                        if !lessonHasSolvableContent || (presentResult && ((presentQuizResultPopup && quizesPassed) || (presentCodeCompiledPopup && codeCompileResult == "success"))) {
+                        if !lessonHasSolvableContent || (presentResult && ((presentQuizResultPopup && quizesPassed) || (presentCodeCompiledPopup && codeCompileResult.0 == "successful!"))) {
                             onContinue(!hasPassedThisLesson)
                         } else {
                             for challengeId in challengeAnswers.keys {
                                 store.dispatch(UpdateChallengeProgress(challengeId: challengeId,
                                                                        solution: challengeAnswers[challengeId] ?? "",
                                                                        compile: true,
-                                                                       programmingLanguage: .python, language: "en"
+                                                                       programmingLanguage: store.state.programmingLanguage, language: "en"
                                                                       ))
                             }
 
@@ -197,31 +187,40 @@ extension LessonView {
 
 extension LessonView {
     private func codeChallengeOutputView() -> some View {
-        VStack {
-            Text(codeCompileResult)
+        VStack(alignment: .leading) {
+            Spacer()
+                .frame(height: 12)
+            HStack {
+                Text(codeCompileResult.0.capitalized)
+                    .foregroundColor(codeCompileResult.1)
+                    .multilineTextAlignment(.leading)
+                    .font(.h5)
+                Spacer()
+            }
+            .padding(.leading, 20)
             Spacer()
         }
         .frame(width: .screenWidth, height: 120)
         .background {
-            RoundedCornersShape(corners: [.topRight, .topLeft], radius: 10)
+            Rectangle()
                 .fill(Color(UIColor.CodeChallenge.gray1))
         }
     }
 
-    private var codeCompileResult: String {
-        for id in challengeIds {
+    private var codeCompileResult: (String, Color) {
+        for id in lesson.challengeIds {
             if challengeResults[id]?.isLoading == true {
-                return "loading"
+                return ("compiling...", Color(UIColor.white))
             } else {
                 let testCases = challengeResults[id]?.value?.unitTests ?? []
                 if (testCases.filter { $0.outcome == .passed }.count == testCases.count), !testCases.isEmpty {
-                    return "success"
+                    return ("successful!", Color(UIColor.CodeChallenge.lessonQuizGreen))
                 } else {
-                    return "fail"
+                    return ("compiler failed!", Color(UIColor.CodeChallenge.lessonQuizRed))
                 }
             }
         }
-        return "success"
+        return ("success", Color(UIColor.CodeChallenge.lessonQuizGreen))
     }
 }
 

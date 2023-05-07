@@ -106,6 +106,7 @@ struct HomeView: View, HomeViewProps {
         }
         .onChange(of: programmingLanguage) { newValue in
             store.dispatch(LoadHomeSections(language: newValue))
+            store.dispatch(GetLearnSections(programmingLanguage: newValue))
         }
         .onChange(of: searchFieldVM.text) { newValue in
             store.dispatch(UpdateSearchQuery(query: newValue))

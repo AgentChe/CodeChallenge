@@ -15,7 +15,7 @@ struct KeywordsSwiftUIView: View {
     @State private var keywordsHeight: Double = 100
 
     var body: some View {
-        KeywordsVieww(keywords: keywords, onHeightChange: { height in
+        KeywordsVieww(keywords: keywords, identifier: "default", onHeightChange: { height in
             keywordsHeight = height
         }, onKeywordTap: onKeywordTap)
         .background(.clear)
@@ -25,11 +25,12 @@ struct KeywordsSwiftUIView: View {
 
 fileprivate struct KeywordsVieww: UIViewRepresentable {
     let keywords: [String]
+    let identifier: String
     let onHeightChange: ((Double) -> Void)?
     let onKeywordTap: (String) -> Void
 
     func makeUIView(context: Context) -> some UIView {
-        let view = KeywordsView(keywords: keywords)
+        let view = KeywordsView(keywords: keywords, cellIdentifier: identifier)
         view.onHeightChange = onHeightChange
         view.onKeywordTap = onKeywordTap
         view.backgroundColor = .clear

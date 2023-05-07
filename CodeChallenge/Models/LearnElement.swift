@@ -1,5 +1,5 @@
 //
-//  HomeElement.swift
+//  LearnElement.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 11/04/2023.
@@ -9,7 +9,7 @@ import Foundation
 
 struct LearnSections: Decodable {
     let currentProgress: Int
-    let contents: [HomeSection]
+    let contents: [LearnSection]
 }
 
 extension LearnSections {
@@ -23,13 +23,13 @@ extension LearnSections {
     }
 }
 
-struct HomeSection: Decodable, Equatable {
+struct LearnSection: Decodable, Equatable {
     let title: String
     let description: String
-    let contents: [HomeElement]
+    let contents: [LearnElement]
 }
 
-extension HomeSection {
+extension LearnSection {
     var lessonCollection: LessonCollection {
         return LessonCollection(
             id: contents.last?.id ?? 0,
@@ -39,7 +39,7 @@ extension HomeSection {
     }
 }
 
-struct HomeElement: Decodable, Equatable {
+struct LearnElement: Decodable, Equatable {
     let id: Int
     let title: String
     let progress: CGFloat

@@ -22,6 +22,9 @@ class LearnCoordinator {
         store.dispatch(GetHomeSections(programmingLanguage: .python))
         let learnView = LearnTabView { [weak self] element in
             self?.openLessonView(element: element)
+        } onJumpSection: { [weak self] section in
+            guard let self = self else { return }
+            self.openChallengesView(for: section)
         } onOpenPremium: { [weak self] in
             guard let self = self else { return }
             self.presentPremiumScreen(from: self.navigationController)
@@ -39,6 +42,12 @@ class LearnCoordinator {
 
     private func openLessonView(element: HomeElement) {
         let controller = UIHostingController(rootView: LessonCollectionView(homeElement: element).environmentObject(store))
+        controller.modalPresentationStyle = .fullScreen
+        navigationController.present(controller, animated: true)
+    }
+
+    private func openChallengesView(for section: HomeSection) {
+        let controller = UIHostingController(rootView: JumpHereContentsView(lessonCollection: section.lessonCollection).environmentObject(store))
         controller.modalPresentationStyle = .fullScreen
         navigationController.present(controller, animated: true)
     }

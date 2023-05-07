@@ -82,5 +82,53 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "05C2AAF4-71B1-42D4-8CAD-54778FCED378"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CodeChallenge/Views/Learn/JumpHereContentsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "05C2AAF4-71B1-42D4-8CAD-54778FCED378 - 4dbcdaacd0b36b43"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool) -&gt; () in closure #1 (Swift.Int, Codehub_Staging.Lesson) -&gt; &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;(offset: Swift.Int, element: Codehub_Staging.Lesson)&gt;, Swift.Int, &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt; in closure #2 () -&gt; SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.Group&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;&gt;)&gt; in Codehub_Staging.JumpHereContentsView.body.getter : some"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Learn/JumpHereContentsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "1400">
+               </Location>
+               <Location
+                  uuid = "05C2AAF4-71B1-42D4-8CAD-54778FCED378 - 4dbcdaacd0b36b43"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Bool) -&gt; () in closure #1 (Swift.Int, Codehub_Staging.Lesson) -&gt; &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;(offset: Swift.Int, element: Codehub_Staging.Lesson)&gt;, Swift.Int, &lt;&lt;opaque return type of SwiftUI.View.tag&lt;&#x3c4;_0_0 where &#x3c4;_1_0: Swift.Hashable&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0&gt; in closure #2 () -&gt; SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.frame(width: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, height: Swift.Optional&lt;CoreGraphics.CGFloat&gt;, alignment: SwiftUI.Alignment) -&gt; some&gt;&gt;.0)&gt;&gt;, SwiftUI.Group&lt;SwiftUI._ConditionalContent&lt;&lt;&lt;opaque return type of SwiftUI.View.tabViewStyle&lt;&#x3c4;_0_0 where &#x3c4;_1_0: SwiftUI.TabViewStyle&gt;(&#x3c4;_1_0) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;&gt;)&gt; in Codehub_Staging.JumpHereContentsView.body.getter : some"
+                  moduleName = "Codehub Staging"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tome/Documents/xcode%20projects/CodeChallenge/CodeChallenge/Views/Learn/JumpHereContentsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82"
+                  offsetFromSymbolStart = "1964">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

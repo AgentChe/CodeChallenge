@@ -55,7 +55,7 @@ struct QuizChallengeView: View {
                 .frame(width: .screenWidth - 40)
 
             SimpleCodePlaygroundView(code: $displayCode, onCodeUpdate: { newValue in
-                onCodeChange(newValue ?? "")
+                onCodeChange(newValue)
             })
                 .frame(height: 200)
                 .disabled(isLoading)

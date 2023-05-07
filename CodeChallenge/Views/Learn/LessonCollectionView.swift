@@ -27,6 +27,20 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
         lessonCollection?.pages ?? []
     }
 
+    var lessonCollections: [HomeElement] {
+        let sections = store.state.learnSections[.python]?.value?.contents ?? []
+        return sections
+            .reduce([HomeElement](), { partialResult, result in
+            partialResult + result.contents
+        })
+    }
+
+    var nextLessonCollectionId: Int? {
+        guard let currentIndex = (lessonCollections.firstIndex(where: { $0.id == lessonCollection?.id })) else { return nil }
+        let index = lessonCollections.index(after: currentIndex)
+        return lessonCollections[index].id
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 20) {
@@ -58,7 +72,15 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                 if let collection = lessonCollection {
                     TabView(selection: $selection, content: {
                         ForEach(Array(enabledPages.enumerated()), id: \.offset) { (index, lesson) in
-                            LessonView(lesson: lesson, lessonCollection: lessonCollection, onContinue: {
+                            LessonView(lesson: lesson, lessonCollection: lessonCollection, onContinue: { updateProgresses in
+                                if updateProgresses {
+                                    store.dispatch(UpdateClassProgress(progress: lesson.id, classId: collection.id))
+                                    if collection.pages.last?.id == lesson.id, let id = nextLessonCollectionId {
+                                        store.dispatch(UpdateLearningPathProgress(progress: id))
+                                    } else {
+                                        store.dispatch(GetHomeSections(programmingLanguage: .python))
+                                    }
+                                }
                                 if selection < pages.count {
 //                                    withAnimation {
 //                                        selection += 1
@@ -102,7 +124,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
 
     private func loadChallengeDetails() {
         guard !challengesLoaded else { return }
-        let contents = enabledPages.reduce([LessonContent]()) { partialResult, lesson in
+        let contents = pages.reduce([LessonContent]()) { partialResult, lesson in
             return partialResult + lesson.content
         }
         for content in contents {

@@ -12,7 +12,7 @@ struct LessonView: View {
     @EnvironmentObject var store: Store
     let lesson: Lesson
     let lessonCollection: LessonCollection?
-    let onContinue: () -> Void
+    let onContinue: (_ updateProgresses: Bool) -> Void
 
     var challengeIds: [Int] {
         lesson.content.reduce([Int](), { partialResult, result in
@@ -45,20 +45,6 @@ struct LessonView: View {
 
     var challengeResults: [Int: Resolvable<ChallengeCompiledResult>] {
         store.state.challengeResults
-    }
-
-    var lessonCollections: [HomeElement] {
-        let sections = store.state.learnSections[.python]?.value?.contents ?? []
-        return sections
-            .reduce([HomeElement](), { partialResult, result in
-            partialResult + result.contents
-        })
-    }
-
-    var nextLessonCollectionId: Int? {
-        guard let currentIndex = (lessonCollections.firstIndex(where: { $0.id == lessonCollection?.id })) else { return nil }
-        let index = lessonCollections.index(after: currentIndex)
-        return lessonCollections[index].id
     }
 
     var body: some View {
@@ -117,13 +103,7 @@ struct LessonView: View {
                     Spacer()
                     Button("Continue") {
                         if !lessonHasSolvableContent || (presentResult && ((presentQuizResultPopup && quizesPassed) || (presentCodeCompiledPopup && codeCompileResult == "success"))) {
-                            if !hasPassedThisLesson {
-                                store.dispatch(UpdateClassProgress(progress: lesson.id, classId: lessonCollection?.id ?? 0))
-                                if lessonCollection?.pages.last?.id == lesson.id, let id = nextLessonCollectionId {
-                                    store.dispatch(UpdateLearningPathProgress(progress: id))
-                                }
-                            }
-                            onContinue()
+                            onContinue(!hasPassedThisLesson)
                         } else {
                             for challengeId in challengeAnswers.keys {
                                 store.dispatch(UpdateChallengeProgress(challengeId: challengeId,

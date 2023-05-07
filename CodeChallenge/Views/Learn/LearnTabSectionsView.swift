@@ -12,6 +12,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     @EnvironmentObject var store: Store
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     let onElementTap: (HomeElement) -> Void
+    let onJumpSection: (HomeSection) -> Void
 
     var programmingLanguage: ProgrammingLanguage {
         store.state.programmingLanguage
@@ -53,7 +54,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                         ) {
 
                             ForEach(Array(section.contents.enumerated()), id: \.element.id) { (offset, element) in
-                                elementView(element, offset, section.contents.count, fromLeft: sectionOffset % 2 == 0)
+                                elementView(element, offset, section.contents.count, fromLeft: sectionOffset % 2 == 0, sectionOffset: sectionOffset)
                                     .id(element.id)
                             }
                         }
@@ -109,20 +110,23 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
         .padding(.horizontal, 25)
     }
 
-    private func elementView(_ element: HomeElement, _ position: Int, _ count: Int, fromLeft: Bool) -> some View {
+    private func elementView(_ element: HomeElement, _ position: Int, _ count: Int, fromLeft: Bool, sectionOffset: Int) -> some View {
         return HStack {
             Spacer()
                 .frame(width: offset(position, count, fromLeft: fromLeft))
             VStack {
-                image(element: element, position: position)
+                image(element: element, position: position) {
+                    if element.id != currentProgressId && position == 0 && learnSections?.passedLessonIds.contains(element.id) == false {
+                        onJumpSection(sections[sectionOffset - 1])
+                    } else {
+                        onElementTap(element)
+                    }
+                }
                 Text(element.title)
                     .font(.bodyText)
                     .multilineTextAlignment(.center)
             }
             .frame(width: .screenWidth/2)
-            .onTapGesture(perform: {
-                onElementTap(element)
-            })
             Spacer()
         }
         .padding(.vertical, 10)
@@ -151,14 +155,14 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     }
 
     @ViewBuilder
-    private func image(element: HomeElement, position: Int) -> some View {
+    private func image(element: HomeElement, position: Int, onTapGesture: @escaping () -> Void) -> some View {
         if element.id == currentProgressId {
             ZStack {
                 Ellipse()
                     .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
                     .frame(width: 95, height: 86)
                 Ellipse()
-                    .trim(from: 0, to: CGFloat(element.passedIds.count)/CGFloat(element.allIds.count))
+                    .trim(from: 0, to: CGFloat(element.progress)/CGFloat(100))
                     .stroke(Color(UIColor.CodeChallenge.lessonQuizGreen), lineWidth: 8)
                     .frame(width: 86, height: 95)
                     .rotationEffect(.degrees(90))
@@ -166,6 +170,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .resizable()
                     .frame(width: 70, height: 65)
                     .padding(12)
+                    .onTapGesture(perform: onTapGesture)
             }
         } else {
             if learnSections?.passedLessonIds.contains(element.id) == true {
@@ -173,12 +178,14 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .resizable()
                     .frame(width: 70, height: 65)
                     .padding(12)
+                    .onTapGesture(perform: onTapGesture)
             } else {
                 if position == 0 {
                     Image("learn_jump")
                         .resizable()
                         .frame(width: 70, height: 65)
                         .padding(12)
+                        .onTapGesture(perform: onTapGesture)
                 } else {
                     Image("learn_disabled")
                         .resizable()

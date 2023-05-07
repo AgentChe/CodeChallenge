@@ -29,20 +29,20 @@ struct HomeSection: Decodable, Equatable {
     let contents: [HomeElement]
 }
 
+extension HomeSection {
+    var lessonCollection: LessonCollection {
+        return LessonCollection(
+            id: contents.last?.id ?? 0,
+            currentProgress: 0,
+            pages: contents.compactMap { $0.challengeId }.enumerated().map { Lesson(id: $0.offset, content: [.challenge($0.element)]) }
+        )
+    }
+}
+
 struct HomeElement: Decodable, Equatable {
     let id: Int
     let title: String
-    let pages: [Lesson]
+    let progress: CGFloat
+    let challengeId: Int?
     let icon: String?
-}
-
-extension HomeElement {
-    var allIds: [Int] {
-        return pages.reduce([Int](), { partialResult, result in
-            partialResult + [result.id]
-        })
-    }
-    var passedIds: [Int] {
-        return allIds.prefix(upTo: (allIds.firstIndex { $0 == 9 } ?? 0)).map { $0 }
-    }
 }

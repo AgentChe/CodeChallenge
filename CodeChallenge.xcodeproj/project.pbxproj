@@ -115,6 +115,7 @@
 		E099936628C155D500E12E36 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E099936528C155D500E12E36 /* Lottie */; };
 		E099936928C1563700E12E36 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = E099936828C1563700E12E36 /* SVGKit */; };
 		E099936B28C1563700E12E36 /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E099936A28C1563700E12E36 /* SVGKitSwift */; };
+		E09B15642A031FA0002627EE /* JumpHereContentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09B15632A031FA0002627EE /* JumpHereContentsView.swift */; };
 		E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E09FA68028C37F1100D3349D /* SettingsViewProps.swift */; };
 		E0A0D7D9286E575F00113316 /* CodeChallengeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A0D7D8286E575F00113316 /* CodeChallengeTests.swift */; };
 		E0A619D329104D73004EDD41 /* MaintenanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A619D229104D73004EDD41 /* MaintenanceView.swift */; };
@@ -333,6 +334,7 @@
 		E096DF202871BEA8008A2A98 /* DoodledView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoodledView.swift; sourceTree = "<group>"; };
 		E096DF222871BF1E008A2A98 /* LayoutUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayoutUtilities.swift; sourceTree = "<group>"; };
 		E096DF26287210AE008A2A98 /* LabelledField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelledField.swift; sourceTree = "<group>"; };
+		E09B15632A031FA0002627EE /* JumpHereContentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumpHereContentsView.swift; sourceTree = "<group>"; };
 		E09FA68028C37F1100D3349D /* SettingsViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewProps.swift; sourceTree = "<group>"; };
 		E0A0D7D6286E575F00113316 /* CodeChallengeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeChallengeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0A0D7D8286E575F00113316 /* CodeChallengeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTests.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				E0AB516129EC8662000DD0DD /* LearnTabViewProps.swift */,
 				E0A64D1529DC6FB500A71575 /* LearnTabSectionsView.swift */,
 				E0A64D1729DC6FC000A71575 /* LearnTabSectionsViewProps.swift */,
+				E09B15632A031FA0002627EE /* JumpHereContentsView.swift */,
 			);
 			path = Learn;
 			sourceTree = "<group>";
@@ -1139,6 +1142,7 @@
 				E00D5BAE2943FFB80086A2BB /* Formatters.swift in Sources */,
 				E0BD3238285A7181000C37A9 /* CodeChallenge.xcdatamodeld in Sources */,
 				E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */,
+				E09B15642A031FA0002627EE /* JumpHereContentsView.swift in Sources */,
 				E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */,
 				E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */,
 				E085CFAD29B40FD900BA1F16 /* ConceptReviewService.swift in Sources */,

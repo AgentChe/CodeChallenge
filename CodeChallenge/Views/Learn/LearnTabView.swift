@@ -11,6 +11,7 @@ import SwiftUI
 struct LearnTabView: View, LearnTabViewProps {
     @EnvironmentObject var store: Store
     let onElementTap: (HomeElement) -> Void
+    let onJumpSection: (HomeSection) -> Void
     @State private var showProgrammingLanguagePopup = false
     let onOpenPremium: () -> Void
 
@@ -18,7 +19,7 @@ struct LearnTabView: View, LearnTabViewProps {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView(showsIndicators: false) {
-                    LearnTabSectionsView(onElementTap: onElementTap)
+                    LearnTabSectionsView(onElementTap: onElementTap, onJumpSection: onJumpSection)
                 }
                 .padding(.top, 10)
             }

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PremiumView: View, PremiumViewProps {
     @EnvironmentObject var store: Store
+    @Environment(\.presentationMode) var presentationMode
     @State var showOverlay = false
     var onShowAllPlans: ([AppStorePayment]) -> Void
     @State private var showMessage: String?
@@ -112,6 +113,11 @@ struct PremiumView: View, PremiumViewProps {
             }
         }
         .foregroundColor(.white)
+        .onChange(of: store.state.user.value?.isPremium) { newValue in
+            if newValue == true {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }
     }
 
     var yearlyPaymentText: some View {

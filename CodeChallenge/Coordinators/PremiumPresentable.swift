@@ -12,6 +12,7 @@ import SwiftUI
 protocol PremiumPresentable: AnyObject {
     var store: Store { get }
     var premiumPopupController: PopupViewController? { get set }
+    var premiumViewController: UIViewController? { get set }
 }
 
 extension PremiumPresentable {
@@ -22,6 +23,7 @@ extension PremiumPresentable {
             .environmentObject(store)
         let controller = UIHostingController(rootView: premiumView)
         navigationController.present(controller, animated: true)
+        premiumViewController = controller
     }
 
     private func showAllPlans(payments: [AppStorePayment]) {
@@ -42,7 +44,7 @@ extension PremiumPresentable {
         }
         premiumPopupController = PopupViewController(contentView: view)
         view.translatesAutoresizingMaskIntoConstraints = false
-        if let rootController = UIApplication.shared.mainWindow?.rootViewController {
+        if let rootController = premiumViewController {
             premiumPopupController?.present(from: rootController, bottomOffset: 0)
         }
     }

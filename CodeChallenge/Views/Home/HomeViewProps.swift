@@ -28,6 +28,10 @@ extension HomeViewProps {
     var programmingLanguage: ProgrammingLanguage {
         store.state.programmingLanguage
     }
+
+    var isPremium: Bool {
+        store.state.user.value?.isPremium == true
+    }
 }
 
 extension HomeViewProps {

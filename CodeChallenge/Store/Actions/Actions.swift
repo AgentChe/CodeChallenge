@@ -733,7 +733,7 @@ struct GetLearnSections: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
 
-        if dispatcher.state.learnSections[programmingLanguage]?.isSuccess == false {
+        if dispatcher.state.learnSections[programmingLanguage]?.value == nil {
             dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
         }
         dispatcher.services.challengesService
@@ -782,7 +782,7 @@ struct GetLessonCollection: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         guard let session = UserDefaults.standard.string(forKey: "cc_user_session") else { return }
 
-        if dispatcher.state.lessons[id]?.isSuccess == false {
+        if dispatcher.state.lessons[id]?.value == nil {
             dispatcher.dispatch(Action.updateLessonCollection(id, .loading))
         }
 

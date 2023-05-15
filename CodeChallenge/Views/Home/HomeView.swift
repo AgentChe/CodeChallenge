@@ -68,7 +68,7 @@ struct HomeView: View, HomeViewProps {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack(spacing: 10) {
-                    if store.state.maintenance?.aiEnabled == true {
+                    if store.state.maintenance?.premium == true, !isPremium {
                         HStack(spacing: 4) {
                             Text("Go Premium")
                                 .foregroundColor(.CodeChallenge.white)

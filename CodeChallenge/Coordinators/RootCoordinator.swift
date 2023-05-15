@@ -150,38 +150,6 @@ final class RootCoordinator {
                     }
                 }
         }
-
-//        self.store
-//            .statePublisher
-//            .compactMap { $0.account.value?.isPremium }
-//            .removeDuplicates()
-//            .combineLatest(isPremiumEnabled(store.services.networkService))
-//            .sink(receiveValue: { [weak self] (isPremium, premiumEnabled) in
-//                guard let self = self else { return }
-//                if isPremium == true {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                        var viewControllers = self.tabBarController.viewControllers
-//                        let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-//                        if let index = index {
-//                            if index == self.tabBarController.selectedIndex {
-//                                self.tabBarController.selectedIndex = (viewControllers?.count ?? 0) - 1
-//                            }
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                                viewControllers?.remove(at: index)
-//                                self.tabBarController.viewControllers = viewControllers
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    guard premiumEnabled else { return }
-//                    let index = self.tabBarController.viewControllers?.firstIndex { $0 == self.premiumCoordinator.navigationController }
-//                    guard index == nil else { return }
-//                    var viewControllers = self.tabBarController.viewControllers
-//                    viewControllers?.insert(self.premiumCoordinator.navigationController, at: 3)
-//                    self.tabBarController.viewControllers = viewControllers
-//                }
-//            })
-//            .store(in: &cancellables)
     }
 
     private func showMaintenanceScreen() {

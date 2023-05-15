@@ -42,7 +42,6 @@
 		E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */; };
 		E052550D288C79FC00FD87C3 /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E052550A288C79FC00FD87C3 /* PlaygroundView.swift */; };
 		E052550E288C79FC00FD87C3 /* AutocompleteTermsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E052550B288C79FC00FD87C3 /* AutocompleteTermsHelper.swift */; };
-		E064949029C26A0400AE3B6B /* TryAIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E064948F29C26A0400AE3B6B /* TryAIView.swift */; };
 		E064949229C649EB00AE3B6B /* ChallengeFriendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E064949129C649EB00AE3B6B /* ChallengeFriendService.swift */; };
 		E064949429C64DC600AE3B6B /* ChallengeFriend.swift in Sources */ = {isa = PBXBuildFile; fileRef = E064949329C64DC600AE3B6B /* ChallengeFriend.swift */; };
 		E064949629C6634C00AE3B6B /* ChallengeFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E064949529C6634C00AE3B6B /* ChallengeFriendView.swift */; };
@@ -68,7 +67,6 @@
 		E068A99E29F895E700EAD210 /* home_stars.json in Resources */ = {isa = PBXBuildFile; fileRef = E068A99D29F895E700EAD210 /* home_stars.json */; };
 		E06AAE252877888300995D3D /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE242877888300995D3D /* HomeCoordinator.swift */; };
 		E06AAE272877888C00995D3D /* LeaderboardCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */; };
-		E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */; };
 		E06AAE33287788CD00995D3D /* PremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE32287788CD00995D3D /* PremiumView.swift */; };
 		E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3428778DAC00995D3D /* AccountViewProps.swift */; };
 		E06AAE3728778DDC00995D3D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3628778DDC00995D3D /* Account.swift */; };
@@ -265,7 +263,6 @@
 		E0525509288C79FB00FD87C3 /* AutocompleteDropdownView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteDropdownView.swift; sourceTree = "<group>"; };
 		E052550A288C79FC00FD87C3 /* PlaygroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
 		E052550B288C79FC00FD87C3 /* AutocompleteTermsHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTermsHelper.swift; sourceTree = "<group>"; };
-		E064948F29C26A0400AE3B6B /* TryAIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryAIView.swift; sourceTree = "<group>"; };
 		E064949129C649EB00AE3B6B /* ChallengeFriendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendService.swift; sourceTree = "<group>"; };
 		E064949329C64DC600AE3B6B /* ChallengeFriend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriend.swift; sourceTree = "<group>"; };
 		E064949529C6634C00AE3B6B /* ChallengeFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeFriendView.swift; sourceTree = "<group>"; };
@@ -291,7 +288,6 @@
 		E068A99D29F895E700EAD210 /* home_stars.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = home_stars.json; sourceTree = "<group>"; };
 		E06AAE242877888300995D3D /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardCoordinator.swift; sourceTree = "<group>"; };
-		E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumCoordinator.swift; sourceTree = "<group>"; };
 		E06AAE32287788CD00995D3D /* PremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumView.swift; sourceTree = "<group>"; };
 		E06AAE3428778DAC00995D3D /* AccountViewProps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewProps.swift; sourceTree = "<group>"; };
 		E06AAE3628778DDC00995D3D /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
@@ -700,7 +696,6 @@
 				E0BD329E285D022F000C37A9 /* AccountCoordinator.swift */,
 				E06AAE242877888300995D3D /* HomeCoordinator.swift */,
 				E06AAE262877888C00995D3D /* LeaderboardCoordinator.swift */,
-				E06AAE2A287788A200995D3D /* PremiumCoordinator.swift */,
 				E0228F722907346200101A82 /* BuddiesCoordinator.swift */,
 				E0C9D7422996BDCD000A7000 /* CodeChallengePresentable.swift */,
 				E064949D29C78BAA00AE3B6B /* ChallengeFriendPresentable.swift */,
@@ -729,7 +724,6 @@
 				E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */,
 				E002972229AECBC400EE3D9B /* LearnView.swift */,
 				E085CFAE29B4129F00BA1F16 /* LearnViewProps.swift */,
-				E064948F29C26A0400AE3B6B /* TryAIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1150,7 +1144,6 @@
 				E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */,
 				E06AAE3728778DDC00995D3D /* Account.swift in Sources */,
 				E0AB516429ECA2DB000DD0DD /* PremiumPresentable.swift in Sources */,
-				E064949029C26A0400AE3B6B /* TryAIView.swift in Sources */,
 				E08D823D299AF12700A11396 /* SearchState.swift in Sources */,
 				E052550D288C79FC00FD87C3 /* PlaygroundView.swift in Sources */,
 				E085CFB129B5569C00BA1F16 /* PageControl.swift in Sources */,
@@ -1226,7 +1219,6 @@
 				E0667AEC29DA2CD900C9CAF1 /* Lesson.swift in Sources */,
 				E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */,
 				E0359DD8299AFAF500E8AF4F /* ChallengeCompiledResult.swift in Sources */,
-				E06AAE2B287788A200995D3D /* PremiumCoordinator.swift in Sources */,
 				E0667AE029DA148E00C9CAF1 /* LessonView.swift in Sources */,
 				E06494AF29CA7A1600AE3B6B /* ChallengeFriendResultView.swift in Sources */,
 				E0BD3299285CFA79000C37A9 /* RequestAdditions.swift in Sources */,

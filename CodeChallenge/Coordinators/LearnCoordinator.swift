@@ -16,6 +16,7 @@ class LearnCoordinator {
     var onGoPremium: (() -> Void)?
     var popupController: PopupViewController?
     var premiumPopupController: PopupViewController?
+    var premiumViewController: UIViewController?
 
     init(store: Store) {
         self.store = store

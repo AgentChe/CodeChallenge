@@ -19,4 +19,8 @@ extension LearnTabViewProps {
     var programmingLanguage: ProgrammingLanguage {
         store.state.programmingLanguage
     }
+
+    var isPremium: Bool {
+        store.state.user.value?.isPremium == true
+    }
 }

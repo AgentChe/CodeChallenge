@@ -19,6 +19,7 @@ class HomeCoordinator {
     var onEndingOnboarding: (() -> Void)?
     var popupController: PopupViewController?
     var premiumPopupController: PopupViewController?
+    var premiumViewController: UIViewController?
 
     init(store: Store) {
         self.store = store
@@ -36,7 +37,6 @@ class HomeCoordinator {
         } onOpenPremium: { [weak self] in
             guard let self = self else { return }
             self.presentPremiumScreen(from: self.navigationController)
-//            self?.openTryAIView()
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: homeView)
@@ -56,20 +56,6 @@ class HomeCoordinator {
             store.dispatch(LoadHashtags(programmingLanguage: language))
         }
     }
-
-//    private func openTryAIView() {
-//        let view = TryAIView { [weak self] challenge in
-//            self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
-//        } goProductHunt: { string in
-//            if let appSettings = URL(string: string), UIApplication.shared.canOpenURL(appSettings) {
-//                UIApplication.shared.open(appSettings)
-//            }
-//        }
-//            .environmentObject(store)
-//
-//        let controller = UIHostingController(rootView: view)
-//        navigationController.present(controller, animated: true)
-//    }
 
     private func openCollectionDetail(collection: ChallengeCollection) {
         let view = CollectionContentView(collection: collection, onChallengeOpen: { [weak self] challenge in

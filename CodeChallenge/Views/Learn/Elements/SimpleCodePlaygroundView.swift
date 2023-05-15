@@ -75,7 +75,9 @@ class SimpleCodePlaygroundUIKitView: UIView {
     }
 
     func set(code: String) {
-        textView.text = code
+        if textView.text != code {
+            textView.text = code
+        }
     }
 }
 

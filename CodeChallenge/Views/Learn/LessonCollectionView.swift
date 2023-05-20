@@ -15,6 +15,10 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
     @State private var selection = 1
     @State private var challengesLoaded = false
 
+    private var hasPassedEntireLesson: Bool {
+        store.state.learnSections[store.state.programmingLanguage]?.value?.passedLessonIds.contains(learnElement.id) == true
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 20) {
@@ -47,7 +51,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
             } else if let collection = lessonCollection {
                 TabView(selection: $selection, content: {
                     ForEach(Array(enabledPages.enumerated()), id: \.offset) { (index, lesson) in
-                        LessonView(lesson: lesson, lessonCollection: lessonCollection, onContinue: { updateProgresses in
+                        LessonView(lesson: lesson, lessonCollection: lessonCollection, hasPassedEntireLesson: hasPassedEntireLesson, onContinue: { updateProgresses in
                             if updateProgresses {
                                 store.dispatch(UpdateClassProgress(progress: lesson.id, classId: collection.id))
                                 if collection.pages.last?.id == lesson.id, let id = nextLessonCollectionId {

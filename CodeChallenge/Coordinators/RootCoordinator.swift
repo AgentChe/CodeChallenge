@@ -80,14 +80,26 @@ final class RootCoordinator {
             self?.showLogin(action: action)
         }
 
+        learnCoordinator.onJumpSignUp = { [weak self] in
+            self?.showLogin()
+        }
+
         accountCoordinator.onGoPremium = { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self?.tabBarController.selectedIndex = 3
+                self.tabBarController.selectedIndex = 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.homeCoordinator.presentPremiumScreen(from: self.homeCoordinator.navigationController)
+                }
             }
         }
         homeCoordinator.onGoPremium = { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self?.tabBarController.selectedIndex = 3
+                self.tabBarController.selectedIndex = 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    self.homeCoordinator.presentPremiumScreen(from: self.homeCoordinator.navigationController)
+                }
             }
         }
 

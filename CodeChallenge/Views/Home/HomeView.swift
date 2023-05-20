@@ -75,7 +75,7 @@ struct HomeView: View, HomeViewProps {
                                 .font(.h5)
                             Image("challenge_premium_icon")
                                 .resizable()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 14, height: 12)
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 7)

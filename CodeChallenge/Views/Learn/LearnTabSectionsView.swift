@@ -12,7 +12,9 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     @EnvironmentObject var store: Store
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     let onElementTap: (LearnElement) -> Void
+    let onOpenPremium: () -> Void
     let onJumpSection: (LearnSection) -> Void
+    let onJumpSignUp: () -> Void
 
     var body: some View {
         if isLoading {
@@ -29,37 +31,41 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                 alignment: .leading,
                 spacing: 19,
                 pinnedViews: []) {
-                    Text("Learning \(programmingLanguage.rawValue.capitalized)")
-                        .font(.pageNameH1)
-                        .foregroundColor(.white)
-                        .padding(.leading, 16)
-                    ForEach(Array(sections.enumerated()), id: \.offset) { (sectionOffset, section) in
-                        Section(
-                            header:
-                                VStack(alignment: .leading, spacing: 12) {
-                                    Text(section.title)
-                                        .font(.h3)
-                                        .bold()
-                                        .padding(.bottom, 6)
-                                    HStack {
-                                        Text(section.description)
-                                            .font(.regular(size: 18))
-                                            .foregroundColor(.CodeChallenge.white)
-                                        Spacer()
+                    if !sections.isEmpty {
+                        Text("Learning \(programmingLanguage.rawValue.capitalized)")
+                            .font(.pageNameH1)
+                            .foregroundColor(.white)
+                            .padding(.leading, 16)
+                        ForEach(Array(sections.enumerated()), id: \.offset) { (sectionOffset, section) in
+                            Section(
+                                header:
+                                    VStack(alignment: .leading, spacing: 12) {
+                                        Text(section.title)
+                                            .font(.h3)
+                                            .bold()
+                                            .padding(.bottom, 6)
+                                        HStack {
+                                            Text(section.description)
+                                                .font(.regular(size: 18))
+                                                .foregroundColor(.CodeChallenge.white)
+                                            Spacer()
+                                        }
                                     }
-                                }
-                                .padding(.vertical, 20)
-                                .padding(.horizontal, 16)
-                                .background(.CodeChallenge.darkBlue)
-                        ) {
+                                    .padding(.vertical, 20)
+                                    .padding(.horizontal, 16)
+                                    .background(.CodeChallenge.darkBlue)
+                            ) {
 
-                            ForEach(Array(section.contents.enumerated()), id: \.element.id) { (offset, element) in
-                                elementView(element, offset, section.contents.count, fromLeft: sectionOffset % 2 == 0, sectionOffset: sectionOffset)
-                                    .id(element.id)
+                                ForEach(Array(section.contents.enumerated()), id: \.element.id) { (offset, element) in
+                                    elementView(element, offset, section.contents.count, fromLeft: sectionOffset % 2 == 0, sectionOffset: sectionOffset)
+                                        .id(element.id)
+                                }
                             }
                         }
+                        footerView
+                    } else {
+                        emptyView
                     }
-                    footerView
                 }
                 .onAppear {
                     withAnimation {
@@ -93,19 +99,37 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .clipShape(Capsule())
             }
             .padding(.bottom, 30)
-            Text("You doing fine!")
+            Text(learnSections?.lastSectionIsDone == true ? "You've made it!" : "You’re on the right track!")
                 .font(.h3)
                 .bold()
-            Text("a little bit of description that is long a lit bit")
+            Text(learnSections?.lastSectionIsDone == true ? "You've unlocked your certificate" : "Keep going and unlock your personalized certificate")
                 .font(.regular(size: 18))
                 .foregroundColor(.CodeChallenge.white)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 30)
-            Button("Get certificate") {
-
+            Button("Claim My Certificate") {
+                if store.state.user.value?.isLoggedIn == true {
+                    // FIXME: implement the popup
+                } else {
+                    onJumpSignUp()
+                }
             }
             .padding(.bottom, 20)
-            .buttonStyle(PrimaryButton(status: .disabled))
+            .buttonStyle(PrimaryButton(status: learnSections?.lastSectionIsDone == true ? .enabled : .disabled))
+        }
+        .padding(.horizontal, 25)
+    }
+
+    private var emptyView: some View {
+        VStack(spacing: 12) {
+            Text("\(programmingLanguage.rawValue.capitalized) lessons are cooking!")
+                .font(.h3)
+                .bold()
+            Text("We are in the process of developing this section!")
+                .font(.regular(size: 18))
+                .foregroundColor(.CodeChallenge.white)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 30)
         }
         .padding(.horizontal, 25)
     }
@@ -156,7 +180,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
 
     @ViewBuilder
     private func image(element: LearnElement, position: Int, onTapGesture: @escaping () -> Void) -> some View {
-        if element.id == currentProgressId {
+        if element.id == currentProgressId && learnSections?.passedLessonIds.contains(element.id) == false {
             ZStack {
                 Ellipse()
                     .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
@@ -173,7 +197,13 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .onTapGesture(perform: onTapGesture)
             }
         } else {
-            if learnSections?.passedLessonIds.contains(element.id) == true {
+            if store.state.user.value?.isPremium == false && element.isPremium == true {
+                Image("learn_premium")
+                    .resizable()
+                    .frame(width: 70, height: 65)
+                    .padding(12)
+                    .onTapGesture(perform: onOpenPremium)
+            } else if learnSections?.passedLessonIds.contains(element.id) == true {
                 Image("learn_star")
                     .resizable()
                     .frame(width: 70, height: 65)

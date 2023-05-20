@@ -497,6 +497,7 @@ struct PurchasePayment: ThunkAction {
             .ephemeralSink { _ in
                 dispatcher.dispatch(TrackAnalyticsEvent(event: .premiumSucceeded(payment.productIdentifier)))
                 dispatcher.dispatch(LoadAccount())
+                dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
             }
         }, failure: { error in
         })
@@ -518,6 +519,7 @@ struct RestorePurchases: ThunkAction {
             .ephemeralSink { _ in
                 completionBlock?(true)
                 dispatcher.dispatch(LoadAccount())
+                dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
             }
         }, failure: { error in
             completionBlock?(false)

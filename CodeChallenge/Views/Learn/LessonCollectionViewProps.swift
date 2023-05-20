@@ -48,6 +48,10 @@ extension LessonCollectionViewProps {
     var nextLessonCollectionId: Int? {
         guard let currentIndex = (lessonCollections.firstIndex(where: { $0.id == lessonCollection?.id })) else { return nil }
         let index = lessonCollections.index(after: currentIndex)
-        return lessonCollections[index].id
+        if index < lessonCollections.count - 1 {
+            return lessonCollections[index].id
+        } else {
+            return nil
+        }
     }
 }

@@ -32,7 +32,7 @@ extension CodeChallengePresentable {
         } onDismiss: {
             navigationController.popViewController(animated: true)
         } onGoPremium: { [weak self] in
-            navigationController.popViewController(animated: true)
+            navigationController.popToRootViewController(animated: true)
             self?.onGoPremium?()
         } onOpenChat: { [weak self] mode in
             self?.openChat(mode: mode, navigationController: navigationController)

@@ -14,12 +14,13 @@ struct LearnTabView: View, LearnTabViewProps {
     let onJumpSection: (LearnSection) -> Void
     @State private var showProgrammingLanguagePopup = false
     let onOpenPremium: () -> Void
+    let onJumpSignUp: () -> Void
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView(showsIndicators: false) {
-                    LearnTabSectionsView(onElementTap: onElementTap, onJumpSection: onJumpSection)
+                    LearnTabSectionsView(onElementTap: onElementTap, onOpenPremium: onOpenPremium, onJumpSection: onJumpSection, onJumpSignUp: onJumpSignUp)
                 }
                 .padding(.top, 10)
             }
@@ -50,7 +51,7 @@ struct LearnTabView: View, LearnTabViewProps {
                                 .font(.h5)
                             Image("challenge_premium_icon")
                                 .resizable()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 14, height: 12)
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 7)

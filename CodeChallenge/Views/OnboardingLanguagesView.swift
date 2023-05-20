@@ -41,6 +41,7 @@ struct OnboardingLanguagesView: View {
                 Spacer()
                 Button("Continue") {
                     onDismiss()
+                    store.dispatch(GetLearnSections(programmingLanguage: selectedLanguage))
                     store.dispatch(ChangeProgrammingLanguage(language: selectedLanguage))
                 }
                 .buttonStyle(PrimaryButton())

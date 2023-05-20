@@ -69,7 +69,7 @@ struct JumpHereContentsView: View {
                 if let collection = lessonCollection {
                     TabView(selection: $selection, content: {
                         ForEach(Array(enabledPages.enumerated()), id: \.offset) { (index, lesson) in
-                            LessonView(lesson: lesson, lessonCollection: lessonCollection, onContinue: { updateProgresses in
+                            LessonView(lesson: lesson, lessonCollection: lessonCollection, hasPassedEntireLesson: false, onContinue: { updateProgresses in
                                 if selection < pages.count - 1 {
                                     withAnimation {
                                         currentProgress = lesson.id
@@ -84,7 +84,6 @@ struct JumpHereContentsView: View {
                                     }
                                 }
                             })
-                            .tag(lesson.id)
                         }
                     })
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -101,7 +100,6 @@ struct JumpHereContentsView: View {
 
     private func loadChallengeDetails() {
         guard !challengesLoaded else { return }
-        currentProgress = pages.first?.id ?? 0
         let contents = pages.reduce([LessonContent]()) { partialResult, lesson in
             return partialResult + lesson.content
         }

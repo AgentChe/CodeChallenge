@@ -12,6 +12,7 @@ struct LessonView: View {
     @EnvironmentObject var store: Store
     let lesson: Lesson
     let lessonCollection: LessonCollection?
+    let hasPassedEntireLesson: Bool
     let onContinue: (_ updateProgresses: Bool) -> Void
 
     @State private var quizAnswers: [(LessonContent, [String])] = []
@@ -24,10 +25,10 @@ struct LessonView: View {
     var buttonStatus: PrimaryButton.Status {
         if quizAnswers.isEmpty { return .enabled }
         return quizAnswers.map { $0.1.isEmpty }.contains(true) ? PrimaryButton.Status.disabled : PrimaryButton.Status.enabled
-        return .enabled
     }
 
     var hasPassedThisLesson: Bool {
+        if hasPassedEntireLesson { return hasPassedThisLesson }
         guard let enabledPages = lessonCollection?.enabledPages,
               let index = (enabledPages.firstIndex { $0.id == lesson.id }) else { return false }
         return index < enabledPages.count - 1
@@ -71,7 +72,7 @@ struct LessonView: View {
                         case .challenge(let id):
                             QuizChallengeView(id: id, onCodeChange: { code in
                                 challengeAnswers[id] = code
-                            })
+                            }).id(id)
                         default: EmptyView()
                         }
                     }
@@ -140,6 +141,8 @@ extension LessonView {
             switch lesson {
             case .composeCodeQuiz, .chooseAnswerQuiz:
                 quizAnswers.append((lesson, []))
+            case .challenge(let id):
+                challengeAnswers[id] = store.state.challengeDetails[id]?.value?.body.template.removingPercentEncoding ?? ""
             default: break
             }
         }

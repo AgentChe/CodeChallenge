@@ -42,8 +42,8 @@ class HomeCoordinator {
         let controller = UIHostingController(rootView: homeView)
         let tabBarItem = UITabBarItem(
             title: "Practice",
-            image: UIImage(named: "homeTabIcon"),
-            selectedImage: UIImage(named: "homeTabIcon")
+            image: UIImage(named: "practiceTabIcon"),
+            selectedImage: UIImage(named: "practiceTabIcon")
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)

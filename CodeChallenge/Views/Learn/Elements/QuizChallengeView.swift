@@ -41,6 +41,7 @@ struct QuizChallengeView: View {
         }
         .onAppear {
             displayCode = code
+            onCodeChange(displayCode ?? "")
         }
         .onChange(of: code, perform: { newValue in
             displayCode = newValue

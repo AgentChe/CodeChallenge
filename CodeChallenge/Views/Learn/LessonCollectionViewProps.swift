@@ -37,8 +37,12 @@ extension LessonCollectionViewProps {
         lessonCollection?.pages ?? []
     }
 
+    var passedIds: [Int] {
+        store.state.learnSections[programmingLanguage]?.value?.passedLessonIds ?? []
+    }
+
     var lessonCollections: [LearnElement] {
-        let sections = store.state.learnSections[.python]?.value?.contents ?? []
+        let sections = store.state.learnSections[programmingLanguage]?.value?.contents ?? []
         return sections
             .reduce([LearnElement](), { partialResult, result in
             partialResult + result.contents
@@ -53,5 +57,9 @@ extension LessonCollectionViewProps {
         } else {
             return nil
         }
+    }
+
+    var hasPassedEntireLesson: Bool {
+        passedIds.contains(learnElement.id)
     }
 }

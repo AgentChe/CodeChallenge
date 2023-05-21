@@ -1,5 +1,5 @@
 //
-//  HomeSectionsViewProps.swift
+//  PracticeSectionsViewProps.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 06/03/2023.
@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol HomeSectionsViewProps {
+protocol PracticeSectionsViewProps {
     var store: Store { get }
     var humanLanguage: String { get }
 }
 
-extension HomeSectionsViewProps {
+extension PracticeSectionsViewProps {
     var isLoading: Bool {
-        store.state.homeSections[identifier]?.isLoading == true
+        store.state.practiceSections[identifier]?.isLoading == true
     }
 
     var sections: [ChallengeSection]? {
-        store.state.homeSections[identifier]?.value
+        store.state.practiceSections[identifier]?.value
     }
 
     var identifier: String {
@@ -32,13 +32,13 @@ extension HomeSectionsViewProps {
     func progressImageName(index: Int, sectionIndex: Int) -> String {
         guard let collections = sections?[sectionIndex].collections else { return "" }
         if index == 0 && collections.count == 1 {
-            return "home_progress_only_section"
+            return "practice_progress_only_section"
         } else if index == 0 {
-            return "home_progress_start"
+            return "practice_progress_start"
         } else if index == collections.count - 1 {
-            return "home_progress_end"
+            return "practice_progress_end"
         } else {
-            return "home_progress_middle"
+            return "practice_progress_middle"
         }
     }
 

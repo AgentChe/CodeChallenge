@@ -16,17 +16,15 @@ final class RootCoordinator {
     internal let store = Store()
     private var authNavigationController: UINavigationController?
     private let accountCoordinator: AccountCoordinator
-    private let homeCoordinator: HomeCoordinator
+    private let practiceCoordinator: PracticeCoordinator
     private let learnCoordinator: LearnCoordinator
     private let browseCoordinator: LeaderboardCoordinator
-//    private let premiumCoordinator: PremiumCoordinator
     private let buddiesCoordinator: BuddiesCoordinator
 
     private let tabBarController = UITabBarController()
     private var authCancellable: AnyCancellable?
-//    private var logoutCancellable: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
-    private var homePageCancellable: AnyCancellable?
+    private var practicePageCancellable: AnyCancellable?
     private var accountCancellable: AnyCancellable?
     private var challengeFriendCancellable: AnyCancellable?
     var challengeFriendNavigationController: UINavigationController?
@@ -36,14 +34,13 @@ final class RootCoordinator {
     init(window: UIWindow) {
         self.window = window
         accountCoordinator = AccountCoordinator(store: store)
-        homeCoordinator = HomeCoordinator(store: store)
+        practiceCoordinator = PracticeCoordinator(store: store)
         browseCoordinator = LeaderboardCoordinator(store: store)
-//        premiumCoordinator = PremiumCoordinator(store: store)
         buddiesCoordinator = BuddiesCoordinator(store: store)
         learnCoordinator = LearnCoordinator(store: store)
         paywallService = PaywallService(store: store)
         setupAppAppearance()
-        homeCoordinator.onEndingOnboarding = { [weak self] in
+        practiceCoordinator.onEndingOnboarding = { [weak self] in
             let challengeFriendId = UserDefaults.standard.integer(forKey: "challenge_friend_key")
             guard challengeFriendId != 0 else { return }
             self?.process(challengeFriendId: challengeFriendId)
@@ -60,7 +57,7 @@ final class RootCoordinator {
         }
         let tabs = [
             learnCoordinator.navigationController,
-            homeCoordinator.navigationController,
+            practiceCoordinator.navigationController,
             browseCoordinator.navigationController,
             buddiesCoordinator.navigationController,
             accountCoordinator.navigationController
@@ -89,16 +86,16 @@ final class RootCoordinator {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.homeCoordinator.presentPremiumScreen(from: self.homeCoordinator.navigationController)
+                    self.practiceCoordinator.presentPremiumScreen(from: self.practiceCoordinator.navigationController)
                 }
             }
         }
-        homeCoordinator.onGoPremium = { [weak self] in
+        practiceCoordinator.onGoPremium = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.homeCoordinator.presentPremiumScreen(from: self.homeCoordinator.navigationController)
+                    self.practiceCoordinator.presentPremiumScreen(from: self.practiceCoordinator.navigationController)
                 }
             }
         }
@@ -120,7 +117,7 @@ final class RootCoordinator {
             .store(in: &cancellables)
 
         store.dispatch(LoadProgrammingLanguage())
-        store.dispatch(LoadHomeSections())
+        store.dispatch(LoadPracticeSections())
         store.dispatch(LoadAppStorePayments())
         store.dispatch(LoadRecommendedChallenges())
         store.dispatch(LoadRewards())
@@ -135,28 +132,28 @@ final class RootCoordinator {
         DispatchQueue.main.async { [weak self] in
             let startDate = Date()
 
-            self?.homePageCancellable = self?.store
+            self?.practicePageCancellable = self?.store
                 .statePublisher
-                .compactMap { $0.homeSections["\($0.programmingLanguage.apiRequestParam)_en"] }
+                .compactMap { $0.practiceSections["\($0.programmingLanguage.apiRequestParam)_en"] }
                 .removeDuplicates()
                 .sink { [weak self] result in
                     if let error = result.error {
                         let miliseconds = Date().timeIntervalSince(startDate) * 1000
-                        self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, error)))
+                        self?.store.dispatch(TrackAnalyticsEvent(event: .practicepageLoaded(miliseconds, error)))
                         let alertController = UIAlertController(title: "An error occurred", message: error.localizedDescription, preferredStyle: .alert)
                         let action = UIAlertAction(title: "Retry", style: .default) { action in
-                            self?.store.dispatch(LoadHomeSections())
+                            self?.store.dispatch(LoadPracticeSections())
                         }
                         alertController.addAction(action)
-                        self?.homeCoordinator.navigationController.present(alertController, animated: true)
+                        self?.learnCoordinator.navigationController.present(alertController, animated: true)
                     } else if let value = result.value {
                         let miliseconds = Date().timeIntervalSince(startDate) * 1000
-                        self?.store.dispatch(TrackAnalyticsEvent(event: .homepageLoaded(miliseconds, nil)))
+                        self?.store.dispatch(TrackAnalyticsEvent(event: .practicepageLoaded(miliseconds, nil)))
                         guard let self = self else { return }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                             if !value.isEmpty {
-                                self.homePageCancellable?.cancel()
-                                self.homePageCancellable = nil
+                                self.practicePageCancellable?.cancel()
+                                self.practicePageCancellable = nil
                             }
                         }
                     }
@@ -335,7 +332,7 @@ extension RootCoordinator {
         guard store.state.ongoingChallengeFriendData.isPending else { return }
         accountCancellable =
         store.statePublisher
-            .filter { $0.account.value != nil && $0.homeSections != [:] }
+            .filter { $0.account.value != nil && $0.practiceSections != [:] }
             .sink(receiveValue: { [weak self] _ in
                 guard self?.store.state.ongoingChallengeFriendData.isPending == true else { return }
                 self?.store.dispatch(AcceptFriendChallenge(id: challengeFriendId))
@@ -348,7 +345,7 @@ extension RootCoordinator {
                         switch result {
                         case .failure:
                             self.store.dispatch(Action.updateOngoingChallengeFriendData(.pending))
-                            self.presentFailure(navigationController: self.homeCoordinator.navigationController)
+                            self.presentFailure(navigationController: self.learnCoordinator.navigationController)
                             self.challengeFriendCancellable?.cancel()
                             self.challengeFriendCancellable = nil
                             self.accountCancellable?.cancel()
@@ -357,7 +354,7 @@ extension RootCoordinator {
                             guard !challengeFriendData.expired else { return }
 
                             DispatchQueue.main.async {
-                                self.startChallengeFriend(with: challengeFriendData, from: self.homeCoordinator.navigationController)
+                                self.startChallengeFriend(with: challengeFriendData, from: self.learnCoordinator.navigationController)
                                 self.challengeFriendCancellable?.cancel()
                                 self.challengeFriendCancellable = nil
                                 self.accountCancellable?.cancel()

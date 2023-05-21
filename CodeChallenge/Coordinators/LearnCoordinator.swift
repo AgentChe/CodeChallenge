@@ -37,8 +37,8 @@ class LearnCoordinator {
         let controller = UIHostingController(rootView: learnView)
         let tabBarItem = UITabBarItem(
             title: "Learn",
-            image: UIImage(named: "homeTabIcon"),
-            selectedImage: UIImage(named: "homeTabIcon")
+            image: UIImage(named: "practiceTabIcon"),
+            selectedImage: UIImage(named: "practiceTabIcon")
         )
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)

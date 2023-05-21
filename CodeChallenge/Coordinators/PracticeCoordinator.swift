@@ -1,5 +1,5 @@
 //
-//  HomeCoordinator.swift
+//  PracticeCoordinator.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 07/07/2022.
@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-class HomeCoordinator {
+class PracticeCoordinator {
     let navigationController = UINavigationController()
     var onboardingNavigationController: UINavigationController?
     var challengeFriendNavigationController: UINavigationController?
@@ -23,7 +23,7 @@ class HomeCoordinator {
 
     init(store: Store) {
         self.store = store
-        let homeView = HomeView(humanLanguage: "en") { [weak self] (collection) in
+        let practiceView = PracticeView(humanLanguage: "en") { [weak self] (collection) in
             self?.openCollectionDetail(collection: collection)
         } onSearch: { [weak self] text in
             let view = BrowsedChallengesView(query: text, onEnterDetails: { [weak self] challenge in
@@ -39,7 +39,7 @@ class HomeCoordinator {
             self.presentPremiumScreen(from: self.navigationController)
         }
             .environmentObject(store)
-        let controller = UIHostingController(rootView: homeView)
+        let controller = UIHostingController(rootView: practiceView)
         let tabBarItem = UITabBarItem(
             title: "Practice",
             image: UIImage(named: "practiceTabIcon"),
@@ -105,5 +105,5 @@ class HomeCoordinator {
     }
 }
 
-extension HomeCoordinator: CodeChallengePresentable {}
-extension HomeCoordinator: PremiumPresentable {}
+extension PracticeCoordinator: CodeChallengePresentable {}
+extension PracticeCoordinator: PremiumPresentable {}

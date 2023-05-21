@@ -1,5 +1,5 @@
 //
-//  NewHomeView.swift
+//  NewPracticeView.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 06/11/2022.
@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 import Paywall
 
-struct HomeView: View, HomeViewProps {
+struct PracticeView: View, PracticeViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     @EnvironmentObject var store: Store
     let humanLanguage: String
@@ -44,7 +44,7 @@ struct HomeView: View, HomeViewProps {
                         } else if isLoading {
                             SkeletonView()
                         } else {
-                            HomeSectionsView(humanLanguage: humanLanguage, onCollectionTap: onCollectionTap)
+                            PracticeSectionsView(humanLanguage: humanLanguage, onCollectionTap: onCollectionTap)
                         }
                     }
                 }
@@ -105,7 +105,7 @@ struct HomeView: View, HomeViewProps {
             }
         }
         .onChange(of: programmingLanguage) { newValue in
-            store.dispatch(LoadHomeSections(language: newValue))
+            store.dispatch(LoadPracticeSections(language: newValue))
             store.dispatch(GetLearnSections(programmingLanguage: newValue))
         }
         .onChange(of: searchFieldVM.text) { newValue in
@@ -290,14 +290,14 @@ fileprivate struct SkeletonView: View {
                         .padding(.leading, 10.0)
                         .padding(.bottom, 16)
                 ) {
-                    HomeViewElementView(
-                        model: model1, progressImageName: "home_progress_start",
+                    PracticeViewElementView(
+                        model: model1, progressImageName: "practice_progress_start",
                         progressTopInset: 21, progressBottomInset: 2,
                         progressPreviousPeaceHeight: 0, expectedHeight: 134,
                         previousModel: nil, nextModel: model2
                     )
-                    HomeViewElementView(
-                        model: model2, progressImageName: "home_progress_end",
+                    PracticeViewElementView(
+                        model: model2, progressImageName: "practice_progress_end",
                         progressTopInset: 2, progressBottomInset: 28,
                         progressPreviousPeaceHeight: 24, expectedHeight: 104,
                         previousModel: model1, nextModel: model3
@@ -311,8 +311,8 @@ fileprivate struct SkeletonView: View {
                         .padding(.leading, 10.0)
                         .padding(.bottom, 16)
                 ) {
-                    HomeViewElementView(
-                        model: model4, progressImageName: "home_progress_only_section",
+                    PracticeViewElementView(
+                        model: model4, progressImageName: "practice_progress_only_section",
                         progressTopInset: 23, progressBottomInset: 26,
                         progressPreviousPeaceHeight: 0, expectedHeight: 108,
                         previousModel: nil, nextModel: model5

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     @EnvironmentObject var store: Store
-    let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
+    private let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     let onElementTap: (LearnElement) -> Void
     let onOpenPremium: () -> Void
     let onJumpSection: (LearnSection) -> Void
@@ -57,7 +57,12 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                             ) {
 
                                 ForEach(Array(section.contents.enumerated()), id: \.element.id) { (offset, element) in
-                                    elementView(element, offset, section.contents.count, fromLeft: sectionOffset % 2 == 0, sectionOffset: sectionOffset)
+                                    elementView(
+                                        element,
+                                        offset,
+                                        section.contents.count,
+                                        fromLeft: sectionOffset % 2 == 0,
+                                        sectionOffset: sectionOffset)
                                         .id(element.id)
                                 }
                             }
@@ -74,9 +79,9 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                 }
                 .foregroundColor(.white)
                 .padding(.top, 16)
-                .onChange(of: currentProgressId) { _ in
+                .onChange(of: currentProgressId) { newValue in
                     withAnimation {
-                        proxy.scrollTo(currentProgressId)
+                        proxy.scrollTo(newValue)
                     }
                 }
         })
@@ -190,40 +195,30 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .stroke(Color(UIColor.CodeChallenge.lessonQuizGreen), lineWidth: 8)
                     .frame(width: 86, height: 95)
                     .rotationEffect(.degrees(90))
-                Image("learn_star")
-                    .resizable()
-                    .frame(width: 70, height: 65)
-                    .padding(12)
+                image("learn_star")
                     .onTapGesture(perform: onTapGesture)
             }
         } else {
             if store.state.user.value?.isPremium == false && element.isPremium == true {
-                Image("learn_premium")
-                    .resizable()
-                    .frame(width: 70, height: 65)
-                    .padding(12)
+                image("learn_premium")
                     .onTapGesture(perform: onOpenPremium)
             } else if learnSections?.passedLessonIds.contains(element.id) == true {
-                Image("learn_star")
-                    .resizable()
-                    .frame(width: 70, height: 65)
-                    .padding(12)
+                image("learn_star")
                     .onTapGesture(perform: onTapGesture)
             } else {
-                if position == 0 {
-                    Image("learn_jump")
-                        .resizable()
-                        .frame(width: 70, height: 65)
-                        .padding(12)
-                        .onTapGesture(perform: onTapGesture)
-                } else {
-                    Image("learn_disabled")
-                        .resizable()
-                        .frame(width: 70, height: 65)
-                        .padding(12)
-                }
+                image(position == 0 ? "learn_jump" : "learn_disabled")
+                    .onTapGesture(perform: {
+                        if position == 0 { onTapGesture() }
+                    })
             }
         }
+    }
+
+    private func image(_ name: String) -> some View {
+        Image(name)
+            .resizable()
+            .frame(width: 70, height: 65)
+            .padding(12)
     }
 }
 

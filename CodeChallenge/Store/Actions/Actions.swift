@@ -25,8 +25,8 @@ enum Action: Dispatchable {
     case logout
     case loadPayments(Resolvable<[AppStorePayment]>)
     case loadHashtags(Resolvable<[String]>, ProgrammingLanguage)
-    case loadHomeSections(String, Resolvable<[ChallengeSection]>)
-    case loadHomeCollectionContent(Int, Resolvable<ChallengeCollectionContent>)
+    case loadPracticeSections(String, Resolvable<[ChallengeSection]>)
+    case loadPracticeCollectionContent(Int, Resolvable<ChallengeCollectionContent>)
     case changeProgrammingLanguage(ProgrammingLanguage)
     case loadRewards(Resolvable<[Reward]>)
     case updateLoadingReward(LoadingReward?)
@@ -62,7 +62,7 @@ struct Login: ThunkAction {
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
                     dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     dispatcher.dispatch(AddStreakIfNeeded())
-                    dispatcher.dispatch(LoadHomeSections())
+                    dispatcher.dispatch(LoadPracticeSections())
                     dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
                     dispatcher.dispatch(Action.loadUser(user))
                 } else {
@@ -89,7 +89,7 @@ struct Logout: ThunkAction {
                     UserDefaults.standard.set(nil, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.logout)
                     dispatcher.services.identifyService.removeIdentity()
-                    dispatcher.dispatch(GuestAuth(reloadHome: true))
+                    dispatcher.dispatch(GuestAuth(reloadPractice: true))
                 } else {
                     dispatcher.dispatch(Action.loadAccount(previousAccount))
                 }
@@ -129,7 +129,7 @@ struct DeleteAccount: ThunkAction {
                     UserDefaults.standard.set(nil, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.logout)
                     dispatcher.services.identifyService.removeIdentity()
-                    dispatcher.dispatch(GuestAuth(reloadHome: true))
+                    dispatcher.dispatch(GuestAuth(reloadPractice: true))
                 } else {
                     dispatcher.dispatch(Action.loadAccount(previousAccount))
                 }
@@ -138,10 +138,10 @@ struct DeleteAccount: ThunkAction {
 }
 
 struct GuestAuth: ThunkAction {
-    let reloadHome: Bool
+    let reloadPractice: Bool
 
-    init(reloadHome: Bool = false) {
-        self.reloadHome = reloadHome
+    init(reloadPractice: Bool = false) {
+        self.reloadPractice = reloadPractice
     }
     func exec(dispatcher: Dispatcher) {
         let session = UserDefaults.standard.string(forKey: "cc_user_session")
@@ -159,8 +159,8 @@ struct GuestAuth: ThunkAction {
                     dispatcher.dispatch(LoadAccount())
                     dispatcher.dispatch(LoadInProgressChallenges())
                     dispatcher.dispatch(LoadCompletedChallenges())
-                    if reloadHome {
-                        dispatcher.dispatch(LoadHomeSections())
+                    if reloadPractice {
+                        dispatcher.dispatch(LoadPracticeSections())
                         dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
 
                     }
@@ -366,7 +366,7 @@ struct UpdateChallengeProgress: ThunkAction {
                     if result.value?.isSuccesful == true, currentProgressType != "done" {
                         dispatcher.services.challengesService.updateChallengeProgress(id: challengeId, progressId: progress?.id ?? 0, session: session, solution: solution, type: "done")
                             .ephemeralSink { _ in
-                                dispatcher.dispatch(LoadHomeSections()) // FIXME:
+                                dispatcher.dispatch(LoadPracticeSections()) // FIXME:
                                 dispatcher.dispatch(LoadAccount())
                                 dispatcher.dispatch(LoadInProgressChallenges())
                                 dispatcher.dispatch(LoadCompletedChallenges())
@@ -527,7 +527,7 @@ struct RestorePurchases: ThunkAction {
     }
 }
 
-struct LoadHomeSections: ThunkAction {
+struct LoadPracticeSections: ThunkAction {
     let language: ProgrammingLanguage?
     let humanLanguage: String
 
@@ -539,15 +539,15 @@ struct LoadHomeSections: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let language = language ?? dispatcher.state.programmingLanguage
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
-        if dispatcher.state.homeSections["\(language.apiRequestParam)_\(humanLanguage)"]?.value == nil {
-            dispatcher.dispatch(Action.loadHomeSections("\(language.apiRequestParam)_\(humanLanguage)", .loading))
+        if dispatcher.state.practiceSections["\(language.apiRequestParam)_\(humanLanguage)"]?.value == nil {
+            dispatcher.dispatch(Action.loadPracticeSections("\(language.apiRequestParam)_\(humanLanguage)", .loading))
         }
 
         dispatcher.services.challengesService
-            .fetchHomeSections(language: language.apiRequestParam, humanLanguage: humanLanguage, id: userId)
+            .fetchPracticeSections(language: language.apiRequestParam, humanLanguage: humanLanguage, id: userId)
             .asResolvable()
             .ephemeralSink { groups in
-                dispatcher.dispatch(Action.loadHomeSections("\(language.apiRequestParam)_\(humanLanguage)", groups))
+                dispatcher.dispatch(Action.loadPracticeSections("\(language.apiRequestParam)_\(humanLanguage)", groups))
             }
     }
 }
@@ -558,14 +558,14 @@ struct LoadCollectionContent: ThunkAction {
     func exec(dispatcher: Dispatcher) {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
         if dispatcher.state.collections[collection.id]?.value == nil {
-            dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, .loading))
+            dispatcher.dispatch(Action.loadPracticeCollectionContent(collection.id, .loading))
         }
 
         dispatcher.services.challengesService
             .fetchCollectionContent(id: userId, groupId: collection.id)
             .asResolvable()
             .ephemeralSink { groups in
-                dispatcher.dispatch(Action.loadHomeCollectionContent(collection.id, groups))
+                dispatcher.dispatch(Action.loadPracticeCollectionContent(collection.id, groups))
             }
     }
 }

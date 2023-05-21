@@ -11,47 +11,22 @@ import SwiftUI
 struct LessonCollectionView: View, LessonCollectionViewProps {
     @EnvironmentObject var store: Store
     @Environment(\.presentationMode) var presentationMode
-    let learnElement: LearnElement
     @State private var selection = 1
     @State private var challengesLoaded = false
-
-    private var hasPassedEntireLesson: Bool {
-        store.state.learnSections[store.state.programmingLanguage]?.value?.passedLessonIds.contains(learnElement.id) == true
-    }
+    let learnElement: LearnElement
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 20) {
-                HStack {
-                    Image("cross")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .onTapGesture {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    Spacer()
-                }
-                .padding(.leading, 16)
-
-                ZStack {
-                    Rectangle()
-                        .fill(Color(UIColor.CodeChallenge.dustyBlue))
-                        .frame(width: .screenWidth)
-                    HStack {
-                        RoundedCornersShape(corners: [.topRight, .bottomRight], radius: 3)
-                            .fill(Color(UIColor.CodeChallenge.blue1))
-                            .frame(width: .screenWidth * CGFloat(selection)/CGFloat(pages.count + 1))
-                        Spacer()
-                    }
-                }
-                .frame(height: 6)
-            }
+            header
             if isLoading {
                 SkeletonView()
             } else if let collection = lessonCollection {
                 TabView(selection: $selection, content: {
                     ForEach(Array(enabledPages.enumerated()), id: \.offset) { (index, lesson) in
-                        LessonView(lesson: lesson, lessonCollection: lessonCollection, hasPassedEntireLesson: hasPassedEntireLesson, onContinue: { updateProgresses in
+                        LessonView(lesson: lesson,
+                                   lessonCollection: lessonCollection,
+                                   hasPassedEntireLesson: hasPassedEntireLesson,
+                                   onContinue: { updateProgresses in
                             if updateProgresses {
                                 store.dispatch(UpdateClassProgress(progress: lesson.id, classId: collection.id))
                                 if collection.pages.last?.id == lesson.id, let id = nextLessonCollectionId {
@@ -59,7 +34,12 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                                 } else {
                                     store.dispatch(GetLearnSections(programmingLanguage: programmingLanguage))
                                 }
+                            } else if selection <= enabledPages.count {
+                                withAnimation {
+                                    selection = selection + 1
+                                }
                             }
+
                             if selection >= pages.count {
                                 presentationMode.wrappedValue.dismiss()
                             }
@@ -76,24 +56,26 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
         .onAppear {
             store.dispatch(GetLessonCollection(id: learnElement.id))
             if !enabledPages.isEmpty {
-                if let index = (enabledPages.firstIndex { $0.id == currentProgress }) {
-                    selection = index + 2
-                } else {
-                    selection = 1
-                }
+                setupSelection()
                 loadChallengeDetails()
             }
         }
         .onChange(of: enabledPages, perform: { _ in
             withAnimation {
-                if let index = (enabledPages.firstIndex { $0.id == currentProgress }) {
-                    selection = index + 2
-                } else {
-                    selection = 1
-                }
+                setupSelection()
             }
             loadChallengeDetails()
         })
+    }
+
+    private func setupSelection() {
+        if enabledPages.count == pages.count {
+            selection = 1
+        } else if let index = (enabledPages.firstIndex { $0.id == currentProgress }) {
+            selection = index + 2
+        } else {
+            selection = 1
+        }
     }
 
     private func loadChallengeDetails() {
@@ -109,6 +91,34 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                 store.dispatch(LoadChallengeProgress(challengeId: id, onComplete: nil))
             default: break
             }
+        }
+    }
+
+    private var header: some View {
+        VStack(spacing: 20) {
+            HStack {
+                Image("cross")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .onTapGesture {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                Spacer()
+            }
+            .padding(.leading, 16)
+
+            ZStack {
+                Rectangle()
+                    .fill(Color(UIColor.CodeChallenge.dustyBlue))
+                    .frame(width: .screenWidth)
+                HStack {
+                    RoundedCornersShape(corners: [.topRight, .bottomRight], radius: 3)
+                        .fill(Color(UIColor.CodeChallenge.blue1))
+                        .frame(width: .screenWidth * CGFloat(selection)/CGFloat(pages.count + 1))
+                    Spacer()
+                }
+            }
+            .frame(height: 6)
         }
     }
 }

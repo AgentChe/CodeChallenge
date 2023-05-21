@@ -25,7 +25,7 @@ enum AnalyticsEvent {
     case planSelected(String)
     case premiumSucceeded(String)
     case viewAllPlansClicked
-    case homepageLoaded(Double, Error?)
+    case practicepageLoaded(Double, Error?)
     case conceptOpened(String)
     case askAICLicked(Int, String)
     case explainMistakeClicked(Int, String)
@@ -62,8 +62,8 @@ enum AnalyticsEvent {
             return "Premium Succeeded"
         case .viewAllPlansClicked:
             return "View All Plans Clicked"
-        case .homepageLoaded:
-            return "Homepage Loaded"
+        case .practicepageLoaded:
+            return "Practicepage Loaded"
         case .conceptOpened:
             return "Concept Opened"
         case .askAICLicked:
@@ -103,7 +103,7 @@ enum AnalyticsEvent {
                 "challengeLevel": challenge.progress]
         case .planSelected(let type):
             return ["type": type]
-        case .homepageLoaded(let seconds, let error):
+        case .practicepageLoaded(let seconds, let error):
             return ["miliseconds": seconds, "error": error?.localizedDescription ?? ""]
         case .premiumSucceeded(let type):
             return ["type": type]

@@ -1,5 +1,5 @@
 //
-//  NewHomeViewProps.swift
+//  NewPracticeViewProps.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 06/11/2022.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol HomeViewProps {
+protocol PracticeViewProps {
     var store: Store { get }
     var humanLanguage: String { get }
 }
 
-extension HomeViewProps {
+extension PracticeViewProps {
     var isLoading: Bool {
-        store.state.homeSections[identifier]?.isLoading == true
+        store.state.practiceSections[identifier]?.isLoading == true
     }
 
     var identifier: String {
@@ -34,7 +34,7 @@ extension HomeViewProps {
     }
 }
 
-extension HomeViewProps {
+extension PracticeViewProps {
     var challengesToSuggest: [Challenge] {
         store.state.searchByInstances[programmingLanguage.apiRequestParam]?.results.value ?? []
     }

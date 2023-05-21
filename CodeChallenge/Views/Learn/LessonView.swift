@@ -28,7 +28,7 @@ struct LessonView: View {
     }
 
     var hasPassedThisLesson: Bool {
-        if hasPassedEntireLesson { return hasPassedThisLesson }
+        if hasPassedEntireLesson { return true }
         guard let enabledPages = lessonCollection?.enabledPages,
               let index = (enabledPages.firstIndex { $0.id == lesson.id }) else { return false }
         return index < enabledPages.count - 1
@@ -93,7 +93,9 @@ struct LessonView: View {
                 VStack {
                     Spacer()
                     Button("Continue") {
-                        if !lessonHasSolvableContent || (presentResult && ((presentQuizResultPopup && quizesPassed) || (presentCodeCompiledPopup && codeCompileResult.0 == "successful!"))) {
+                        if !lessonHasSolvableContent ||
+                            (presentResult && ((presentQuizResultPopup && quizesPassed) ||
+                                               (presentCodeCompiledPopup && codeCompileResult.0 == "successful!"))) {
                             onContinue(!hasPassedThisLesson)
                         } else {
                             for challengeId in challengeAnswers.keys {
@@ -122,7 +124,7 @@ struct LessonView: View {
             }
         }
         .onAppear {
-            setupQuizAnswersDict()
+            setupAnswersDict()
         }
         .padding(.top, 20)
         .onChange(of: challengeResults) { newValue in
@@ -136,7 +138,7 @@ struct LessonView: View {
 }
 
 extension LessonView {
-    private func setupQuizAnswersDict() {
+    private func setupAnswersDict() {
         for lesson in lesson.content {
             switch lesson {
             case .composeCodeQuiz, .chooseAnswerQuiz:

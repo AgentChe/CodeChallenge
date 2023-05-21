@@ -1,5 +1,5 @@
 //
-//  HomeSectionsView.swift
+//  PracticeSectionsView.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 06/03/2023.
@@ -10,7 +10,7 @@ import SwiftUI
 import UIKit
 import Paywall
 
-struct HomeSectionsView: View, HomeSectionsViewProps {
+struct PracticeSectionsView: View, PracticeSectionsViewProps {
     @EnvironmentObject var store: Store
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]
     let humanLanguage: String
@@ -36,7 +36,7 @@ struct HomeSectionsView: View, HomeSectionsViewProps {
                             .padding(.bottom, 16)
                     ) {
                         ForEach(Array(section.collections.enumerated()), id: \.element.id) { (offset, collection) in
-                            homeViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
+                            practiceViewElementView(offset: offset, sectionOffset: sectionOffset, section: section, collection: collection)
                                 .onTapGesture {
                                     onCollectionTap?(collection)
                                 }
@@ -49,8 +49,8 @@ struct HomeSectionsView: View, HomeSectionsViewProps {
             .padding(.top, 16)
     }
 
-    private func homeViewElementView(offset: Int, sectionOffset: Int, section: ChallengeSection, collection: ChallengeCollection) -> some View {
-        HomeViewElementView(model: collection,
+    private func practiceViewElementView(offset: Int, sectionOffset: Int, section: ChallengeSection, collection: ChallengeCollection) -> some View {
+        PracticeViewElementView(model: collection,
                             progressImageName: progressImageName(index: offset, sectionIndex: sectionOffset),
                             progressTopInset: progressTopInset(index: offset, sectionIndex: sectionOffset),
                             progressBottomInset: progressBottomInset(index: offset, sectionIndex: sectionOffset),
@@ -61,7 +61,7 @@ struct HomeSectionsView: View, HomeSectionsViewProps {
     }
 }
 
-struct HomeViewElementView: View {
+struct PracticeViewElementView: View {
     @EnvironmentObject var store: Store
     let model: ChallengeCollection
     let progressImageName: String
@@ -197,7 +197,7 @@ struct HomeViewElementView: View {
         VStack {
             Spacer()
                 .frame(height: completionViewTopInset)
-            Image("home_progress_done")
+            Image("practice_progress_done")
                 .resizable()
                 .frame(width: 20, height: 20)
             Spacer()

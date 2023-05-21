@@ -1,5 +1,5 @@
 //
-//  HomeLoadingView.swift
+//  PracticeLoadingView.swift
 //  CodeChallenge
 //
 //  Created by Tatevik Tovmasyan on 27/11/2022.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct HomeLoadingView: View {
+struct PracticeLoadingView: View {
     var body: some View {
         ZStack {
             Rectangle()

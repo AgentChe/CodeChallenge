@@ -12,15 +12,20 @@ struct LearnTabView: View, LearnTabViewProps {
     @EnvironmentObject var store: Store
     let onElementTap: (LearnElement) -> Void
     let onJumpSection: (LearnSection) -> Void
-    @State private var showProgrammingLanguagePopup = false
     let onOpenPremium: () -> Void
     let onJumpSignUp: () -> Void
+    @State private var showProgrammingLanguagePopup = false
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 0) {
                 ScrollView(showsIndicators: false) {
-                    LearnTabSectionsView(onElementTap: onElementTap, onOpenPremium: onOpenPremium, onJumpSection: onJumpSection, onJumpSignUp: onJumpSignUp)
+                    LearnTabSectionsView(
+                        onElementTap: onElementTap,
+                        onOpenPremium: onOpenPremium,
+                        onJumpSection: onJumpSection,
+                        onJumpSignUp: onJumpSignUp
+                    )
                 }
                 .padding(.top, 10)
             }
@@ -81,7 +86,7 @@ struct LearnTabView: View, LearnTabViewProps {
             }
         }
         .onChange(of: programmingLanguage) { newValue in
-            store.dispatch(LoadHomeSections(language: newValue))
+            store.dispatch(LoadPracticeSections(language: newValue))
             store.dispatch(GetLearnSections(programmingLanguage: newValue))
         }
     }

@@ -17,7 +17,7 @@ protocol ChallengesServiceProtocol {
     func compile(id: Int, challengeId: Int, session: String, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<ChallengeCompiledResult, Error>
     func searchChallenges(with query: String, programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<[Challenge], Error>
     func loadHashtags(programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[String], Error>
-    func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error>
+    func fetchPracticeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error>
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<ChallengeCollectionContent, Error>
     func getRecommendedChallenges(userId: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<[Challenge], Error>
     func getLearnSections(programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<LearnSections, Error>
@@ -83,7 +83,7 @@ struct ChallengesService: ChallengesServiceProtocol {
             .eraseToAnyPublisher()
     }
 
-    func fetchHomeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error> {
+    func fetchPracticeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error> {
         return URLRequest
             .create(url: "\(Configuration.host)/v2/home/\(id)/\(humanLanguage)/\(language)", type: .get)
             .flatMap { networkService.load($0, decoding: [ChallengeSection].self, with: .snakeCase) }

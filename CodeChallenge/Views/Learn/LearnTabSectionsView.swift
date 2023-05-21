@@ -41,12 +41,12 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                                 header:
                                     VStack(alignment: .leading, spacing: 12) {
                                         Text(section.title)
-                                            .font(.h3)
+                                            .font(.h4)
                                             .bold()
                                             .padding(.bottom, 6)
                                         HStack {
                                             Text(section.description)
-                                                .font(.regular(size: 18))
+                                                .font(.regular(size: 16))
                                                 .foregroundColor(.CodeChallenge.white)
                                             Spacer()
                                         }

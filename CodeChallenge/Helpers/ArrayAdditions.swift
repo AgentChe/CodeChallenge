@@ -17,3 +17,15 @@ extension Array {
         return self[index]
     }
 }
+
+extension Array where Element: Equatable {
+    func copyWithout(_ array: [Element]) -> [Element] {
+        var result = self
+        for element in array {
+            if let index = result.firstIndex(of: element) {
+                result.remove(at: index)
+            }
+        }
+        return result
+    }
+}

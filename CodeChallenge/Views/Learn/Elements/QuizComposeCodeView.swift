@@ -10,7 +10,7 @@ import SwiftUI
 
 struct QuizComposeCodeView: View {
     let text: String
-    let options: [String]
+    var options: [String]
     let winning: [String]
     let passed: Bool
     let onSelect: ([String]) -> Void
@@ -46,7 +46,7 @@ struct QuizComposeCodeView: View {
                 .frame(height: .screenHeight/4)
             }
 
-            OptionsView(options: options.filter { !selectedOptions.contains($0) }, onHeightChange: { _ in }, onOptionTap: { keyword in
+            OptionsView(options: options.copyWithout(selectedOptions), onHeightChange: { _ in }, onOptionTap: { keyword in
                 selectedOptions = selectedOptions + [keyword]
                 onSelect(selectedOptions)
             })

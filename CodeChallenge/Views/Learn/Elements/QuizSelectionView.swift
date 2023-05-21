@@ -46,10 +46,14 @@ struct QuizSelectionView: View {
                     }
                 }
                 .onTapGesture {
-                    if selectedOptions.contains(option) {
-                        selectedOptions = selectedOptions.filter { $0 != option }
+                    if winning.count == 1 {
+                        selectedOptions = [option]
                     } else {
-                        selectedOptions.append(option)
+                        if selectedOptions.contains(option) {
+                            selectedOptions = selectedOptions.filter { $0 != option }
+                        } else {
+                            selectedOptions.append(option)
+                        }
                     }
                     onSelect(selectedOptions)
                 }

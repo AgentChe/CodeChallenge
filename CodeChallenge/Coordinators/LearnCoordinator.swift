@@ -14,7 +14,7 @@ class LearnCoordinator {
 
     let store: Store
     var onGoPremium: (() -> Void)?
-    var onJumpSignUp: (() -> Void)?
+    var onClaimCertificate: ((Bool) -> Void)?
     var popupController: PopupViewController?
     var premiumPopupController: PopupViewController?
     var premiumViewController: UIViewController?
@@ -30,8 +30,8 @@ class LearnCoordinator {
         } onOpenPremium: { [weak self] in
             guard let self = self else { return }
             self.presentPremiumScreen(from: self.navigationController)
-        } onJumpSignUp: { [weak self] in
-            self?.onJumpSignUp?()
+        } onClaimCertificate: { [weak self] loggedIn in
+            self?.onClaimCertificate?(loggedIn)
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: learnView)

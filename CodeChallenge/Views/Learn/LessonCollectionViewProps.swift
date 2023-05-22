@@ -30,7 +30,8 @@ extension LessonCollectionViewProps {
     }
 
     var enabledPages: [Lesson] {
-        lessonCollection?.enabledPages ?? []
+        if hasPassedEntireLesson { return pages }
+        return lessonCollection?.enabledPages ?? []
     }
 
     var pages: [Lesson] {

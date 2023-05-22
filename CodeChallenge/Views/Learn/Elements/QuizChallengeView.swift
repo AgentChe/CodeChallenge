@@ -25,7 +25,7 @@ struct QuizChallengeView: View {
 
     var code: String? {
         if let progress = store.state.challengeProgresses[details?.id ?? 0]?.value {
-            return progress.solution?.python.removingPercentEncoding ?? details?.body.template.removingPercentEncoding
+            return progress.solution?.python.removingPercentEncoding ?? progress.solution?.python ?? details?.body.template.removingPercentEncoding
         } else {
             return details?.body.template.removingPercentEncoding
         }
@@ -34,25 +34,30 @@ struct QuizChallengeView: View {
     var body: some View {
         VStack {
             if let details = details {
-                detailsContent(details)
-            } else {
-
+                detailsView(details)
             }
         }
         .onAppear {
-            displayCode = code
-            onCodeChange(displayCode ?? "")
+            if !isLoading {
+                displayCode = code
+                onCodeChange(code ?? "")
+            }
         }
         .onChange(of: code, perform: { newValue in
-            displayCode = newValue
-            onCodeChange(newValue ?? "")
+            if !isLoading {
+                displayCode = newValue
+                onCodeChange(newValue ?? "")
+            }
         })
     }
 
-    func detailsContent(_ details: ChallengeDetail) -> some View {
+    private func detailsView(_ details: ChallengeDetail) -> some View {
         VStack {
             HtmlAttributedLabel(htmlAttributedString: details.body.toAttributedString(), foregroundColor: .white)
                 .frame(width: .screenWidth - 40)
+
+            Spacer()
+                .frame(height: 20)
 
             SimpleCodePlaygroundView(code: $displayCode, onCodeUpdate: { newValue in
                 onCodeChange(newValue)
@@ -60,6 +65,11 @@ struct QuizChallengeView: View {
                 .frame(height: 200)
                 .disabled(isLoading)
                 .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+                .background {
+                    Rectangle()
+                        .fill(Color(UIColor.CodeChallenge.darkBlue))
+                }
             Spacer()
         }
     }

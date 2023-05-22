@@ -16,13 +16,16 @@ struct SimpleCodePlaygroundView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> some UIView {
         let view = SimpleCodePlaygroundUIKitView()
-        view.set(code: code ?? "")
+        if let code = code {
+            view.set(code: code)
+        }
         view.onCodeUpdate = onCodeUpdate
         return view
     }
 
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        (uiView as? SimpleCodePlaygroundUIKitView)?.set(code: code ?? "")
+        guard let code = code else { return }
+        (uiView as? SimpleCodePlaygroundUIKitView)?.set(code: code)
     }
 }
 
@@ -75,9 +78,7 @@ class SimpleCodePlaygroundUIKitView: UIView {
     }
 
     func set(code: String) {
-        if textView.text != code {
-            textView.text = code
-        }
+        textView.text = code
     }
 }
 

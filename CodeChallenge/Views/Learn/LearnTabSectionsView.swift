@@ -14,7 +14,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
     let onElementTap: (LearnElement) -> Void
     let onOpenPremium: () -> Void
     let onJumpSection: (LearnSection) -> Void
-    let onJumpSignUp: () -> Void
+    let onClaimCertificate: (Bool) -> Void
 
     var body: some View {
         if isLoading {
@@ -113,11 +113,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 30)
             Button("Claim My Certificate") {
-                if store.state.user.value?.isLoggedIn == true {
-                    // FIXME: implement the popup
-                } else {
-                    onJumpSignUp()
-                }
+                onClaimCertificate(store.state.user.value?.isLoggedIn == true)
             }
             .padding(.bottom, 20)
             .buttonStyle(PrimaryButton(status: learnSections?.lastSectionIsDone == true ? .enabled : .disabled))

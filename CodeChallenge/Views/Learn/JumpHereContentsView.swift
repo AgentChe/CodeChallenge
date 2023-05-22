@@ -96,6 +96,9 @@ struct JumpHereContentsView: View {
         .onAppear {
             loadChallengeDetails()
         }
+        .onChange(of: selection) { _ in
+            UIApplication.shared.endEditing()
+        }
     }
 
     private func loadChallengeDetails() {

@@ -711,7 +711,7 @@
 				E0667AD929DA13C600C9CAF1 /* Learn */,
 				E039199A29BE9C7D00B43A99 /* Chat */,
 				E085CFB829B6A78100BA1F16 /* Leaderboard */,
-				E0FB612B29185BFD00DB1E9A /* Home */,
+				E0FB612B29185BFD00DB1E9A /* Practice */,
 				E0FB612A29185BBA00DB1E9A /* Rewards */,
 				E0FB612929185B9C00DB1E9A /* Challenge */,
 				E0FB612829185B6700DB1E9A /* Premium */,
@@ -912,7 +912,7 @@
 			path = Rewards;
 			sourceTree = "<group>";
 		};
-		E0FB612B29185BFD00DB1E9A /* Home */ = {
+		E0FB612B29185BFD00DB1E9A /* Practice */ = {
 			isa = PBXGroup;
 			children = (
 				E0FB612729185B3400DB1E9A /* Search */,
@@ -925,7 +925,7 @@
 				E085CFB229B6A21E00BA1F16 /* PracticeSectionsView.swift */,
 				E085CFB429B6A23000BA1F16 /* PracticeSectionsViewProps.swift */,
 			);
-			path = Home;
+			path = Practice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

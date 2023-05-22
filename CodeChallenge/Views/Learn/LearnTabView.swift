@@ -13,7 +13,7 @@ struct LearnTabView: View, LearnTabViewProps {
     let onElementTap: (LearnElement) -> Void
     let onJumpSection: (LearnSection) -> Void
     let onOpenPremium: () -> Void
-    let onJumpSignUp: () -> Void
+    let onClaimCertificate: (Bool) -> Void
     @State private var showProgrammingLanguagePopup = false
 
     var body: some View {
@@ -24,7 +24,7 @@ struct LearnTabView: View, LearnTabViewProps {
                         onElementTap: onElementTap,
                         onOpenPremium: onOpenPremium,
                         onJumpSection: onJumpSection,
-                        onJumpSignUp: onJumpSignUp
+                        onClaimCertificate: onClaimCertificate
                     )
                 }
                 .padding(.top, 10)

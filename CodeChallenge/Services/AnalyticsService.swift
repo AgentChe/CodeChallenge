@@ -29,6 +29,7 @@ enum AnalyticsEvent {
     case conceptOpened(String)
     case askAICLicked(Int, String)
     case explainMistakeClicked(Int, String)
+    case claimCertificate
 
     var value: String {
         switch self {
@@ -70,6 +71,8 @@ enum AnalyticsEvent {
             return "Ask AI Clicked"
         case .explainMistakeClicked:
             return "Explain Mistake"
+        case .claimCertificate:
+            return "Claim certificate"
         }
     }
 

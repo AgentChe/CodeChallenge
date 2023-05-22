@@ -77,8 +77,19 @@ final class RootCoordinator {
             self?.showLogin(action: action)
         }
 
-        learnCoordinator.onJumpSignUp = { [weak self] in
-            self?.showLogin()
+        learnCoordinator.onClaimCertificate = { [weak self] isLoggedIn in
+            let runAlert = {
+                let alertController = UIAlertController(title: "Certificate claimed!", message: "You'll be notified via an email in 48 hours", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Ok", style: .default) { _ in }
+                alertController.addAction(action)
+                self?.learnCoordinator.navigationController.present(alertController, animated: true)
+            }
+            if isLoggedIn {
+                self?.store.dispatch(TrackAnalyticsEvent(event: .claimCertificate))
+                runAlert()
+            } else {
+                self?.showLogin(action: TrackAnalyticsEvent(event: .claimCertificate), completion: runAlert)
+            }
         }
 
         accountCoordinator.onGoPremium = { [weak self] in
@@ -166,7 +177,7 @@ final class RootCoordinator {
         window.rootViewController = controller
     }
 
-    private func showLogin(action: ThunkAction? = nil) {
+    private func showLogin(action: ThunkAction? = nil, completion: (() -> Void)? = nil) {
         authCancellable = self.store
             .statePublisher
             .map { $0.user.value?.isLoggedIn }
@@ -180,6 +191,7 @@ final class RootCoordinator {
                     self.authNavigationController?.dismiss(animated: true)
                     if let action = action {
                         self.store.dispatch(action)
+                        completion?()
                     }
                 }
             }

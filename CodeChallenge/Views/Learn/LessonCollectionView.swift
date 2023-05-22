@@ -11,7 +11,7 @@ import SwiftUI
 struct LessonCollectionView: View, LessonCollectionViewProps {
     @EnvironmentObject var store: Store
     @Environment(\.presentationMode) var presentationMode
-    @State private var selection = 1
+    @State private var selection = 0
     @State private var challengesLoaded = false
     let learnElement: LearnElement
 
@@ -27,6 +27,9 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                                    lessonCollection: lessonCollection,
                                    hasPassedEntireLesson: hasPassedEntireLesson,
                                    onContinue: { updateProgresses in
+                            if selection >= pages.count {
+                                presentationMode.wrappedValue.dismiss()
+                            }
                             if updateProgresses {
                                 store.dispatch(UpdateClassProgress(progress: lesson.id, classId: collection.id))
                                 if collection.pages.last?.id == lesson.id, let id = nextLessonCollectionId {
@@ -38,10 +41,6 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                                 withAnimation {
                                     selection = selection + 1
                                 }
-                            }
-
-                            if selection >= pages.count {
-                                presentationMode.wrappedValue.dismiss()
                             }
                         })
                         .tag(lesson.id)
@@ -69,7 +68,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
     }
 
     private func setupSelection() {
-        if enabledPages.count == pages.count {
+        if hasPassedEntireLesson {
             selection = 1
         } else if let index = (enabledPages.firstIndex { $0.id == currentProgress }) {
             selection = index + 2

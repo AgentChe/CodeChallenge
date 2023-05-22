@@ -42,7 +42,7 @@ struct LessonView: View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
-                    ForEach(Array(lesson.content.enumerated()), id: \.offset) { (_, lessonContent) in
+                    ForEach(Array(lesson.content.enumerated()), id: \.offset) { (offset, lessonContent) in
                         switch lessonContent {
                         case .text(let text):
                             LessonTextView(text: text)
@@ -72,7 +72,8 @@ struct LessonView: View {
                         case .challenge(let id):
                             QuizChallengeView(id: id, onCodeChange: { code in
                                 challengeAnswers[id] = code
-                            }).id(id)
+                            })
+                            .id(id)
                         default: EmptyView()
                         }
                     }
@@ -144,7 +145,7 @@ extension LessonView {
             case .composeCodeQuiz, .chooseAnswerQuiz:
                 quizAnswers.append((lesson, []))
             case .challenge(let id):
-                challengeAnswers[id] = store.state.challengeDetails[id]?.value?.body.template.removingPercentEncoding ?? ""
+                break
             default: break
             }
         }
@@ -157,10 +158,16 @@ extension LessonView {
     }
 
     private func continuePopup() -> some View {
-        VStack {
+        VStack(alignment: .leading) {
             Rectangle()
                 .fill(Color(quizesPassed ? UIColor.CodeChallenge.lessonQuizGreen : UIColor.CodeChallenge.lessonQuizRed))
                 .frame(height: 4)
+            if !quizesPassed {
+                Text("Try again")
+                    .foregroundColor(Color(UIColor.CodeChallenge.lessonQuizRed))
+                    .font(.bodyText)
+                    .padding(.leading, 20)
+            }
             Spacer()
         }
         .frame(width: .screenWidth, height: 120)

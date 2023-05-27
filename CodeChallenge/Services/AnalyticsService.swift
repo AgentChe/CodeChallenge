@@ -72,7 +72,7 @@ enum AnalyticsEvent {
         case .explainMistakeClicked:
             return "Explain Mistake"
         case .claimCertificate:
-            return "Claim certificate"
+            return "Claim Certificate"
         }
     }
 

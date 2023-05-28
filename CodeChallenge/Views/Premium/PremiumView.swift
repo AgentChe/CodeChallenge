@@ -113,7 +113,7 @@ struct PremiumView: View, PremiumViewProps {
             }
         }
         .foregroundColor(.white)
-        .onChange(of: store.state.user.value?.isPremium) { newValue in
+        .onChange(of: store.state.account.value?.isPremium) { newValue in
             if newValue == true {
                 presentationMode.wrappedValue.dismiss()
             }

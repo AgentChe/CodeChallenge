@@ -21,6 +21,6 @@ extension LearnTabViewProps {
     }
 
     var isPremium: Bool {
-        store.state.user.value?.isPremium == true
+        store.state.account.value?.isPremium == true
     }
 }

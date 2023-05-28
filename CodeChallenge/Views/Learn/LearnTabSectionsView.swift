@@ -181,7 +181,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
 
     @ViewBuilder
     private func image(element: LearnElement, position: Int, onTapGesture: @escaping () -> Void) -> some View {
-        if store.state.user.value?.isPremium == false && element.isPremium == true {
+        if store.state.account.value?.isPremium == false && element.isPremium == true {
             image("learn_premium")
                 .onTapGesture(perform: onOpenPremium)
         } else if element.id == currentProgressId && learnSections?.passedLessonIds.contains(element.id) == false {

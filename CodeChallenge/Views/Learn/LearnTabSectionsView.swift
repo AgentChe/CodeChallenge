@@ -113,7 +113,9 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 30)
             Button("Claim My Certificate") {
-                onClaimCertificate(store.state.user.value?.isLoggedIn == true)
+                if learnSections?.lastSectionIsDone == true {
+                    onClaimCertificate(store.state.user.value?.isLoggedIn == true)
+                }
             }
             .padding(.bottom, 20)
             .buttonStyle(PrimaryButton(status: learnSections?.lastSectionIsDone == true ? .enabled : .disabled))

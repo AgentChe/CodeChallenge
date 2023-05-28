@@ -36,7 +36,8 @@ class PaywallService: NSObject {
 // MARK: - Paywall Delegate
 extension PaywallService: PaywallDelegate {
   func purchase(product: SKProduct) {
-      store.dispatch(PurchasePayment(payment: product))
+      let extractedExpr = PurchasePayment(payment: product)
+      store.dispatch(extractedExpr)
   }
 
   func restorePurchases(completion: @escaping (Bool) -> Void) {

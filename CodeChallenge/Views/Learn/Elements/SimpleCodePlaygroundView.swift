@@ -79,6 +79,7 @@ class SimpleCodePlaygroundUIKitView: UIView {
 
     func set(code: String) {
         textView.text = code
+            .removingPercentEncoding ?? code
     }
 }
 

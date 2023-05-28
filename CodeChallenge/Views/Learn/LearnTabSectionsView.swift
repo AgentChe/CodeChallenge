@@ -181,7 +181,10 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
 
     @ViewBuilder
     private func image(element: LearnElement, position: Int, onTapGesture: @escaping () -> Void) -> some View {
-        if element.id == currentProgressId && learnSections?.passedLessonIds.contains(element.id) == false {
+        if store.state.user.value?.isPremium == false && element.isPremium == true {
+            image("learn_premium")
+                .onTapGesture(perform: onOpenPremium)
+        } else if element.id == currentProgressId && learnSections?.passedLessonIds.contains(element.id) == false {
             ZStack {
                 Ellipse()
                     .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
@@ -195,10 +198,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .onTapGesture(perform: onTapGesture)
             }
         } else {
-            if store.state.user.value?.isPremium == false && element.isPremium == true {
-                image("learn_premium")
-                    .onTapGesture(perform: onOpenPremium)
-            } else if learnSections?.passedLessonIds.contains(element.id) == true {
+            if learnSections?.passedLessonIds.contains(element.id) == true {
                 image("learn_star")
                     .onTapGesture(perform: onTapGesture)
             } else {

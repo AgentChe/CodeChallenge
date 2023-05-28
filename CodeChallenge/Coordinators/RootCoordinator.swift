@@ -52,9 +52,9 @@ final class RootCoordinator {
             store.dispatch(GuestAuth())
         } else {
             store.dispatch(LoadAccount())
-            store.dispatch(LoadInProgressChallenges())
-            store.dispatch(LoadCompletedChallenges())
         }
+        store.dispatch(LoadInProgressChallenges())
+        store.dispatch(LoadCompletedChallenges())
         let tabs = [
             learnCoordinator.navigationController,
             practiceCoordinator.navigationController,

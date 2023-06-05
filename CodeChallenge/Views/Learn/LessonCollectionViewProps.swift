@@ -20,6 +20,12 @@ extension LessonCollectionViewProps {
     var lessonCollection: LessonCollection? {
         store.state.lessons[learnElement.id]?.value
     }
+    
+    var chapterTitle: String? {
+        store.state.learnSections[store.state.programmingLanguage]?.value?.contents.first(where: { learnSection in
+            learnSection.contents.contains(where: { $0.id == learnElement.id })
+        })?.title
+    }
 
     var isLoading: Bool {
         store.state.lessons[learnElement.id]?.isLoading == true

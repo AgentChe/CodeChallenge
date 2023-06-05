@@ -30,6 +30,9 @@ enum AnalyticsEvent {
     case askAICLicked(Int, String)
     case explainMistakeClicked(Int, String)
     case claimCertificate
+    case lessonStarted(Int)
+    case lessonCompleted(Int)
+    case chapterCompleted(String)
 
     var value: String {
         switch self {
@@ -73,6 +76,12 @@ enum AnalyticsEvent {
             return "Explain Mistake"
         case .claimCertificate:
             return "Claim Certificate"
+        case .lessonStarted:
+            return "Lesson Started"
+        case .lessonCompleted:
+            return "Lesson Completed"
+        case .chapterCompleted:
+            return "Chapter Completed"
         }
     }
 
@@ -116,6 +125,10 @@ enum AnalyticsEvent {
             return ["challengeid": "\(id)", buttonName: buttonName]
         case .explainMistakeClicked(let id, let buttonName):
             return ["challengeid": "\(id)", buttonName: buttonName]
+        case .chapterCompleted(let id):
+            return ["chapterTitle": "\(id)"]
+        case .lessonCompleted(let id), .lessonStarted(let id):
+            return ["lessonId": "\(id)"]
         default: return [:]
         }
     }

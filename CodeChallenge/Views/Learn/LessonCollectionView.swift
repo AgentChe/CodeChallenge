@@ -32,8 +32,13 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
                             }
                             if updateProgresses {
                                 store.dispatch(UpdateClassProgress(progress: lesson.id, classId: collection.id))
-                                if collection.pages.last?.id == lesson.id, let id = nextLessonCollectionId {
-                                    store.dispatch(UpdateLearningPathProgress(progress: id))
+                                if collection.pages.last?.id == lesson.id {
+                                    if let id = nextLessonCollectionId {
+                                        store.dispatch(TrackAnalyticsEvent(event: .lessonCompleted(learnElement.id)))
+                                        store.dispatch(UpdateLearningPathProgress(progress: id))
+                                    } else if let chapterTitle = chapterTitle {
+                                        store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.chapterCompleted(chapterTitle)))
+                                    }
                                 } else {
                                     store.dispatch(GetLearnSections(programmingLanguage: programmingLanguage))
                                 }
@@ -53,6 +58,7 @@ struct LessonCollectionView: View, LessonCollectionViewProps {
         }
         .background(.CodeChallenge.dark)
         .onAppear {
+            store.dispatch(TrackAnalyticsEvent(event: .lessonStarted(learnElement.id)))
             store.dispatch(GetLessonCollection(id: learnElement.id))
             if !enabledPages.isEmpty {
                 setupSelection()

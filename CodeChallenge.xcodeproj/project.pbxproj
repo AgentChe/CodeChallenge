@@ -79,6 +79,10 @@
 		E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6A28A85C9A004B81DA /* SolutionView.swift */; };
 		E0785AF929A40EB100E4661D /* Rewards.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0785AF829A40EB100E4661D /* Rewards.swift */; };
 		E0785AFB29A40F9800E4661D /* RewardsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0785AFA29A40F9800E4661D /* RewardsService.swift */; };
+		E079315F2A376B440003CFA3 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E079315E2A376B440003CFA3 /* OnboardingCoordinator.swift */; };
+		E07931622A376C560003CFA3 /* OnboardingStarterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07931612A376C560003CFA3 /* OnboardingStarterView.swift */; };
+		E07931642A376C620003CFA3 /* OnboardingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07931632A376C620003CFA3 /* OnboardingStepView.swift */; };
+		E07931662A377A470003CFA3 /* OnboardingSummaryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07931652A377A470003CFA3 /* OnboardingSummaryPage.swift */; };
 		E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */; };
 		E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */; };
 		E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */; };
@@ -300,6 +304,10 @@
 		E0750D6A28A85C9A004B81DA /* SolutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionView.swift; sourceTree = "<group>"; };
 		E0785AF829A40EB100E4661D /* Rewards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rewards.swift; sourceTree = "<group>"; };
 		E0785AFA29A40F9800E4661D /* RewardsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsService.swift; sourceTree = "<group>"; };
+		E079315E2A376B440003CFA3 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		E07931612A376C560003CFA3 /* OnboardingStarterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStarterView.swift; sourceTree = "<group>"; };
+		E07931632A376C620003CFA3 /* OnboardingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStepView.swift; sourceTree = "<group>"; };
+		E07931652A377A470003CFA3 /* OnboardingSummaryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSummaryPage.swift; sourceTree = "<group>"; };
 		E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingLanguage.swift; sourceTree = "<group>"; };
 		E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguagesView.swift; sourceTree = "<group>"; };
 		E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
@@ -554,6 +562,16 @@
 			path = Elements;
 			sourceTree = "<group>";
 		};
+		E07931602A376B890003CFA3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E07931612A376C560003CFA3 /* OnboardingStarterView.swift */,
+				E07931632A376C620003CFA3 /* OnboardingStepView.swift */,
+				E07931652A377A470003CFA3 /* OnboardingSummaryPage.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		E085CFB829B6A78100BA1F16 /* Leaderboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -701,6 +719,7 @@
 				E064949D29C78BAA00AE3B6B /* ChallengeFriendPresentable.swift */,
 				E0AB515D29EC822A000DD0DD /* LearnCoordinator.swift */,
 				E0AB516329ECA2DB000DD0DD /* PremiumPresentable.swift */,
+				E079315E2A376B440003CFA3 /* OnboardingCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -708,6 +727,7 @@
 		E0BD3247285A8D15000C37A9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E07931602A376B890003CFA3 /* Onboarding */,
 				E0667AD929DA13C600C9CAF1 /* Learn */,
 				E039199A29BE9C7D00B43A99 /* Chat */,
 				E085CFB829B6A78100BA1F16 /* Leaderboard */,
@@ -1115,6 +1135,7 @@
 				E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */,
 				E0BD3295285CF886000C37A9 /* Services.swift in Sources */,
 				E085CFBA29B6A78F00BA1F16 /* LeaderboardViewProps.swift in Sources */,
+				E07931642A376C620003CFA3 /* OnboardingStepView.swift in Sources */,
 				E0667AE629DA14AF00C9CAF1 /* LessonCodeView.swift in Sources */,
 				E06494AB29CA483F00AE3B6B /* ChallengeFriendCodeChallengeView.swift in Sources */,
 				E06494A029C8FC7800AE3B6B /* CodeChallengeContentsView.swift in Sources */,
@@ -1127,6 +1148,7 @@
 				E06D90C229A2E8F500AC09AB /* ActivityView.swift in Sources */,
 				E0DA79C228F20AB00038B0E1 /* Configuration.swift in Sources */,
 				E0BD3286285CF568000C37A9 /* NetworkService.swift in Sources */,
+				E07931662A377A470003CFA3 /* OnboardingSummaryPage.swift in Sources */,
 				E0BD3246285A8B1F000C37A9 /* RootCoordinator.swift in Sources */,
 				E0BD3297285CF979000C37A9 /* AuthService.swift in Sources */,
 				E085CFBE29B6A8AC00BA1F16 /* LeaderboardService.swift in Sources */,
@@ -1197,6 +1219,7 @@
 				E039199529BBA38800B43A99 /* PlaygroundViewModel.swift in Sources */,
 				E0750D6B28A85C9A004B81DA /* SolutionView.swift in Sources */,
 				E0D0AE1029BFDE3F001CE57D /* MessageView.swift in Sources */,
+				E07931622A376C560003CFA3 /* OnboardingStarterView.swift in Sources */,
 				E0BD324B285A8D6B000C37A9 /* AppDelegate.swift in Sources */,
 				E0A69CCA292AE896009D5C0C /* CompletedChallengesView.swift in Sources */,
 				E0BD3283285CF4A5000C37A9 /* Store.swift in Sources */,
@@ -1215,6 +1238,7 @@
 				E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */,
 				E0785AF929A40EB100E4661D /* Rewards.swift in Sources */,
 				E09FA68128C37F1100D3349D /* SettingsViewProps.swift in Sources */,
+				E079315F2A376B440003CFA3 /* OnboardingCoordinator.swift in Sources */,
 				E06494AD29CA484E00AE3B6B /* ChallengeFriendCodeChallengeViewProps.swift in Sources */,
 				E0667AEC29DA2CD900C9CAF1 /* Lesson.swift in Sources */,
 				E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */,
@@ -1459,7 +1483,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1493,7 +1517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1590,7 +1614,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1701,7 +1725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6;
+				MARKETING_VERSION = 2.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

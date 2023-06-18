@@ -1,0 +1,108 @@
+//
+//  OnboardingCoordinator.swift
+//  CodeChallenge
+//
+//  Created by Tatevik Tovmasyan on 12/06/2023.
+//
+
+import Foundation
+import UIKit
+import SwiftUI
+import Paywall
+import Combine
+
+class OnboardingCoordinator {
+    let navigationController = UINavigationController()
+    let store: Store
+    private var result: [(OnboardingStep, String)] = []
+    private var authCancellable: AnyCancellable?
+    
+    private let steps: [OnboardingStep] = [
+        .init(title: "I want to learn ...", summaryTitle: nil, options: [(image: "python", title: "Python", secondaryTitle: nil), (image: "java", title: "Java", secondaryTitle: nil), (image: "swift", title: "Swift", secondaryTitle: nil)]),
+        .init(title: "How much do you already know?", summaryTitle: nil, options: [(image: "onboarding_how_much1", title: "I am new", secondaryTitle: nil), (image: "onboarding_how_much2", title: "I know some parts", secondaryTitle: nil), (image: "onboarding_how_much3", title: "I can write simple code", secondaryTitle: nil), (image: "onboarding_how_much4", title: "I am intermediate or higher", secondaryTitle: nil)]),
+        .init(title: "Why are you learning coding?", summaryTitle: nil, options: [(image: nil, title: "Brain training", secondaryTitle: nil), (image: nil, title: "Education", secondaryTitle: nil), (image: nil, title: "Career", secondaryTitle: nil)]),
+        .init(title: "Whats your daily learning goal?", summaryTitle: "Learning duration", options: [(image: nil, title: "5 min/day", secondaryTitle: "Casual"), (image: nil, title: "10 min/day", secondaryTitle: "Regular"), (image: nil, title: "15 min/day", secondaryTitle: "Serious"), (image: nil, title: "20 min/day", secondaryTitle: "Intense")]),
+        .init(title: "How many practice challenges are you ready to complete?", summaryTitle: "Focus", options: [(image: nil, title: "5 challenges", secondaryTitle: "Casual"), (image: nil, title: "10 challenges", secondaryTitle: "Regular"), (image: nil, title: "20 challenges", secondaryTitle: "Serious"), (image: nil, title: "50 challenges", secondaryTitle: "Intense")]),
+        .init(title: "How much salary do you want to earn?", summaryTitle: nil, options: [(image: nil, title: "$ 10,000", secondaryTitle: nil), (image: nil, title: "$ 50,000", secondaryTitle: nil), (image: nil, title: "$ 100,000", secondaryTitle: nil), (image: nil, title: "$ 1,000,000", secondaryTitle: nil)])
+    ]
+    
+    private var currentStep: OnboardingStep?
+    
+    init(store: Store) {
+        self.store = store
+        
+        let view = OnboardingStarterPage { [weak self] in
+            guard let self = self, let first = self.steps.first else { return }
+            pushToStep(step: first)
+        } onLogin: { [weak self] in
+            self?.showLogin()
+        }
+        let controller = UIHostingController(rootView: view)
+        navigationController.setViewControllers([controller], animated: false)
+    }
+    
+    func pushToStep(step: OnboardingStep) {
+        let view = OnboardingStepView(onNext: { [weak self] option in
+            guard let self = self else { return }
+            self.result.removeAll(where: {$0.0.title == step.title})
+            self.result.append((step, option))
+            let stepIndex = self.steps.firstIndex(where: {$0.title == step.title}) ?? 0
+            if stepIndex < (steps.count - 1) {
+                self.pushToStep(step: steps[stepIndex + 1])
+            } else {
+                self.showSummary()
+            }
+            if step.title == "I want to learn ...", let language = ProgrammingLanguage(rawValue: option.lowercased()) {
+                store.dispatch(ChangeProgrammingLanguage(language: language))
+            }
+        }, step: step)
+        let hostingController = UIHostingController(rootView: view)
+        navigationController.pushViewController(hostingController, animated: true)
+    }
+    
+    func showSummary() {
+        let view = OnboardingSummaryView(result: result, amount: result.last?.1 ?? "") { [weak self] in
+            guard let self = self else { return }
+            self.navigationController.dismiss(animated: true)
+            Paywall.track("get_my_plan", [:])
+            UserDefaults.standard.set(true, forKey: "getStartedPresented")
+            store.dispatch(TrackAnalyticsEvent(event: .onboardingCompleted(self.result)))
+        }
+        let hostingController = UIHostingController(rootView: view)
+        navigationController.pushViewController(hostingController, animated: true)
+    }
+    
+    private func showLogin(completion: (() -> Void)? = nil) {
+        authCancellable = self.store
+            .statePublisher
+            .map { $0.user.value?.isLoggedIn }
+            .removeDuplicates()
+            .sink { [weak self] isLoggedIn in
+                guard let self = self else { return }
+                if isLoggedIn == true {
+                    UserDefaults.standard.set(true, forKey: "getStartedPresented")
+                    self.store.dispatch(LoadAccount())
+                    self.store.dispatch(LoadInProgressChallenges())
+                    self.store.dispatch(LoadCompletedChallenges())
+                    self.navigationController.dismiss(animated: true)
+                }
+            }
+
+        let loginView = LoginView(continuesOperation: false, screenMode: .login, onChangeMode: { [weak self] in
+            self?.showSignUpView()
+        })
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: loginView)
+        navigationController.pushViewController(controller, animated: true)
+    }
+
+
+    func showSignUpView() {
+        let loginView = LoginView(screenMode: .signup, onChangeMode: { [weak self] in
+            self?.navigationController.popViewController(animated: true)
+        })
+            .environmentObject(store)
+        let controller = UIHostingController(rootView: loginView)
+        navigationController.pushViewController(controller, animated: true)
+    }
+}

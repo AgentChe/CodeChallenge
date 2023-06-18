@@ -48,10 +48,6 @@ class PracticeCoordinator {
         controller.tabBarItem = tabBarItem
         navigationController.setViewControllers([controller], animated: false)
 
-        DispatchQueue.main.async { [weak self] in
-            self?.presentGetStartedIfNecessary()
-        }
-
         for language in ProgrammingLanguage.allCases {
             store.dispatch(LoadHashtags(programmingLanguage: language))
         }
@@ -69,31 +65,6 @@ class PracticeCoordinator {
             .environmentObject(store)
         let controller = UIHostingController(rootView: view)
         navigationController.pushViewController(controller, animated: true)
-    }
-
-    private func presentGetStartedIfNecessary() {
-        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
-        let view = GetStartedView { [weak self] in
-            self?.presentProgrammingLanguagesView()
-        }
-            .environmentObject(store)
-        let controller = UIHostingController(rootView: view)
-        onboardingNavigationController = UINavigationController(rootViewController: controller)
-        onboardingNavigationController?.modalPresentationStyle = .fullScreen
-        if let onboardingNavigationController = onboardingNavigationController {
-            navigationController.present(onboardingNavigationController, animated: false)
-        }
-    }
-
-    private func presentProgrammingLanguagesView() {
-        let view = OnboardingLanguagesView { [weak self] in
-            self?.onboardingNavigationController?.dismiss(animated: true)
-            UserDefaults.standard.set(true, forKey: "getStartedPresented")
-            self?.onEndingOnboarding?()
-        }
-            .environmentObject(store)
-        let controller = UIHostingController(rootView: view)
-        onboardingNavigationController?.pushViewController(controller, animated: true)
     }
 
     private func presentConceptReview(sectionConceptReview: SectionConceptReview) {

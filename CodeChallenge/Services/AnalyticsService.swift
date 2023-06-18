@@ -33,6 +33,7 @@ enum AnalyticsEvent {
     case lessonStarted(Int)
     case lessonCompleted(Int)
     case chapterCompleted(String)
+    case onboardingCompleted([(OnboardingStep, String)])
 
     var value: String {
         switch self {
@@ -82,6 +83,8 @@ enum AnalyticsEvent {
             return "Lesson Completed"
         case .chapterCompleted:
             return "Chapter Completed"
+        case .onboardingCompleted:
+            return "Onboarding Completed"
         }
     }
 
@@ -129,6 +132,12 @@ enum AnalyticsEvent {
             return ["chapterTitle": "\(id)"]
         case .lessonCompleted(let id), .lessonStarted(let id):
             return ["lessonId": "\(id)"]
+        case .onboardingCompleted(let array):
+            return array.reduce([:]) { partialResult, result in
+                var copyPartial = partialResult
+                copyPartial[result.0.title] = result.1
+                return copyPartial
+            }
         default: return [:]
         }
     }

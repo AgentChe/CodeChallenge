@@ -20,6 +20,8 @@ final class RootCoordinator {
     private let learnCoordinator: LearnCoordinator
     private let browseCoordinator: LeaderboardCoordinator
     private let buddiesCoordinator: BuddiesCoordinator
+    
+    private let onboardingCoordinator: OnboardingCoordinator
 
     private let tabBarController = UITabBarController()
     private var authCancellable: AnyCancellable?
@@ -39,6 +41,7 @@ final class RootCoordinator {
         buddiesCoordinator = BuddiesCoordinator(store: store)
         learnCoordinator = LearnCoordinator(store: store)
         paywallService = PaywallService(store: store)
+        onboardingCoordinator = OnboardingCoordinator(store: store)
         setupAppAppearance()
         practiceCoordinator.onEndingOnboarding = { [weak self] in
             let challengeFriendId = UserDefaults.standard.integer(forKey: "challenge_friend_key")
@@ -170,6 +173,17 @@ final class RootCoordinator {
                     }
                 }
         }
+        
+        DispatchQueue.main.async {
+            self.showOnboardingIfNeccessary()
+        }
+    }
+    
+    private func showOnboardingIfNeccessary() {
+        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
+
+        self.onboardingCoordinator.navigationController.modalPresentationStyle = .overFullScreen
+        self.practiceCoordinator.navigationController.present(self.onboardingCoordinator.navigationController, animated: false)
     }
 
     private func showMaintenanceScreen() {

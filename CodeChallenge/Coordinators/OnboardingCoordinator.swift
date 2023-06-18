@@ -66,7 +66,7 @@ class OnboardingCoordinator {
             self.navigationController.dismiss(animated: true)
             Paywall.track("get_my_plan", [:])
             UserDefaults.standard.set(true, forKey: "getStartedPresented")
-            store.dispatch(TrackAnalyticsEvent(event: .onboardingCompleted(self.result)))
+            self.store.dispatch(TrackAnalyticsEvent(event: .onboardingCompleted(self.result)))
         }
         let hostingController = UIHostingController(rootView: view)
         navigationController.pushViewController(hostingController, animated: true)

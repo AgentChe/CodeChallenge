@@ -33,7 +33,7 @@ class OnboardingCoordinator {
         
         let view = OnboardingStarterPage { [weak self] in
             guard let self = self, let first = self.steps.first else { return }
-            pushToStep(step: first)
+            self.pushToStep(step: first)
         } onLogin: { [weak self] in
             self?.showLogin()
         }
@@ -47,13 +47,13 @@ class OnboardingCoordinator {
             self.result.removeAll(where: {$0.0.title == step.title})
             self.result.append((step, option))
             let stepIndex = self.steps.firstIndex(where: {$0.title == step.title}) ?? 0
-            if stepIndex < (steps.count - 1) {
-                self.pushToStep(step: steps[stepIndex + 1])
+            if stepIndex < (self.steps.count - 1) {
+                self.pushToStep(step: self.steps[stepIndex + 1])
             } else {
                 self.showSummary()
             }
             if step.title == "I want to learn ...", let language = ProgrammingLanguage(rawValue: option.lowercased()) {
-                store.dispatch(ChangeProgrammingLanguage(language: language))
+                self.store.dispatch(ChangeProgrammingLanguage(language: language))
             }
         }, step: step)
         let hostingController = UIHostingController(rootView: view)

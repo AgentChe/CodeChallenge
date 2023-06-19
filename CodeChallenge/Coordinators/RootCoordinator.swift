@@ -180,7 +180,7 @@ final class RootCoordinator {
     }
     
     private func showOnboardingIfNeccessary() {
-        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
+//        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
 
         self.onboardingCoordinator.navigationController.modalPresentationStyle = .overFullScreen
         self.practiceCoordinator.navigationController.present(self.onboardingCoordinator.navigationController, animated: false)

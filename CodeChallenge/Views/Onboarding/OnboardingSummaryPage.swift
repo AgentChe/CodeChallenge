@@ -17,7 +17,7 @@ struct OnboardingSummaryView: View {
         DoodledView {
             VStack {
                 ScrollView {
-                    VStack(spacing: 40) {
+                    VStack(spacing: 30) {
                         Text("Your learning plan is ready")
                             .font(.pageNameH1)
                             .multilineTextAlignment(.center)
@@ -40,6 +40,14 @@ struct OnboardingSummaryView: View {
                                             .font(.h4)
                                     }
                                 }
+                                VStack(alignment: .leading) {
+                                    Text("Practice lessons")
+                                        .foregroundColor(.CodeChallenge.lightBlue)
+                                        .font(.regular(size: 14))
+                                    Text("500 lessons")
+                                        .foregroundColor(.CodeChallenge.white)
+                                        .font(.h4)
+                                }
                             }
                             Spacer()
                         }
@@ -49,6 +57,13 @@ struct OnboardingSummaryView: View {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(Color(UIColor.CodeChallenge.gray))
                         }
+                        
+                        Text("Please note that the selected salary indicated during the onboarding process is solely an estimation, and we do not provide any guarantee that you will receive that specific amount.")
+                            .multilineTextAlignment(.center)
+                            .font(.bodyText)
+                            .foregroundColor(.lightGray)
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 16)
                     }
                     .padding(.horizontal, 16)
                 }

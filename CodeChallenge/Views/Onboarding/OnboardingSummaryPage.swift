@@ -20,7 +20,7 @@ struct OnboardingSummaryView: View {
                     VStack(spacing: 40) {
                         Text("Your learning plan is ready")
                             .font(.pageNameH1)
-                            .multilineTextAlignment(.leading)
+                            .multilineTextAlignment(.center)
                             .padding(.horizontal, 16)
 
                         Image("onboarding_summary_graph_\(amount)")

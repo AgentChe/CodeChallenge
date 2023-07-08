@@ -34,6 +34,7 @@ enum AnalyticsEvent {
     case lessonCompleted(Int)
     case chapterCompleted(String)
     case onboardingCompleted([(OnboardingStep, String)])
+    case offerRedeemed
 
     var value: String {
         switch self {
@@ -85,6 +86,8 @@ enum AnalyticsEvent {
             return "Chapter Completed"
         case .onboardingCompleted:
             return "Onboarding Completed"
+        case .offerRedeemed:
+            return "Offer Redeemed"
         }
     }
 

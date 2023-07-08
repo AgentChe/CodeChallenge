@@ -35,6 +35,18 @@ class IAPManager : NSObject {
     var onLoadPayments: (([AppStorePayment]) -> Void)?
 
     // MARK:- Main methods
+    
+    func presentCodeRedemptionSheet(success: @escaping SuccessBlock, failure: @escaping FailureBlock) {
+        guard SKPaymentQueue.canMakePayments() else {
+            return
+        }
+        guard SKPaymentQueue.default().transactions.last?.transactionState != .purchasing else {
+            return
+        }
+        self.successBlock = success
+        self.failureBlock = failure
+        SKPaymentQueue.default().presentCodeRedemptionSheet()
+    }
 
     @objc func startWith(arrayOfIds : Set<String>!){
         SKPaymentQueue.default().add(self)
@@ -58,6 +70,13 @@ class IAPManager : NSObject {
         self.failureBlock = failure
         let payment = SKPayment(product: product)
         SKPaymentQueue.default().add(payment)
+    }
+    
+    func finishLastTransaction() {
+        guard let transaction = SKPaymentQueue.default().transactions.last else {
+            return
+        }
+        SKPaymentQueue.default().finishTransaction(transaction)
     }
 
     func restorePurchases(success: @escaping SuccessBlock, failure: @escaping FailureBlock){
@@ -220,14 +239,6 @@ extension IAPManager: SKPaymentTransactionObserver {
     }
 
     private func notifyIsPurchased(transaction: SKPaymentTransaction) {
-//        refreshSubscriptionsStatus(callback: {
-//            self.successBlock?(transaction.transactionIdentifier ?? "")
-//            self.cleanUp()
-//        }) { (error) in
-//            // couldn't verify receipt
-//            self.failureBlock?(error)
-//            self.cleanUp()
-//        }
         self.successBlock?(transaction.transactionIdentifier ?? "")
     }
 

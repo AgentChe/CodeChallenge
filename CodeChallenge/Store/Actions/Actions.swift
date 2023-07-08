@@ -202,6 +202,7 @@ struct LoadAccount: ThunkAction {
         guard UserDefaults.standard.string(forKey: "cc_user_session") != nil,
               UserDefaults.standard.integer(forKey: "cc_user_id") != 0 else { return }
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
+        let previousAccount = dispatcher.state.account.value
         dispatcher.dispatch(Action.loadAccount(.loading))
 
         let account = Account()
@@ -217,6 +218,12 @@ struct LoadAccount: ThunkAction {
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
                 dispatcher.services.identifyService.identify(id: user.id)
                 dispatcher.dispatch(LoadLeaderboardData())
+                
+                if account.isPremium == false && previousAccount == nil {
+                    // first account load - need to updatepremiuminserver in case they redeemed an offer before app opening
+                    IAPManager.shared.finishLastTransaction()
+                    dispatcher.dispatch(UpdatePremiumInServer(completionBlock: nil))
+                }
             }
     }
 }
@@ -490,17 +497,42 @@ struct PurchasePayment: ThunkAction {
 
         IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
             guard previousAccount?.isPremium == false else { return }
-            dispatcher.services.purchasesService.send(
-                receipt: IAPManager.shared.receiptData ?? "",
-                userId: previousAccount?.id ?? 0
-            )
-            .ephemeralSink { _ in
+            dispatcher.dispatch(UpdatePremiumInServer(completionBlock: { _ in
                 dispatcher.dispatch(TrackAnalyticsEvent(event: .premiumSucceeded(payment.productIdentifier)))
-                dispatcher.dispatch(LoadAccount())
-                dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
-            }
+            }))
         }, failure: { error in
         })
+    }
+}
+
+struct RedeemCode: ThunkAction {
+    func exec(dispatcher: Dispatcher) {
+        let previousAccount = dispatcher.state.account.value
+
+        IAPManager.shared.presentCodeRedemptionSheet(success: { identifier in
+            guard previousAccount?.isPremium == false else { return }
+            
+            dispatcher.dispatch(UpdatePremiumInServer(completionBlock: { _ in
+                dispatcher.dispatch(TrackAnalyticsEvent(event: .offerRedeemed))
+            }))
+        }, failure: { error in
+        })
+    }
+}
+
+struct UpdatePremiumInServer: ThunkAction {
+    let completionBlock: ((Bool) -> Void)?
+
+    func exec(dispatcher: Dispatcher) {
+        dispatcher.services.purchasesService.send(
+            receipt: IAPManager.shared.receiptData ?? "",
+            userId: dispatcher.state.account.value?.id ?? 0
+        )
+        .ephemeralSink { _ in
+            completionBlock?(true)
+            dispatcher.dispatch(LoadAccount())
+            dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
+        }
     }
 }
 
@@ -512,15 +544,7 @@ struct RestorePurchases: ThunkAction {
 
         IAPManager.shared.restorePurchases(success: { identifier in
             guard previousAccount?.isPremium == false else { return }
-            dispatcher.services.purchasesService.send(
-                receipt: IAPManager.shared.receiptData ?? "",
-                userId: previousAccount?.id ?? 0
-            )
-            .ephemeralSink { _ in
-                completionBlock?(true)
-                dispatcher.dispatch(LoadAccount())
-                dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
-            }
+            dispatcher.dispatch(UpdatePremiumInServer(completionBlock: completionBlock))
         }, failure: { error in
             completionBlock?(false)
         })

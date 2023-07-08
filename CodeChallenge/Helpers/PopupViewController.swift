@@ -75,10 +75,7 @@ extension PopupViewController {
 
 extension PopupViewController {
     func present(from controller: UIViewController, bottomOffset: CGFloat = 0) {
-        self.willMove(toParent: controller)
-        controller.addChild(self)
         controller.view.addSubview(self.view)
-        self.didMove(toParent: controller)
         NSLayoutConstraint.activate([
             self.view.topAnchor.constraint(equalTo: controller.view.topAnchor),
             self.view.leadingAnchor.constraint(equalTo: controller.view.leadingAnchor),

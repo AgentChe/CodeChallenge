@@ -91,6 +91,12 @@ struct PremiumView: View, PremiumViewProps {
                         store.dispatch(PurchasePayment(payment: yearlyPayment))
                     }
                 }).buttonStyle(PremiumGradientButton(status: buttonStatus))
+                
+                Button("Redeem voucher") {
+                    store.dispatch(RedeemCode())
+                }
+                .foregroundColor(.CodeChallenge.blue1)
+                .font(.h5)
 
                 Button(action: {
                     store.dispatch(RestorePurchases(completionBlock: nil))

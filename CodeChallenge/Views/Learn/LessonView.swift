@@ -186,7 +186,7 @@ extension LessonView {
                     result = false
                 }
             case .composeCodeQuiz(_, _, let winning):
-                if winning.sorted() != item.1.sorted() {
+                if winning != item.1 {
                     result = false
                 }
             default: continue

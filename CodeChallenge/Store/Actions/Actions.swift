@@ -216,7 +216,7 @@ struct LoadAccount: ThunkAction {
                 account.solvedChallenges = user.doneChallangeCount
                 account.isPremium = user.isPremium
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
-                dispatcher.services.identifyService.identify(id: user.id)
+                dispatcher.services.identifyService.identify(id: user.id, subscribed: user.isPremium == true)
                 dispatcher.dispatch(LoadLeaderboardData())
                 
                 if account.isPremium == false && previousAccount == nil {

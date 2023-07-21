@@ -12,16 +12,17 @@ import Mixpanel
 import Branch
 
 protocol IdentifyServiceProtocol {
-    func identify(id: Int)
+    func identify(id: Int, subscribed: Bool)
     func removeIdentity()
 }
 
 struct IdentifyService: IdentifyServiceProtocol {
-    func identify(id: Int) {
+    func identify(id: Int, subscribed: Bool) {
         OneSignal.setExternalUserId("\(id)")
         Paywall.identify(userId: "\(id)")
         Mixpanel.mainInstance().identify(distinctId: "\(id)")
         Branch.getInstance().setIdentity("\(id)")
+        Paywall.setUserAttributes(["subscribed": subscribed])
     }
 
     func removeIdentity() {

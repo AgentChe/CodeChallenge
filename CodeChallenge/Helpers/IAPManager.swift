@@ -10,10 +10,7 @@ import StoreKit
 
 public typealias SuccessBlock = (String) -> Void
 public typealias FailureBlock = (Error?) -> Void
-
 typealias AppStorePayment = SKProduct
-
-let IAP_PRODUCTS_DID_LOAD_NOTIFICATION = Notification.Name("IAP_PRODUCTS_DID_LOAD_NOTIFICATION")
 
 class IAPManager : NSObject {
 
@@ -27,7 +24,7 @@ class IAPManager : NSObject {
     private var successBlock : SuccessBlock?
     private var failureBlock : FailureBlock?
 
-    private var refreshSubscriptionSuccessBlock : SuccessBlock?
+    private var refreshSubscriptionSuccessBlock : (() -> Void)?
     private var refreshSubscriptionFailureBlock : FailureBlock?
 
     @Published var isLoading: Bool = false
@@ -35,6 +32,12 @@ class IAPManager : NSObject {
     var onLoadPayments: (([AppStorePayment]) -> Void)?
 
     // MARK:- Main methods
+    
+    @objc func startWith(arrayOfIds : Set<String>!){
+        SKPaymentQueue.default().add(self)
+        self.productIds = arrayOfIds
+        loadProducts()
+    }
     
     func presentCodeRedemptionSheet(success: @escaping SuccessBlock, failure: @escaping FailureBlock) {
         guard SKPaymentQueue.canMakePayments() else {
@@ -48,18 +51,7 @@ class IAPManager : NSObject {
         SKPaymentQueue.default().presentCodeRedemptionSheet()
     }
 
-    @objc func startWith(arrayOfIds : Set<String>!){
-        SKPaymentQueue.default().add(self)
-        self.productIds = arrayOfIds
-        loadProducts()
-    }
-
-    func expirationDateFor(_ identifier : String) -> Date?{
-        return UserDefaults.standard.object(forKey: identifier) as? Date
-    }
-
     func purchaseProduct(product : SKProduct, success: @escaping SuccessBlock, failure: @escaping FailureBlock){
-
         guard SKPaymentQueue.canMakePayments() else {
             return
         }
@@ -84,25 +76,23 @@ class IAPManager : NSObject {
         self.failureBlock = failure
         SKPaymentQueue.default().restoreCompletedTransactions()
     }
+    
+    func validateReceiptData(success: @escaping () -> Void, failure: @escaping FailureBlock) {
+        self.refreshSubscriptionSuccessBlock = success
+        self.refreshSubscriptionFailureBlock = failure
+        refreshSubscriptionsStatus()
+    }
 
-    /* It's the most simple way to send verify receipt request. Consider this code as for learning purposes. You shouldn't use current code in production apps.
-     This code doesn't handle errors.
-     */
     var receiptData: String? {
         guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
             refreshReceipt()
-            // do not call block in this case. It will be called inside after receipt refreshing finishes.
             return nil
         }
         let receiptData = try? Data(contentsOf: receiptUrl).base64EncodedString()
         return receiptData
     }
 
-    func refreshSubscriptionsStatus(callback : @escaping SuccessBlock, failure : @escaping FailureBlock){
-
-        self.refreshSubscriptionSuccessBlock = callback
-        self.refreshSubscriptionFailureBlock = failure
-
+    private func refreshSubscriptionsStatus(){
         #if DEBUG
         let urlString = "https://sandbox.itunes.apple.com/verifyReceipt"
         #else
@@ -151,7 +141,7 @@ class IAPManager : NSObject {
                 }
             }
         }
-//        self.refreshSubscriptionSuccessBlock?()
+        self.refreshSubscriptionSuccessBlock?()
         self.cleanUpRefeshReceiptBlocks()
     }
 
@@ -199,9 +189,6 @@ extension IAPManager: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         products = response.products
         self.onLoadPayments?(response.products)
-        DispatchQueue.main.async {
-            NotificationCenter.default.post(name: IAP_PRODUCTS_DID_LOAD_NOTIFICATION, object: nil)
-        }
     }
 }
 
@@ -240,6 +227,7 @@ extension IAPManager: SKPaymentTransactionObserver {
 
     private func notifyIsPurchased(transaction: SKPaymentTransaction) {
         self.successBlock?(transaction.transactionIdentifier ?? "")
+        self.cleanUp()
     }
 
     func cleanUp(){

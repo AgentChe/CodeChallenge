@@ -67,7 +67,7 @@ struct LearnTabView: View, LearnTabViewProps {
                                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(.CodeChallenge.dark)))
                         )
                         .onTapGesture {
-                            onOpenPremium()
+                            store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
                         }
                     }
                     LanguagePickerIconView()

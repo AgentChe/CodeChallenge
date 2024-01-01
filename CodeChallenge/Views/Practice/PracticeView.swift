@@ -86,7 +86,7 @@ struct PracticeView: View, PracticeViewProps {
                                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(.CodeChallenge.dark)))
                             )
                             .onTapGesture {
-                                onOpenPremium()
+                                store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
                             }
                     }
                     LanguagePickerIconView()

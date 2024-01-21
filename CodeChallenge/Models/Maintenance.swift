@@ -12,4 +12,5 @@ struct Maintenance: Codable {
     let premium: Bool
     let aiEnabled: Bool?
     let prdoductHunt: String?
+    let discordLink: String?
 }

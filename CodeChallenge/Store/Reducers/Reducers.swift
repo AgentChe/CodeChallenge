@@ -24,7 +24,6 @@ struct Reducers {
             recommendedChallenges: recommendedChallengesReducer(state.recommendedChallenges, action),
             inProgressChallenges: inProgressChallengesReducer(state.inProgressChallenges, action),
             doneChallenges: doneChallengesReducer(state.doneChallenges, action),
-            payments: paymentsReducer(state.payments, action),
             rewards: rewardsReducer(state.rewards, action),
             loadingReward: loadingRewardReducer(state.loadingReward, action),
             conceptReviews: conceptReviewReducer(state.conceptReviews, action),

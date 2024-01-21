@@ -78,6 +78,7 @@ class SimpleCodePlaygroundUIKitView: UIView {
     }
 
     func set(code: String) {
+        guard (code.removingPercentEncoding ?? code) != textView.text else { return }
         textView.text = code
             .removingPercentEncoding ?? code
     }

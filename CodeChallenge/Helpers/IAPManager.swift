@@ -12,10 +12,10 @@ public typealias SuccessBlock = (String) -> Void
 public typealias FailureBlock = (Error?) -> Void
 typealias AppStorePayment = SKProduct
 
-class IAPManager : NSObject {
+class IAPManagerr : NSObject {
 
     private var sharedSecret = "238613b2da4f47178ac9bfd52bc85697"
-    @objc static let shared = IAPManager()
+    @objc static let shared = IAPManagerr()
     @objc private(set) var products : Array<SKProduct>?
 
     private override init(){}
@@ -167,7 +167,7 @@ class IAPManager : NSObject {
 }
 
 // MARK:- SKReceipt Refresh Request Delegate
-extension IAPManager : SKRequestDelegate {
+extension IAPManagerr : SKRequestDelegate {
 
     func requestDidFinish(_ request: SKRequest) {
 //        if request is SKReceiptRefreshRequest {
@@ -185,7 +185,7 @@ extension IAPManager : SKRequestDelegate {
 }
 
 // MARK:- SKProducts Request Delegate
-extension IAPManager: SKProductsRequestDelegate {
+extension IAPManagerr: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         products = response.products
         self.onLoadPayments?(response.products)
@@ -193,7 +193,7 @@ extension IAPManager: SKProductsRequestDelegate {
 }
 
 // MARK:- SKPayment Transaction Observer
-extension IAPManager: SKPaymentTransactionObserver {
+extension IAPManagerr: SKPaymentTransactionObserver {
 
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
 

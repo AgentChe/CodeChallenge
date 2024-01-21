@@ -20,7 +20,6 @@ struct AppState {
     let recommendedChallenges: Resolvable<[Challenge]>
     let inProgressChallenges: Resolvable<[Challenge]>
     let doneChallenges: Resolvable<[Challenge]>
-    let payments: Resolvable<[AppStorePayment]>
     let rewards: Resolvable<[Reward]>
     let loadingReward: LoadingReward?
     let conceptReviews: [Int: Resolvable<ConceptReview>]
@@ -43,7 +42,6 @@ struct AppState {
          recommendedChallenges: Resolvable<[Challenge]> = .pending,
          inProgressChallenges: Resolvable<[Challenge]> = .pending,
          doneChallenges: Resolvable<[Challenge]> = .pending,
-         payments: Resolvable<[AppStorePayment]> = .pending,
          rewards: Resolvable<[Reward]> = .pending,
          loadingReward: LoadingReward? = nil,
          conceptReviews: [Int: Resolvable<ConceptReview>] = [:],
@@ -64,7 +62,6 @@ struct AppState {
         self.searchByInstances = searchByInstances
         self.recommendedChallenges = recommendedChallenges
         self.inProgressChallenges = inProgressChallenges
-        self.payments = payments
         self.doneChallenges = doneChallenges
         self.rewards = rewards
         self.loadingReward = loadingReward

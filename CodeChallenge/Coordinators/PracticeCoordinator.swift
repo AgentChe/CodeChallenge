@@ -36,7 +36,7 @@ class PracticeCoordinator {
             self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
         } onOpenPremium: { [weak self] in
             guard let self = self else { return }
-            self.presentPremiumScreen(from: self.navigationController)
+            store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: practiceView)
@@ -77,4 +77,3 @@ class PracticeCoordinator {
 }
 
 extension PracticeCoordinator: CodeChallengePresentable {}
-extension PracticeCoordinator: PremiumPresentable {}

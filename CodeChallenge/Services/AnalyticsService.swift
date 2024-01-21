@@ -7,7 +7,7 @@
 
 import Foundation
 import Mixpanel
-import Paywall
+import SuperwallKit
 
 enum AnalyticsEvent {
     case getStarted
@@ -156,6 +156,6 @@ protocol AnalyticsServiceProtocol {
 struct AnalyticsService: AnalyticsServiceProtocol {
     func track(event: AnalyticsEvent, properties: [String: MixpanelType]) {
         Mixpanel.mainInstance().track(event: event.value, properties: properties)
-        Paywall.track(event.value, properties.mapValues { "\($0)" })
+        Superwall.shared.register(event: event.value, params: properties.mapValues { "\($0)" })
     }
 }

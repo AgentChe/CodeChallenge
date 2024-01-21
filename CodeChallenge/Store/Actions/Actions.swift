@@ -221,8 +221,7 @@ struct LoadAccount: ThunkAction {
                 
                 if account.isPremium == false && previousAccount == nil {
                     // first account load - need to updatepremiuminserver in case they redeemed an offer before app opening
-                    IAPManager.shared.finishLastTransaction()
-                    dispatcher.dispatch(UpdatePremiumInServerIfValid(completionBlock: nil))
+                    RevenueCatManager.shared.finishTransactions()
                 }
             }
     }
@@ -461,18 +460,6 @@ struct TrackAnalyticsEvent: ThunkAction {
     }
 }
 
-struct LoadAppStorePayments: ThunkAction {
-    func exec(dispatcher: Dispatcher) {
-        dispatcher.dispatch(Action.loadPayments(.loading))
-        IAPManager.shared.startWith(arrayOfIds: Set<String>(
-            ["monthly_subscription", "yearly_pro_2week_trial"]
-        ))
-        IAPManager.shared.onLoadPayments = { payments in
-            dispatcher.dispatch(Action.loadPayments(.success(payments)))
-        }
-    }
-}
-
 struct UploadImage: ThunkAction {
     let image: Data
 
@@ -489,70 +476,37 @@ struct UploadImage: ThunkAction {
     }
 }
 
-struct PurchasePayment: ThunkAction {
-    let payment: AppStorePayment
-
+struct UpdateUserPremium: ThunkAction {
+    let premium: Bool
+    
     func exec(dispatcher: Dispatcher) {
         let previousAccount = dispatcher.state.account.value
-
-        IAPManager.shared.purchaseProduct(product: payment, success: { identifier in
-            guard previousAccount?.isPremium == false else { return }
-            dispatcher.dispatch(UpdatePremiumInServerIfValid(completionBlock: { _ in
-                dispatcher.dispatch(TrackAnalyticsEvent(event: .premiumSucceeded(payment.productIdentifier)))
-            }))
-        }, failure: { error in
-        })
-    }
-}
-
-struct RedeemCode: ThunkAction {
-    func exec(dispatcher: Dispatcher) {
-        let previousAccount = dispatcher.state.account.value
-
-        IAPManager.shared.presentCodeRedemptionSheet(success: { identifier in
-            guard previousAccount?.isPremium == false else { return }
-            
-            dispatcher.dispatch(UpdatePremiumInServerIfValid(completionBlock: { _ in
-                dispatcher.dispatch(TrackAnalyticsEvent(event: .offerRedeemed))
-            }))
-        }, failure: { error in
-        })
-    }
-}
-
-struct UpdatePremiumInServerIfValid: ThunkAction {
-    let completionBlock: ((Bool) -> Void)?
-
-    func exec(dispatcher: Dispatcher) {
-        IAPManager.shared.validateReceiptData {
-            dispatcher.services.purchasesService.send(
-                receipt: IAPManager.shared.receiptData ?? "",
-                userId: dispatcher.state.account.value?.id ?? 0
-            )
+        guard previousAccount?.isPremium != premium else { return }
+        let session = UserDefaults.standard.string(forKey: "cc_user_session") ?? ""
+        
+        dispatcher.services.accountService.updateUserPremium(session: session, id: dispatcher.state.account.value?.id ?? 0, premium: premium)
             .ephemeralSink { _ in
-                completionBlock?(true)
+                print("TT___ updated user premium")
                 dispatcher.dispatch(LoadAccount())
                 dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
             }
-        } failure: { _ in
-        }
     }
 }
 
-struct RestorePurchases: ThunkAction {
-    let completionBlock: ((Bool) -> Void)?
-
-    func exec(dispatcher: Dispatcher) {
-        let previousAccount = dispatcher.state.account.value
-
-        IAPManager.shared.restorePurchases(success: { identifier in
-            guard previousAccount?.isPremium == false else { return }
-            dispatcher.dispatch(UpdatePremiumInServerIfValid(completionBlock: completionBlock))
-        }, failure: { error in
-            completionBlock?(false)
-        })
-    }
-}
+//struct RedeemCode: ThunkAction {
+//    func exec(dispatcher: Dispatcher) {
+//        let previousAccount = dispatcher.state.account.value
+//
+//        IAPManager.shared.presentCodeRedemptionSheet(success: { identifier in
+//            guard previousAccount?.isPremium == false else { return }
+//            
+//            dispatcher.dispatch(UpdatePremiumInServerIfValid(completionBlock: { _ in
+//                dispatcher.dispatch(TrackAnalyticsEvent(event: .offerRedeemed))
+//            }))
+//        }, failure: { error in
+//        })
+//    }
+//}
 
 struct LoadPracticeSections: ThunkAction {
     let language: ProgrammingLanguage?

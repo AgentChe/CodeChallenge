@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import UIKit
-import Paywall
 
 struct PracticeView: View, PracticeViewProps {
     let gridItemLayout = [GridItem(.flexible(), spacing: 0)]

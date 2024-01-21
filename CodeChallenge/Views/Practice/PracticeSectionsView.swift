@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import UIKit
-import Paywall
 
 struct PracticeSectionsView: View, PracticeSectionsViewProps {
     @EnvironmentObject var store: Store

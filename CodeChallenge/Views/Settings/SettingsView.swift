@@ -80,8 +80,10 @@ struct SettingsView: View, SettingsViewProps {
                 onOpenUrl("https://www.surveymonkey.com/r/L9YR78L")
             }
 
-            Button("Join Us") {
-                onOpenUrl("https://discord.gg/xNZMEVvV")
+            if let discordLink = store.state.maintenance?.discordLink {
+                Button("Join Us") {
+                    onOpenUrl(discordLink)
+                }
             }
 
             if UserDefaults.standard.bool(forKey: "isLoggedIn") == true {

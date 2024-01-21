@@ -7,9 +7,9 @@
 
 import Foundation
 import OneSignal
-import Paywall
 import Mixpanel
 import Branch
+import SuperwallKit
 
 protocol IdentifyServiceProtocol {
     func identify(id: Int, subscribed: Bool)
@@ -19,15 +19,15 @@ protocol IdentifyServiceProtocol {
 struct IdentifyService: IdentifyServiceProtocol {
     func identify(id: Int, subscribed: Bool) {
         OneSignal.setExternalUserId("\(id)")
-        Paywall.identify(userId: "\(id)")
+        Superwall.shared.identify(userId: "\(id)")
         Mixpanel.mainInstance().identify(distinctId: "\(id)")
         Branch.getInstance().setIdentity("\(id)")
-        Paywall.setUserAttributes(["subscribed": subscribed])
+        Superwall.shared.setUserAttributes(["subscribed": subscribed])
     }
 
     func removeIdentity() {
         OneSignal.removeExternalUserId()
-        Paywall.reset()
+        Superwall.shared.reset()
         Mixpanel.mainInstance().reset()
     }
 }

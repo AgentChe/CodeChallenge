@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
-import Paywall
 
 final class RootCoordinator {
     private let window: UIWindow
@@ -31,7 +30,6 @@ final class RootCoordinator {
     private var challengeFriendCancellable: AnyCancellable?
     var challengeFriendNavigationController: UINavigationController?
 
-    private let paywallService: PaywallService
 
     init(window: UIWindow) {
         self.window = window
@@ -40,7 +38,6 @@ final class RootCoordinator {
         browseCoordinator = LeaderboardCoordinator(store: store)
         buddiesCoordinator = BuddiesCoordinator(store: store)
         learnCoordinator = LearnCoordinator(store: store)
-        paywallService = PaywallService(store: store)
         onboardingCoordinator = OnboardingCoordinator(store: store)
         setupAppAppearance()
         practiceCoordinator.onEndingOnboarding = { [weak self] in
@@ -48,6 +45,7 @@ final class RootCoordinator {
             guard challengeFriendId != 0 else { return }
             self?.process(challengeFriendId: challengeFriendId)
         }
+        RevenueCatManager.shared.start(with: store)
     }
 
     func start() {
@@ -100,7 +98,7 @@ final class RootCoordinator {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.practiceCoordinator.presentPremiumScreen(from: self.practiceCoordinator.navigationController)
+                    self.store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
                 }
             }
         }
@@ -109,7 +107,7 @@ final class RootCoordinator {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.practiceCoordinator.presentPremiumScreen(from: self.practiceCoordinator.navigationController)
+                    self.store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
                 }
             }
         }
@@ -132,10 +130,10 @@ final class RootCoordinator {
 
         store.dispatch(LoadProgrammingLanguage())
         store.dispatch(LoadPracticeSections())
-        store.dispatch(LoadAppStorePayments())
         store.dispatch(LoadRecommendedChallenges())
         store.dispatch(LoadRewards())
         store.dispatch(FetchMaintenanceInfo())
+        
 
         DispatchQueue.global(qos: .userInitiated).async {
             // The first time you create an attributed string of HTML, iOS creates all sorts of extra threads needed to parse the string, among which JavascriptCore engine.

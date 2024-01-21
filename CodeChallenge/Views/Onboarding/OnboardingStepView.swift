@@ -44,12 +44,13 @@ struct OnboardingStepView: View {
                                         .font(.h5)
                                 }
                             }
-                            .padding(.vertical, option.image != nil ? 8 : 21)
+                            .padding(.vertical, option.image != nil ? 12 : 21)
                             .padding(.horizontal, 20)
                             .background {
                                 RoundedRectangle(cornerRadius: 10)
                                     .stroke(Color(option.title == selectedOption ? UIColor.CodeChallenge.blue1 : UIColor.lightGray), lineWidth: 1.5)
                             }
+                            .contentShape(Rectangle())
                             .onTapGesture {
                                 selectedOption = option.title
                             }

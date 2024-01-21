@@ -10,7 +10,6 @@ import UIKit
 import OneSignal
 import FirebaseCore
 import Branch
-import Paywall
 import Mixpanel
 
 @main

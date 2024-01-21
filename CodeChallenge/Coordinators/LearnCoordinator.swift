@@ -29,7 +29,7 @@ class LearnCoordinator {
             self.openChallengesView(for: section)
         } onOpenPremium: { [weak self] in
             guard let self = self else { return }
-            self.presentPremiumScreen(from: self.navigationController)
+            store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
         } onClaimCertificate: { [weak self] loggedIn in
             self?.onClaimCertificate?(loggedIn)
         }
@@ -56,5 +56,3 @@ class LearnCoordinator {
         navigationController.present(controller, animated: true)
     }
 }
-
-extension LearnCoordinator: PremiumPresentable {}

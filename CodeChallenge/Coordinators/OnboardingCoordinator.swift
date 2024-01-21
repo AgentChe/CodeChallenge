@@ -8,8 +8,8 @@
 import Foundation
 import UIKit
 import SwiftUI
-import Paywall
 import Combine
+import SuperwallKit
 
 class OnboardingCoordinator {
     let navigationController = UINavigationController()
@@ -67,7 +67,7 @@ class OnboardingCoordinator {
         let view = OnboardingSummaryView(result: result, amount: result.last?.1 ?? "") { [weak self] in
             guard let self = self else { return }
             self.navigationController.dismiss(animated: true)
-            Paywall.track("get_my_plan", [:])
+            Superwall.shared.register(event: "get_my_plan", params: [:])
             UserDefaults.standard.set(true, forKey: "getStartedPresented")
             self.store.dispatch(TrackAnalyticsEvent(event: .onboardingCompleted(self.result)))
         }

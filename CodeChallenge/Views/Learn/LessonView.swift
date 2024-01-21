@@ -144,7 +144,7 @@ extension LessonView {
             switch lesson {
             case .composeCodeQuiz, .chooseAnswerQuiz:
                 quizAnswers.append((lesson, []))
-            case .challenge(let id):
+            case .challenge:
                 break
             default: break
             }
@@ -162,12 +162,10 @@ extension LessonView {
             Rectangle()
                 .fill(Color(quizesPassed ? UIColor.CodeChallenge.lessonQuizGreen : UIColor.CodeChallenge.lessonQuizRed))
                 .frame(height: 4)
-            if !quizesPassed {
-                Text("Try again")
-                    .foregroundColor(Color(UIColor.CodeChallenge.lessonQuizRed))
-                    .font(.bodyText)
-                    .padding(.leading, 20)
-            }
+            Text(!quizesPassed ? "Try again": "You are correct!")
+                .foregroundColor(Color(!quizesPassed ? UIColor.CodeChallenge.lessonQuizRed : UIColor.CodeChallenge.lessonQuizGreen))
+                .font(.bodyText)
+                .padding(.leading, 20)
             Spacer()
         }
         .frame(width: .screenWidth, height: 120)

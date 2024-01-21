@@ -16,6 +16,7 @@ protocol AccountServiceProtocol {
     func getChallengeDones(userId: Int) -> AnyPublisher<[Challenge], Error>
     func addStreak(session: String) -> AnyPublisher<Void, Error>
     func uploadImage(session: String, imageData: Data) -> AnyPublisher<Void, Error>
+    func updateUserPremium(session: String, id: Int, premium: Bool) -> AnyPublisher<Void, Error>
 }
 
 struct AccountService: AccountServiceProtocol {
@@ -46,6 +47,14 @@ struct AccountService: AccountServiceProtocol {
         let params = ["session": session]
         return URLRequest
             .create(url: "\(Configuration.host)/user/addStreak", type: .post, params: params)
+            .flatMap { networkService.send($0) }
+            .eraseToAnyPublisher()
+    }
+    
+    func updateUserPremium(session: String, id: Int, premium: Bool) -> AnyPublisher<Void, Error> {
+        let params = ["session": session, "id": id, "change": ["is_premium": premium]] as [String : Any]
+        return URLRequest
+            .create(url: "\(Configuration.host)/user/update", type: .post, params: params)
             .flatMap { networkService.send($0) }
             .eraseToAnyPublisher()
     }

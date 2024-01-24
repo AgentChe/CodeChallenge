@@ -56,7 +56,7 @@ struct PracticeSectionsView: View, PracticeSectionsViewProps {
                             progressPreviousPeaceHeight: progressPreviousPeaceHeight(index: offset, sectionIndex: sectionOffset),
                             expectedHeight: expectedHeight(index: offset, sectionIndex: sectionOffset),
                             previousModel: section.collections.element(at: offset - 1),
-                            nextModel: section.collections.element(at: offset + 1))
+                            nextModel: section.collections.element(at: offset + 1), progresses: progresses)
     }
 }
 
@@ -71,6 +71,8 @@ struct PracticeViewElementView: View {
 
     let previousModel: ChallengeCollection?
     let nextModel: ChallengeCollection?
+    
+    let progresses: [IdProgressCouple]?
 
     var body: some View {
         HStack {
@@ -85,7 +87,7 @@ struct PracticeViewElementView: View {
                     Spacer()
                         .frame(width: 3)
                 }
-                if model.progress == 100 {
+                if getProgress(model: model) == 100 {
                     completionView
                 }
             }
@@ -99,7 +101,7 @@ struct PracticeViewElementView: View {
                         .fill(Color(UIColor.CodeChallenge.dark))
                     RoundedRectangle(cornerRadius: 13)
                         .stroke(
-                            Color(model.progress > 0 ? (model.progress == 100 ? .CodeChallenge.blue1 : .CodeChallenge.white) : .CodeChallenge.gray1),
+                            Color(getProgress(model: model) > 0 ? (getProgress(model: model) == 100 ? .CodeChallenge.blue1 : .CodeChallenge.white) : .CodeChallenge.gray1),
                             lineWidth: 1.5
                         )
                     HStack(spacing: 0) {
@@ -153,7 +155,7 @@ struct PracticeViewElementView: View {
             ZStack {
                 Image(progressImageName)
                     .colorMultiply(Color(UIColor.CodeChallenge.gray2))
-                if model.progress > 0 {
+                if getProgress(model: model) > 0 {
                     VStack(spacing: 0) {
                         Image(progressImageName)
                             .resizable()
@@ -215,7 +217,7 @@ struct PracticeViewElementView: View {
     var previousPeaceProgress: CGFloat? {
         guard let previousModel = previousModel else { return nil }
         //158 is total, 134 is visible in previous model
-        let heightToCover = CGFloat(previousModel.progress)/100 * 158.0
+        let heightToCover = CGFloat(getProgress(model: previousModel))/100 * 158.0
         if heightToCover >= expectedHeight {
             return 20 - (158.0 - heightToCover)
         }
@@ -224,12 +226,16 @@ struct PracticeViewElementView: View {
 
     var currentPeaceProgress: CGFloat? {
         if let _ = nextModel {
-            let heightToCover = CGFloat(model.progress)/100 * 158.0
+            let heightToCover = CGFloat(getProgress(model: model))/100 * 158.0
             if heightToCover >= expectedHeight {
                 return expectedHeight
             }
             return heightToCover
         }
-        return CGFloat(model.progress)/100 * expectedHeight
+        return CGFloat(getProgress(model: model))/100 * expectedHeight
+    }
+    
+    func getProgress(model: ChallengeCollection) -> Double {
+        progresses?.first(where: { $0.id == model.id })?.progress ?? 0
     }
 }

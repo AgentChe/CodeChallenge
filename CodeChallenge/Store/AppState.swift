@@ -12,7 +12,9 @@ struct AppState {
     let account: Resolvable<Account>
     let programmingLanguage: ProgrammingLanguage
     let practiceSections: [String: Resolvable<[ChallengeSection]>]
+    let practiceSectionsProgresses: [String: Resolvable<[IdProgressCouple]>]
     let collections: [Int: Resolvable<ChallengeCollectionContent>]
+    let collectionProgresses: [Int: Resolvable<ChallengeCollectionContentProgress>]
     let challengeDetails: [Int: Resolvable<ChallengeDetail>]
     let challengeProgresses: [Int: Resolvable<ChallengeProgress>]
     let challengeResults: [Int: Resolvable<ChallengeCompiledResult>]
@@ -28,13 +30,17 @@ struct AppState {
     let maintenance: Maintenance?
     let ongoingChallengeFriendData: Resolvable<ChallengeFriendData>
     let learnSections: [ProgrammingLanguage: Resolvable<LearnSections>]
+    let learnSectionsProgress: [ProgrammingLanguage: Resolvable<LearnSectionsProgress>]
     let lessons: [Int: Resolvable<LessonCollection>]
+    let lessonsProgress: [Int: Resolvable<LessonCollectionProgress>]
 
     init(user: Resolvable<User> = .pending,
          account: Resolvable<Account> = .pending,
          programmingLanguage: ProgrammingLanguage = .python,
          practiceSections: [String: Resolvable<[ChallengeSection]>] = [:],
+         practiceSectionsProgresses: [String: Resolvable<[IdProgressCouple]>] = [:],
          collections: [Int: Resolvable<ChallengeCollectionContent>] = [:],
+         collectionProgresses: [Int: Resolvable<ChallengeCollectionContentProgress>] = [:],
          challengeDetails: [Int: Resolvable<ChallengeDetail>] = [:],
          challengeProgresses: [Int: Resolvable<ChallengeProgress>] = [:],
          challengeResults: [Int: Resolvable<ChallengeCompiledResult>] = [:],
@@ -50,12 +56,16 @@ struct AppState {
          maintenance: Maintenance? = nil,
          ongoingChallengeFriendData: Resolvable<ChallengeFriendData> = .pending,
          learnSections: [ProgrammingLanguage: Resolvable<LearnSections>] = [:],
-         lessons: [Int: Resolvable<LessonCollection>] = [:]) {
+         learnSectionsProgress: [ProgrammingLanguage: Resolvable<LearnSectionsProgress>] = [:],
+         lessons: [Int: Resolvable<LessonCollection>] = [:],
+         lessonsProgress: [Int: Resolvable<LessonCollectionProgress>] = [:]) {
         self.user = user
         self.account = account
         self.programmingLanguage = programmingLanguage
         self.practiceSections = practiceSections
+        self.practiceSectionsProgresses = practiceSectionsProgresses
         self.collections = collections
+        self.collectionProgresses = collectionProgresses
         self.challengeDetails = challengeDetails
         self.challengeProgresses = challengeProgresses
         self.challengeResults = challengeResults
@@ -71,6 +81,8 @@ struct AppState {
         self.maintenance = maintenance
         self.ongoingChallengeFriendData = ongoingChallengeFriendData
         self.learnSections = learnSections
+        self.learnSectionsProgress = learnSectionsProgress
         self.lessons = lessons
+        self.lessonsProgress = lessonsProgress
     }
 }

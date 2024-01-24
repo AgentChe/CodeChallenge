@@ -94,7 +94,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
                     .frame(width: 120, height: 120)
                 Circle()
-                    .trim(from: 0, to: CGFloat(learnSections?.passedLessonIds.count ?? 0) / CGFloat(learnSections?.allIds.count ?? 0))
+                    .trim(from: 0, to: CGFloat(learnSectionsProgress?.passedLessonIds.count ?? 0) / CGFloat(learnSectionsProgress?.allIds.count ?? 0))
                     .stroke(Color(UIColor.CodeChallenge.blue1), lineWidth: 8)
                     .frame(width: 120, height: 120)
                     .rotationEffect(.degrees(90))
@@ -104,21 +104,21 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .clipShape(Capsule())
             }
             .padding(.bottom, 30)
-            Text(learnSections?.lastSectionIsDone == true ? "You've made it!" : "You’re on the right track!")
+            Text(learnSectionsProgress?.lastSectionIsDone == true ? "You've made it!" : "You’re on the right track!")
                 .font(.h3)
                 .bold()
-            Text(learnSections?.lastSectionIsDone == true ? "You've unlocked your certificate" : "Keep going and unlock your personalized certificate")
+            Text(learnSectionsProgress?.lastSectionIsDone == true ? "You've unlocked your certificate" : "Keep going and unlock your personalized certificate")
                 .font(.regular(size: 18))
                 .foregroundColor(.CodeChallenge.white)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 30)
             Button("Claim My Certificate") {
-                if learnSections?.lastSectionIsDone == true {
+                if learnSectionsProgress?.lastSectionIsDone == true {
                     onClaimCertificate(store.state.user.value?.isLoggedIn == true)
                 }
             }
             .padding(.bottom, 20)
-            .buttonStyle(PrimaryButton(status: learnSections?.lastSectionIsDone == true ? .enabled : .disabled))
+            .buttonStyle(PrimaryButton(status: learnSectionsProgress?.lastSectionIsDone == true ? .enabled : .disabled))
         }
         .padding(.horizontal, 25)
     }
@@ -143,7 +143,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                 .frame(width: offset(position, count, fromLeft: fromLeft))
             VStack {
                 image(element: element, position: position) {
-                    if element.id != currentProgressId && position == 0 && learnSections?.passedLessonIds.contains(element.id) == false {
+                    if element.id != currentProgressId && position == 0 && learnSectionsProgress?.passedLessonIds.contains(element.id) == false {
                         onJumpSection(sections[sectionOffset - 1])
                     } else {
                         onElementTap(element)
@@ -186,13 +186,13 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
         if store.state.account.value?.isPremium == false && element.isPremium == true {
             image("learn_premium")
                 .onTapGesture(perform: onOpenPremium)
-        } else if element.id == currentProgressId && learnSections?.passedLessonIds.contains(element.id) == false {
+        } else if element.id == currentProgressId && learnSectionsProgress?.passedLessonIds.contains(element.id) == false {
             ZStack {
                 Ellipse()
                     .stroke(Color(UIColor.CodeChallenge.gray2), lineWidth: 6)
                     .frame(width: 95, height: 86)
                 Ellipse()
-                    .trim(from: 0, to: CGFloat(element.progress)/CGFloat(100))
+                    .trim(from: 0, to: Double(getProgress(element: element) ?? 0)/Double(100))
                     .stroke(Color(UIColor.CodeChallenge.lessonQuizGreen), lineWidth: 8)
                     .frame(width: 86, height: 95)
                     .rotationEffect(.degrees(90))
@@ -200,7 +200,7 @@ struct LearnTabSectionsView: View, LearnTabSectionsViewProps {
                     .onTapGesture(perform: onTapGesture)
             }
         } else {
-            if learnSections?.passedLessonIds.contains(element.id) == true {
+            if learnSectionsProgress?.passedLessonIds.contains(element.id) == true {
                 image("learn_star")
                     .onTapGesture(perform: onTapGesture)
             } else {

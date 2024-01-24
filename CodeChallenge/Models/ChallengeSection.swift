@@ -23,7 +23,6 @@ struct ChallengeCollection: Codable, Equatable {
     let name: String
     let description: String
     let icon: String
-    let progress: CGFloat
     let isNew: Bool
     let conceptReview: SectionConceptReview?
 
@@ -32,7 +31,6 @@ struct ChallengeCollection: Codable, Equatable {
         case name
         case description
         case icon
-        case progress
         case isNew
         case conceptReview
     }
@@ -43,20 +41,23 @@ struct ChallengeCollection: Codable, Equatable {
         self.name = try container.decode(String.self, forKey: .name)
         self.description = try container.decode(String.self, forKey: .description).removingPercentEncoding ?? ""
         self.icon = try container.decode(String.self, forKey: .icon)
-        self.progress = try container.decode(CGFloat.self, forKey: .progress)
         self.isNew = try container.decode(Bool.self, forKey: .isNew)
         self.conceptReview = try container.decodeIfPresent(SectionConceptReview.self, forKey: .conceptReview)
     }
 
-    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", progress: CGFloat = 0, isNew: Bool = false, conceptReview: SectionConceptReview? = nil) {
+    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", isNew: Bool = false, conceptReview: SectionConceptReview? = nil) {
         self.id = id
         self.name = name
         self.description = description
         self.icon = icon
-        self.progress = progress
         self.isNew = isNew
         self.conceptReview = conceptReview
     }
+}
+
+struct IdProgressCouple: Codable {
+    let id: Int
+    let progress: Double
 }
 
 struct ChallengeCollectionContent: Codable, Equatable {
@@ -65,7 +66,6 @@ struct ChallengeCollectionContent: Codable, Equatable {
     var description: String
     var icon: String
     var challenges: [Challenge]
-    let progress: CGFloat
 
     enum CodingKeys: CodingKey {
         case id
@@ -73,7 +73,6 @@ struct ChallengeCollectionContent: Codable, Equatable {
         case description
         case icon
         case challenges
-        case progress
     }
 
     init(from decoder: Decoder) throws {
@@ -83,6 +82,16 @@ struct ChallengeCollectionContent: Codable, Equatable {
         self.description = try container.decode(String.self, forKey: .description).removingPercentEncoding ?? ""
         self.icon = try container.decode(String.self, forKey: .icon)
         self.challenges = try container.decode([Challenge].self, forKey: .challenges)
-        self.progress = try container.decode(CGFloat.self, forKey: .progress)
     }
+}
+
+struct ChallengeCollectionContentProgress: Codable {
+    var id: Int
+    var progress: Double
+    var challenges: [IdProgressStringCouple]
+}
+
+struct IdProgressStringCouple: Codable {
+    let id: String
+    let progress: String
 }

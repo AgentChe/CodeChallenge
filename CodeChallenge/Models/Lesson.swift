@@ -9,13 +9,16 @@ import Foundation
 
 struct LessonCollection: Decodable {
     let id: Int
-    let currentProgress: Int
     let pages: [Lesson]
 }
 
 struct Lesson: Decodable, Equatable {
     let id: Int
     let content: [LessonContent]
+}
+
+struct LessonCollectionProgress: Codable {
+    let currentProgress: Int
 }
 
 extension Lesson {
@@ -31,10 +34,6 @@ extension Lesson {
 }
 
 extension LessonCollection {
-    var enabledPages: [Lesson] {
-        getEnabledPages(basedOn: currentProgress)
-    }
-
     func getEnabledPages(basedOn progress: Int) -> [Lesson] {
         let index = pages.firstIndex(where: { lesson in
             lesson.id == progress

@@ -101,14 +101,14 @@ enum AnalyticsEvent {
                 "challengeTags": challenge.tagsDescription,
                 "challengeId": challenge.id,
                 "challengeGroup": programmingLanguage.rawValue,
-                "challengeLevel": challenge.progress,
+                "challengeLevel": challenge.progress ?? "",
                 "source": source]
         case .startedSolving(let challenge, let programmingLanguage):
             return [
                 "challengeTags": challenge.tagsDescription,
                 "challengeId": challenge.id,
                 "challengeGroup": programmingLanguage.rawValue,
-                "challengeLevel": challenge.progress]
+                "challengeLevel": challenge.progress ?? ""]
         case .challengeCompleted(let challenge, let completed):
             return [
                 "completedStatus": completed,
@@ -121,7 +121,7 @@ enum AnalyticsEvent {
                 "challengeTags": challenge.tagsDescription,
                 "challengeId": challenge.id,
                 "challengeGroup": programmingLanguage.rawValue,
-                "challengeLevel": challenge.progress]
+                "challengeLevel": challenge.progress ?? ""]
         case .planSelected(let type):
             return ["type": type]
         case .practicepageLoaded(let seconds, let error):

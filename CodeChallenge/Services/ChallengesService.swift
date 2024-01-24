@@ -24,6 +24,10 @@ protocol ChallengesServiceProtocol {
     func getLessonCollection(id: Int, session: String) -> AnyPublisher<LessonCollection, Error>
     func updateClassProgress(session: String, classId: Int, progress: Int) -> AnyPublisher<Void, Error>
     func updatePathProgress(session: String, progress: Int, programmingLanguage: ProgrammingLanguage) -> AnyPublisher<Void, Error>
+    func fetchPracticeSectionsProgress(language: String, id: Int) -> AnyPublisher<[IdProgressCouple], Error>
+    func fetchCollectionContentProgress(id: Int, groupId: Int) -> AnyPublisher<ChallengeCollectionContentProgress, Error>
+    func getLearnSectionsProgress(programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<LearnSectionsProgress, Error>
+    func getLessonCollectionProgress(id: Int, session: String) -> AnyPublisher<LessonCollectionProgress, Error>
 }
 
 struct ChallengesService: ChallengesServiceProtocol {
@@ -85,15 +89,29 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func fetchPracticeSections(language: String, humanLanguage: String, id: Int) -> AnyPublisher<[ChallengeSection], Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/v2/home/\(id)/\(humanLanguage)/\(language)", type: .get)
+            .create(url: "\(Configuration.host)/v3/home/\(language)", type: .get)
             .flatMap { networkService.load($0, decoding: [ChallengeSection].self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchPracticeSectionsProgress(language: String, id: Int) -> AnyPublisher<[IdProgressCouple], Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/v3/home/progress/\(id)/\(language)", type: .get)
+            .flatMap { networkService.load($0, decoding: [IdProgressCouple].self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 
     func fetchCollectionContent(id: Int, groupId: Int) -> AnyPublisher<ChallengeCollectionContent, Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/v1/challange/group/\(groupId)/\(id)", type: .get)
+            .create(url: "\(Configuration.host)/v2/challange/group/\(groupId)", type: .get)
             .flatMap { networkService.load($0, decoding: ChallengeCollectionContent.self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchCollectionContentProgress(id: Int, groupId: Int) -> AnyPublisher<ChallengeCollectionContentProgress, Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/v2/challange/group/progress/\(groupId)/\(id)", type: .get)
+            .flatMap { networkService.load($0, decoding: ChallengeCollectionContentProgress.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
 
@@ -106,14 +124,28 @@ struct ChallengesService: ChallengesServiceProtocol {
 
     func getLearnSections(programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<LearnSections, Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/learning/learningPath/", type: .post, params: ["session": session, "pl": programmingLanguage.apiRequestParam])
+            .create(url: "\(Configuration.host)/v1/learning/learningPath/\(programmingLanguage.apiRequestParam)", type: .get)
             .flatMap { networkService.load($0, decoding: LearnSections.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }
+    
+    func getLearnSectionsProgress(programmingLanguage: ProgrammingLanguage, session: String) -> AnyPublisher<LearnSectionsProgress, Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/v1/learning/learningPath/progress", type: .post, params: ["session": session, "pl": programmingLanguage.apiRequestParam])
+            .flatMap { networkService.load($0, decoding: LearnSectionsProgress.self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
 
+    func getLessonCollectionProgress(id: Int, session: String) -> AnyPublisher<LessonCollectionProgress, Error> {
+        return URLRequest
+            .create(url: "\(Configuration.host)/v1/learning/learningClass/progress", type: .post, params: ["session": session, "classId": id])
+            .flatMap { networkService.load($0, decoding: LessonCollectionProgress.self, with: .snakeCase) }
+            .eraseToAnyPublisher()
+    }
+    
     func getLessonCollection(id: Int, session: String) -> AnyPublisher<LessonCollection, Error> {
         return URLRequest
-            .create(url: "\(Configuration.host)/learning/learningClass/", type: .post, params: ["session": session, "classId": id])
+            .create(url: "\(Configuration.host)/v1/learning/learningClass/\(id)", type: .get)
             .flatMap { networkService.load($0, decoding: LessonCollection.self, with: .snakeCase) }
             .eraseToAnyPublisher()
     }

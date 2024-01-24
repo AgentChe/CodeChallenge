@@ -19,7 +19,7 @@ struct Challenge: Codable {
     let difficulty: String
     let isPremium: Bool
     let xp: Int
-    let progress: String
+    let progress: String?
     let isNew: Bool
 }
 

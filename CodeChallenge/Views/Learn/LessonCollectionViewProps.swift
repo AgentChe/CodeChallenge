@@ -21,6 +21,10 @@ extension LessonCollectionViewProps {
         store.state.lessons[learnElement.id]?.value
     }
     
+    var lessonCollectionProgress: LessonCollectionProgress? {
+        store.state.lessonsProgress[learnElement.id]?.value
+    }
+    
     var chapterTitle: String? {
         store.state.learnSections[store.state.programmingLanguage]?.value?.contents.first(where: { learnSection in
             learnSection.contents.contains(where: { $0.id == learnElement.id })
@@ -32,12 +36,12 @@ extension LessonCollectionViewProps {
     }
     
     var currentProgress: Int {
-        lessonCollection?.currentProgress ?? 1
+        lessonCollectionProgress?.currentProgress ?? 1
     }
 
     var enabledPages: [Lesson] {
         if hasPassedEntireLesson { return pages }
-        return lessonCollection?.enabledPages ?? []
+        return lessonCollection?.getEnabledPages(basedOn: currentProgress) ?? []
     }
 
     var pages: [Lesson] {
@@ -45,7 +49,7 @@ extension LessonCollectionViewProps {
     }
 
     var passedIds: [Int] {
-        store.state.learnSections[programmingLanguage]?.value?.passedLessonIds ?? []
+        store.state.learnSectionsProgress[programmingLanguage]?.value?.passedLessonIds ?? []
     }
 
     var lessonCollections: [LearnElement] {

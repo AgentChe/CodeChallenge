@@ -174,6 +174,7 @@ final class RootCoordinator {
         
         DispatchQueue.main.async {
             self.showOnboardingIfNeccessary()
+            self.tabBarController.selectedIndex = 1
         }
     }
     

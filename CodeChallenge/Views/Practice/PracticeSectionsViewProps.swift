@@ -20,6 +20,10 @@ extension PracticeSectionsViewProps {
     var sections: [ChallengeSection]? {
         store.state.practiceSections[identifier]?.value
     }
+    
+    var progresses: [IdProgressCouple]? {
+        store.state.practiceSectionsProgresses[identifier]?.value
+    }
 
     var identifier: String {
         "\(programmingLanguage.apiRequestParam)_\(humanLanguage)"

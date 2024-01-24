@@ -21,6 +21,10 @@ struct LessonView: View {
     @State private var presentResult = false
     @State private var presentQuizResultPopup = false
     @State private var presentCodeCompiledPopup = false
+    
+    var progress: LessonCollectionProgress? {
+        store.state.lessonsProgress[lesson.id]?.value
+    }
 
     var buttonStatus: PrimaryButton.Status {
         if quizAnswers.isEmpty { return .enabled }
@@ -29,7 +33,7 @@ struct LessonView: View {
 
     var hasPassedThisLesson: Bool {
         if hasPassedEntireLesson { return true }
-        guard let enabledPages = lessonCollection?.enabledPages,
+        guard let enabledPages = lessonCollection?.getEnabledPages(basedOn: progress?.currentProgress ?? 0),
               let index = (enabledPages.firstIndex { $0.id == lesson.id }) else { return false }
         return index < enabledPages.count - 1
     }

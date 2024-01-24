@@ -36,7 +36,6 @@ class RevenueCatManager: PurchaseController {
         Task {
             for await customerInfo in Purchases.shared.customerInfoStream {
                 // Gets called whenever new CustomerInfo is available
-                print("TT___ sync called")
                 let hasActiveSubscription = !customerInfo.entitlements.active.isEmpty || isBackendPremium
                 store?.dispatch(UpdateUserPremium(premium: hasActiveSubscription))
                 if hasActiveSubscription {
@@ -55,7 +54,6 @@ class RevenueCatManager: PurchaseController {
         do {
             // This must be initialized before initiating the purchase.
             let purchaseDate = Date()
-            print("TT___ purchase called")
             
             let storeProduct = RevenueCat.StoreProduct(sk1Product: product)
             let revenueCatResult = try await Purchases.shared.purchase(product: storeProduct)
@@ -88,7 +86,6 @@ class RevenueCatManager: PurchaseController {
     /// Makes a restore with RevenueCat and returns `.restored`, unless an error is thrown.
     /// This gets called when someone tries to restore purchases on one of your paywalls.
     func restorePurchases() async -> RestorationResult {
-        print("TT___ restore called")
 
         do {
             _ = try await Purchases.shared.restorePurchases()

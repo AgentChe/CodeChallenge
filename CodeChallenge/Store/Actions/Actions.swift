@@ -23,10 +23,11 @@ enum Action: Dispatchable {
     case loadRecommendedChallenges(Resolvable<[Challenge]>)
     case loadDoneChallenges(Resolvable<[Challenge]>)
     case logout
-    case loadPayments(Resolvable<[AppStorePayment]>)
     case loadHashtags(Resolvable<[String]>, ProgrammingLanguage)
     case loadPracticeSections(String, Resolvable<[ChallengeSection]>)
+    case loadPracticeSectionsProgresses(String, Resolvable<[IdProgressCouple]>)
     case loadPracticeCollectionContent(Int, Resolvable<ChallengeCollectionContent>)
+    case loadPracticeCollectionContentProgress(Int, Resolvable<ChallengeCollectionContentProgress>)
     case changeProgrammingLanguage(ProgrammingLanguage)
     case loadRewards(Resolvable<[Reward]>)
     case updateLoadingReward(LoadingReward?)
@@ -37,7 +38,9 @@ enum Action: Dispatchable {
     case deleteFailedMessages(mode: ChatMessagesMode)
     case updateOngoingChallengeFriendData(Resolvable<ChallengeFriendData>)
     case updateLearnSections(ProgrammingLanguage, Resolvable<LearnSections>)
+    case updateLearnSectionsProgress(ProgrammingLanguage, Resolvable<LearnSectionsProgress>)
     case updateLessonCollection(Int, Resolvable<LessonCollection>)
+    case updateLessonCollectionProgress(Int, Resolvable<LessonCollectionProgress>)
 }
 
 protocol ThunkAction: Dispatchable {
@@ -486,7 +489,6 @@ struct UpdateUserPremium: ThunkAction {
         
         dispatcher.services.accountService.updateUserPremium(session: session, id: dispatcher.state.account.value?.id ?? 0, premium: premium)
             .ephemeralSink { _ in
-                print("TT___ updated user premium")
                 dispatcher.dispatch(LoadAccount())
                 dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
             }
@@ -522,6 +524,7 @@ struct LoadPracticeSections: ThunkAction {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
         if dispatcher.state.practiceSections["\(language.apiRequestParam)_\(humanLanguage)"]?.value == nil {
             dispatcher.dispatch(Action.loadPracticeSections("\(language.apiRequestParam)_\(humanLanguage)", .loading))
+            dispatcher.dispatch(Action.loadPracticeSectionsProgresses("\(language.apiRequestParam)_\(humanLanguage)", .loading))
         }
 
         dispatcher.services.challengesService
@@ -529,6 +532,13 @@ struct LoadPracticeSections: ThunkAction {
             .asResolvable()
             .ephemeralSink { groups in
                 dispatcher.dispatch(Action.loadPracticeSections("\(language.apiRequestParam)_\(humanLanguage)", groups))
+            }
+        
+        dispatcher.services.challengesService
+            .fetchPracticeSectionsProgress(language: language.apiRequestParam, id: userId)
+            .asResolvable()
+            .ephemeralSink { progresses in
+                dispatcher.dispatch(Action.loadPracticeSectionsProgresses("\(language.apiRequestParam)_\(humanLanguage)", progresses))
             }
     }
 }
@@ -540,6 +550,7 @@ struct LoadCollectionContent: ThunkAction {
         let userId = UserDefaults.standard.integer(forKey: "cc_user_id")
         if dispatcher.state.collections[collection.id]?.value == nil {
             dispatcher.dispatch(Action.loadPracticeCollectionContent(collection.id, .loading))
+            dispatcher.dispatch(Action.loadPracticeCollectionContentProgress(collection.id, .loading))
         }
 
         dispatcher.services.challengesService
@@ -547,6 +558,13 @@ struct LoadCollectionContent: ThunkAction {
             .asResolvable()
             .ephemeralSink { groups in
                 dispatcher.dispatch(Action.loadPracticeCollectionContent(collection.id, groups))
+            }
+        
+        dispatcher.services.challengesService
+            .fetchCollectionContentProgress(id: userId, groupId: collection.id)
+            .asResolvable()
+            .ephemeralSink { groups in
+                dispatcher.dispatch(Action.loadPracticeCollectionContentProgress(collection.id, groups))
             }
     }
 }
@@ -718,12 +736,20 @@ struct GetLearnSections: ThunkAction {
 
         if dispatcher.state.learnSections[programmingLanguage]?.value == nil {
             dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, .loading))
+            dispatcher.dispatch(Action.updateLearnSectionsProgress(programmingLanguage, .loading))
         }
         dispatcher.services.challengesService
             .getLearnSections(programmingLanguage: programmingLanguage, session: session)
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.updateLearnSections(programmingLanguage, result))
+            }
+        
+        dispatcher.services.challengesService
+            .getLearnSectionsProgress(programmingLanguage: programmingLanguage, session: session)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateLearnSectionsProgress(programmingLanguage, result))
             }
     }
 }
@@ -767,6 +793,7 @@ struct GetLessonCollection: ThunkAction {
 
         if dispatcher.state.lessons[id]?.value == nil {
             dispatcher.dispatch(Action.updateLessonCollection(id, .loading))
+            dispatcher.dispatch(Action.updateLessonCollectionProgress(id, .loading))
         }
 
         dispatcher.services.challengesService
@@ -774,6 +801,13 @@ struct GetLessonCollection: ThunkAction {
             .asResolvable()
             .ephemeralSink { result in
                 dispatcher.dispatch(Action.updateLessonCollection(id, result))
+            }
+        
+        dispatcher.services.challengesService
+            .getLessonCollectionProgress(id: id, session: session)
+            .asResolvable()
+            .ephemeralSink { result in
+                dispatcher.dispatch(Action.updateLessonCollectionProgress(id, result))
             }
     }
 }

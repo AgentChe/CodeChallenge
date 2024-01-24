@@ -293,13 +293,13 @@ fileprivate struct SkeletonView: View {
                         model: model1, progressImageName: "practice_progress_start",
                         progressTopInset: 21, progressBottomInset: 2,
                         progressPreviousPeaceHeight: 0, expectedHeight: 134,
-                        previousModel: nil, nextModel: model2
+                        previousModel: nil, nextModel: model2, progresses: []
                     )
                     PracticeViewElementView(
                         model: model2, progressImageName: "practice_progress_end",
                         progressTopInset: 2, progressBottomInset: 28,
                         progressPreviousPeaceHeight: 24, expectedHeight: 104,
-                        previousModel: model1, nextModel: model3
+                        previousModel: model1, nextModel: model3, progresses: []
                     )
                 }
                 Section(
@@ -314,7 +314,7 @@ fileprivate struct SkeletonView: View {
                         model: model4, progressImageName: "practice_progress_only_section",
                         progressTopInset: 23, progressBottomInset: 26,
                         progressPreviousPeaceHeight: 0, expectedHeight: 108,
-                        previousModel: nil, nextModel: model5
+                        previousModel: nil, nextModel: model5, progresses: []
                     )
                 }
             }

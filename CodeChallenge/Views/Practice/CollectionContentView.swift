@@ -140,8 +140,8 @@ struct CollectionContentView: View, CollectionContentViewProps {
             HStack {
                 RoundedRectangle(cornerRadius: 1.5)
                     .fill(Color(UIColor.CodeChallenge.blue1))
-                    .frame(width: (.screenWidth - 32) * CGFloat(displayContent.progress)/100, height: 3)
-                if displayContent.progress != 100 {
+                    .frame(width: (.screenWidth - 32) * CGFloat(contentProgress?.progress ?? 0)/100, height: 3)
+                if contentProgress?.progress != 100 {
                     Spacer()
                 }
             }

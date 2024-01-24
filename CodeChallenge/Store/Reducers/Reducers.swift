@@ -16,7 +16,9 @@ struct Reducers {
             account: accountReducer(state.account, action),
             programmingLanguage: programmingLanguageReducer(state.programmingLanguage, action),
             practiceSections: practiceSectionsReducer(state.practiceSections, action),
+            practiceSectionsProgresses: practiceSectionsProgressesReducer(state.practiceSectionsProgresses, action),
             collections: collectionContentReducer(state.collections, action),
+            collectionProgresses: collectionContentProgressReducer(state.collectionProgresses, action),
             challengeDetails: challengeDetailsReducer(state.challengeDetails, action),
             challengeProgresses: challengeProgressReducer(state.challengeProgresses, action),
             challengeResults: challengeResultsReducer(state.challengeResults, action),
@@ -32,7 +34,9 @@ struct Reducers {
             maintenance: maintenanceReducer(state.maintenance, action),
             ongoingChallengeFriendData: ongoingChallengeFriendDataReducer(state.ongoingChallengeFriendData, action),
             learnSections: learnSectionsReducer(state.learnSections, action),
-            lessons: lessonsReducer(state.lessons, action)
+            learnSectionsProgress: learnSectionsProgressReducer(state.learnSectionsProgress, action),
+            lessons: lessonsReducer(state.lessons, action),
+            lessonsProgress: lessonsProgressReducer(state.lessonsProgress, action)
         )
     }
 }
@@ -155,19 +159,21 @@ extension Reducers {
 }
 
 extension Reducers {
-    static let paymentsReducer: Reducer<Resolvable<[AppStorePayment]>> = { state, action in
+    static let practiceSectionsReducer: Reducer<[String: Resolvable<[ChallengeSection]>]> = { state, action in
         switch action {
-        case .loadPayments(let result):
-            return result
+        case .loadPracticeSections(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
         default: return state
         }
     }
 }
 
 extension Reducers {
-    static let practiceSectionsReducer: Reducer<[String: Resolvable<[ChallengeSection]>]> = { state, action in
+    static let practiceSectionsProgressesReducer: Reducer<[String: Resolvable<[IdProgressCouple]>]> = { state, action in
         switch action {
-        case .loadPracticeSections(let identifier, let result):
+        case .loadPracticeSectionsProgresses(let identifier, let result):
             var copy = state
             copy[identifier] = result
             return copy
@@ -189,6 +195,18 @@ extension Reducers {
 }
 
 extension Reducers {
+    static let learnSectionsProgressReducer: Reducer<[ProgrammingLanguage: Resolvable<LearnSectionsProgress>]> = { state, action in
+        switch action {
+        case .updateLearnSectionsProgress(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
     static let lessonsReducer: Reducer<[Int: Resolvable<LessonCollection>]> = { state, action in
         switch action {
         case .updateLessonCollection(let identifier, let result):
@@ -201,9 +219,33 @@ extension Reducers {
 }
 
 extension Reducers {
+    static let lessonsProgressReducer: Reducer<[Int: Resolvable<LessonCollectionProgress>]> = { state, action in
+        switch action {
+        case .updateLessonCollectionProgress(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
     static let collectionContentReducer: Reducer<[Int: Resolvable<ChallengeCollectionContent>]> = { state, action in
         switch action {
         case .loadPracticeCollectionContent(let identifier, let result):
+            var copy = state
+            copy[identifier] = result
+            return copy
+        default: return state
+        }
+    }
+}
+
+extension Reducers {
+    static let collectionContentProgressReducer: Reducer<[Int: Resolvable<ChallengeCollectionContentProgress>]> = { state, action in
+        switch action {
+        case .loadPracticeCollectionContentProgress(let identifier, let result):
             var copy = state
             copy[identifier] = result
             return copy

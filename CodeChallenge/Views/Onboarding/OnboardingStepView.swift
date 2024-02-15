@@ -7,11 +7,13 @@
 
 import Foundation
 import SwiftUI
+import StoreKit
 
 struct OnboardingStep {
     let title: String
     let summaryTitle: String?
     let options: [(image: String?, title: String, secondaryTitle: String?)]
+    let requestReview: Bool
 }
 
 struct OnboardingStepView: View {
@@ -66,6 +68,17 @@ struct OnboardingStepView: View {
                     .padding(.bottom, 20)
             }
         }
+        .onAppear {
+            guard
+                step.requestReview,
+                let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+            else {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                SKStoreReviewController.requestReview(in: scene)
+            }
+        }
     }
 }
-

@@ -1444,7 +1444,7 @@
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1479,7 +1479,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1577,7 +1577,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1689,7 +1689,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -19,7 +19,7 @@ struct MaintenanceView: View {
                 HStack {
                     Spacer()
                         .frame(width: 34)
-                    Text("Codehub is currently down for maintenance")
+                    Text("Code Learning is currently down for maintenance")
                         .padding(.bottom, 17)
                         .font(.pageNameH1)
                         .multilineTextAlignment(.center)

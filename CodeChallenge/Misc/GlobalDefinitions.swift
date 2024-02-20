@@ -8,4 +8,8 @@
 enum GlobalDefinitions {
     static let otterScaleHost = "https://api.korrekted.com"
     static let otterScaleApiKey = "aYIILMSLfJK1Q8RT"
+    
+    enum Paygate {
+        static let weekly = "weekly_subscription_access"
+    }
 }

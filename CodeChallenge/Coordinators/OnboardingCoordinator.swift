@@ -67,7 +67,9 @@ class OnboardingCoordinator {
         let view = OnboardingSummaryView(result: result, amount: result.last?.1 ?? "") { [weak self] in
             guard let self = self else { return }
             self.navigationController.dismiss(animated: true)
+            
             Superwall.shared.register(event: "get_my_plan", params: [:])
+            
             UserDefaults.standard.set(true, forKey: "getStartedPresented")
         }
         let hostingController = UIHostingController(rootView: view)

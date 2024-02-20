@@ -8,7 +8,7 @@ target 'CodeChallenge' do
   pod 'RxSwift'
   pod 'RxCocoa'
   
-  pod 'Alamofire'
+  pod 'SwiftyStoreKit'
   
   pod 'OtterScaleiOS', :git => "https://github.com/AgentChe/OtterScaleiOS.git"
 end

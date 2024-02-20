@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
+import SuperwallKit
 
 final class RootCoordinator {
     private let window: UIWindow
@@ -167,11 +168,13 @@ final class RootCoordinator {
         }
     }
     
+    // TODO
     private func showOnboardingIfNeccessary() {
-        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
-
-        self.onboardingCoordinator.navigationController.modalPresentationStyle = .overFullScreen
-        self.practiceCoordinator.navigationController.present(self.onboardingCoordinator.navigationController, animated: false)
+        Superwall.shared.register(event: "get_my_plan", params: [:])
+//        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
+//
+//        self.onboardingCoordinator.navigationController.modalPresentationStyle = .overFullScreen
+//        self.practiceCoordinator.navigationController.present(self.onboardingCoordinator.navigationController, animated: false)
     }
 
     private func showMaintenanceScreen() {

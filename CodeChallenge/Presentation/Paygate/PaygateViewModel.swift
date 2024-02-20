@@ -89,8 +89,7 @@ private extension PaygateViewModel {
         let restore = makeRestored(didTapRestore: didTapRestore)
             .map { $0 ? Route.dismiss : Route.error }
         let termsAndPolicy = didTapTermsAndPolicy
-            .compactMap { URL(string: "") }
-            .map { Route.open($0) }
+            .map { Route.open(GlobalDefinitions.termsOfUse) }
             .asDriver(onErrorDriveWith: .never())
         
         return Driver

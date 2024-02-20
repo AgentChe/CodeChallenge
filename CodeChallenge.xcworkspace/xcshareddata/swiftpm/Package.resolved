@@ -136,24 +136,6 @@
       }
     },
     {
-      "identity" : "purchases-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/RevenueCat/purchases-ios.git",
-      "state" : {
-        "revision" : "c598bfa60672881933d8945584cc327acd6f018a",
-        "version" : "4.36.3"
-      }
-    },
-    {
-      "identity" : "superwall-ios",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/superwall-me/Superwall-iOS",
-      "state" : {
-        "revision" : "205c458dd92bbab2a1be73e0244a62efdd03c3e4",
-        "version" : "3.4.8"
-      }
-    },
-    {
       "identity" : "svgkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/bfolkens/SVGKit",

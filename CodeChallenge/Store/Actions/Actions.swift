@@ -89,7 +89,6 @@ struct Logout: ThunkAction {
                     UserDefaults.standard.set(nil, forKey: "cc_user_session")
                     UserDefaults.standard.set(nil, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.logout)
-                    dispatcher.services.identifyService.removeIdentity()
                     dispatcher.dispatch(GuestAuth(reloadPractice: true))
                 } else {
                     dispatcher.dispatch(Action.loadAccount(previousAccount))
@@ -129,7 +128,6 @@ struct DeleteAccount: ThunkAction {
                     UserDefaults.standard.set(nil, forKey: "cc_user_session")
                     UserDefaults.standard.set(nil, forKey: "cc_user_id")
                     dispatcher.dispatch(Action.logout)
-                    dispatcher.services.identifyService.removeIdentity()
                     dispatcher.dispatch(GuestAuth(reloadPractice: true))
                 } else {
                     dispatcher.dispatch(Action.loadAccount(previousAccount))
@@ -214,15 +212,9 @@ struct LoadAccount: ThunkAction {
                 account.id = user.id
                 account.xp = user.xp
                 account.solvedChallenges = user.doneChallangeCount
-                account.isPremium = user.isPremium
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
                 dispatcher.services.identifyService.identify(id: user.id, subscribed: user.isPremium == true)
                 dispatcher.dispatch(LoadLeaderboardData())
-                
-                if account.isPremium == false && previousAccount == nil {
-                    // first account load - need to updatepremiuminserver in case they redeemed an offer before app opening
-                    RevenueCatManager.shared.finishTransactions()
-                }
             }
     }
 }

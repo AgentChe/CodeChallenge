@@ -16,7 +16,10 @@ class Account {
     var followingsCount: Int?
     var streak: Int?
     var xp: Int?
-    var isPremium: Bool?
+    
+    var isPremium: Bool? {
+        SessionManager().hasActiveSubscriptions()
+    }
 
     init() {}
 }

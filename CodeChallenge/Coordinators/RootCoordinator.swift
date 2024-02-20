@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
-import SuperwallKit
 
 final class RootCoordinator {
     private let window: UIWindow
@@ -46,7 +45,6 @@ final class RootCoordinator {
             guard challengeFriendId != 0 else { return }
             self?.process(challengeFriendId: challengeFriendId)
         }
-        RevenueCatManager.shared.start(with: store)
     }
 
     func start() {
@@ -163,18 +161,33 @@ final class RootCoordinator {
         }
         
         DispatchQueue.main.async {
-            self.showOnboardingIfNeccessary()
+            self.showOnboardingOrPaygate()
             self.tabBarController.selectedIndex = 1
         }
     }
     
-    // TODO
-    private func showOnboardingIfNeccessary() {
-        Superwall.shared.register(event: "get_my_plan", params: [:])
-//        guard !UserDefaults.standard.bool(forKey: "getStartedPresented") else { return }
-//
-//        self.onboardingCoordinator.navigationController.modalPresentationStyle = .overFullScreen
-//        self.practiceCoordinator.navigationController.present(self.onboardingCoordinator.navigationController, animated: false)
+    private func showOnboardingOrPaygate() {
+        let onboardingWasPresented = UserDefaults.standard.bool(forKey: "getStartedPresented")
+
+        if onboardingWasPresented {
+            openPaygateIfNeeded()
+        } else {
+            onboardingCoordinator.didClosed = { [weak self] in
+                self?.openPaygateIfNeeded()
+            }
+            
+            onboardingCoordinator.navigationController.modalPresentationStyle = .overFullScreen
+            practiceCoordinator.navigationController.present(onboardingCoordinator.navigationController, animated: false)
+        }
+    }
+    
+    private func openPaygateIfNeeded() {
+        guard !SessionManager().hasActiveSubscriptions() else {
+            return
+        }
+        
+        let vc = PaygateViewController.make()
+        practiceCoordinator.navigationController.present(vc, animated: true)
     }
 
     private func showMaintenanceScreen() {

@@ -21,12 +21,15 @@
 	<false/>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>We need this permission to send you updates on our new challenges, remind you of your streak, and ensure you get the most out of your learning.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need this permission to have better analytics</string>
 	<key>TARGET_NAME</key>
 	<string>$(TARGET_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-Pro-Text-Medium.otf</string>
+		<string>SF-Pro-Text-Bold.otf</string>
+		<string>SF-Pro-Text-Regular.otf</string>
+		<string>SF-Pro-Text-Semibold.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -55,12 +58,5 @@
 		<key>test</key>
 		<string>key_test_el08E8ln468UYYjQyuT2GcjbDunMJXgM</string>
 	</dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-Pro-Text-Medium.otf</string>
-		<string>SF-Pro-Text-Bold.otf</string>
-		<string>SF-Pro-Text-Regular.otf</string>
-		<string>SF-Pro-Text-Semibold.otf</string>
-	</array>
 </dict>
 </plist>

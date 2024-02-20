@@ -1444,7 +1444,8 @@
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Python, Coding - Codehub";
+				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1478,7 +1479,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Python, Coding - Codehub";
+				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1576,6 +1578,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1587,7 +1590,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.tome.codechallenge.staging";
@@ -1687,6 +1690,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Codehub AI Staging";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

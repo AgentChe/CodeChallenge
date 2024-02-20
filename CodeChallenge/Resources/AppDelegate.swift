@@ -11,10 +11,15 @@ import OneSignal
 import FirebaseCore
 import Branch
 import Mixpanel
+import OtterScaleiOS
 
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        OtterScale.shared.initialize(host: GlobalDefinitions.otterScaleHost, apiKey: GlobalDefinitions.otterScaleApiKey)
+        
+        PurchaseValidationObserver.shared.startObserve()
+        
         OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
 
         OneSignal.initWithLaunchOptions(launchOptions)

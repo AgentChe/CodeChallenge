@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Mixpanel
 
 protocol Dispatchable {}
 
@@ -63,7 +62,6 @@ struct Login: ThunkAction {
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
-                    dispatcher.dispatch(TrackAnalyticsEvent(event: .loginSuccessful))
                     dispatcher.dispatch(AddStreakIfNeeded())
                     dispatcher.dispatch(LoadPracticeSections())
                     dispatcher.dispatch(GetLearnSections(programmingLanguage: dispatcher.state.programmingLanguage))
@@ -187,7 +185,6 @@ struct SignUp: ThunkAction {
             .ephemeralSink { user in
                 if user.isSuccess {
                     dispatcher.dispatch(AddStreakIfNeeded())
-                    dispatcher.dispatch(TrackAnalyticsEvent(event: .signUpSuccessful))
                     UserDefaults.standard.set(user.value?.session, forKey: "cc_user_session")
                     UserDefaults.standard.set(user.value?.id, forKey: "cc_user_id")
                     UserDefaults.standard.set(true, forKey: "isLoggedIn")
@@ -367,7 +364,6 @@ struct UpdateChallengeProgress: ThunkAction {
                 .challengesService.compile(id: userId, challengeId: challengeId, session: session, programmingLanguage: programmingLanguage)
                 .asResolvable()
                 .ephemeralSink { result in
-                    dispatcher.dispatch(TrackAnalyticsEvent(event: .challengeCompleted(challengeId, result.value?.isSuccesful == true)))
                     dispatcher.dispatch(Action.loadChallengeCompiledResult((challengeId, result)))
 
                     let progress = dispatcher.state.challengeProgresses[challengeId]?.value
@@ -455,14 +451,6 @@ struct LoadSearchResults: ThunkAction {
     }
 }
 
-struct TrackAnalyticsEvent: ThunkAction {
-    let event: AnalyticsEvent
-    func exec(dispatcher: Dispatcher) {
-        dispatcher.services.analyticsService
-            .track(event: event, properties: event.properties)
-    }
-}
-
 struct UploadImage: ThunkAction {
     let image: Data
 
@@ -494,21 +482,6 @@ struct UpdateUserPremium: ThunkAction {
             }
     }
 }
-
-//struct RedeemCode: ThunkAction {
-//    func exec(dispatcher: Dispatcher) {
-//        let previousAccount = dispatcher.state.account.value
-//
-//        IAPManager.shared.presentCodeRedemptionSheet(success: { identifier in
-//            guard previousAccount?.isPremium == false else { return }
-//            
-//            dispatcher.dispatch(UpdatePremiumInServerIfValid(completionBlock: { _ in
-//                dispatcher.dispatch(TrackAnalyticsEvent(event: .offerRedeemed))
-//            }))
-//        }, failure: { error in
-//        })
-//    }
-//}
 
 struct LoadPracticeSections: ThunkAction {
     let language: ProgrammingLanguage?

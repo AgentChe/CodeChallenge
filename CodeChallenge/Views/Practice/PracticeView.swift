@@ -36,9 +36,6 @@ struct PracticeView: View, PracticeViewProps {
                             .padding(.vertical, 10)
                         if searchFieldIsFocused {
                             searchedResultView
-                                .onAppear {
-                                    store.dispatch(TrackAnalyticsEvent(event: .browseOpened))
-                                }
                                 .padding(.top, 10)
                         } else if isLoading {
                             SkeletonView()
@@ -84,9 +81,6 @@ struct PracticeView: View, PracticeViewProps {
                                     .fill(Color(.CodeChallenge.blue1))
                                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(.CodeChallenge.dark)))
                             )
-                            .onTapGesture {
-                                store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
-                            }
                     }
                     LanguagePickerIconView()
                         .onTapGesture {
@@ -123,7 +117,6 @@ struct PracticeView: View, PracticeViewProps {
             HStack {
                 FocusableSearchField(viewModel: searchFieldVM) {
                     if !searchFieldVM.text.isEmpty {
-                        store.dispatch(TrackAnalyticsEvent(event: .challengeSearched(searchFieldVM.text, "manual")))
                         onSearch?(searchFieldVM.text)
                     }
                 }
@@ -168,7 +161,6 @@ struct PracticeView: View, PracticeViewProps {
                                 UniversalCodeChallengeView(codeChallenge: challenge)
                                     .onTapGesture {
                                         onOpenChallenge(challenge)
-                                        store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, "Browse", programmingLanguage)))
                                     }
                             }
                         }
@@ -186,7 +178,6 @@ struct PracticeView: View, PracticeViewProps {
                                     .padding(.horizontal, 20)
                                 if !hashtags.isEmpty {
                                     KeywordsSwiftUIView(keywords: hashtags, onKeywordTap: { keyword in
-                                        store.dispatch(TrackAnalyticsEvent(event: .challengeSearched(keyword, "keyword")))
                                         onSearch?(keyword)
                                     })
                                     .background(.clear)

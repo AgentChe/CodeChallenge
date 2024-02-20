@@ -61,11 +61,6 @@ struct LoginView: View, LoginViewProps {
         }
         .onAppear {
             self.mode = screenMode
-            if self.mode == .login {
-                store.dispatch(TrackAnalyticsEvent(event: .loginSelected))
-            } else {
-                store.dispatch(TrackAnalyticsEvent(event: .signUpSelected))
-            }
         }
         .onReceive(errorPublisher) { errorMessage in
             guard !showAlert else { return }

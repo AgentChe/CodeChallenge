@@ -132,9 +132,6 @@ struct ChatAIView: View, ChatAIViewProps {
             VStack(spacing: 10) {
                 ForEach(mode.answerPrompts, id: \.self) { prompt in
                     Button(action: {
-                        if let analyticsEvent = mode.getAnalyticsEvent(string: prompt) {
-                            store.dispatch(TrackAnalyticsEvent(event: analyticsEvent))
-                        }
                         if dismissView(on: prompt) { presentationMode.wrappedValue.dismiss() } else {
                             showPromptViewIfSatisfied = false
                             store.dispatch(SendMessageToAI(message: prompt, mode: mode))

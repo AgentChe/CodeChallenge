@@ -86,10 +86,7 @@ final class RootCoordinator {
                 self?.learnCoordinator.navigationController.present(alertController, animated: true)
             }
             if isLoggedIn {
-                self?.store.dispatch(TrackAnalyticsEvent(event: .claimCertificate))
                 runAlert()
-            } else {
-                self?.showLogin(action: TrackAnalyticsEvent(event: .claimCertificate), completion: runAlert)
             }
         }
 
@@ -97,18 +94,12 @@ final class RootCoordinator {
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
-                }
             }
         }
         practiceCoordinator.onGoPremium = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
-                }
             }
         }
 
@@ -151,7 +142,6 @@ final class RootCoordinator {
                 .sink { [weak self] result in
                     if let error = result.error {
                         let miliseconds = Date().timeIntervalSince(startDate) * 1000
-                        self?.store.dispatch(TrackAnalyticsEvent(event: .practicepageLoaded(miliseconds, error)))
                         let alertController = UIAlertController(title: "An error occurred", message: error.localizedDescription, preferredStyle: .alert)
                         let action = UIAlertAction(title: "Retry", style: .default) { action in
                             self?.store.dispatch(LoadPracticeSections())
@@ -160,7 +150,6 @@ final class RootCoordinator {
                         self?.learnCoordinator.navigationController.present(alertController, animated: true)
                     } else if let value = result.value {
                         let miliseconds = Date().timeIntervalSince(startDate) * 1000
-                        self?.store.dispatch(TrackAnalyticsEvent(event: .practicepageLoaded(miliseconds, nil)))
                         guard let self = self else { return }
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
                             if !value.isEmpty {

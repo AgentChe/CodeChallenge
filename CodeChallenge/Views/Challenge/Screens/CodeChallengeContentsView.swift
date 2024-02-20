@@ -62,11 +62,6 @@ struct CodeChallengeContentsView: View, CodeChallengeContentsViewProps {
             store.dispatch(LoadChallengeDetails(id: codeChallenge.id))
             store.dispatch(LoadChallengeProgress(challengeId: codeChallenge.id, onComplete: nil))
         })
-        .onChange(of: selection, perform: { newValue in
-            if newValue == 1 {
-                store.dispatch(TrackAnalyticsEvent(event: .startedSolving(codeChallenge, programmingLanguage)))
-            }
-        })
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {

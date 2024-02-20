@@ -31,7 +31,6 @@ struct BrowsedChallengesView: View, BrowsedChallengesViewProps {
                             UniversalCodeChallengeView(codeChallenge: challenge)
                                 .onTapGesture {
                                     onEnterDetails(challenge)
-                                    store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, "Browse", programmingLanguage)))
                                 }
                         }
                         Spacer()

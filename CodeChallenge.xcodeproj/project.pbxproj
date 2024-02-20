@@ -89,8 +89,6 @@
 		E07B88F729566AE400AD1C61 /* ProgrammingLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */; };
 		E07B88F929566C1300AD1C61 /* OnboardingLanguagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */; };
 		E07B88FB2958BC4B00AD1C61 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */; };
-		E07BBDDB28C29DDB00A1805B /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = E07BBDDA28C29DDB00A1805B /* Mixpanel */; };
-		E07BBDDD28C29DEC00A1805B /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */; };
 		E083D95529E9FB64005829F4 /* QuizChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E083D95429E9FB64005829F4 /* QuizChallengeView.swift */; };
 		E085CFA929B39EF100BA1F16 /* SnapCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */; };
 		E085CFAB29B40E4F00BA1F16 /* ConceptReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */; };
@@ -315,7 +313,6 @@
 		E07B88F629566AE400AD1C61 /* ProgrammingLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgrammingLanguage.swift; sourceTree = "<group>"; };
 		E07B88F829566C1300AD1C61 /* OnboardingLanguagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLanguagesView.swift; sourceTree = "<group>"; };
 		E07B88FA2958BC4B00AD1C61 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
-		E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		E083D95429E9FB64005829F4 /* QuizChallengeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizChallengeView.swift; sourceTree = "<group>"; };
 		E085CFA829B39EF100BA1F16 /* SnapCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapCarousel.swift; sourceTree = "<group>"; };
 		E085CFAA29B40E4F00BA1F16 /* ConceptReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptReview.swift; sourceTree = "<group>"; };
@@ -444,7 +441,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0228F71290547CC00101A82 /* Branch in Frameworks */,
-				E07BBDDB28C29DDB00A1805B /* Mixpanel in Frameworks */,
 				E099936628C155D500E12E36 /* Lottie in Frameworks */,
 				E06D28C728CE6EB800E211A0 /* OneSignal in Frameworks */,
 				E01AECB028A1B1AD00615B52 /* Highlightr in Frameworks */,
@@ -853,7 +849,6 @@
 				DE0D27232B84B9F1007F1560 /* Session */,
 				DE0D27202B84B929007F1560 /* Purchase */,
 				E0BD3294285CF886000C37A9 /* Services.swift */,
-				E07BBDDC28C29DEC00A1805B /* AnalyticsService.swift */,
 				E0BD3285285CF568000C37A9 /* NetworkService.swift */,
 				E0BD3296285CF979000C37A9 /* AuthService.swift */,
 				E06AAE3828778EEF00995D3D /* AccountService.swift */,
@@ -1020,7 +1015,6 @@
 				E099936528C155D500E12E36 /* Lottie */,
 				E099936828C1563700E12E36 /* SVGKit */,
 				E099936A28C1563700E12E36 /* SVGKitSwift */,
-				E07BBDDA28C29DDB00A1805B /* Mixpanel */,
 				E06D28C628CE6EB800E211A0 /* OneSignal */,
 				E0EF279128E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				E0EF279328E21F3000597160 /* FirebaseCrashlytics */,
@@ -1064,7 +1058,6 @@
 				E01AECAE28A1B1AD00615B52 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				E099936428C155D500E12E36 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E099936728C1563700E12E36 /* XCRemoteSwiftPackageReference "SVGKit" */,
-				E07BBDD928C29DDB00A1805B /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
 				E06D28C528CE6EB800E211A0 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				E0EF279028E21F2F00597160 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */,
@@ -1227,7 +1220,6 @@
 				E085CFBE29B6A8AC00BA1F16 /* LeaderboardService.swift in Sources */,
 				E0EBB7E8288B1BE100DE7C53 /* JSONDecoderAdditions.swift in Sources */,
 				E06AAE252877888300995D3D /* PracticeCoordinator.swift in Sources */,
-				E07BBDDD28C29DEC00A1805B /* AnalyticsService.swift in Sources */,
 				E00D5BAE2943FFB80086A2BB /* Formatters.swift in Sources */,
 				E0BD3238285A7181000C37A9 /* CodeChallenge.xcdatamodeld in Sources */,
 				E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */,
@@ -1914,14 +1906,6 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		E07BBDD928C29DDB00A1805B /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mixpanel/mixpanel-swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.8.0;
-			};
-		};
 		E099936428C155D500E12E36 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1973,11 +1957,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E06D28C528CE6EB800E211A0 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
 			productName = OneSignal;
-		};
-		E07BBDDA28C29DDB00A1805B /* Mixpanel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E07BBDD928C29DDB00A1805B /* XCRemoteSwiftPackageReference "mixpanel-swift" */;
-			productName = Mixpanel;
 		};
 		E099936528C155D500E12E36 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

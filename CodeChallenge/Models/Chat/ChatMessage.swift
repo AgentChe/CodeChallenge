@@ -50,16 +50,6 @@ extension ChatMessagesMode {
         }
     }
 
-    func getAnalyticsEvent(string: String) -> AnalyticsEvent? {
-        switch self {
-        case .explain(_, let challengeDetail):
-            return .explainMistakeClicked(challengeDetail.id, string)
-        case .provideSolution(let challengeDetail):
-            return .askAICLicked(challengeDetail.id, string)
-        case .explainTopic: return nil
-        }
-    }
-
     var title: String {
         switch self {
         case .explain:

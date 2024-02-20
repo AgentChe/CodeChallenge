@@ -51,9 +51,6 @@ struct GetStartedView: View {
         .background(Color.dark.edgesIgnoringSafeArea(.all))
         .edgesIgnoringSafeArea(.top)
         .foregroundColor(.white)
-        .onAppear {
-            store.dispatch(TrackAnalyticsEvent(event: .getStarted))
-        }
     }
 
     private var getStartedDescribtion: some View {

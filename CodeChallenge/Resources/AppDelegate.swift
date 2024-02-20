@@ -10,7 +10,6 @@ import UIKit
 import OneSignal
 import FirebaseCore
 import Branch
-import Mixpanel
 import OtterScaleiOS
 
 @main
@@ -47,7 +46,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         })
 
         FirebaseApp.configure()
-        Mixpanel.initialize(token: "4e8b61d12afcdad81dca5a29ef81425d")
         return true
     }
 

@@ -27,9 +27,8 @@ class LearnCoordinator {
         } onJumpSection: { [weak self] section in
             guard let self = self else { return }
             self.openChallengesView(for: section)
-        } onOpenPremium: { [weak self] in
-            guard let self = self else { return }
-            store.dispatch(TrackAnalyticsEvent(event: AnalyticsEvent.goPremiumClicked))
+        } onOpenPremium: {
+            
         } onClaimCertificate: { [weak self] loggedIn in
             self?.onClaimCertificate?(loggedIn)
         }

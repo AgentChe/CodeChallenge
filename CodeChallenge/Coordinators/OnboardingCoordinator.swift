@@ -69,7 +69,6 @@ class OnboardingCoordinator {
             self.navigationController.dismiss(animated: true)
             Superwall.shared.register(event: "get_my_plan", params: [:])
             UserDefaults.standard.set(true, forKey: "getStartedPresented")
-            self.store.dispatch(TrackAnalyticsEvent(event: .onboardingCompleted(self.result)))
         }
         let hostingController = UIHostingController(rootView: view)
         navigationController.pushViewController(hostingController, animated: true)

@@ -79,7 +79,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
             HStack {
                 if displayConceptReview {
                     Button {
-                        store.dispatch(TrackAnalyticsEvent(event: .conceptOpened(displayContent.name)))
                         if let conceptReview = collection.conceptReview {
                             onConceptReview(conceptReview)
                         }
@@ -155,7 +154,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 .transition(.move(edge: .bottom))
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, "Practice", store.state.programmingLanguage)))
                     onChallengeOpen(challenge)
                 }
                 .modifier(PremiumGradientModifier(changeStrokeColor: true, cornerRadius: 13, strokeWidth: 1.5))
@@ -164,7 +162,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 .transition(.move(edge: .bottom))
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    store.dispatch(TrackAnalyticsEvent(event: .challengeSelected(challenge, "Practice", store.state.programmingLanguage)))
                     onChallengeOpen(challenge)
                 }
                 .background {

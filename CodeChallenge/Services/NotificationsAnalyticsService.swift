@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import OneSignal
 import Branch
 import SuperwallKit
 
@@ -17,14 +16,12 @@ protocol IdentifyServiceProtocol {
 
 struct IdentifyService: IdentifyServiceProtocol {
     func identify(id: Int, subscribed: Bool) {
-        OneSignal.setExternalUserId("\(id)")
         Superwall.shared.identify(userId: "\(id)")
         Branch.getInstance().setIdentity("\(id)")
         Superwall.shared.setUserAttributes(["subscribed": subscribed])
     }
 
     func removeIdentity() {
-        OneSignal.removeExternalUserId()
         Superwall.shared.reset()
     }
 }

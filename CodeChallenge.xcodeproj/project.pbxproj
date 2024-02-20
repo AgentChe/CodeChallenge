@@ -75,7 +75,6 @@
 		E06AAE3728778DDC00995D3D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3628778DDC00995D3D /* Account.swift */; };
 		E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3828778EEF00995D3D /* AccountService.swift */; };
 		E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */; };
-		E06D28C728CE6EB800E211A0 /* OneSignal in Frameworks */ = {isa = PBXBuildFile; productRef = E06D28C628CE6EB800E211A0 /* OneSignal */; };
 		E06D90C0299EFCC000AC09AB /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */; };
 		E06D90C229A2E8F500AC09AB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90C129A2E8F500AC09AB /* ActivityView.swift */; };
 		E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */; };
@@ -442,7 +441,6 @@
 			files = (
 				E0228F71290547CC00101A82 /* Branch in Frameworks */,
 				E099936628C155D500E12E36 /* Lottie in Frameworks */,
-				E06D28C728CE6EB800E211A0 /* OneSignal in Frameworks */,
 				E01AECB028A1B1AD00615B52 /* Highlightr in Frameworks */,
 				E099936B28C1563700E12E36 /* SVGKitSwift in Frameworks */,
 				E099936928C1563700E12E36 /* SVGKit in Frameworks */,
@@ -1015,7 +1013,6 @@
 				E099936528C155D500E12E36 /* Lottie */,
 				E099936828C1563700E12E36 /* SVGKit */,
 				E099936A28C1563700E12E36 /* SVGKitSwift */,
-				E06D28C628CE6EB800E211A0 /* OneSignal */,
 				E0EF279128E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				E0EF279328E21F3000597160 /* FirebaseCrashlytics */,
 				E0228F70290547CC00101A82 /* Branch */,
@@ -1058,7 +1055,6 @@
 				E01AECAE28A1B1AD00615B52 /* XCRemoteSwiftPackageReference "Highlightr" */,
 				E099936428C155D500E12E36 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E099936728C1563700E12E36 /* XCRemoteSwiftPackageReference "SVGKit" */,
-				E06D28C528CE6EB800E211A0 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */,
 				E0EF279028E21F2F00597160 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */,
 				E01DFB3F2B5D64EB00238F46 /* XCRemoteSwiftPackageReference "purchases-ios" */,
@@ -1898,14 +1894,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		E06D28C528CE6EB800E211A0 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/OneSignal/OneSignal-XCFramework";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		E099936428C155D500E12E36 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1952,11 +1940,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */;
 			productName = Branch;
-		};
-		E06D28C628CE6EB800E211A0 /* OneSignal */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E06D28C528CE6EB800E211A0 /* XCRemoteSwiftPackageReference "OneSignal-XCFramework" */;
-			productName = OneSignal;
 		};
 		E099936528C155D500E12E36 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

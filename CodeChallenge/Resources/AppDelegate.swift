@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import OneSignal
 import FirebaseCore
 import Branch
 import OtterScaleiOS
@@ -19,15 +18,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         PurchaseValidationObserver.shared.startObserve()
         
-        OneSignal.setLogLevel(.LL_VERBOSE, visualLevel: .LL_NONE)
-
-        OneSignal.initWithLaunchOptions(launchOptions)
-        OneSignal.setAppId("d6f08880-5de1-4077-b5ec-82a962cff441")
-
-        OneSignal.promptForPushNotifications(userResponse: { accepted in
-            print("User accepted notification: \(accepted)")
-        })
-
         Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { [weak self]
             (params, error) in
             if let params = params, (params["+is_first_session"] as? String) == "1",

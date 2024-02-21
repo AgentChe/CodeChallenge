@@ -93,12 +93,24 @@ final class RootCoordinator {
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    if let topVC = UIApplication.shared.getTopViewController() {
+                        let vc = PaygateViewController.make()
+                        topVC.present(vc, animated: true)
+                    }
+                }
             }
         }
         practiceCoordinator.onGoPremium = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.tabBarController.selectedIndex = 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    if let topVC = UIApplication.shared.getTopViewController() {
+                        let vc = PaygateViewController.make()
+                        topVC.present(vc, animated: true)
+                    }
+                }
             }
         }
 

@@ -66,6 +66,12 @@ struct LearnTabView: View, LearnTabViewProps {
                                 .fill(Color(.CodeChallenge.blue1))
                                 .background(RoundedRectangle(cornerRadius: 16).fill(Color(.CodeChallenge.dark)))
                         )
+                        .onTapGesture {
+                            if let topVC = UIApplication.shared.getTopViewController() {
+                                let vc = PaygateViewController.make()
+                                topVC.present(vc, animated: true)
+                            }
+                        }
                     }
                     LanguagePickerIconView()
                         .onTapGesture {

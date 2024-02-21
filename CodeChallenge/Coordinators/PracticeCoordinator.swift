@@ -34,8 +34,11 @@ class PracticeCoordinator {
             self?.navigationController.pushViewController(controller, animated: true)
         } onOpenChallenge: { [weak self] challenge in
             self?.openChallengeView(challenge: challenge, collection: nil, from: self?.navigationController)
-        } onOpenPremium: { [weak self] in
-            
+        } onOpenPremium: {
+            if let topVC = UIApplication.shared.getTopViewController() {
+                let vc = PaygateViewController.make()
+                topVC.present(vc, animated: true)
+            }
         }
             .environmentObject(store)
         let controller = UIHostingController(rootView: practiceView)

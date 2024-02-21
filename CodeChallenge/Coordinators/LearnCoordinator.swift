@@ -28,7 +28,10 @@ class LearnCoordinator {
             guard let self = self else { return }
             self.openChallengesView(for: section)
         } onOpenPremium: {
-            
+            if let topVC = UIApplication.shared.getTopViewController() {
+                let vc = PaygateViewController.make()
+                topVC.present(vc, animated: true)
+            }
         } onClaimCertificate: { [weak self] loggedIn in
             self?.onClaimCertificate?(loggedIn)
         }

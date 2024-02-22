@@ -65,11 +65,11 @@ struct SettingsView: View, SettingsViewProps {
     var buttonsView: some View {
         VStack(alignment: .leading, spacing: 30) {
             Button("Privacy Policy") {
-                onOpenUrl("https://codehub.ninja/privacy/")
+                UIApplication.shared.open(GlobalDefinitions.privacyPolicy)
             }
 
             Button("Terms of Use") {
-                onOpenUrl("https://codehub.ninja/privacy/")
+                UIApplication.shared.open(GlobalDefinitions.termsOfUse)
             }
 
             Button("Notifications") {

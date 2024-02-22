@@ -20,6 +20,14 @@ extension CodeChallengePresentable {
         collection: ChallengeCollection?,
         from navigationController: UINavigationController?) {
             guard let navigationController = navigationController else { return }
+            
+            let locked = challenge.isPremium ? !SessionManager().hasActiveSubscriptions() : false
+            
+            guard !locked else {
+                onGoPremium?()
+                
+                return
+            }
         let challengeView = CodeChallengeContentsView(codeChallenge: challenge) { [weak self] challengeDetail in
             guard let challengeDetail = challengeDetail else { return }
             self?.showSolution(challengeDetail: challengeDetail, challenge: challenge)

@@ -200,7 +200,16 @@ struct AccountView: View, AccountViewProps {
             ForEach(inProgressChallenges, id: \.id) { challenge in
                 UniversalCodeChallengeView(codeChallenge: challenge)
                     .onTapGesture {
-                        self.onOpenChallengeDetails(challenge)
+                        let locked = challenge.isPremium ? !SessionManager().hasActiveSubscriptions() : false
+                        
+                        if locked {
+                            if let topVC = UIApplication.shared.getTopViewController() {
+                                let vc = PaygateViewController.make()
+                                topVC.present(vc, animated: true)
+                            }
+                        } else {
+                            onOpenChallengeDetails(challenge)
+                        }
                     }
             }
         }

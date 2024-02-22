@@ -12,6 +12,7 @@ enum GlobalDefinitions {
     static let otterScaleApiKey = "aYIILMSLfJK1Q8RT"
     
     static let termsOfUse = URL(string: "https://cocorporateapps.com/terms-of-use.html")!
+    static let privacyPolicy = URL(string: "https://cocorporateapps.com/privacy-policy.html")!
     
     enum Paygate {
         static let weekly = "weekly_subscription_access"

@@ -329,7 +329,7 @@ extension RootCoordinator {
 
 extension RootCoordinator {
     func isAppMaintained(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
-        let url = "https://maintenance.yervandgaloyan.workers.dev/"
+        let url = "https://maintenance.sergey-ddd.workers.dev/"
         return
             URLRequest.create(url: url)
             .map {
@@ -350,7 +350,7 @@ extension RootCoordinator {
 
 extension RootCoordinator {
     func isPremiumEnabled(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
-        let url = "https://maintenance.yervandgaloyan.workers.dev/"
+        let url = "https://maintenance.sergey-ddd.workers.dev/"
         return
             URLRequest.create(url: url)
             .map {

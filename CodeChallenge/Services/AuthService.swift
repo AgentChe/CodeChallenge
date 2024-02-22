@@ -73,7 +73,7 @@ struct AuthService: AuthServiceProtocol {
 
     func fetchMaintenance() -> AnyPublisher<Maintenance, Error> {
         return
-            URLRequest.create(url: "https://maintenance.yervandgaloyan.workers.dev/")
+            URLRequest.create(url: "https://maintenance.sergey-ddd.workers.dev/")
             .map {
                 var copy = $0
                 copy.cachePolicy = .reloadIgnoringCacheData

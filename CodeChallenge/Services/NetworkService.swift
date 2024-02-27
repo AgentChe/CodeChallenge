@@ -116,6 +116,7 @@ extension Publisher where Output == (data: Data, response: URLResponse) {
             guard 200...299 ~= httpResponse.statusCode else {
                 throw NetworkError.api(httpResponse.statusCode, data) //TODO: map to error
             }
+            
             return (data, httpResponse)
         }
         .eraseToAnyPublisher()

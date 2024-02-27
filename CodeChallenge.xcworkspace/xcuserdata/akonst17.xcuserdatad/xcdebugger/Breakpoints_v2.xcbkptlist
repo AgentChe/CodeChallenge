@@ -7,64 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1C451320-82C4-4A90-B947-1F26F997E01C"
+            uuid = "1546FA75-214F-4FD5-86A9-AB986D1AF3D4"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CodeChallenge/Coordinators/PracticeCoordinator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "openCollectionDetail(collection:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1C451320-82C4-4A90-B947-1F26F997E01C - 3efcc2f79d77c44d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Codehub.PracticeCoordinator.openCollectionDetail(collection: Codehub.ChallengeCollection) -&gt; ()"
-                  moduleName = "Codehub"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/akonst17/Documents/code_challenge_ios/CodeChallenge/Coordinators/PracticeCoordinator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "100">
-               </Location>
-               <Location
-                  uuid = "1C451320-82C4-4A90-B947-1F26F997E01C - b989367e199a875"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Codehub.Challenge) -&gt; () in Codehub.PracticeCoordinator.openCollectionDetail(collection: Codehub.ChallengeCollection) -&gt; ()"
-                  moduleName = "Codehub"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/akonst17/Documents/code_challenge_ios/CodeChallenge/Coordinators/PracticeCoordinator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "59"
-                  endingLineNumber = "59"
-                  offsetFromSymbolStart = "192">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B7514784-E2AC-4F6D-9C27-86FD537C019A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "CodeChallenge/Services/ChallengesService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
-            landmarkName = "fetchPracticeSections(language:humanLanguage:id:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

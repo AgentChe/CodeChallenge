@@ -25,14 +25,16 @@ struct ChallengeCollection: Codable, Equatable {
     let icon: String
     let isNew: Bool
     let conceptReview: SectionConceptReview?
+    let isPremium: Bool
 
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case id
         case name
         case description
         case icon
         case isNew
         case conceptReview
+        case isPremium
     }
 
     init(from decoder: Decoder) throws {
@@ -43,15 +45,17 @@ struct ChallengeCollection: Codable, Equatable {
         self.icon = try container.decode(String.self, forKey: .icon)
         self.isNew = try container.decode(Bool.self, forKey: .isNew)
         self.conceptReview = try container.decodeIfPresent(SectionConceptReview.self, forKey: .conceptReview)
+        self.isPremium = try container.decode(Bool.self, forKey: .isPremium)
     }
 
-    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", isNew: Bool = false, conceptReview: SectionConceptReview? = nil) {
+    init(id: Int, name: String = "random", description: String = "random 2", icon: String = "just", isNew: Bool = false, conceptReview: SectionConceptReview? = nil, isPremium: Bool = false) {
         self.id = id
         self.name = name
         self.description = description
         self.icon = icon
         self.isNew = isNew
         self.conceptReview = conceptReview
+        self.isPremium = isPremium
     }
 }
 

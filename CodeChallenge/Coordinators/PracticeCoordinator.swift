@@ -56,17 +56,25 @@ class PracticeCoordinator {
     }
 
     private func openCollectionDetail(collection: ChallengeCollection) {
-        let view = CollectionContentView(collection: collection, onChallengeOpen: { [weak self] challenge in
-            self?.openChallengeView(challenge: challenge, collection: collection, from: self?.navigationController)
-        }, onConceptReview: { [weak self] conceptReview in
-            self?.presentConceptReview(sectionConceptReview: conceptReview)
-        }, onLessonOpen: { [weak self] collectionContent in
-            guard let self = self else { return }
-            self.openChat(mode: .explainTopic(collectionContent, self.store.state.programmingLanguage), navigationController: self.navigationController)
-        })
-            .environmentObject(store)
-        let controller = UIHostingController(rootView: view)
-        navigationController.pushViewController(controller, animated: true)
+        let locked = collection.isPremium ? !SessionManager().hasActiveSubscriptions() : false
+        
+        if locked {
+            let vc = PaygateViewController.make()
+            let baseVC = UIApplication.shared.getTopViewController() ?? navigationController
+            baseVC.present(vc, animated: true)
+        } else {
+            let view = CollectionContentView(collection: collection, onChallengeOpen: { [weak self] challenge in
+                self?.openChallengeView(challenge: challenge, collection: collection, from: self?.navigationController)
+            }, onConceptReview: { [weak self] conceptReview in
+                self?.presentConceptReview(sectionConceptReview: conceptReview)
+            }, onLessonOpen: { [weak self] collectionContent in
+                guard let self = self else { return }
+                self.openChat(mode: .explainTopic(collectionContent, self.store.state.programmingLanguage), navigationController: self.navigationController)
+            })
+                .environmentObject(store)
+            let controller = UIHostingController(rootView: view)
+            navigationController.pushViewController(controller, animated: true)
+        }
     }
 
     private func presentConceptReview(sectionConceptReview: SectionConceptReview) {

@@ -60,16 +60,7 @@ private extension PaygateViewModel {
                     return nil
                 }
                 
-                let result = NSNumber(value: price.priceValue / 7)
-                
-                let formatter = NumberFormatter()
-                formatter.numberStyle = .currency
-                formatter.locale = price.priceLocale
-                formatter.currencyCode = price.currency
-                formatter.maximumFractionDigits = 2
-                formatter.roundingMode = .down
-                
-                return formatter.string(from: result)
+                return Currency(productPrice: price).formatted()
             }
             .trackActivity(activity)
             .asDriver(onErrorJustReturn: "")
@@ -138,5 +129,44 @@ private extension PaygateViewModel {
                     .trackActivity(self.activity)
                     .asDriver(onErrorJustReturn: false)
             }
+    }
+}
+
+// MARK: Additional
+private struct Currency {
+    enum LTRCurrency: String, CaseIterable {
+        case USD = "USD"
+    }
+    
+    private let productPrice: ProductPrice
+    
+    init(productPrice: ProductPrice) {
+        self.productPrice = productPrice
+    }
+    
+    func formatted() -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = productPrice.priceLocale
+        formatter.maximumFractionDigits = 2
+        formatter.roundingMode = .up
+        formatter.currencyCode = productPrice.currency
+        
+        let currencySymbol = formatter.currencySymbol ?? productPrice.currency
+        
+        formatter.currencyCode = ""
+        formatter.currencySymbol = ""
+        
+        guard let resultPrice = formatter.string(from: NSNumber(value: productPrice.priceValue)) else {
+            return nil
+        }
+        
+        let ltrCurrencies = LTRCurrency.allCases.map { $0.rawValue }
+        
+        if ltrCurrencies.contains(productPrice.currency) {
+            return String(format: "%@%@", currencySymbol, resultPrice)
+        } else {
+            return String(format: "%@%@", resultPrice, currencySymbol)
+        }
     }
 }

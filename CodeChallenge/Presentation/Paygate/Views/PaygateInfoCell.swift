@@ -23,6 +23,12 @@ final class PaygateInfoCell: UIView {
     
     let item: Item
     
+    private lazy var textAttrs = TextAttributes()
+        .textColor(UIColor.white.withAlphaComponent(0.6))
+        .font(UIFont.regular(size: 13.scale))
+        .lineHeight(18.2.scale)
+        .textAlignment(.left)
+    
     init(item: Item) {
         self.item = item
         
@@ -33,6 +39,13 @@ final class PaygateInfoCell: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: Public
+extension PaygateInfoCell {
+    func update(text: String) {
+        textLabel.attributedText = text.attributed(with: textAttrs)
     }
 }
 
@@ -96,15 +109,9 @@ private extension PaygateInfoCell {
     }
     
     func makeTextLabel() -> UILabel {
-        let attrs = TextAttributes()
-            .textColor(UIColor.white.withAlphaComponent(0.6))
-            .font(UIFont.regular(size: 13.scale))
-            .lineHeight(18.2.scale)
-            .textAlignment(.left)
-        
         let view = UILabel()
         view.numberOfLines = 0
-        view.attributedText = item.text.attributed(with: attrs)
+        view.attributedText = item.text.attributed(with: textAttrs)
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

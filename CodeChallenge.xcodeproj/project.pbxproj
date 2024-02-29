@@ -1684,12 +1684,12 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
+				INFOPLIST_KEY_CFBundleDisplayName = "Python Coding";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1701,7 +1701,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1720,12 +1720,12 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
+				INFOPLIST_KEY_CFBundleDisplayName = "Python Coding";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1737,7 +1737,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1818,13 +1818,13 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
+				INFOPLIST_KEY_CFBundleDisplayName = "Python Coding";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1836,7 +1836,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1932,12 +1932,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CodeChallenge/Resources/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Code Learning";
+				INFOPLIST_KEY_CFBundleDisplayName = "Python Coding";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need this permission to have better analytics";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need this permission to let you choose your new profile picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1949,7 +1949,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.7;
+				MARKETING_VERSION = 3.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

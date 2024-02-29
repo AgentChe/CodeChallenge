@@ -50,6 +50,8 @@ extension PaygateView {
     func setup(price: String) {
         let result = String(format: "Paygate.Price".localized, price)
         priceLabel.attributedText = result.attributed(with: priceAttrs)
+        
+        info4Cell.update(text: String(format: "Paygate.Info4.Text".localized, price))
     }
 }
 

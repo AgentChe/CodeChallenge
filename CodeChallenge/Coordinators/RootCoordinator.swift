@@ -312,7 +312,7 @@ extension RootCoordinator {
     private func showForceUpdateAlert() {
         let alert = UIAlertController(
             title: "Unsupported Version",
-            message: "This version of Code Learning is no longer supported. Please update the app from the App Store",
+            message: "This version of Python Coding is no longer supported. Please update the app from the App Store",
             preferredStyle: .alert
         )
         let action = UIAlertAction(title: "Update", style: .default) { [weak self] _ in

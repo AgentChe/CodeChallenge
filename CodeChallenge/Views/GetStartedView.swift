@@ -30,7 +30,7 @@ struct GetStartedView: View {
                     Text("Learn to code in 5 minutes a day")
                         .font(.pageNameH1)
                         .padding(.top, -90)
-                    Text("Bringing you over 100 of the best free python coding challenges in a bite-sized format")
+                    Text("Bringing you over 100 of the best free code learning challenges in a bite-sized format")
                         .font(.bodyText)
                     Spacer()
                     Button("Get Started") {

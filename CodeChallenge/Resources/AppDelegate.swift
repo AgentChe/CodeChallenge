@@ -14,8 +14,11 @@ import OtterScaleiOS
 @main
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        NumberLaunches().launch()
+        
         OtterScale.shared.initialize(host: GlobalDefinitions.otterScaleHost, apiKey: GlobalDefinitions.otterScaleApiKey)
         
+        AmplitudeManager.shared.initialize()
         IAPManager.initialize()
         PurchaseValidationObserver.shared.startObserve()
         

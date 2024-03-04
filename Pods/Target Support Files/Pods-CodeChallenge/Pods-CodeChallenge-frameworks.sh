@@ -176,6 +176,7 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OtterScaleiOS/OtterScaleiOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
@@ -183,6 +184,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Debug Staging" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OtterScaleiOS/OtterScaleiOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
@@ -190,6 +192,7 @@ if [[ "$CONFIGURATION" == "Debug Staging" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OtterScaleiOS/OtterScaleiOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"
@@ -197,6 +200,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release Staging" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Amplitude-iOS/Amplitude_iOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OtterScaleiOS/OtterScaleiOS.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework"

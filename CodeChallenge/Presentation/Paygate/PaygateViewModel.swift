@@ -54,9 +54,9 @@ extension PaygateViewModel {
 private extension PaygateViewModel {
     func makePrice() -> Driver<String> {
         iapManager
-            .obtainPrices(for: [GlobalDefinitions.Paygate.weekly])
+            .obtainPrices(for: [GlobalDefinitions.Paygate.yearly])
             .compactMap { prices -> String? in
-                guard let price = prices.first(where: { $0.id == GlobalDefinitions.Paygate.weekly }) else {
+                guard let price = prices.first(where: { $0.id == GlobalDefinitions.Paygate.yearly }) else {
                     return nil
                 }
                 
@@ -95,7 +95,7 @@ private extension PaygateViewModel {
                 }
                 
                 return self.paygateInteractor
-                    .makeActiveSubscription(by: .buy(GlobalDefinitions.Paygate.weekly))
+                    .makeActiveSubscription(by: .buy(GlobalDefinitions.Paygate.yearly))
                     .map { result -> Bool in
                         switch result {
                         case .completed(let response):

@@ -17,7 +17,7 @@ extension ProgrammingLanguage {
     var shortDescription: String {
         switch self {
         case .python:
-            return "Challenge yourself with Python coding exercises."
+            return "Challenge yourself with Code Learning exercises."
         case .java:
             return "Boost Java skills with interactive coding challenges."
         case .swift:

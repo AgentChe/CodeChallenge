@@ -22,6 +22,9 @@ final class PaygateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        AmplitudeManager.shared
+            .logEvent(name: "Paygate Screen")
+        
         let output = viewModel.configure(input: PaygateViewModel.Input(
             didTapClose: mainView.closeButton.rx.tap.asSignal(),
             didTapBuy: mainView.buyButton.rx.tap.asSignal(),

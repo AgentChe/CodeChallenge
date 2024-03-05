@@ -1704,7 +1704,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1740,7 +1740,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1838,7 +1838,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
@@ -1952,7 +1952,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 51;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;

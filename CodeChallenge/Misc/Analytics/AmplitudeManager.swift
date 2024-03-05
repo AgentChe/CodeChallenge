@@ -38,7 +38,10 @@ extension AmplitudeManager: AnalyticsDelegate {
             return
         }
         
-        var properties = [String: Any]()
+        var properties: [String: Any] = [
+            "app": GlobalDefinitions.applicationTag
+        ]
+        
         if let adgroup = attributionsModel.adgroup {
             properties["adgroup"] = adgroup
         }

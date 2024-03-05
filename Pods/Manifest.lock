@@ -1,5 +1,11 @@
 PODS:
   - Amplitude-iOS (4.10.0)
+  - FBAEMKit (16.3.1):
+    - FBSDKCoreKit_Basics (= 16.3.1)
+  - FBSDKCoreKit (16.3.1):
+    - FBAEMKit (= 16.3.1)
+    - FBSDKCoreKit_Basics (= 16.3.1)
+  - FBSDKCoreKit_Basics (16.3.1)
   - OtterScaleiOS (1.25)
   - RxCocoa (6.6.0):
     - RxRelay (= 6.6.0)
@@ -11,6 +17,7 @@ PODS:
 
 DEPENDENCIES:
   - Amplitude-iOS
+  - FBSDKCoreKit
   - OtterScaleiOS (from `https://github.com/AgentChe/OtterScaleiOS.git`)
   - RxCocoa
   - RxSwift
@@ -19,6 +26,9 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Amplitude-iOS
+    - FBAEMKit
+    - FBSDKCoreKit
+    - FBSDKCoreKit_Basics
     - RxCocoa
     - RxRelay
     - RxSwift
@@ -35,12 +45,15 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
+  FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
+  FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
+  FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
   OtterScaleiOS: 0411b70aee2f3c998988188b0768e2e3216ebe9d
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
   RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SwiftyStoreKit: 6b9c08810269f030586dac1fae8e75871a82e84a
 
-PODFILE CHECKSUM: c08ad4991087357a619bb3c33eb04f9e7499bff8
+PODFILE CHECKSUM: 9b55561f9f62872ebecf6c65cdd3033893dbe801
 
 COCOAPODS: 1.11.2

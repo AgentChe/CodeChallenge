@@ -13,7 +13,7 @@ enum GlobalDefinitions {
     
     static let amplitudeApiKey = "d4ad5c33d23d7a891e9c68de9471f36b"
     
-    static let applicationTag = "Code Learning"
+    static let applicationTag = "CODE_LEARNING"
     
     static let termsOfUse = URL(string: "https://cocorporateapps.com/terms-of-use.html")!
     static let privacyPolicy = URL(string: "https://cocorporateapps.com/privacy-policy.html")!

@@ -18,6 +18,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         OtterScale.shared.initialize(host: GlobalDefinitions.otterScaleHost, apiKey: GlobalDefinitions.otterScaleApiKey)
         
+        FacebookManager.shared.initialize(app: application, launchOptions: launchOptions)
         AmplitudeManager.shared.initialize()
         IAPManager.initialize()
         PurchaseValidationObserver.shared.startObserve()
@@ -40,6 +41,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         })
 
         FirebaseApp.configure()
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        FacebookManager.shared.application(app, open: url, options: options)
+        
         return true
     }
 

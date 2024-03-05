@@ -16,7 +16,21 @@
 				<string>codechallenge</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb765940281776403</string>
+			</array>
+		</dict>
 	</array>
+	<key>FacebookAppID</key>
+	<string>765940281776403</string>
+	<key>FacebookClientToken</key>
+	<string>9692ae5115e5c73c84fb69f3d3df4fe7</string>
+	<key>FacebookDisplayName</key>
+	<string>Code Learning</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSUserNotificationsUsageDescription</key>

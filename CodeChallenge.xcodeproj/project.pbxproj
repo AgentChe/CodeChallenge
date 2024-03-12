@@ -1704,7 +1704,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1721,7 +1721,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.10;
+				MARKETING_VERSION = 3.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1740,7 +1740,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1757,7 +1757,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.10;
+				MARKETING_VERSION = 3.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1838,7 +1838,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
@@ -1856,7 +1856,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.10;
+				MARKETING_VERSION = 3.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1952,7 +1952,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 53;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1969,7 +1969,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.10;
+				MARKETING_VERSION = 3.11;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

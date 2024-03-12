@@ -116,13 +116,6 @@ final class RootCoordinator {
 
         store.dispatch(AddStreakIfNeeded())
 
-        isAppVersionSupported(store.services.networkService)
-            .filter { !$0 }
-            .sink { [weak self] _ in
-                self?.showForceUpdateAlert()
-            }
-            .store(in: &cancellables)
-
         isAppMaintained(store.services.networkService)
             .filter { $0 }
             .sink { [weak self] _ in
@@ -280,50 +273,6 @@ extension RootCoordinator {
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().isOpaque = false
-    }
-}
-
-extension RootCoordinator {
-    func isAppVersionSupported(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
-        guard
-            let versionString = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-            let appVersion = Double(versionString)
-        else {
-            return Just(true).eraseToAnyPublisher()
-        }
-        let versionsURL = "https://api.codehub.ninja/version/"
-        return
-            URLRequest.create(url: versionsURL)
-            .map {
-                var copy = $0
-                copy.cachePolicy = .reloadIgnoringCacheData
-                return copy
-            }
-            .map { networkService.load($0, decoding: String.self, with: .init()) }
-            .switchToLatest()
-            .asResolvable()
-            .compactMap(\.value)
-            .map {
-                Double($0) ?? 0 <= appVersion
-            }
-            .eraseToAnyPublisher()
-    }
-
-    private func showForceUpdateAlert() {
-        let alert = UIAlertController(
-            title: "Unsupported Version",
-            message: "This version of Code Learning is no longer supported. Please update the app from the App Store",
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: "Update", style: .default) { [weak self] _ in
-            guard
-                let url = URL(string: "itms-apps://itunes.apple.com/app/1632477791")
-            else { return }
-            UIApplication.shared.open(url)
-            self?.showForceUpdateAlert()
-        }
-        alert.addAction(action)
-        window.rootViewController?.present(alert, animated: true)
     }
 }
 

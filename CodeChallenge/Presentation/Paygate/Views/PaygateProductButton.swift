@@ -130,7 +130,11 @@ private extension PaygateProductButton {
     }
     
     func updateMarker() {
-        markerView.isHidden = !marked
+        let imageName = marked ? "Paygate.Marker.S" : "Paygate.Marker.D"
+        markerView.image = UIImage(named: imageName)
+        
+        backgroundColor = marked ? UIColor(integralRed: 58, green: 107, blue: 243) : UIColor.clear
+        layer.borderColor = marked ? UIColor(integralRed: 58, green: 107, blue: 243).cgColor : UIColor(integralRed: 46, green: 46, blue: 53).cgColor
     }
 }
 
@@ -169,7 +173,6 @@ private extension PaygateProductButton {
     func makeMarkerView() -> UIImageView {
         let view = UIImageView()
         view.clipsToBounds = true
-        view.image = UIImage(named: "Paygate.Marker")
         view.contentMode = .scaleAspectFit
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)

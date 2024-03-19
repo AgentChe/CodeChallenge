@@ -15,8 +15,8 @@ final class PaygateView: UIView {
     lazy var cell2 = makeCell(number: 2)
     lazy var cell3 = makeCell(number: 3)
     lazy var cell4 = makeCell(number: 4)
-    lazy var product1Button = makeProduct1Button()
-    lazy var product2Button = makeProduct2Button()
+    lazy var product1Button = makeProductButton()
+    lazy var product2Button = makeProductButton()
     lazy var buyButton = makeBuyButton()
     lazy var cancelAnytimeLabel = makeCancelAnytimeLabel()
     lazy var termsOfUseButton = makeActionButton(text: "Paygate.TermsOfUse".localized)
@@ -197,23 +197,10 @@ private extension PaygateView {
         return view
     }
     
-    func makeProduct1Button() -> PaygateProductButton {
+    func makeProductButton() -> PaygateProductButton {
         let view = PaygateProductButton()
         view.layer.cornerRadius = 20.scale
-        view.layer.borderColor = UIColor(integralRed: 58, green: 107, blue: 243).cgColor
         view.layer.borderWidth = 2.scale
-        view.backgroundColor = UIColor(integralRed: 58, green: 107, blue: 243)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(view)
-        return view
-    }
-    
-    func makeProduct2Button() -> PaygateProductButton {
-        let view = PaygateProductButton()
-        view.layer.cornerRadius = 20.scale
-        view.layer.borderColor = UIColor(integralRed: 46, green: 46, blue: 53).cgColor
-        view.layer.borderWidth = 2.scale
-        view.backgroundColor = UIColor.clear
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view

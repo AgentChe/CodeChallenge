@@ -37,7 +37,7 @@ private extension PaygateInfoCell {
         ])
         
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 44.scale),
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 36.scale),
             label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.scale),
             label.topAnchor.constraint(equalTo: topAnchor),
             label.bottomAnchor.constraint(equalTo: bottomAnchor)

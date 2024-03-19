@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 
 final class PaygateViewController: UIViewController {
     lazy var mainView = PaygateView()
@@ -25,11 +26,35 @@ final class PaygateViewController: UIViewController {
         AmplitudeManager.shared
             .logEvent(name: "Paygate Screen")
         
+        Observable
+            .merge(
+                mainView.product1Button.rx.tap.map { (true, false) },
+                mainView.product2Button.rx.tap.map { (false, true) }
+            )
+            .startWith((true, false))
+            .bind(to: Binder(mainView) { base, args in
+                base.product1Button.marked = args.0
+                base.product2Button.marked = args.1
+            })
+            .disposed(by: disposeBag)
+        
+        let productId = Observable<String>
+            .merge(
+                mainView.product1Button.rx.tap
+                    .compactMap { [weak self] in self?.mainView.product1Button.product?.id },
+                mainView.product2Button.rx.tap
+                    .compactMap { [weak self] in self?.mainView.product2Button.product?.id }
+            )
+        let didBuy = mainView.buyButton.rx.tap
+            .withLatestFrom(productId)
+            .asSignal(onErrorSignalWith: .never())
+        
         let output = viewModel.configure(input: PaygateViewModel.Input(
             didTapClose: mainView.closeButton.rx.tap.asSignal(),
-            didTapBuy: mainView.buyButton.rx.tap.asSignal(),
+            didTapBuy: didBuy,
             didTapRestore: mainView.restoreButton.rx.tap.asSignal(),
-            didTapTermsAndPolicy: mainView.termsAndPrivacyButton.rx.tap.asSignal()
+            didTapTermsOfUse: mainView.termsOfUseButton.rx.tap.asSignal(),
+            didTapPrivacyPolicy: mainView.privacyPolicyButton.rx.tap.asSignal()
         ))
         
         output.activity
@@ -38,15 +63,16 @@ final class PaygateViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.price
-            .drive(Binder(mainView) { base, price in
-                base.setup(price: price)
-            })
-            .disposed(by: disposeBag)
-        
         output.route
             .drive(Binder(self) { base, route in
                 base.route(route)
+            })
+            .disposed(by: disposeBag)
+        
+        output.products
+            .drive(Binder(mainView) { base, products in
+                base.product1Button.product = products.weekly
+                base.product2Button.product = products.lifetime
             })
             .disposed(by: disposeBag)
     }
@@ -66,10 +92,15 @@ private extension PaygateViewController {
     func activity(_ activity: Bool) {
         activity ? mainView.preloader.startAnimating() : mainView.preloader.stopAnimating()
         
-        mainView.bottomContainer.isHidden = activity
-        mainView.restoreButton.isHidden = activity
-        mainView.termsAndPrivacyButton.isHidden = activity
-        mainView.closeButton.isHidden = activity
+        [
+            mainView.product1Button,
+            mainView.product2Button,
+            mainView.buyButton,
+            mainView.restoreButton,
+            mainView.termsOfUseButton,
+            mainView.privacyPolicyButton,
+            mainView.closeButton
+        ].forEach { $0.isHidden = activity }
     }
     
     func route(_ route: PaygateViewModel.Route) {

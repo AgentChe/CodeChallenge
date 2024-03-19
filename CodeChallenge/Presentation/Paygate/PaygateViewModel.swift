@@ -9,6 +9,8 @@ import RxSwift
 import RxCocoa
 
 final class PaygateViewModel {
+    typealias Products = (weekly: ProductPrice, lifetime: ProductPrice)
+    
     enum Route {
         case dismiss
         case error
@@ -25,15 +27,16 @@ final class PaygateViewModel {
 extension PaygateViewModel {
     struct Input {
         let didTapClose: Signal<Void>
-        let didTapBuy: Signal<Void>
+        let didTapBuy: Signal<String>
         let didTapRestore: Signal<Void>
-        let didTapTermsAndPolicy: Signal<Void>
+        let didTapTermsOfUse: Signal<Void>
+        let didTapPrivacyPolicy: Signal<Void>
     }
     
     struct Output {
         let activity: Driver<Bool>
         let route: Driver<Route>
-        let price: Driver<String>
+        let products: Driver<Products>
     }
     
     func configure(input: Input) -> Output {
@@ -43,34 +46,42 @@ extension PaygateViewModel {
                 didTapClose: input.didTapClose,
                 didTapBuy: input.didTapBuy,
                 didTapRestore: input.didTapRestore,
-                didTapTermsAndPolicy: input.didTapTermsAndPolicy
+                didTapTermsOfUse: input.didTapTermsOfUse,
+                didTapPrivacyPolicy: input.didTapPrivacyPolicy
             ),
-            price: makePrice()
+            products: makeProducts()
         )
     }
 }
 
 // MARK: Private
 private extension PaygateViewModel {
-    func makePrice() -> Driver<String> {
+    func makeProducts() -> Driver<Products> {
         iapManager
-            .obtainPrices(for: [GlobalDefinitions.Paygate.yearly])
-            .compactMap { prices -> String? in
-                guard let price = prices.first(where: { $0.id == GlobalDefinitions.Paygate.yearly }) else {
+            .obtainPrices(for: [
+                GlobalDefinitions.Paygate.weekly,
+                GlobalDefinitions.Paygate.lifetime
+            ])
+            .compactMap { prices -> Products? in
+                guard
+                    let weekly = prices.first(where: { $0.id == GlobalDefinitions.Paygate.weekly }),
+                    let lifetime = prices.first(where: { $0.id == GlobalDefinitions.Paygate.lifetime })
+                else {
                     return nil
                 }
-                
-                return Currency(productPrice: price).formatted()
+
+                return (weekly: weekly, lifetime: lifetime)
             }
             .trackActivity(activity)
-            .asDriver(onErrorJustReturn: "")
+            .asDriver(onErrorDriveWith: .never())
     }
     
     func makeRoute(
         didTapClose: Signal<Void>,
-        didTapBuy: Signal<Void>,
+        didTapBuy: Signal<String>,
         didTapRestore: Signal<Void>,
-        didTapTermsAndPolicy: Signal<Void>
+        didTapTermsOfUse: Signal<Void>,
+        didTapPrivacyPolicy: Signal<Void>
     ) -> Driver<Route> {
         let dismiss = didTapClose
             .map { Route.dismiss }
@@ -79,23 +90,26 @@ private extension PaygateViewModel {
             .map { $0 ? Route.dismiss : Route.error }
         let restore = makeRestored(didTapRestore: didTapRestore)
             .map { $0 ? Route.dismiss : Route.error }
-        let termsAndPolicy = didTapTermsAndPolicy
+        let termsOfUse = didTapTermsOfUse
             .map { Route.open(GlobalDefinitions.termsOfUse) }
+            .asDriver(onErrorDriveWith: .never())
+        let privacyPolicy = didTapPrivacyPolicy
+            .map { Route.open(GlobalDefinitions.privacyPolicy) }
             .asDriver(onErrorDriveWith: .never())
         
         return Driver
-            .merge(dismiss, buy, restore, termsAndPolicy)
+            .merge(dismiss, buy, restore, termsOfUse, privacyPolicy)
     }
     
-    func makeBuyed(didTapBuy: Signal<Void>) -> Driver<Bool> {
+    func makeBuyed(didTapBuy: Signal<String>) -> Driver<Bool> {
         didTapBuy
-            .flatMapLatest { [weak self] void -> Driver<Bool> in
+            .flatMapLatest { [weak self] productId -> Driver<Bool> in
                 guard let self = self else {
                     return .never()
                 }
                 
                 return self.paygateInteractor
-                    .makeActiveSubscription(by: .buy(GlobalDefinitions.Paygate.yearly))
+                    .makeActiveSubscription(by: .buy(productId))
                     .map { result -> Bool in
                         switch result {
                         case .completed(let response):
@@ -129,44 +143,5 @@ private extension PaygateViewModel {
                     .trackActivity(self.activity)
                     .asDriver(onErrorJustReturn: false)
             }
-    }
-}
-
-// MARK: Additional
-private struct Currency {
-    enum LTRCurrency: String, CaseIterable {
-        case USD = "USD"
-    }
-    
-    private let productPrice: ProductPrice
-    
-    init(productPrice: ProductPrice) {
-        self.productPrice = productPrice
-    }
-    
-    func formatted() -> String? {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = productPrice.priceLocale
-        formatter.maximumFractionDigits = 2
-        formatter.roundingMode = .up
-        formatter.currencyCode = productPrice.currency
-        
-        let currencySymbol = formatter.currencySymbol ?? productPrice.currency
-        
-        formatter.currencyCode = ""
-        formatter.currencySymbol = ""
-        
-        guard let resultPrice = formatter.string(from: NSNumber(value: productPrice.priceValue)) else {
-            return nil
-        }
-        
-        let ltrCurrencies = LTRCurrency.allCases.map { $0.rawValue }
-        
-        if ltrCurrencies.contains(productPrice.currency) {
-            return String(format: "%@%@", currencySymbol, resultPrice)
-        } else {
-            return String(format: "%@%@", resultPrice, currencySymbol)
-        }
     }
 }

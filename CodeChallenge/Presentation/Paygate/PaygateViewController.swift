@@ -75,6 +75,24 @@ final class PaygateViewController: UIViewController {
                 base.product2Button.product = products.lifetime
             })
             .disposed(by: disposeBag)
+        
+        Observable.merge(
+            mainView.product1Button.rx.tap
+                .compactMap { [weak self] in self?.mainView.product1Button.product },
+            mainView.product2Button.rx.tap
+                .compactMap { [weak self] in self?.mainView.product2Button.product },
+            output.products.asObservable().map { $0.weekly }
+        )
+        .map { product -> (String, Bool) in
+            (
+                Currency(productPrice: product).formatted() ?? "",
+                product.id == GlobalDefinitions.Paygate.lifetime
+            )
+        }
+        .bind(to: Binder(mainView) { base, args in
+            base.setup(price: args.0, isLifetime: args.1)
+        })
+        .disposed(by: disposeBag)
     }
 }
 

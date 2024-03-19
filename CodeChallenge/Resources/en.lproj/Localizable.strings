@@ -18,9 +18,10 @@
 "Paygate.QuickPeek" = "Quick peek";
 "Paygate.PerWeek" = "per week";
 "Paygate.Lifetime" = "Lifetime";
+"Paygate.Once" = "once";
 "Paygate.Just" = "just";
-"Paygate.PerYear" = "per year";
-"Paygate.Continue" = "Continue";
+"Paygate.PurchaseFor" = "Purchase for %@";
+"Paygate.SubscribeFor" = "Subscribe for %@";
 "Paygate.CancelAnytime" = "Secured by the App Store. Cancel anytime.";
 "Paygate.TermsOfUse" = "Terms of Use";
 "Paygate.PrivacyPolicy" = "Privacy Policy";

@@ -24,6 +24,10 @@ final class PaygateView: UIView {
     lazy var restoreButton = makeActionButton(text: "Paygate.RestorePurchases".localized)
     lazy var preloader = makePreloader()
     
+    let buyAttrs = TextAttributes()
+        .textColor(UIColor.white)
+        .font(UIFont.medium(size: 15.scale))
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -33,6 +37,15 @@ final class PaygateView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: Public
+extension PaygateView {
+    func setup(price: String, isLifetime: Bool) {
+        let key = isLifetime ? "Paygate.PurchaseFor" : "Paygate.SubscribeFor"
+        let string = String(format: key.localized, price).attributed(with: buyAttrs)
+        buyButton.setAttributedTitle(string, for: .normal)
     }
 }
 
@@ -207,12 +220,7 @@ private extension PaygateView {
     }
     
     func makeBuyButton() -> UIButton {
-        let attrs = TextAttributes()
-            .textColor(UIColor.white)
-            .font(UIFont.medium(size: 15.scale))
-        
         let view = UIButton()
-        view.setAttributedTitle("Paygate.Continue".localized.attributed(with: attrs), for: .normal)
         view.layer.cornerRadius = 28.scale
         view.backgroundColor = UIColor(integralRed: 58, green: 107, blue: 243)
         view.translatesAutoresizingMaskIntoConstraints = false

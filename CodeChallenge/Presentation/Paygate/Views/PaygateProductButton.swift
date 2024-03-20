@@ -144,7 +144,7 @@ private extension PaygateProductButton {
         ])
         
         NSLayoutConstraint.activate([
-            rigthLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -54.scale),
+            rigthLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 192.scale),
             rigthLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         

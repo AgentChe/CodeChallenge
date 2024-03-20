@@ -50,37 +50,32 @@ private extension PaygateProductButton {
             return
         }
         
-        let isLifetime = isLifetime()
+        let isYearly = isYearly()
         
         let result = NSMutableAttributedString()
         
-        switch isLifetime {
+        switch isYearly {
         case true:
             let nameAttrs = TextAttributes()
                 .textColor(UIColor.white)
-                .font(UIFont.medium(size: 16.scale))
-                .lineHeight(22.4.scale)
-            let name = "Paygate.Lifetime".localized + "\n"
+                .font(UIFont.medium(size: 14.scale))
+                .lineHeight(19.6.scale)
+            let name = "Paygate.Yearly".localized + "\n"
             result.append(name.attributed(with: nameAttrs))
             
-            let priceAttrs = TextAttributes()
+            let bottomAttrs = TextAttributes()
                 .textColor(UIColor.white)
-                .font(UIFont.medium(size: 24.scale))
-                .lineHeight(28.8.scale)
-            let price = Currency(productPrice: product).formatted()
-            result.append((price ?? "").attributed(with: priceAttrs))
-            
-            let periodAttrs = TextAttributes()
-                .textColor(UIColor.white)
-                .font(UIFont.medium(size: 14.scale))
-                .lineHeight(16.8.scale)
-            result.append((" " + "Paygate.Once".localized).attributed(with: periodAttrs))
+                .font(UIFont.medium(size: 16.scale))
+                .lineHeight(19.2.scale)
+            let price = Currency(productPrice: product).formatted() ?? ""
+            let bottom = String(format: "Paygate.Yearly.Bottom".localized, price)
+            result.append(bottom.attributed(with: bottomAttrs))
         case false:
             let attrs = TextAttributes()
                 .textColor(UIColor.white)
-                .font(UIFont.bold(size: 16.scale))
-                .lineHeight(22.4.scale)
-            result.append("Paygate.QuickPeek".localized.attributed(with: attrs))
+                .font(UIFont.medium(size: 14.scale))
+                .lineHeight(19.6.scale)
+            result.append("Paygate.FreeTrialDays".localized.attributed(with: attrs))
         }
         
         leftLabel.attributedText = result
@@ -91,49 +86,51 @@ private extension PaygateProductButton {
             return
         }
         
-        let isLifetime = isLifetime()
+        let isYearly = isYearly()
         
         let result = NSMutableAttributedString()
         
-        switch isLifetime {
+        switch isYearly {
         case true:
-            let attrs = TextAttributes()
+            let priceAttrs = TextAttributes()
                 .textColor(UIColor.white)
-                .font(UIFont.medium(size: 14.scale))
+                .font(UIFont.medium(size: 16.scale))
+                .lineHeight(22.4.scale)
+            let price = Currency(productPrice: product, div: 52).formatted() ?? ""
+            result.append((price + "\n").attributed(with: priceAttrs))
+            
+            let periodAttrs = TextAttributes()
+                .textColor(UIColor.white)
+                .font(UIFont.regular(size: 14.scale))
                 .lineHeight(19.6.scale)
-            result.append(("Paygate.Just".localized + " ").attributed(with: attrs))
-            
-            let price = Currency(productPrice: product, div: 52).formatted()
-            result.append((price ?? "").attributed(with: attrs))
-            
-            result.append(("\n" + "Paygate.PerWeek".localized).attributed(with: attrs))
+            result.append("Paygate.PerWeek".localized.attributed(with: periodAttrs))
         case false:
             let priceAttrs = TextAttributes()
                 .textColor(UIColor.white)
-                .font(UIFont.medium(size: 22.scale))
-                .lineHeight(26.4.scale)
-            let price = Currency(productPrice: product).formatted()
-            result.append((price ?? "").attributed(with: priceAttrs))
+                .font(UIFont.medium(size: 16.scale))
+                .lineHeight(22.4.scale)
+            let price = Currency(productPrice: product).formatted() ?? ""
+            result.append(String(format: "Paygate.Then".localized, price).attributed(with: priceAttrs))
             
-            let periodPrice = TextAttributes()
+            let periodAttrs = TextAttributes()
                 .textColor(UIColor.white)
-                .font(UIFont.medium(size: 14.scale))
+                .font(UIFont.regular(size: 14.scale))
                 .lineHeight(19.6.scale)
-            result.append(("\n" + "Paygate.PerWeek".localized).attributed(with: periodPrice))
+            result.append("Paygate.PerWeek".localized.attributed(with: periodAttrs))
         }
         
         rigthLabel.attributedText = result
     }
     
-    func isLifetime() -> Bool {
-       product?.id == GlobalDefinitions.Paygate.lifetime
+    func isYearly() -> Bool {
+       product?.id == GlobalDefinitions.Paygate.yearly
     }
     
     func updateMarker() {
         let imageName = marked ? "Paygate.Marker.S" : "Paygate.Marker.D"
         markerView.image = UIImage(named: imageName)
         
-        backgroundColor = marked ? UIColor(integralRed: 58, green: 107, blue: 243) : UIColor.clear
+        backgroundColor = marked ? UIColor(integralRed: 58, green: 107, blue: 243, alpha: 0.3) : UIColor.clear
         layer.borderColor = marked ? UIColor(integralRed: 58, green: 107, blue: 243).cgColor : UIColor(integralRed: 46, green: 46, blue: 53).cgColor
     }
 }

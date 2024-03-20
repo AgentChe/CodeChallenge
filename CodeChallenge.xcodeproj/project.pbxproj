@@ -36,6 +36,7 @@
 		DE0D27C12B974338007F1560 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D27C02B974338007F1560 /* FacebookManager.swift */; };
 		DE38BF202BA9D81D0019C044 /* PaygateProductButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE38BF1F2BA9D81D0019C044 /* PaygateProductButton.swift */; };
 		DE38BF222BA9EA6E0019C044 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE38BF212BA9EA6D0019C044 /* Currency.swift */; };
+		DE38BF242BAB2ABB0019C044 /* PaygateEnableTrialButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE38BF232BAB2ABB0019C044 /* PaygateEnableTrialButton.swift */; };
 		E002972329AECBC400EE3D9B /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E002972229AECBC400EE3D9B /* LearnView.swift */; };
 		E00C391D28A304F900A6B04E /* QuickAccessCharsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */; };
 		E00D5BAE2943FFB80086A2BB /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = E00D5BAD2943FFB80086A2BB /* Formatters.swift */; };
@@ -284,6 +285,7 @@
 		DE0D27C02B974338007F1560 /* FacebookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		DE38BF1F2BA9D81D0019C044 /* PaygateProductButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateProductButton.swift; sourceTree = "<group>"; };
 		DE38BF212BA9EA6D0019C044 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		DE38BF232BAB2ABB0019C044 /* PaygateEnableTrialButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateEnableTrialButton.swift; sourceTree = "<group>"; };
 		E002972229AECBC400EE3D9B /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		E00C391C28A304F800A6B04E /* QuickAccessCharsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessCharsView.swift; sourceTree = "<group>"; };
 		E00D5BAD2943FFB80086A2BB /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
@@ -625,6 +627,7 @@
 			children = (
 				DE0D27572B84F169007F1560 /* PaygateInfoCell.swift */,
 				DE38BF1F2BA9D81D0019C044 /* PaygateProductButton.swift */,
+				DE38BF232BAB2ABB0019C044 /* PaygateEnableTrialButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1344,6 +1347,7 @@
 				DE0D27582B84F169007F1560 /* PaygateInfoCell.swift in Sources */,
 				E085CFB529B6A23100BA1F16 /* PracticeSectionsViewProps.swift in Sources */,
 				DE0D273C2B84D94B007F1560 /* PaygateView.swift in Sources */,
+				DE38BF242BAB2ABB0019C044 /* PaygateEnableTrialButton.swift in Sources */,
 				E06D90C0299EFCC000AC09AB /* SegmentedControlView.swift in Sources */,
 				E064949429C64DC600AE3B6B /* ChallengeFriend.swift in Sources */,
 				DE0D27382B84D941007F1560 /* PaygateViewController.swift in Sources */,
@@ -1712,7 +1716,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1729,7 +1733,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.15;
+				MARKETING_VERSION = 3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1748,7 +1752,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1765,7 +1769,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.15;
+				MARKETING_VERSION = 3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1846,7 +1850,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
@@ -1864,7 +1868,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.15;
+				MARKETING_VERSION = 3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1960,7 +1964,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1977,7 +1981,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.15;
+				MARKETING_VERSION = 3.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";

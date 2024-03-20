@@ -9,7 +9,7 @@ import RxSwift
 import RxCocoa
 
 final class PaygateViewModel {
-    typealias Products = (weekly: ProductPrice, lifetime: ProductPrice)
+    typealias Products = (yearly: ProductPrice, weekly: ProductPrice)
     
     enum Route {
         case dismiss
@@ -59,18 +59,18 @@ private extension PaygateViewModel {
     func makeProducts() -> Driver<Products> {
         iapManager
             .obtainPrices(for: [
-                GlobalDefinitions.Paygate.weekly,
-                GlobalDefinitions.Paygate.lifetime
+                GlobalDefinitions.Paygate.yearly,
+                GlobalDefinitions.Paygate.weekly
             ])
             .compactMap { prices -> Products? in
                 guard
-                    let weekly = prices.first(where: { $0.id == GlobalDefinitions.Paygate.weekly }),
-                    let lifetime = prices.first(where: { $0.id == GlobalDefinitions.Paygate.lifetime })
+                    let yearly = prices.first(where: { $0.id == GlobalDefinitions.Paygate.yearly }),
+                    let weekly = prices.first(where: { $0.id == GlobalDefinitions.Paygate.weekly })
                 else {
                     return nil
                 }
 
-                return (weekly: weekly, lifetime: lifetime)
+                return (yearly: yearly, weekly: weekly)
             }
             .trackActivity(activity)
             .asDriver(onErrorDriveWith: .never())

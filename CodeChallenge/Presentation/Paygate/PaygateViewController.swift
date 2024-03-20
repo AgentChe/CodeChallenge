@@ -29,24 +29,38 @@ final class PaygateViewController: UIViewController {
         Observable
             .merge(
                 mainView.product1Button.rx.tap.map { (true, false) },
-                mainView.product2Button.rx.tap.map { (false, true) }
+                mainView.product2Button.rx.tap.map { (false, true) },
+                mainView.enableTrialButton.rx.tap
+                    .compactMap { [weak self] in
+                        let isEnable = self?.mainView.enableTrialButton.isEnable ?? false
+                        let newValue = !isEnable
+                        return (!newValue, newValue)
+                    }
             )
             .startWith((true, false))
             .bind(to: Binder(mainView) { base, args in
                 base.product1Button.marked = args.0
                 base.product2Button.marked = args.1
+                base.enableTrialButton.isEnable = args.1
+                
+                let buyTitle = args.0 ? "Paygate.Continue".localized : "Paygate.TryFreeSubscribe".localized
+                base.setup(buyTitle: buyTitle)
             })
             .disposed(by: disposeBag)
         
-        let productId = Observable<String>
-            .merge(
-                mainView.product1Button.rx.tap
-                    .compactMap { [weak self] in self?.mainView.product1Button.product?.id },
-                mainView.product2Button.rx.tap
-                    .compactMap { [weak self] in self?.mainView.product2Button.product?.id }
-            )
         let didBuy = mainView.buyButton.rx.tap
-            .withLatestFrom(productId)
+            .compactMap { [weak self] void -> String? in
+                guard let self else {
+                    return nil
+                }
+                
+                let id = [
+                    self.mainView.product1Button,
+                    self.mainView.product2Button
+                ].first(where: { $0.marked })?.product?.id
+                
+                return id
+            }
             .asSignal(onErrorSignalWith: .never())
         
         let output = viewModel.configure(input: PaygateViewModel.Input(
@@ -71,28 +85,10 @@ final class PaygateViewController: UIViewController {
         
         output.products
             .drive(Binder(mainView) { base, products in
-                base.product1Button.product = products.weekly
-                base.product2Button.product = products.lifetime
+                base.product1Button.product = products.yearly
+                base.product2Button.product = products.weekly
             })
             .disposed(by: disposeBag)
-        
-        Observable.merge(
-            mainView.product1Button.rx.tap
-                .compactMap { [weak self] in self?.mainView.product1Button.product },
-            mainView.product2Button.rx.tap
-                .compactMap { [weak self] in self?.mainView.product2Button.product },
-            output.products.asObservable().map { $0.weekly }
-        )
-        .map { product -> (String, Bool) in
-            (
-                Currency(productPrice: product).formatted() ?? "",
-                product.id == GlobalDefinitions.Paygate.lifetime
-            )
-        }
-        .bind(to: Binder(mainView) { base, args in
-            base.setup(price: args.0, isLifetime: args.1)
-        })
-        .disposed(by: disposeBag)
     }
 }
 
@@ -113,6 +109,7 @@ private extension PaygateViewController {
         [
             mainView.product1Button,
             mainView.product2Button,
+            mainView.enableTrialButton,
             mainView.buyButton,
             mainView.restoreButton,
             mainView.termsOfUseButton,

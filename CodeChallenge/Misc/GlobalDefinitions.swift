@@ -19,7 +19,7 @@ enum GlobalDefinitions {
     static let privacyPolicy = URL(string: "https://cocorporateapps.com/privacy-policy.html")!
     
     enum Paygate {
-        static let weekly = "weekly_subscription_access"
-        static let lifetime = "q1_codehub_lifetime"
+        static let yearly = "yearly_pro_3day_trial"
+        static let weekly = "weekly_with_trial"
     }
 }

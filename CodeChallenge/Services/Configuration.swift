@@ -9,8 +9,7 @@ import Foundation
 
 struct Configuration {
     static var host: String {
-        "https://api.codehub.ninja"
-//        return Self.bundleId == "com.tome.codechallenge" ? "https://api.codehub.ninja" : "https://api.stage.codehub.ninja"
+        "https://codehub.thinkaboutapps.com"
     }
 
     private static var bundleId: String? {

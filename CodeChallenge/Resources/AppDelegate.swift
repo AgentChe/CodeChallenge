@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import FirebaseCore
-import Branch
 import OtterScaleiOS
 
 @main
@@ -19,26 +18,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         OtterScale.shared.initialize(host: GlobalDefinitions.otterScaleHost, apiKey: GlobalDefinitions.otterScaleApiKey)
         
         FacebookManager.shared.initialize(app: application, launchOptions: launchOptions)
-        AmplitudeManager.shared.initialize()
         IAPManager.initialize()
         PurchaseValidationObserver.shared.startObserve()
-        
-        Branch.getInstance().initSession(launchOptions: launchOptions, andRegisterDeepLinkHandler: { [weak self]
-            (params, error) in
-            if let params = params, (params["+is_first_session"] as? String) == "1",
-                    let idString = params["referringUserID"] as? String {
-                self?.sendReferralId(userId: idString)
-                return
-            }
-
-            if let id = params?["challengeFriendId"] as? String, let intId = Int(id) {
-                guard UserDefaults.standard.bool(forKey: "getStartedPresented") else {
-                    UserDefaults.standard.set(intId, forKey: "challenge_friend_key")
-                    return
-                }
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.process(acceptedChallengeId: intId)
-            }
-        })
 
         FirebaseApp.configure()
         return true

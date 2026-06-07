@@ -13,7 +13,6 @@ protocol ServicesProtocol {
     var accountService: AccountServiceProtocol { get }
     var challengesService: ChallengesServiceProtocol { get }
     var imageService: ImageServiceProtocol { get }
-    var identifyService: IdentifyServiceProtocol { get }
     var rewardsService: RewardsServiceProtocol { get }
     var conceptReviewService: ConceptReviewServiceProtocol { get }
     var leaderboardService: LeaderboardServiceProtocol { get }
@@ -27,7 +26,6 @@ struct Services: ServicesProtocol {
     let accountService: AccountServiceProtocol
     let challengesService: ChallengesServiceProtocol
     let imageService: ImageServiceProtocol
-    let identifyService: IdentifyServiceProtocol
     let rewardsService: RewardsServiceProtocol
     let conceptReviewService: ConceptReviewServiceProtocol
     let leaderboardService: LeaderboardServiceProtocol
@@ -40,7 +38,6 @@ struct Services: ServicesProtocol {
         self.accountService = AccountService(networkService: networkService)
         self.challengesService = ChallengesService(networkService: networkService)
         self.imageService = ImageService()
-        self.identifyService = IdentifyService()
         self.rewardsService = RewardsService(networkService: networkService)
         self.conceptReviewService = ConceptReviewService(networkService: networkService)
         self.leaderboardService = LeaderboardService(networkService: networkService)

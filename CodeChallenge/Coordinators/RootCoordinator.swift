@@ -116,13 +116,6 @@ final class RootCoordinator {
 
         store.dispatch(AddStreakIfNeeded())
 
-        isAppMaintained(store.services.networkService)
-            .filter { $0 }
-            .sink { [weak self] _ in
-                self?.showMaintenanceScreen()
-            }
-            .store(in: &cancellables)
-
         store.dispatch(LoadProgrammingLanguage())
         store.dispatch(LoadPracticeSections())
         store.dispatch(LoadRecommendedChallenges())
@@ -273,48 +266,6 @@ extension RootCoordinator {
         UINavigationBar.appearance().tintColor = .white
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().isOpaque = false
-    }
-}
-
-extension RootCoordinator {
-    func isAppMaintained(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
-        let url = "https://maintenance.sergey-ddd.workers.dev/"
-        return
-            URLRequest.create(url: url)
-            .map {
-                var copy = $0
-                copy.cachePolicy = .reloadIgnoringCacheData
-                return copy
-            }
-            .map { networkService.load($0, decoding: Maintenance.self, with: .snakeCase) }
-            .switchToLatest()
-            .asResolvable()
-            .compactMap(\.value)
-            .map {
-                return $0.maintenance
-            }
-            .eraseToAnyPublisher()
-    }
-}
-
-extension RootCoordinator {
-    func isPremiumEnabled(_ networkService: NetworkServiceProtocol) -> AnyPublisher<Bool, Never> {
-        let url = "https://maintenance.sergey-ddd.workers.dev/"
-        return
-            URLRequest.create(url: url)
-            .map {
-                var copy = $0
-                copy.cachePolicy = .reloadIgnoringCacheData
-                return copy
-            }
-            .map { networkService.load($0, decoding: Maintenance.self, with: .init()) }
-            .switchToLatest()
-            .asResolvable()
-            .compactMap(\.value)
-            .map {
-                return $0.premium
-            }
-            .eraseToAnyPublisher()
     }
 }
 

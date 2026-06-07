@@ -31,7 +31,6 @@
 		DE0D27582B84F169007F1560 /* PaygateInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D27572B84F169007F1560 /* PaygateInfoCell.swift */; };
 		DE0D275B2B850075007F1560 /* TapAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D275A2B850075007F1560 /* TapAreaButton.swift */; };
 		DE0D275D2B860182007F1560 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D275C2B860182007F1560 /* UIApplication+Extension.swift */; };
-		DE0D27BB2B95E59D007F1560 /* AmplitudeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D27BA2B95E59D007F1560 /* AmplitudeManager.swift */; };
 		DE0D27BD2B95E8BF007F1560 /* NumberLaunches.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D27BC2B95E8BF007F1560 /* NumberLaunches.swift */; };
 		DE0D27C12B974338007F1560 /* FacebookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0D27C02B974338007F1560 /* FacebookManager.swift */; };
 		DE38BF202BA9D81D0019C044 /* PaygateProductButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE38BF1F2BA9D81D0019C044 /* PaygateProductButton.swift */; };
@@ -52,7 +51,6 @@
 		E0228F6A29043C7600101A82 /* HTMLAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6929043C7600101A82 /* HTMLAttributedString.swift */; };
 		E0228F6C2904B7A000101A82 /* BuddiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6B2904B7A000101A82 /* BuddiesView.swift */; };
 		E0228F6E2904B92100101A82 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F6D2904B92100101A82 /* NoteView.swift */; };
-		E0228F71290547CC00101A82 /* Branch in Frameworks */ = {isa = PBXBuildFile; productRef = E0228F70290547CC00101A82 /* Branch */; };
 		E0228F732907346200101A82 /* BuddiesCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0228F722907346200101A82 /* BuddiesCoordinator.swift */; };
 		E02542FA292053EB002D2F19 /* ArrayAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02542F9292053EB002D2F19 /* ArrayAdditions.swift */; };
 		E0359DCD299AF8CF00E8AF4F /* String+RFC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0359DCC299AF8CF00E8AF4F /* String+RFC.swift */; };
@@ -97,7 +95,6 @@
 		E06AAE3528778DAC00995D3D /* AccountViewProps.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3428778DAC00995D3D /* AccountViewProps.swift */; };
 		E06AAE3728778DDC00995D3D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3628778DDC00995D3D /* Account.swift */; };
 		E06AAE3928778EEF00995D3D /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06AAE3828778EEF00995D3D /* AccountService.swift */; };
-		E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */; };
 		E06D90C0299EFCC000AC09AB /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */; };
 		E06D90C229A2E8F500AC09AB /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E06D90C129A2E8F500AC09AB /* ActivityView.swift */; };
 		E0750D6728A5AB73004B81DA /* CodeChallengeTestCasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */; };
@@ -280,7 +277,6 @@
 		DE0D27572B84F169007F1560 /* PaygateInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateInfoCell.swift; sourceTree = "<group>"; };
 		DE0D275A2B850075007F1560 /* TapAreaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapAreaButton.swift; sourceTree = "<group>"; };
 		DE0D275C2B860182007F1560 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
-		DE0D27BA2B95E59D007F1560 /* AmplitudeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeManager.swift; sourceTree = "<group>"; };
 		DE0D27BC2B95E8BF007F1560 /* NumberLaunches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberLaunches.swift; sourceTree = "<group>"; };
 		DE0D27C02B974338007F1560 /* FacebookManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookManager.swift; sourceTree = "<group>"; };
 		DE38BF1F2BA9D81D0019C044 /* PaygateProductButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaygateProductButton.swift; sourceTree = "<group>"; };
@@ -346,7 +342,6 @@
 		E06AAE3628778DDC00995D3D /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		E06AAE3828778EEF00995D3D /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		E06D28C228CD218E00E211A0 /* CodeChallenge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodeChallenge.entitlements; sourceTree = "<group>"; };
-		E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsAnalyticsService.swift; sourceTree = "<group>"; };
 		E06D90BF299EFCC000AC09AB /* SegmentedControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
 		E06D90C129A2E8F500AC09AB /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		E0750D6628A5AB73004B81DA /* CodeChallengeTestCasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeChallengeTestCasesView.swift; sourceTree = "<group>"; };
@@ -487,7 +482,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0228F71290547CC00101A82 /* Branch in Frameworks */,
 				E099936628C155D500E12E36 /* Lottie in Frameworks */,
 				E01AECB028A1B1AD00615B52 /* Highlightr in Frameworks */,
 				E099936B28C1563700E12E36 /* SVGKitSwift in Frameworks */,
@@ -643,7 +637,6 @@
 		DE0D27B92B95E58B007F1560 /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				DE0D27BA2B95E59D007F1560 /* AmplitudeManager.swift */,
 				DE0D27C02B974338007F1560 /* FacebookManager.swift */,
 			);
 			path = Analytics;
@@ -1011,7 +1004,6 @@
 				E06AAE3828778EEF00995D3D /* AccountService.swift */,
 				E0EBB7E5288B1B6A00DE7C53 /* ChallengesService.swift */,
 				E0EBB7ED288B207700DE7C53 /* ImageService.swift */,
-				E06D28C328CD3F7E00E211A0 /* NotificationsAnalyticsService.swift */,
 				E0DA79C128F20AB00038B0E1 /* Configuration.swift */,
 				E0785AFA29A40F9800E4661D /* RewardsService.swift */,
 				E085CFAC29B40FD900BA1F16 /* ConceptReviewService.swift */,
@@ -1174,7 +1166,6 @@
 				E099936A28C1563700E12E36 /* SVGKitSwift */,
 				E0EF279128E21F3000597160 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				E0EF279328E21F3000597160 /* FirebaseCrashlytics */,
-				E0228F70290547CC00101A82 /* Branch */,
 			);
 			productName = CodeChallenge;
 			productReference = E0BD3228285A717E000C37A9 /* Codehub.app */;
@@ -1213,7 +1204,6 @@
 				E099936428C155D500E12E36 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E099936728C1563700E12E36 /* XCRemoteSwiftPackageReference "SVGKit" */,
 				E0EF279028E21F2F00597160 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */,
 			);
 			productRefGroup = E0BD3229285A717E000C37A9 /* Products */;
 			projectDirPath = "";
@@ -1278,9 +1268,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CodeChallenge/Pods-CodeChallenge-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-CodeChallenge/Pods-CodeChallenge-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1382,7 +1376,6 @@
 				E0BD3238285A7181000C37A9 /* CodeChallenge.xcdatamodeld in Sources */,
 				E01666E128F74C9B00693575 /* CompilationOutputView.swift in Sources */,
 				E09B15642A031FA0002627EE /* JumpHereContentsView.swift in Sources */,
-				E06D28C428CD3F7E00E211A0 /* NotificationsAnalyticsService.swift in Sources */,
 				E052550C288C79FC00FD87C3 /* AutocompleteDropdownView.swift in Sources */,
 				E085CFAD29B40FD900BA1F16 /* ConceptReviewService.swift in Sources */,
 				E085CFAF29B4129F00BA1F16 /* LearnViewProps.swift in Sources */,
@@ -1510,7 +1503,6 @@
 				E0D0AE0E29BFDC2A001CE57D /* ChatService.swift in Sources */,
 				E01AECA2289EE8F300615B52 /* KeywordsView.swift in Sources */,
 				E0A69CF6292BD624009D5C0C /* UIFont.swift in Sources */,
-				DE0D27BB2B95E59D007F1560 /* AmplitudeManager.swift in Sources */,
 				DE0D275D2B860182007F1560 /* UIApplication+Extension.swift in Sources */,
 				E085CFA929B39EF100BA1F16 /* SnapCarousel.swift in Sources */,
 				E064949229C649EB00AE3B6B /* ChallengeFriendService.swift in Sources */,
@@ -1716,7 +1708,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 60;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1733,7 +1725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.17;
+				MARKETING_VERSION = 3.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge";
@@ -1752,7 +1744,7 @@
 				CODE_SIGN_ENTITLEMENTS = CodeChallenge/CodeChallenge.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1769,7 +1761,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.17;
+				MARKETING_VERSION = 3.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = Codehub;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge";
@@ -1850,7 +1842,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 60;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
@@ -1868,7 +1860,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.17;
+				MARKETING_VERSION = 3.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.tome.codechallenge.staging";
@@ -1964,7 +1956,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 59;
+				CURRENT_PROJECT_VERSION = 60;
 				DEVELOPMENT_TEAM = WPJ4XRRZ4V;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = WPJ4XRRZ4V;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1981,7 +1973,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.17;
+				MARKETING_VERSION = 3.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tome.codechallenge.staging;
 				PRODUCT_NAME = "Codehub Staging";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.tome.codechallenge.staging";
@@ -2061,14 +2053,6 @@
 				version = 2.1.2;
 			};
 		};
-		E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/BranchMetrics/ios-branch-sdk-spm";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 		E099936428C155D500E12E36 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -2100,11 +2084,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E01AECAE28A1B1AD00615B52 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
-		};
-		E0228F70290547CC00101A82 /* Branch */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E0228F6F290547CC00101A82 /* XCRemoteSwiftPackageReference "ios-branch-sdk-spm" */;
-			productName = Branch;
 		};
 		E099936528C155D500E12E36 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

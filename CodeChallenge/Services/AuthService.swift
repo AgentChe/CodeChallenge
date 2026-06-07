@@ -72,14 +72,16 @@ struct AuthService: AuthServiceProtocol {
     }
 
     func fetchMaintenance() -> AnyPublisher<Maintenance, Error> {
-        return
-            URLRequest.create(url: "https://maintenance.sergey-ddd.workers.dev/")
-            .map {
-                var copy = $0
-                copy.cachePolicy = .reloadIgnoringCacheData
-                return copy
-            }
-            .flatMap { networkService.load($0, decoding: Maintenance.self, with: .snakeCase) }
+        let maintenance = Maintenance(
+            maintenance: false,
+            premium: true,
+            aiEnabled: true,
+            prdoductHunt: nil,
+            discordLink: "https://discord.gg/7PnzDz4xwH"
+        )
+
+        return Just(maintenance)
+            .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
 }

@@ -213,7 +213,6 @@ struct LoadAccount: ThunkAction {
                 account.xp = user.xp
                 account.solvedChallenges = user.doneChallangeCount
                 dispatcher.dispatch(Action.loadAccount(.success(account)))
-                dispatcher.services.identifyService.identify(id: user.id, subscribed: user.isPremium == true)
                 dispatcher.dispatch(LoadLeaderboardData())
             }
     }

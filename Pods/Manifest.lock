@@ -1,5 +1,4 @@
 PODS:
-  - Amplitude-iOS (4.10.0)
   - FBAEMKit (16.3.1):
     - FBSDKCoreKit_Basics (= 16.3.1)
   - FBSDKCoreKit (16.3.1):
@@ -16,7 +15,6 @@ PODS:
   - SwiftyStoreKit (0.16.1)
 
 DEPENDENCIES:
-  - Amplitude-iOS
   - FBSDKCoreKit
   - OtterScaleiOS (from `https://github.com/AgentChe/OtterScaleiOS.git`)
   - RxCocoa
@@ -25,7 +23,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Amplitude-iOS
     - FBAEMKit
     - FBSDKCoreKit
     - FBSDKCoreKit_Basics
@@ -44,7 +41,6 @@ CHECKOUT OPTIONS:
     :git: https://github.com/AgentChe/OtterScaleiOS.git
 
 SPEC CHECKSUMS:
-  Amplitude-iOS: 7d8cdc3408ba35c2e68368fc7c692cd104606b94
   FBAEMKit: 6c7b5eb77c96861bb59e040842c6e55bf39512ce
   FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
   FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
@@ -54,6 +50,6 @@ SPEC CHECKSUMS:
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SwiftyStoreKit: 6b9c08810269f030586dac1fae8e75871a82e84a
 
-PODFILE CHECKSUM: 9b55561f9f62872ebecf6c65cdd3033893dbe801
+PODFILE CHECKSUM: e2de8dbc70f0990734d71897654b284a3badc1bf
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.16.2

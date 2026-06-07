@@ -11,12 +11,8 @@ enum GlobalDefinitions {
     static let otterScaleHost = "https://api.korrekted.com"
     static let otterScaleApiKey = "aYIILMSLfJK1Q8RT"
     
-    static let amplitudeApiKey = "d4ad5c33d23d7a891e9c68de9471f36b"
-    
-    static let applicationTag = "CODE_LEARNING"
-    
-    static let termsOfUse = URL(string: "https://cocorporateapps.com/terms-of-use.html")!
-    static let privacyPolicy = URL(string: "https://cocorporateapps.com/privacy-policy.html")!
+    static let termsOfUse = URL(string: "https://thinkaboutapps.com/terms")!
+    static let privacyPolicy = URL(string: "https://thinkaboutapps.com/policy")!
     
     enum Paygate {
         static let yearly = "yearly_pro_3day_trial"

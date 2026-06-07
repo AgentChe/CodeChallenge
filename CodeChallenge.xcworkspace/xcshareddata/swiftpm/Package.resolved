@@ -1,4 +1,5 @@
 {
+  "originHash" : "4496e9305fcfd015e91220a34fb4da150ac93e2fd28ff466eb6e322542f442ec",
   "pins" : [
     {
       "identity" : "abseil-cpp-swiftpm",
@@ -91,15 +92,6 @@
       }
     },
     {
-      "identity" : "ios-branch-sdk-spm",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BranchMetrics/ios-branch-sdk-spm",
-      "state" : {
-        "revision" : "65dcd12e0107e1e1c464fabcd0ba29c577648650",
-        "version" : "1.45.2"
-      }
-    },
-    {
       "identity" : "leveldb",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/leveldb.git",
@@ -163,5 +155,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

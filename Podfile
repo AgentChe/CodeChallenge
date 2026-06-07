@@ -10,7 +10,6 @@ target 'CodeChallenge' do
   
   pod 'SwiftyStoreKit'
   
-  pod 'Amplitude-iOS'
   pod 'FBSDKCoreKit'
   
   pod 'OtterScaleiOS', :git => "https://github.com/AgentChe/OtterScaleiOS.git"

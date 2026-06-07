@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 import SwiftUI
 import Combine
-import Branch
 
 class LeaderboardCoordinator {
     let navigationController = UINavigationController()
@@ -41,27 +40,7 @@ class LeaderboardCoordinator {
             .sink(receiveValue: { [weak self] data in
                 self?.ongoingChallengeFriendDataCancellable?.cancel()
                 self?.ongoingChallengeFriendDataCancellable = nil
-                self?.composeBranchLinkAndShare(data)
             })
-    }
-
-    private func composeBranchLinkAndShare(_ data: ChallengeFriendData) {
-        let branchUniversalObject = BranchUniversalObject()
-        branchUniversalObject.title = "Lets compete"
-        branchUniversalObject.locallyIndex = false
-        branchUniversalObject.imageUrl = "https://codehub.ninja/static/icon.jpg"
-        let properties = BranchLinkProperties()
-        properties.addControlParam("challengeFriendId", withValue: "\(data.id)")
-
-        let urlString = branchUniversalObject.getShortUrl(with: properties) ?? ""
-
-        let activityController = UIActivityViewController(activityItems: [urlString], applicationActivities: nil)
-        activityController.popoverPresentationController?.sourceView = navigationController.view
-        activityController.completionWithItemsHandler = { [weak self] _, success, _, _ in
-            guard success, let navigationController = self?.navigationController else { return }
-            self?.startChallengeFriend(with: data, from: navigationController)
-        }
-        navigationController.present(activityController, animated: true)
     }
 }
 

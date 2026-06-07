@@ -55,7 +55,7 @@ struct GetStartedView: View {
 
     private var getStartedDescribtion: some View {
         Button(action: {
-            let tosURL = URL.init(string: "https://codehub.ninja/privacy/")!
+            let tosURL = URL.init(string: "https://thinkaboutapps.com/privacy")!
             if UIApplication.shared.canOpenURL(tosURL) {
                 UIApplication.shared.open(tosURL)
             }

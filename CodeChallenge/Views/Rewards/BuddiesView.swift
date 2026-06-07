@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import UIKit
-import Branch
 import Combine
 
 struct BuddiesView: View {
@@ -22,7 +21,6 @@ struct BuddiesView: View {
     @EnvironmentObject var store: Store
     @State private var selection = 0
     @State private var shareText: ShareText? = nil
-    @State private var branchURLString: String? = nil
     @State private var showShareSheet = false
     @State private var selectedReward: Reward?
 
@@ -54,16 +52,6 @@ struct BuddiesView: View {
             content
                 .sheet(item: $shareText) { item in
                     ActivityView(text: item.text)
-                }
-                .onAppear {
-                    let branchUniversalObject = BranchUniversalObject()
-                    branchUniversalObject.title = "Come learn coding with us!"
-                    branchUniversalObject.locallyIndex = false
-                    branchUniversalObject.imageUrl = "https://codehub.ninja/static/icon.jpg"
-                    let properties = BranchLinkProperties()
-                    properties.addControlParam("referringUserID", withValue: "\(account?.id ?? 0)")
-
-                    branchURLString = branchUniversalObject.getShortUrl(with: properties) ?? ""
                 }
                 .onReceive(errorPublisher) { error in
                     if error {
@@ -144,12 +132,12 @@ struct BuddiesView: View {
                     .padding(.bottom, 6)
                 HStack(spacing: 10) {
                     HStack {
-                        Text(branchURLString ?? "")
+                        Text("")
                             .font(.regular(size: 14))
                             .padding(16)
                         Spacer()
                         Button("Copy") {
-                            UIPasteboard.general.string = branchURLString ?? ""
+                            
                         }
                         .foregroundColor(.CodeChallenge.blue1)
                         .padding(.trailing, 14)
@@ -161,8 +149,7 @@ struct BuddiesView: View {
                     .frame(height: 46)
 
                     Button {
-                        guard let branchURLString = branchURLString else { return }
-                        shareText = ShareText(text: branchURLString)
+                        
                     } label: {
                         Text("Share")
                             .padding(14)

@@ -77,7 +77,7 @@ struct SettingsView: View, SettingsViewProps {
             }
 
             Button("Feedback") {
-                onOpenUrl("https://www.surveymonkey.com/r/L9YR78L")
+                onOpenUrl("https://contact@thinkaboutapps.com")
             }
 
             if let discordLink = store.state.maintenance?.discordLink {

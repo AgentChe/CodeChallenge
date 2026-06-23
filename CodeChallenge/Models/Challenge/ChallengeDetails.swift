@@ -58,9 +58,22 @@ struct Output: Codable, Equatable {
 }
 
 extension Body {
+    // NOTE: HTML parsing spins a nested WebKit run loop and must run on the main
+    // thread AND outside any SwiftUI view-update transaction. Never call this from
+    // a `body`/`updateUIView`; compute it from `.task`/`.onAppear` and cache it.
     func toAttributedString() -> NSMutableAttributedString {
-        guard let cleared = description.removingPercentEncoding else { return NSMutableAttributedString(string: description) }
-        let data = cleared.replacingOccurrences(of: "\n", with: "<br>").data(using: .utf8)
-        return try! NSMutableAttributedString(data: data!, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+        let cleared = description.removingPercentEncoding ?? description
+        guard let data = cleared.replacingOccurrences(of: "\n", with: "<br>").data(using: .utf8),
+              let parsed = try? NSMutableAttributedString(
+                data: data,
+                options: [
+                    .documentType: NSAttributedString.DocumentType.html,
+                    .characterEncoding: String.Encoding.utf8.rawValue
+                ],
+                documentAttributes: nil
+              ) else {
+            return NSMutableAttributedString(string: cleared)
+        }
+        return parsed
     }
 }

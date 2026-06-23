@@ -16,6 +16,8 @@ struct CodeChallengeTaskView: View {
     let onGoPremium: (() -> Void)?
     let onOpenChat: ((ChatMessagesMode) -> Void)?
 
+    @State private var bodyAttributedString: NSMutableAttributedString?
+
     var body: some View {
         VStack(alignment: .leading) {
             ScrollView {
@@ -24,8 +26,10 @@ struct CodeChallengeTaskView: View {
                         .frame(height: 25)
                     Text(details.name)
                         .font(.h3)
-                    HtmlAttributedLabel(htmlAttributedString: details.body.toAttributedString(), foregroundColor: .white)
-                        .frame(width: .screenWidth - 40)
+                    if let bodyAttributedString = bodyAttributedString {
+                        HtmlAttributedLabel(htmlAttributedString: bodyAttributedString, foregroundColor: .white)
+                            .frame(width: .screenWidth - 40)
+                    }
 
                     if let input = taskInput {
                         VStack(alignment: .leading, spacing: 6) {
@@ -99,6 +103,16 @@ struct CodeChallengeTaskView: View {
 
         }
         .foregroundColor(.CodeChallenge.white)
+        // Parse the HTML description OUTSIDE the SwiftUI view-update transaction.
+        // `NSAttributedString` HTML parsing spins up a nested WebKit run loop;
+        // calling it inside `body` (as `details.body.toAttributedString()` did)
+        // re-entered SwiftUI's graph update, producing "Publishing changes from
+        // within view updates", AttributeGraph cycles and an over-release crash
+        // in HVStack.updateCache. `.task` runs on the main actor but after the
+        // update, so the nested run loop is safe here.
+        .task(id: details) {
+            bodyAttributedString = details.body.toAttributedString()
+        }
     }
 
     private var aiButton: some View {

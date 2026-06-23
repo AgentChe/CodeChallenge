@@ -14,6 +14,7 @@ struct QuizChallengeView: View {
     let onCodeChange: (String) -> Void
     @State private var displayCode: String? = nil
     @State private var showsResetProgressPopup = false
+    @State private var bodyAttributedString: NSMutableAttributedString?
 
     var details: ChallengeDetail? {
         store.state.challengeDetails[id]?.value
@@ -49,12 +50,18 @@ struct QuizChallengeView: View {
                 onCodeChange(newValue ?? "")
             }
         })
+        // Parse HTML off the view-update transaction — see CodeChallengeTaskView.
+        .task(id: details) {
+            bodyAttributedString = details?.body.toAttributedString()
+        }
     }
 
     private func detailsView(_ details: ChallengeDetail) -> some View {
         VStack {
-            HtmlAttributedLabel(htmlAttributedString: details.body.toAttributedString(), foregroundColor: .white)
-                .frame(width: .screenWidth - 40)
+            if let bodyAttributedString = bodyAttributedString {
+                HtmlAttributedLabel(htmlAttributedString: bodyAttributedString, foregroundColor: .white)
+                    .frame(width: .screenWidth - 40)
+            }
 
             Spacer()
                 .frame(height: 20)

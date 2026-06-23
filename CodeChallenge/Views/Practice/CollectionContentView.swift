@@ -30,17 +30,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
         .onAppear {
             if displayChallenges.isEmpty {
                 store.dispatch(LoadCollectionContent(collection: collection))
-                displayContent = content
-                if let content = content {
-                    for index in 0..<content.challenges.count {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.05 * Double(index))) {
-                            withAnimation(.easeOut(duration: 0.3)) {
-                                let newItem = content.challenges[index]
-                                displayChallenges.append(newItem)
-                            }
-                        }
-                    }
-                }
             }
             if let conceptReview = collection.conceptReview, !showConceptReview {
                 store.dispatch(FetchConceptReview(sectionConceptReview: conceptReview))
@@ -48,10 +37,19 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 displayConceptReview = showConceptReview
             }
         }
-        .onChange(of: content) { newValue in
-            guard let newValue = newValue else { return }
-            displayChallenges = newValue.challenges
-            displayContent = newValue
+        // Populate the grid directly, without an entrance animation. The cells
+        // carry a tap responder (`onChallengeOpen`); animating their insertion
+        // with `withAnimation` + `.transition` leaves SwiftUI's animation
+        // interpolation state (`ZipLocation` / `KeyframeTrackState`) live on the
+        // cell. Tapping a cell pushes the next screen and tears that cell down
+        // while its animation is still in flight, which over-releases the cell's
+        // responder and crashes in `_swift_release_dealloc`. Driving the list
+        // from a single source of truth (`content.challenges`) also rules out
+        // the duplicate-`id` `ForEach` that the old two-writer setup could hit.
+        .task(id: content) {
+            guard let content = content else { return }
+            displayContent = content
+            displayChallenges = content.challenges
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -151,7 +149,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
     func challengeView(for challenge: Challenge) -> some View {
         if challenge.isPremium == true && getProgress(challenge: challenge) == "done" {
             challengeView(challenge: challenge, progress: getProgress(challenge: challenge))
-                .transition(.move(edge: .bottom))
                 .contentShape(Rectangle())
                 .onTapGesture {
                     onChallengeOpen(challenge)
@@ -159,7 +156,6 @@ struct CollectionContentView: View, CollectionContentViewProps {
                 .modifier(PremiumGradientModifier(changeStrokeColor: true, cornerRadius: 13, strokeWidth: 1.5))
         } else {
             challengeView(challenge: challenge, progress: getProgress(challenge: challenge))
-                .transition(.move(edge: .bottom))
                 .contentShape(Rectangle())
                 .onTapGesture {
                     onChallengeOpen(challenge)
